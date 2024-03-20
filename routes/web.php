@@ -13,18 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
+
 Route::get('/', function () {
-    return view('auth.login');
-});
-
-Route::get('/dashboard-main', function () {
-    return view('dashboard.main');
-});
-
-Route::get('/oldlogin', function () {
-    return view('auth.oldlogin');
+    return redirect()->route('login');
 });
 
 Auth::routes();
+
+// Route::get('/dashboard-main', function () {
+//     return view('dashboard.main');
+// });
+
+Route::get('/dashboard-main', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.main');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
