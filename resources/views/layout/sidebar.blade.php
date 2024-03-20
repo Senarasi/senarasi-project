@@ -76,7 +76,7 @@
             </div>
             <ul style="color: #4a25aa" id="karyawan" class="sidebar-dropdown list-unstyled collapse"
                 data-bs-parent="#sidebar">
-                <a href="/departemenbudget" class="sidebar-link">Departemen</a>
+                <a href="{{ route('department.index') }}" class="sidebar-link">Department</a>
                 <a href="/karyawan" class="sidebar-link">Karyawan</a>
             </ul>
         </button>

@@ -30,4 +30,6 @@ Auth::routes();
 Route::get('/dashboard-main', [App\Http\Controllers\DashboardController::class, 'dashboardmain'])->name('dashboard.main');
 Route::get('/dashboard-budget', [App\Http\Controllers\DashboardController::class, 'dashboardbudget'])->name('dashboard.budget');
 
+Route::resource('department', 'App\Http\Controllers\DepartmentController');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
