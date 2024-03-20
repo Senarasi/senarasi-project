@@ -27,6 +27,7 @@ Auth::routes();
 //     return view('dashboard.main');
 // });
 
-Route::get('/dashboard-main', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.main');
+Route::get('/dashboard-main', [App\Http\Controllers\DashboardController::class, 'dashboardmain'])->name('dashboard.main');
+Route::get('/dashboard-budget', [App\Http\Controllers\DashboardController::class, 'dashboardbudget'])->name('dashboard.budget');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

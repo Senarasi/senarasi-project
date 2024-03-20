@@ -11,8 +11,13 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function dashboardmain()
     {
         return view('dashboard.main');
+    }
+
+    public function dashboardbudget()
+    {
+        return view('dashboard.budget');
     }
 }
