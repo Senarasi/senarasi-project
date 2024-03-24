@@ -30,6 +30,10 @@ Auth::routes();
 Route::get('/dashboard-main', [App\Http\Controllers\DashboardController::class, 'dashboardmain'])->name('dashboard.main');
 Route::get('/dashboard-budget', [App\Http\Controllers\DashboardController::class, 'dashboardbudget'])->name('dashboard.budget');
 
+Route::get('/create-budget', function () {
+    return view('budget.create');
+});
+
 Route::get('/approval', function () {
     return view('approval.index');
 });
@@ -42,6 +46,13 @@ Route::get('/detail-budget', function () {
     return view('budget.index');
 });
 
+Route::resource('department', 'App\Http\Controllers\DepartmentController');
+Route::post('/department/store', 'App\Http\Controllers\DepartmentController@store')->name('department.store');
+
+Route::get('/karyawan', function () {
+    return view('employee.index');
+});
+
 Route::get('/vendor', function () {
     return view('vendor.index');
 });
@@ -50,7 +61,6 @@ Route::get('/vendor-edit', function () {
     return view('vendor.edit');
 });
 
-Route::resource('department', 'App\Http\Controllers\DepartmentController');
-Route::post('/department/store', 'App\Http\Controllers\DepartmentController@store')->name('department.store');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
