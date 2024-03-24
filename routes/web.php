@@ -31,5 +31,6 @@ Route::get('/dashboard-main', [App\Http\Controllers\DashboardController::class, 
 Route::get('/dashboard-budget', [App\Http\Controllers\DashboardController::class, 'dashboardbudget'])->name('dashboard.budget');
 
 Route::resource('department', 'App\Http\Controllers\DepartmentController');
+Route::post('/department/store', 'App\Http\Controllers\DepartmentController@store')->name('department.store');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

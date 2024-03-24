@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <!--Badan Isi-->
-    <form>
+
         <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> Add Department
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -18,13 +18,15 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body bg-white">
-                        <form class="modal-form-check" style="font: 500 14px Narasi Sans, sans-serif">
+                        <form action="{{ route('department.store') }}" method="POST" class="modal-form-check"
+                            style="font: 500 14px Narasi Sans, sans-serif">
+                            @csrf
                             <div class="mb-3">
                                 <label for="namakaryawan" class="form-label">Department Name</label>
-                                <input type="text" class="form-control" id="namakaryawan" />
+                                <input type="text" class="form-control" name="department_name"
+                                    placeholder="Department Name">
                             </div>
-
-                            <button type="add" class="button-submit">Submit</button>
+                            <button type="submit" class="button-submit">Submit</button>
                             <button type="close" class="button-tutup">Close</button>
                         </form>
                     </div>
@@ -33,51 +35,48 @@
                 </div>
             </div>
         </div>
-        <div class="tablenih" style="margin-top: 24px;">
-            <table class="table table-hover"
-                style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ; ;  color: #4A25AA;">
-                <thead style="font-weight: 500; text-align: center">
-                    <tr class="dicobain">
-                        <th scope="col">#</th>
-                        <th scope="col" style="text-align:start;">Department</th>
-                        <th scope="col">Position</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row" style="text-align: center;">1</th>
-                        <td>Laptop (Legion 5 Gen 7 (15″ AMD))</td>
-                        <td style="text-align: center;">20402170001</td>
-                        <td style="gap: 8px; display: flex; justify-content: center;">
-                            <a href="/department-edit" class="text-decoration-none text-end">
-                                <button type="button" class="btn btn-primary" style="width: fit-content;">Edit</button>
-                            </a>
-                            <button type="button" class="btn btn-danger" style="width: fit-content;">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope=" row " style="text-align: center; ">2</th>
-                        <td>Mouse Logitech M275 </td>
-                        <td style="text-align: center; ">20402170001</td>
-                        <td style="gap: 8px; display: flex; justify-content: center;"><button type="button"
-                                class="btn btn-primary" style="width: fit-content;">Edit</button><button type="button"
-                                class="btn btn-danger" style="width: fit-content;">Delete</button></td>
 
-                    </tr>
+    <div class="tablenih" style="margin-top: 24px;">
+        <table class="table table-hover"
+            style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ; ;  color: #4A25AA;">
+            <thead style="font-weight: 500; text-align: center">
+                <tr class="dicobain">
+                    <th scope="col">#</th>
+                    <th scope="col" style="text-align:start;">Department</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($department as $key => $data)
                     <tr>
-                        <th scope="row " style="text-align: center; ">3</th>
-                        <td>Kabel LAN</td>
-                        <td style="text-align: center; ">20402170001</td>
-                        <td style="gap: 8px; display: flex; justify-content: center;">
-                            <button type="button" class="btn btn-primary" style="width: fit-content;">Edit</button>
-                            <button type="button" class="btn btn-danger" style="width: fit-content;">Delete</button>
+                        <th scope="row" style="text-align: center;">{{ $department->firstItem() + $key }}</th>
+                        <td style="width:200px">{{ $data->department_name }}</td>
+
+                        <td style="text-align: center; margin-top: 14px;">
+                            @forelse ($data->position->sortBy('department_name') as $position)
+                                <span
+                                    style="font: 300 12px Narasi sans, sans-serif; color: black; border: 1px solid #4A25AA; border-radius:4px ;background-color: #eceaef; padding: 4px 8px; display: inline-block; margin: 4px;"><small>{{ $position->position_name }}</small></span>
+                            @empty
+                                <small><i>Position doesn't exist</i></small>
+                            @endforelse
                         </td>
 
+                        <td>
+                            <span style="display: flex; gap: 8px;">
+                                <a href="{{ route('department.edit', $data->department_id) }}" class="uwuq">
+                                    <button type="button" class="uwuq">Edit</button>
+                                </a>
+                                <button type="button " class="btn btn-danger ">Delete</button>
+                            </span>
+                        </td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-
-    </form>
+                @empty
+                    <div class="alert alert-danger">
+                        Data Post belum Tersedia.
+                    </div>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 @endsection
