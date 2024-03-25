@@ -30,9 +30,12 @@ Auth::routes();
 Route::get('/dashboard-main', [App\Http\Controllers\DashboardController::class, 'dashboardmain'])->name('dashboard.main');
 Route::get('/dashboard-budget', [App\Http\Controllers\DashboardController::class, 'dashboardbudget'])->name('dashboard.budget');
 
-Route::get('/create-budget', function () {
-    return view('budget.create');
-});
+Route::resource('budget', 'App\Http\Controllers\BudgetController');
+Route::post('/budget/store', 'App\Http\Controllers\BudgetController@store')->name('budget.store');
+
+// Route::get('/create-budget', function () {
+//     return view('budget.create');
+// });
 
 Route::get('/approval', function () {
     return view('approval.index');

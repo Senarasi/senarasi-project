@@ -5,14 +5,18 @@
 @section('content')
     <div class="judulhalaman">Budgeting System Narasi</div>
     <div class="button-dashboard">
-        <button class="button-ini" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button type="button" class="button-ini" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             INPUT
             <span style="color: #ffe900">BUDGET</span>
         </button>
-        <a href="/create-budget" class="text-decoration-none text-end">
+        <a href="{{ route('budget.create') }}" class="text-decoration-none text-end">
             <button class="button-ini">REQUEST <span style="color: #ffe900">BUDGET</span></button>
         </a>
     </div>
+
+
+
+
     <div class="tablenih" style="margin-top: 110px; margin-left: 42px">
         <table class="table table-hover"
             style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
@@ -90,20 +94,28 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body bg-white">
-                    <form class="modal-form-check">
-                        <fieldset disabled>
-                            <div class="mb-3">
-                                <label for="disabledTextInput" class="form-label">User</label>
-                                <input type="text" id="disabledTextInput " class="form-control" placeholder="Admin" />
-                            </div>
-                        </fieldset>
+                    <form action="{{ route('budget.store') }}" method="POST" class="modal-form-check"
+                        style="font: 500 14px Narasi Sans, sans-serif">
+                        @csrf
+                        {{-- <fieldset disabled> --}}
                         <div class="mb-3">
-                            <label for="namaprogram" class="form-label">Nama Program</label>
-                            <input type="text" class="form-control" id="namaprogram" />
+                            <label for="employee_id" class="form-label">User</label>
+                            <input type="text" id="employee_id" class="form-control" name="employee_id"
+                                value="{{ Auth::user()->full_name }}" placeholder="{{ Auth::user()->full_name }}" />
+                        </div>
+                        {{-- </fieldset> --}}
+                        <div class="mb-3">
+                            <label for="program_name" class="form-label">Nama Program</label>
+                            <input type="text" class="form-control" id="program_name" name="program_name" required />
                         </div>
                         <div class="mb-3">
-                            <label for="budgettahunan" class="form-label">Budget Tahunan</label>
-                            <input type="text" class="form-control" id="budgettahunan" />
+                            <label for="budget" class="form-label">Budget Tahunan</label>
+                            {{-- <input type="text" class="form-control" id="budget" name="budget" required /> --}}
+                            <input type="text" class="form-control" id="budget" name="budget" required />
+                            <!-- Input field for entering the budget value -->
+                            <input type="hidden" id="raw_budget" name="raw_budget" />
+                            <!-- Hidden input field for storing the raw numeric value -->
+
                         </div>
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="close" class="button-close btn-secondary">Close</button>
@@ -117,8 +129,18 @@
 @endsection
 @section('custom-js')
     <script>
+        var budgetInput = document.getElementById('budget');
+        var rawBudgetInput = document.getElementById('raw_budget');
+
+        budgetInput.addEventListener('keyup', function(e) {
+            var formattedBudget = formatRupiah(this.value, 'Rp');
+            budgetInput.value = formattedBudget; // Update the budget input field with the formatted value
+            var rawValue = parseRawBudget(formattedBudget); // Parse the raw numeric value
+            rawBudgetInput.value = rawValue; // Store the raw numeric value in the hidden input field
+        });
+
         /* Dengan Rupiah */
-        var budgettahunan = document.getElementById('budgettahunan');
+        var budgettahunan = document.getElementById('budget');
         budgettahunan.addEventListener('keyup', function(e) {
             budgettahunan.value = formatRupiah(this.value, 'Rp');
         });
@@ -138,6 +160,12 @@
 
             rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
             return prefix == undefined ? rupiah : rupiah ? 'Rp ' + rupiah : '';
+        }
+
+        function parseRawBudget(formattedBudget) {
+            // Remove any non-numeric characters from the formatted budget value
+            var rawValue = formattedBudget.replace(/[^\d]/g, '');
+            return rawValue;
         }
     </script>
 @endsection
