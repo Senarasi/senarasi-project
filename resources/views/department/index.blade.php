@@ -4,7 +4,6 @@
 @endsection
 @section('content')
     <!--Badan Isi-->
-
     <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> Add Department
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -12,27 +11,7 @@
                 fill="white" />
         </svg>
     </button>
-    <div class="modal justify-content-center fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body bg-white">
-                    <form action="{{ route('department.store') }}" method="POST" class="modal-form-check"
-                        style="font: 500 14px Narasi Sans, sans-serif">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="namakaryawan" class="form-label">Department Name</label>
-                            <input type="text" class="form-control" name="department_name" placeholder="Department Name">
-                        </div>
-                        <button type="submit" class="button-submit">Submit</button>
-                        <button type="close" class="button-tutup">Close</button>
-                    </form>
-                </div>
-                <img class="img-8" src="image/Narasi_Brandmark - Alternate Lockup alternate color version 1.svg "
-                    alt=" " />
-            </div>
-        </div>
-    </div>
+
     <div class="tablenih" style="margin-top: 24px;">
         <table class="table table-hover"
             style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ; ;  color: #4A25AA;">
@@ -75,5 +54,28 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+@endsection
+@section('modal')
+    <div class="modal justify-content-center fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body bg-white">
+                    <form action="{{ route('department.store') }}" method="POST" class="modal-form-check"
+                        style="font: 500 14px Narasi Sans, sans-serif">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="namakaryawan" class="form-label">Department Name</label>
+                            <input type="text" class="form-control" name="department_name" placeholder="Department Name">
+                        </div>
+                        <button type="submit" class="button-submit">Submit</button>
+                        <button type="close" class="button-tutup">Close</button>
+                    </form>
+                </div>
+                <img class="img-8" src="image/Narasi_Brandmark - Alternate Lockup alternate color version 1.svg "
+                    alt=" " />
+            </div>
+        </div>
     </div>
 @endsection

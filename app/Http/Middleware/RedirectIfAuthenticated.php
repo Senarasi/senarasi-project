@@ -26,5 +26,12 @@ class RedirectIfAuthenticated
         }
 
         return $next($request);
+
+        if (Auth::guard($guard)->check()) {
+            return $next($request);
+        }
+
+        // Redirect to the login page
+        return redirect()->route('login');
     }
 }

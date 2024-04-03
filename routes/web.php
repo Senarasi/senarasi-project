@@ -52,9 +52,10 @@ Route::get('/detail-budget', function () {
 Route::resource('department', 'App\Http\Controllers\DepartmentController');
 Route::post('/department/store', 'App\Http\Controllers\DepartmentController@store')->name('department.store');
 
-Route::get('/karyawan', function () {
-    return view('employee.index');
-});
+Route::resource('employee', 'App\Http\Controllers\EmployeeController');
+Route::post('/employee/store', 'App\Http\Controllers\EmployeeController@store')->name('employee.store');
+Route::post('/get-current-position', [App\Http\Controllers\AjaxController::class, 'getcurrentposition'])->name('ajax.getcurrentposition');
+Route::post('/get-position-from-department', [App\Http\Controllers\AjaxController::class, 'getpositionfromdepartment'])->name('ajax.getpositionfromdepartment');
 
 Route::get('/vendor', function () {
     return view('vendor.index');

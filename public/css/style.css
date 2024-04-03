@@ -990,10 +990,19 @@ label .form-label {
     margin-bottom: 24px;
 }
 
+.button-permintaan svg path {
+    fill: #4A25AA;
+}
+
 .button-permintaan:hover {
     border: #4A25AA;
     background-color: #4A25AA;
     color: #fff;
+    border: 1px solid var(--Primary-Main, #4A25AA);
+}
+
+.button-permintaan:hover svg path {
+    fill: #ffff;
 }
 
 #karyawan-button {
@@ -1010,7 +1019,6 @@ label .form-label {
     list-style: none;
     border-radius: 12px;
     box-shadow: 0 2px 5px rgba(76, 3, 125, 0.2);
-    list-style: none;
     border: 1px solid #4A25AA;
     background: white;
 }
@@ -1112,8 +1120,7 @@ td {
 }
 
 .uwuq {
-    width: 100%;
-    display: 100%;
+    right: 0;
     color: white;
     border-radius: 6px;
     background-color: #4A25AA;
@@ -1122,11 +1129,19 @@ td {
     text-decoration: none;
     font: 400 16px Narasi Sans, sans-serif;
     align-self: center;
-    padding: 4px 8px;
+    padding: 8px 8px;
 }
 
 .uwuq:hover {
     background-color: #34128c;
+}
+
+.tablein {
+    border: 2px solid #BCC4E5;
+    border-radius: 12px;
+    margin-top: 12px;
+    padding: 12px;
+    box-shadow: 0px 4px 24px -1px rgba(74, 37, 170, 0.2);
 }
 /* coba *;
 ;
