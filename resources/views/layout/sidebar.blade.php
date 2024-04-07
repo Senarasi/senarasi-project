@@ -1,7 +1,8 @@
+<!--Sidebar-->
 <aside id="sidebar">
     <div class="div-9">
-        <a href="/dashboard-budget" class="text-decoration-none text-end">
-            <button class="div-10">
+        <li class="nav-item div-12">
+            <a href="/dashboard-budget" class="nav-link align-middle px-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32" viewBox="0 0 33 32" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M5.83333 17.3333H13.8333C14.187 17.3333 14.5261 17.1929 14.7761 16.9428C15.0262 16.6928 15.1667 16.3536 15.1667 16V5.33333C15.1667 4.97971 15.0262 4.64057 14.7761 4.39052C14.5261 4.14048 14.187 4 13.8333 4H5.83333C5.47971 4 5.14057 4.14048 4.89052 4.39052C4.64048 4.64057 4.5 4.97971 4.5 5.33333V16C4.5 16.3536 4.64048 16.6928 4.89052 16.9428C5.14057 17.1929 5.47971 17.3333 5.83333 17.3333ZM17.8333 26.6667C17.8333 27.0203 17.9738 27.3594 18.2239 27.6095C18.4739 27.8595 18.813 28 19.1667 28H27.1667C27.5203 28 27.8594 27.8595 28.1095 27.6095C28.3595 27.3594 28.5 27.0203 28.5 26.6667V17.3333C28.5 16.9797 28.3595 16.6406 28.1095 16.3905C27.8594 16.1405 27.5203 16 27.1667 16H19.1667C18.813 16 18.4739 16.1405 18.2239 16.3905C17.9738 16.6406 17.8333 16.9797 17.8333 17.3333V26.6667Z"
@@ -11,11 +12,11 @@
                         fill="#FFE900" />
                 </svg>
                 <div class="div-13 text-white">Dashboard</div>
-            </button>
-        </a>
+            </a>
+        </li>
 
-        <a href="/approval" class="text-decoration-none text-end">
-            <button class="div-12">
+        <li class="nav-item div-12">
+            <a href="/approval" class="nav-link align-middle px-0">
                 <svg class="img-5" xmlns="http://www.w3.org/2000/svg " width="33 " height="32 "
                     viewBox="0 0 33 32 " fill="none ">
                     <g clip-path="url(#clip0_310_283) ">
@@ -52,10 +53,11 @@
                     </defs>
                 </svg>
                 <div class="div-13 text-white">Approval</div>
-            </button>
-        </a>
-        <a href="/detail-budget" class="text-decoration-none text-end">
-            <button class="div-12">
+            </a>
+        </li>
+
+        <li class="nav-item div-12">
+            <a href="/detail-budget" class="nav-link align-middle px-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24"
                     fill="none">
                     <path
@@ -63,8 +65,30 @@
                         fill="#FFE900" />
                 </svg>
                 <div class="div-13 text-white">Detail</div>
-            </button>
-        </a>
+            </a>
+        </li>
+
+        <li class="nav-item div-12">
+            <a href="#" class="nav-link align-middle px-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24"
+                    fill="none">
+                    <g clip-path="url(#clip0_675_330)">
+                        <path
+                            d="M11.6667 7C10.6267 7.30825 10 8.17399 10 8.99037C10 9.80674 10.6267 10.6725 11.6667 10.9795V7ZM13.3333 13.0217V17C14.3733 16.693 15 15.8272 15 15.0108C15 14.1945 14.3733 13.3287 13.3333 13.0217Z"
+                            fill="#FFE900" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M25 12C25 18.6276 19.4037 24 12.5 24C5.59625 24 0 18.6276 0 12C0 5.3724 5.59625 0 12.5 0C19.4037 0 25 5.3724 25 12ZM12.5 3.9C12.7486 3.9 12.9871 3.99482 13.1629 4.1636C13.3387 4.33239 13.4375 4.56131 13.4375 4.8V5.1804C15.475 5.5308 17.1875 7.0008 17.1875 9C17.1875 9.2387 17.0887 9.46761 16.9129 9.6364C16.7371 9.80518 16.4986 9.9 16.25 9.9C16.0014 9.9 15.7629 9.80518 15.5871 9.6364C15.4113 9.46761 15.3125 9.2387 15.3125 9C15.3125 8.1864 14.6075 7.3236 13.4375 7.0164V11.1804C15.475 11.5308 17.1875 13.0008 17.1875 15C17.1875 16.9992 15.475 18.4692 13.4375 18.8196V19.2C13.4375 19.4387 13.3387 19.6676 13.1629 19.8364C12.9871 20.0052 12.7486 20.1 12.5 20.1C12.2514 20.1 12.0129 20.0052 11.8371 19.8364C11.6613 19.6676 11.5625 19.4387 11.5625 19.2V18.8196C9.525 18.4692 7.8125 16.9992 7.8125 15C7.8125 14.7613 7.91127 14.5324 8.08709 14.3636C8.2629 14.1948 8.50136 14.1 8.75 14.1C8.99864 14.1 9.2371 14.1948 9.41291 14.3636C9.58873 14.5324 9.6875 14.7613 9.6875 15C9.6875 15.8136 10.3925 16.6764 11.5625 16.9824V12.8196C9.525 12.4692 7.8125 10.9992 7.8125 9C7.8125 7.0008 9.525 5.5308 11.5625 5.1804V4.8C11.5625 4.56131 11.6613 4.33239 11.8371 4.1636C12.0129 3.99482 12.2514 3.9 12.5 3.9Z"
+                            fill="#FFE900" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_675_330">
+                            <rect width="25" height="24" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+                <div class="div-13 text-white">Budget</div>
+            </a>
+        </li>
 
         <button id="karyawan-button" class="div-12 sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
             data-bs-target="#karyawan" role="button" aria-expanded="false" aria-controls="karyawan">
@@ -76,12 +100,13 @@
             </div>
             <ul style="color: #4a25aa" id="karyawan" class="sidebar-dropdown list-unstyled collapse"
                 data-bs-parent="#sidebar">
-                <a href="{{ route('department.index') }}" class="sidebar-link">Department</a>
-                <a href="{{route ('employee.index')}}" class="sidebar-link">Karyawan</a>
+                <a href="/department" class="sidebar-link">Departemen</a>
+                <a href="/karyawan" class="sidebar-link">Karyawan</a>
             </ul>
         </button>
-        <a href="/vendor" class="text-decoration-none text-end">
-            <button class="div-12">
+
+        <li class="nav-item div-12">
+            <a href="/vendor" class="nav-link align-middle px-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32" viewBox="0 0 33 32"
                     fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -95,7 +120,28 @@
                         fill="#FFE900" />
                 </svg>
                 <div class="div-13 text-white">Vendor</div>
-            </button>
-        </a>
+            </a>
+        </li>
     </div>
 </aside>
+
+
+<script>
+    // Get the current URL
+    var currentUrl = window.location.href;
+
+    // Get all the list items with the class "nav-item"
+    var navItems = document.querySelectorAll("#sidebar .nav-item");
+
+    // Loop through each list item
+    navItems.forEach(function(item) {
+        // Get the URL of the anchor tag
+        var url = item.querySelector("a").getAttribute("href");
+
+        // Check if the URL matches the current URL
+        if (currentUrl.includes(url)) {
+            // Change the background color of the list item to black
+            item.style.backgroundColor = "#34128c";
+        }
+    });
+</script>
