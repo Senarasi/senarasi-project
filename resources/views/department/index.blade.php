@@ -11,7 +11,6 @@
                 fill="white" />
         </svg>
     </button>
-
     <div class="tablenih" style="margin-top: 24px;">
         <table class="table table-hover"
             style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ; ;  color: #4A25AA;">

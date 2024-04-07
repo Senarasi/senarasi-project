@@ -9,13 +9,10 @@
             INPUT
             <span style="color: #ffe900">BUDGET</span>
         </button>
-        <a href="{{ route('budget.create') }}" class="text-decoration-none text-end">
+        <a href="/create-budget" class="text-decoration-none text-end">
             <button class="button-ini">REQUEST <span style="color: #ffe900">BUDGET</span></button>
         </a>
     </div>
-
-
-
 
     <div class="tablenih" style="margin-top: 110px; margin-left: 42px">
         <table class="table table-hover"

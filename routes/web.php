@@ -33,9 +33,11 @@ Route::get('/dashboard-budget', [App\Http\Controllers\DashboardController::class
 Route::resource('budget', 'App\Http\Controllers\BudgetController');
 Route::post('/budget/store', 'App\Http\Controllers\BudgetController@store')->name('budget.store');
 
-// Route::get('/create-budget', function () {
-//     return view('budget.create');
-// });
+Route::resource('requestbudget', 'App\Http\Controllers\RequestBudgetController');
+
+Route::get('/create-budget', function () {
+    return view('requestbudget.create');
+});
 
 Route::get('/approval', function () {
     return view('approval.index');
