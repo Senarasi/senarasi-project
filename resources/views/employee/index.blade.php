@@ -136,6 +136,7 @@
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
+                <img class="img-8" src="{{asset("image/Narasi_Logo.svg")}}" alt=" " />
             </div>
         </div>
     </div>
@@ -223,6 +224,7 @@
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
+                <img class="img-8" src="{{asset("image/Narasi_Logo.svg")}}" alt=" " />
             </div>
         </div>
     </div>
