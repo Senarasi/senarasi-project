@@ -31,7 +31,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                         <a href="" id="#" class="button-profile sidebar-link collapsed has-dropdown"
-                            data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button" aria-expanded="false"
+                            data-bs-toggle="modal" data-bs-target="#staticBackdrop-profile" role="button" aria-expanded="false"
                             aria-controls="profile" style="margin-bottom: 1px">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none">
@@ -67,7 +67,7 @@
     </div>
 </nav>
 <!-- Modal Button Profile -->
-<div class="modal justify-content-center fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+<div class="modal justify-content-center fade" id="staticBackdrop-profile" data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

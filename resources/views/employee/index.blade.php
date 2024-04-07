@@ -133,7 +133,7 @@
                         </div>
 
                         <button type="submit" class="button-submit">Submit</button>
-                        <button type="close" class="button-tutup">Close</button>
+                        <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
             </div>
@@ -220,7 +220,7 @@
                         </div>
 
                         <button type="submit" class="button-submit">Submit</button>
-                        <button type="close" class="button-tutup">Close</button>
+                        <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
             </div>
@@ -272,13 +272,6 @@
                         }
                     }
                 });
-            });
-            $('#check-pw').click(function() {
-                if ('password' == $('#input-pw').attr('type')) {
-                    $('#input-pw').prop('type', 'text');
-                } else {
-                    $('#input-pw').prop('type', 'password');
-                }
             });
         });
     </script>

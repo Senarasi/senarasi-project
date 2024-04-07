@@ -96,8 +96,6 @@
                         <button type="close" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
-                <img class="img-8" src="image/Narasi_Brandmark - Alternate Lockup alternate color version 1.svg "
-                    alt=" " />
             </div>
         </div>
     </div>
@@ -128,8 +126,6 @@
                         <button type="close" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
-                <img class="img-8" src="image/Narasi_Brandmark - Alternate Lockup alternate color version 1.svg "
-                    alt=" " />
             </div>
         </div>
     </div>

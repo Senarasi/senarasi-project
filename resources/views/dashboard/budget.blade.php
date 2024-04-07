@@ -115,11 +115,9 @@
 
                         </div>
                         <button type="submit" class="button-submit">Submit</button>
-                        <button type="close" class="button-close btn-secondary">Close</button>
+                        <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
-                <img class="img-8" src="image/Narasi_Brandmark - Alternate Lockup alternate color version 1.svg "
-                    alt=" " />
             </div>
         </div>
     </div>

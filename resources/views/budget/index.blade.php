@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="judulhalaman" style="display: flex; align-items: center">
-        Request Budget Narasi
+        Input Budget Narasi
         <form style="margin-left: 12px" class="d-flex has-search" role="search ">
             <input style="font-size: 14px; justify-content: center" class="form-control me-2" type="search "
                 placeholder="Search " aria-label="Search" />
@@ -121,7 +121,7 @@
                             <input type="text " class="form-control" id="budgettahunan " />
                         </div>
                         <button type="submit " class="button-submit">Submit</button>
-                        <button type="button " class="button-close btn-secondary" data-bs-dismiss="modal ">Close</button>
+                        <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
                 <img class="img-8" src="image/Narasi_Logo.svg " alt=" " />

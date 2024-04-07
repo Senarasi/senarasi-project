@@ -48,7 +48,7 @@ Route::get('/approval-detail', function () {
 });
 
 Route::get('/detail-budget', function () {
-    return view('budget.index');
+    return view('requestbudget.index');
 });
 
 Route::resource('department', 'App\Http\Controllers\DepartmentController');
