@@ -15,7 +15,7 @@ class EmployeeController extends Controller
     {
         $employee = Employee::with(['department', 'position'])->when($request->cari, function ($query) use ($request) {
             $query->where('full_name', 'like', "%{$request->cari}%");
-        })->paginate(15);
+        })->orderBy('employee_id', 'asc')->paginate(15);
         $total_employee = $employee->count();
         $department = Department::orderBy('department_name', 'asc')->pluck('department_name', 'department_id');
         $position = Position::orderBy('position_name', 'asc')->pluck('position_name', 'position_id');
