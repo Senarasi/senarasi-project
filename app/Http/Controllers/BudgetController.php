@@ -10,13 +10,15 @@ use Illuminate\Database\QueryException;
 
 class BudgetController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Retrieve all budgets from the database with associated employee
-        $budgets = BudgetName::with(['employee', 'yearlyBudgets', 'yearlyBudgets.quarterlyBudgets', 'yearlyBudgets.quarterlyBudgets.monthlyBudgets'])->get();
-
+        $budgets = BudgetName::with(['employee', 'yearlyBudgets', 'yearlyBudgets.quarterlyBudgets', 'yearlyBudgets.quarterlyBudgets.monthlyBudgets'])->when($request->cari, function ($query) use ($request) {
+            $query->where('name', 'like', "%{$request->cari}%");
+        })->paginate(15);
+        $total_budget = $budgets->count();
         // Pass the retrieved budgets to the view
-        return view('budget.index', ['budgets' => $budgets]);
+        return view('budget.index', compact('budgets', 'total_budget'));
     }
 
     public function create()
@@ -36,6 +38,7 @@ class BudgetController extends Controller
         $budgetName = BudgetName::create([
             'name' => $request->input('program_name'),
             'employee_id' => Auth::user()->employee_id,
+            'budget_code' => $request->input('budget_code')
         ]);
 
         $yearlyBudget = $budgetName->yearlyBudgets()->create([
@@ -68,7 +71,7 @@ class BudgetController extends Controller
                 // Add logic to create budget details if needed
             }
         }
-        return redirect()->route('dashboard.budget');
+        return redirect()->route('budget.index');
     }
 
     public function edit($id)
@@ -80,7 +83,7 @@ class BudgetController extends Controller
         $employees = Employee::all();
 
         // Pass the retrieved data to the edit view
-        return view('budget.edit', ['budget' => $budget, 'employees' => $employees]);
+        return view('budget.edit', compact('budget', 'employees'));
     }
 
     public function update(Request $request, $budget_name_id)
@@ -99,6 +102,7 @@ class BudgetController extends Controller
         $budget->update([
             'name' => $request->input('program_name'),
             'employee_id' => $request->input('employee_id'),
+            'budget_code' => $request->input('budget_code'),
         ]);
 
         // Update the yearly budget amount and remaining budget

@@ -107,7 +107,6 @@
                         </div>
                         <div class="mb-3">
                             <label for="budget" class="form-label">Budget Tahunan</label>
-                            {{-- <input type="text" class="form-control" id="budget" name="budget" required /> --}}
                             <input type="text" class="form-control" id="budget" name="budget" required />
                             <!-- Input field for entering the budget value -->
                             <input type="hidden" id="raw_budget" name="raw_budget" />

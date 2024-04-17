@@ -11,7 +11,7 @@ class BudgetName extends Model
 
     protected $table = 'budget_names';
     protected $primaryKey = 'budget_name_id';
-    protected $fillable = ['name', 'employee_id'];
+    protected $fillable = ['name', 'employee_id', 'budget_code'];
 
     public function employee()
     {

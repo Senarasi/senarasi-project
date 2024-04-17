@@ -45,45 +45,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row ">1</th>
-                        <td>1</td>
-                        <td>Mata Najwa</td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <span style="display: flex; gap: 8px; justify-content: center">
-                                <a type="button " class="uwuq" data-bs-toggle="modal" data-bs-target="#modal2">Edit</a>
-                                <button type="button " class="btn btn-danger">Delete</button>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope=" row ">2</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <span style="display: flex; gap: 8px; justify-content: center">
-                                <a type="button " class="uwuq" data-bs-toggle="modal" data-bs-target="#modal2">Edit</a>
-                                <button type="button " class="btn btn-danger">Delete</button>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row ">3</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <span style="display: flex; gap: 8px; justify-content: center">
-                                <a type="button " class="uwuq" data-bs-toggle="modal" data-bs-target="#modal2">Edit</a>
-                                <button type="button " class="btn btn-danger">Delete</button>
-                            </span>
-                        </td>
-                    </tr>
+                    @forelse ($budgets as $key => $data)
+                        <tr>
+                            <th scope="row" style="text-align: center;">{{ $budgets->firstItem() + $key }}</th>
+                            <td>{{ $data->budget_code }}</td>
+                            <td>{{ $data->name }}</td>
+                            @foreach ($data->yearlyBudgets as $yearly)
+                                <td>{{ $yearly->budget_amount }}</td>
+                            @endforeach
+                            <td>{{ $data->employee->full_name }}</td>
+                            <td>
+                                <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                    action="{{ route('budget.destroy', $data->budget_name_id) }}" method="POST">
+                                    <a href="{{ route('budget.edit', $data->budget_name_id) }}" class="uwuq"
+                                        data-bs-toggle="modal" data-bs-target="#modal2"
+                                        style="width: fit-content; ">Edit</a>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger "
+                                        style="width: fit-content; ">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <div class="alert alert-danger">
+                            Data Not Found.
+                        </div>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -96,35 +84,46 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body bg-white">
-                    <form class="modal-form-check">
+                    <form action="{{ route('budget.store') }}" method="POST" class="modal-form-check"
+                        style="font: 500 14px Narasi Sans, sans-serif">
+                        @csrf
                         <fieldset disabled>
                             <div class="mb-3">
-                                <label for="disabledTextInput " class="form-label">User</label>
-                                <input type="text " id="disabledTextInput " class="form-control"
-                                    placeholder="Rp10.000.000 " readonly />
+                                <label for="employee_id" class="form-label">User</label>
+                                <input type="text" id="employee_id" class="form-control" name="employee_id"
+                                    value="{{ Auth::user()->full_name }}" placeholder="{{ Auth::user()->full_name }}"
+                                    readonly />
                             </div>
                         </fieldset>
                         <div class="mb-3">
-                            <label for="namaprogram " class="form-label">Nama Program</label>
-                            <input type="text " class="form-control" id="namaprogram " />
+                            <label for="budget_code" class="form-label">Budget Code</label>
+                            <input type="text " class="form-control" id="budget_code" name="budget_code" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="program_name" class="form-label">Nama Program</label>
+                            <input type="text" class="form-control" id="program_name" name="program_name" required />
                         </div>
                         <!-- <div class="mb-3 ">
-                                    <label for="departemen " class="form-label ">Kategori</label>
-                                    <select id="departemen " class="form-select ">
-                                    <option style="color: rgb(189, 189, 189) ">Choose One</option>
-                                    <option>REGULAR</option>
-                                    <option>EVENT</option>
-                                </select>
-                                </div> -->
-                        <div id="budgettahunanContainer " class="mb-3">
-                            <label for="budgettahunan " class="form-label">Budget Tahunan</label>
-                            <input type="text " class="form-control" id="budgettahunan " />
+                                                            <label for="departemen " class="form-label ">Kategori</label>
+                                                            <select id="departemen " class="form-select ">
+                                                            <option style="color: rgb(189, 189, 189) ">Choose One</option>
+                                                            <option>REGULAR</option>
+                                                            <option>EVENT</option>
+                                                        </select>
+                                                        </div> -->
+                        <div class="mb-3">
+                            <label for="budget" class="form-label">Budget Tahunan</label>
+                            <input type="text" class="form-control" id="budget" name="budget" required />
+                            <!-- Input field for entering the budget value -->
+                            <input type="hidden" id="raw_budget" name="raw_budget" />
+                            <!-- Hidden input field for storing the raw numeric value -->
+
                         </div>
                         <button type="submit " class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
-                <img class="img-8" src="{{asset("image/Narasi_Logo.svg")}}" alt=" " />
+                <img class="img-8" src="{{ asset('image/Narasi_Logo.svg') }}" alt=" " />
             </div>
         </div>
     </div>
@@ -135,43 +134,95 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body bg-white">
-                    <form class="modal-form-check">
+                    <form action="{{ route('budget.update', $data->budget_name_id) }}" method="POST"
+                        class="modal-form-check" style="font: 500 14px Narasi Sans, sans-serif">
+                        @csrf
+                        @method('PUT')
                         <fieldset disabled>
                             <div class="departposisi">
                                 <div
                                     style="font: 300 12; justify-content: space-between; align-items: center; flex: 1 0 0">
-                                    <label for="departemen " class="form-label">Request Number</label>
-                                    <input type="text " class="form-control" id="departemen " />
+                                    <label for="budget_code" class="form-label">Budget Code</label>
+                                    <input type="text " class="form-control" id="budget_code" name="budget_code"
+                                        value="{{ $data->budget_code }}" />
                                 </div>
                                 <div
                                     style="font: 300 12; justify-content: space-between; align-items: center; flex: 1 0 0">
-                                    <label for="statuskaryawan " class="form-label">User</label>
-                                    <input type="text " class="form-control" id="statuskaryawan " />
+                                    <label for="employee_id" class="form-label">User</label>
+                                    <input type="text" id="employee_id" class="form-control" name="employee_id"
+                                        value=""
+                                        placeholder="" readonly />
                                 </div>
                             </div>
                         </fieldset>
                         <div class="mb-3">
-                            <label for="namaprogram " class="form-label">Nama Program</label>
-                            <input type="text " class="form-control" id="namaprogram " />
+                            <label for="program_name" class="form-label">Nama Program</label>
+                            <input type="text" class="form-control" id="program_name" name="program_name" value="" required />
                         </div>
                         <!-- <div class="mb-3 ">
-                            <label for="departemen " class="form-label ">Kategori</label>
-                            <select id="departemen " class="form-select ">
-                            <option style="color: rgb(189, 189, 189) ">Choose One</option>
-                            <option>REGULAR</option>
-                            <option>EVENT</option>
-                        </select>
-                        </div> -->
-                        <div id="budgettahunanContainer " class="mb-3">
-                            <label for="budgettahunan " class="form-label">Budget</label>
-                            <input type="text " class="form-control" id="budgettahunan " />
+                                                    <label for="departemen " class="form-label ">Kategori</label>
+                                                    <select id="departemen " class="form-select ">
+                                                    <option style="color: rgb(189, 189, 189) ">Choose One</option>
+                                                    <option>REGULAR</option>
+                                                    <option>EVENT</option>
+                                                </select>
+                                                </div> -->
+                        <div class="mb-3">
+                            <label for="budget" class="form-label">Budget Tahunan</label>
+                            <input type="text" class="form-control" id="budget" name="budget" required />
+                            <!-- Input field for entering the budget value -->
+                            <input type="hidden" id="raw_budget" name="raw_budget" />
+                            <!-- Hidden input field for storing the raw numeric value -->
+
                         </div>
                         <button type="submit " class="button-submit">Submit</button>
-                        <button type="button " class="button-close btn-secondary" data-bs-dismiss="modal ">Close</button>
+                        <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
-                <img class="img-8" src="{{asset("image/Narasi_Logo.svg")}}" alt=" " />
+                <img class="img-8" src="{{ asset('image/Narasi_Logo.svg') }}" alt=" " />
             </div>
         </div>
     </div>
+@endsection
+@section('custom-js')
+    <script>
+        var budgetInput = document.getElementById('budget');
+        var rawBudgetInput = document.getElementById('raw_budget');
+
+        budgetInput.addEventListener('keyup', function(e) {
+            var formattedBudget = formatRupiah(this.value, 'Rp');
+            budgetInput.value = formattedBudget; // Update the budget input field with the formatted value
+            var rawValue = parseRawBudget(formattedBudget); // Parse the raw numeric value
+            rawBudgetInput.value = rawValue; // Store the raw numeric value in the hidden input field
+        });
+
+        /* Dengan Rupiah */
+        var budgettahunan = document.getElementById('budget');
+        budgettahunan.addEventListener('keyup', function(e) {
+            budgettahunan.value = formatRupiah(this.value, 'Rp');
+        });
+
+        /* Fungsi */
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : rupiah ? 'Rp ' + rupiah : '';
+        }
+
+        function parseRawBudget(formattedBudget) {
+            // Remove any non-numeric characters from the formatted budget value
+            var rawValue = formattedBudget.replace(/[^\d]/g, '');
+            return rawValue;
+        }
+    </script>
 @endsection

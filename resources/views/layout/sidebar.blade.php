@@ -101,7 +101,7 @@
             <ul style="color: #4a25aa" id="karyawan" class="sidebar-dropdown list-unstyled collapse"
                 data-bs-parent="#sidebar">
                 <a href="/department" class="sidebar-link">Departemen</a>
-                <a href="/karyawan" class="sidebar-link">Karyawan</a>
+                <a href="/employee" class="sidebar-link">Karyawan</a>
             </ul>
         </button>
 
