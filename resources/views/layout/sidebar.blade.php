@@ -1,5 +1,6 @@
 <!--Sidebar-->
-<aside id="sidebar">
+<aside id="sidebar" >
+    <div style="background-color: var(--Primary-Main, #4a25aa);">
     <div class="div-9">
         <li class="nav-item div-12">
             <a href="/dashboard-budget" class="nav-link align-middle px-0">
@@ -57,6 +58,22 @@
         </li>
 
         <li class="nav-item div-12">
+            <a href="/report" class="nav-link align-middle px-0">
+                <svg width="25" height="28" viewBox="0 0 25 28" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 8.75C2.57174 8.75 1.6815 9.11875 1.02513 9.77513C0.368749 10.4315 0 11.3217 0 12.25V23.625C0 24.7853 0.460936 25.8981 1.28141 26.7186C2.10188 27.5391 3.21468 28 4.375 28H20.125C21.2853 28 22.3981 27.5391 23.2186 26.7186C24.0391 25.8981 24.5 24.7853 24.5 23.625V21C24.5 20.0717 24.1313 19.1815 23.4749 18.5251C22.8185 17.8687 21.9283 17.5 21 17.5H17.7118C17.2477 17.4999 16.8026 17.3155 16.4745 16.9872L9.26275 9.7755C8.60653 9.11908 7.71643 8.7502 6.78825 8.75H3.5Z" fill="#FFE900"/>
+                    <path d="M15.75 0C16.6783 0 17.5685 0.368749 18.2249 1.02513C18.8813 1.6815 19.25 2.57174 19.25 3.5V15.75H17.7118L10.5 8.53825C9.51566 7.55362 8.18052 7.0003 6.78825 7H3.5C2.8875 7 2.29775 7.105 1.75 7.2975V3.5C1.75 2.57174 2.11875 1.6815 2.77513 1.02513C3.4315 0.368749 4.32174 0 5.25 0H15.75Z" fill="white"/>
+                    <path d="M21 15.75C21.6125 15.75 22.2023 15.855 22.75 16.0475V7C22.75 6.38564 22.5883 5.7821 22.2811 5.25005C21.9739 4.718 21.5321 4.27618 21 3.969V15.75Z" fill="white"/>
+                    <rect x="12.8333" y="2.3335" width="5.1156" height="4.66667" fill="url(#pattern0_851_422)"/>
+                    <defs>
+                    <pattern id="pattern0_851_422" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlink:href="#image0_851_422" transform="scale(0.000317965 0.000348554)"/>
+                    </pattern>
+                    </svg>
+                <div class="div-13 text-white">Report</div>
+            </a>
+        </li>
+
+        <li class="nav-item div-12">
             <a href="/detail-budget" class="nav-link align-middle px-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24"
                     fill="none">
@@ -64,12 +81,12 @@
                         d="M12.5 0C10.1266 0 7.80655 0.703788 5.83316 2.02236C3.85977 3.34094 2.3217 5.21508 1.41345 7.4078C0.505199 9.60051 0.267559 12.0133 0.730582 14.3411C1.1936 16.6689 2.33649 18.807 4.01472 20.4853C5.69295 22.1635 7.83115 23.3064 10.1589 23.7694C12.4867 24.2324 14.8995 23.9948 17.0922 23.0865C19.2849 22.1783 21.1591 20.6402 22.4776 18.6668C23.7962 16.6934 24.5 14.3734 24.5 12C24.4966 8.81843 23.2313 5.76814 20.9816 3.51843C18.7319 1.26872 15.6816 0.00335979 12.5 0ZM12.0385 5.53846C12.3123 5.53846 12.58 5.61967 12.8077 5.77181C13.0354 5.92395 13.2129 6.1402 13.3177 6.39321C13.4225 6.64621 13.4499 6.92461 13.3965 7.1932C13.343 7.46179 13.2112 7.7085 13.0175 7.90215C12.8239 8.09579 12.5772 8.22766 12.3086 8.28109C12.04 8.33451 11.7616 8.30709 11.5086 8.20229C11.2556 8.0975 11.0393 7.92002 10.8872 7.69233C10.7351 7.46463 10.6538 7.19693 10.6538 6.92308C10.6538 6.55585 10.7997 6.20367 11.0594 5.944C11.3191 5.68434 11.6712 5.53846 12.0385 5.53846ZM13.4231 18.4615C12.9334 18.4615 12.4639 18.267 12.1177 17.9208C11.7714 17.5746 11.5769 17.105 11.5769 16.6154V12C11.3321 12 11.0973 11.9027 10.9242 11.7296C10.7511 11.5565 10.6538 11.3217 10.6538 11.0769C10.6538 10.8321 10.7511 10.5973 10.9242 10.4242C11.0973 10.2511 11.3321 10.1538 11.5769 10.1538C12.0666 10.1538 12.5361 10.3483 12.8824 10.6946C13.2286 11.0408 13.4231 11.5104 13.4231 12V16.6154C13.6679 16.6154 13.9027 16.7126 14.0758 16.8857C14.2489 17.0589 14.3462 17.2936 14.3462 17.5385C14.3462 17.7833 14.2489 18.0181 14.0758 18.1912C13.9027 18.3643 13.6679 18.4615 13.4231 18.4615Z"
                         fill="#FFE900" />
                 </svg>
-                <div class="div-13 text-white">Detail</div>
+                <div class="div-13 text-white">Request</div>
             </a>
         </li>
 
         <li class="nav-item div-12">
-            <a href="{{route('budget.index')}}" class="nav-link align-middle px-0">
+            <a href="/budget" class="nav-link align-middle px-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24"
                     fill="none">
                     <g clip-path="url(#clip0_675_330)">
@@ -90,12 +107,12 @@
             </a>
         </li>
 
-        <button id="karyawan-button" class="div-12 sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-            data-bs-target="#karyawan" role="button" aria-expanded="false" aria-controls="karyawan">
+        <li id="karyawan-button" class="karyawan-button div-12 sidebar-link collapsed has-dropdown"
+            data-bs-target="#karyawan" role="button" aria-expanded="false" aria-controls="karyawan" >
             <img loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/2353b0cdf451679e8c2af60effba1490ef91f20f2d2a30a175c208799d2f5e31?"
                 class="img-5" />
-            <div class="div-11 text-white">
+            <div class="div-13 text-white">
                 <a href="#" class="sidebar-link">Karyawan</a>
             </div>
             <ul style="color: #4a25aa" id="karyawan" class="sidebar-dropdown list-unstyled collapse"
@@ -103,7 +120,7 @@
                 <a href="/department" class="sidebar-link">Departemen</a>
                 <a href="/employee" class="sidebar-link">Karyawan</a>
             </ul>
-        </button>
+        </li>
 
         <li class="nav-item div-12">
             <a href="/vendor" class="nav-link align-middle px-0">
@@ -122,6 +139,36 @@
                 <div class="div-13 text-white">Vendor</div>
             </a>
         </li>
+
+        <li class="nav-item div-12">
+            <a href="/category" class="nav-link align-middle px-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="29" height="31" viewBox="0 0 29 31" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.3421 13.7368L13.7368 0L22.1316 13.7368H5.3421Z" fill="#FFE900"/>
+                    <path d="M22.1316 30.5263C20.2237 30.5263 18.6022 29.8588 17.2672 28.5238C15.9322 27.1888 15.2642 25.5668 15.2632 23.6579C15.2621 21.749 15.9302 20.1275 17.2672 18.7935C18.6043 17.4595 20.2257 16.7915 22.1316 16.7895C24.0374 16.7874 25.6594 17.4555 26.9975 18.7935C28.3355 20.1316 29.003 21.753 29 23.6579C28.9969 25.5627 28.3294 27.1847 26.9975 28.5238C25.6655 29.8629 24.0435 30.5304 22.1316 30.5263Z" fill="#FFE900"/>
+                    <path d="M0 29.7632V17.5526H12.2105V29.7632H0Z" fill="white"/>
+                    </svg>
+                    <div class="div-13 text-white">Kategori</div>
+            </a>
+        </li>
+
+        <li class="nav-item div-12">
+            <a href="/sop" class="nav-link align-middle px-0">
+                <svg width="25" height="28" viewBox="0 0 25 28" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 8.75C2.57174 8.75 1.6815 9.11875 1.02513 9.77513C0.368749 10.4315 0 11.3217 0 12.25V23.625C0 24.7853 0.460936 25.8981 1.28141 26.7186C2.10188 27.5391 3.21468 28 4.375 28H20.125C21.2853 28 22.3981 27.5391 23.2186 26.7186C24.0391 25.8981 24.5 24.7853 24.5 23.625V21C24.5 20.0717 24.1313 19.1815 23.4749 18.5251C22.8185 17.8687 21.9283 17.5 21 17.5H17.7118C17.2477 17.4999 16.8026 17.3155 16.4745 16.9872L9.26275 9.7755C8.60653 9.11908 7.71643 8.7502 6.78825 8.75H3.5Z" fill="#FFE900"/>
+                    <path d="M15.75 0C16.6783 0 17.5685 0.368749 18.2249 1.02513C18.8813 1.6815 19.25 2.57174 19.25 3.5V15.75H17.7118L10.5 8.53825C9.51566 7.55362 8.18052 7.0003 6.78825 7H3.5C2.8875 7 2.29775 7.105 1.75 7.2975V3.5C1.75 2.57174 2.11875 1.6815 2.77513 1.02513C3.4315 0.368749 4.32174 0 5.25 0H15.75Z" fill="white"/>
+                    <path d="M21 15.75C21.6125 15.75 22.2023 15.855 22.75 16.0475V7C22.75 6.38564 22.5883 5.7821 22.2811 5.25005C21.9739 4.718 21.5321 4.27618 21 3.969V15.75Z" fill="white"/>
+                    <rect x="12.8333" y="2.3335" width="5.1156" height="4.66667" fill="url(#pattern0_851_422)"/>
+                    <defs>
+                    <pattern id="pattern0_851_422" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlink:href="#image0_851_422" transform="scale(0.000317965 0.000348554)"/>
+                    </pattern>
+                    </svg>
+                    <div class="div-13 text-white">SOP</div>
+
+            </a>
+
+        </li>
+    </div>
     </div>
 </aside>
 

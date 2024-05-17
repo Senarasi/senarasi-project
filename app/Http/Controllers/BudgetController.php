@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\BudgetName;
+use App\Models\Program;
+use App\Models\YearlyBudget;
+use App\Models\QuarterlyBudget;
+use App\Models\MonthlyBudget;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 
@@ -12,20 +16,26 @@ class BudgetController extends Controller
 {
     public function index(Request $request)
     {
-        // Retrieve all budgets from the database with associated employee
-        $budget = BudgetName::with(['employee', 'yearlyBudgets', 'yearlyBudgets.quarterlyBudgets', 'yearlyBudgets.quarterlyBudgets.monthlyBudgets'])->when($request->cari, function ($query) use ($request) {
+        // // Retrieve all budgets from the database with associated employee
+        // $budget = BudgetName::with(['employee', 'yearlyBudgets', 'yearlyBudgets.quarterlyBudgets', 'yearlyBudgets.quarterlyBudgets.monthlyBudgets'])->when($request->cari, function ($query) use ($request) {
+        //     $query->where('name', 'like', "%{$request->cari}%");
+        // })->orderBy('budget_name_id', 'asc')->paginate(15);
+        // $total_budget = $budget->count();
+        // // Pass the retrieved budgets to the view
+        // return view('budget.index', compact('budget', 'total_budget'));
+        // $budget = YearlyBudget::with('employee', 'program', 'quarterlyBudgets.monthlyBudgets')->get();
+        $budget = YearlyBudget::with(['employee', 'program', 'quarterlyBudgets.monthlyBudgets'])->when($request->cari, function ($query) use ($request) {
             $query->where('name', 'like', "%{$request->cari}%");
-        })->orderBy('budget_name_id', 'asc')->paginate(15);
-        $total_budget = $budget->count();
-        // Pass the retrieved budgets to the view
-        return view('budget.index', compact('budget', 'total_budget'));
+        })->orderBy('yearly_budget_id', 'asc')->paginate(15);
+        $program = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id')->prepend('Select Program', '');
+        return view('budget.index', compact('budget', 'program'));
     }
 
     public function create()
     {
-        $budget = BudgetName::orderBy('name', 'asc')->pluck('name', 'budget_name_id')->prepend('Select Budget', '');
-        $employee = Employee::orderBy('full_name', 'asc')->pluck('full_name', 'employee_id')->prepend('Select Employee', '');
-        return view('budget.create', compact('budget', 'employee'));
+        // $budget = BudgetName::orderBy('name', 'asc')->pluck('name', 'budget_name_id')->prepend('Select Budget', '');
+        // $employee = Employee::orderBy('full_name', 'asc')->pluck('full_name', 'employee_id')->prepend('Select Employee', '');
+        // return view('budget.create', compact('budget', 'employee'));
     }
 
     public function store(Request $request)
@@ -80,10 +90,10 @@ class BudgetController extends Controller
         $budget = BudgetName::findOrFail($id);
 
         // Retrieve all employees for the dropdown menu
-        $employees = Employee::all();
+        $program = Program::pluck('program_name', 'program_id')->prepend('Select Program', '');
 
         // Pass the retrieved data to the edit view
-        return view('budget.edit', compact('budget', 'employees'));
+        return view('budget.edit', compact('budget', 'program'));
     }
 
     public function update(Request $request, $budget_name_id)

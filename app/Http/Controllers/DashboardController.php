@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Program;
+use App\Models\YearlyBudget;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,6 +19,8 @@ class DashboardController extends Controller
 
     public function dashboardbudget()
     {
-        return view('dashboard.budget');
+        $budget = YearlyBudget::with('employee', 'program', 'quarterlyBudgets.monthlyBudgets')->get();
+        $program = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id')->prepend('Select Program', '');
+        return view('dashboard.budget', compact('budget', 'program'));
     }
 }

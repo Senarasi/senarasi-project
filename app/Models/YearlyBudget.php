@@ -8,13 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class YearlyBudget extends Model
 {
     use HasFactory;
-    protected $table = 'yearly_budgets';
     protected $primaryKey = 'yearly_budget_id';
-    protected $fillable = ['year', 'budget_amount', 'remaining_budget', 'budget_name_id'];
 
-    public function budgetName()
+    protected $fillable = [
+        'employee_id',
+        'program_id',
+        'budget_code',
+        'yearly_budget',
+        'remaining_budget',
+        'year',
+    ];
+
+    public function employee()
     {
-        return $this->belongsTo(BudgetName::class, 'budget_name_id');
+        return $this->belongsTo(Employee::class, 'employee_id');
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'program_id');
     }
 
     public function quarterlyBudgets()

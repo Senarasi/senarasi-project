@@ -4,10 +4,10 @@
 @endsection
 @section('content')
     <div class="judulhalaman" style="display: flex; align-items: center; ">Karyawan Narasi
-        <form style="margin-left: 12px" class="d-flex has-search" role="search ">
-            <input style="font-size: 14px; justify-content: center;" class="form-control me-2" type="search "
-                placeholder="Search " aria-label="Search" />
-        </form>
+        {{-- <form style="margin-left: 12px" class="d-flex has-search" role="search ">
+        <input style="font-size: 14px; justify-content: center;" class="form-control me-2" type="search "
+            placeholder="Search " aria-label="Search" />
+    </form> --}}
     </div>
     <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add
         Karyawan<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -17,48 +17,55 @@
         </svg>
     </button>
     <div class="tablenih" style="margin-top: 24px;">
-        <table class="table table-hover"
-            style="font: 300 16px Narasi Sans, sans-serif; display: 100%; width: 100% ;   color: #4A25AA;">
-            <thead style="font-weight: 500; text-align: center;">
-                <tr class="dicobain">
-                    <th scope="col">ID Number</th>
-                    <th scope="col" style="text-align:start; ">Nama Karyawan</th>
-                    <th scope="col">Departemen</th>
-                    <th scope="col">Posisi</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($employee as $key => $data)
-                    <tr>
-                        <th scope="row" style="text-align: center; ">{{ $data->employee_id }}</th>
-                        <td>{{ $data->full_name }}</td>
-                        <td style="text-align: center; ">{{ $data->department->department_name }}</td>
-                        <td style="text-align: center; ">{{ $data->position->position_name }}</td>
-                        <td style="text-align: center; ">{{ $data->email }}</td>
-                        <td style="text-align: center; ">{{ $data->role }}</td>
-                        <td style="gap: 8px; display: flex; justify-content: center; ">
-                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                action="{{ route('employee.destroy', $data->employee_id) }}" method="POST">
-                                <a href="{{ route('employee.edit', $data->employee_id) }}" class="btn btn-primary"
-                                    data-bs-toggle="modal" data-bs-target="#editModal-{{ $data->employee_id }}"
-                                    style="width: fit-content; ">Edit</a>
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger " style="width: fit-content; ">Delete</button>
-                            </form>
-                        </td>
+        <div class="table-responsive p-3">
+            <table id="datatable" class="table table-hover"
+                style="font: 300 16px Narasi Sans, sans-serif; display: 100%; width: 100% ;   color: #4A25AA;">
+                <thead style="font-weight: 500; text-align: center;">
+                    <tr class="dicobain">
+                        <th scope="col">ID Number</th>
+                        <th scope="col" style="text-align:start; ">Nama Karyawan</th>
+                        <th scope="col">Departemen</th>
+                        <th scope="col">Posisi</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Action</th>
                     </tr>
-                    @include('partials.edit_employee_modal', ['data' => $data, 'department' => $department, 'position' => $position])
-                @empty
-                    <div class="alert alert-danger">
-                        Data Post belum Tersedia.
-                    </div>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($employee as $key => $data)
+                        <tr>
+                            <th scope="row" style="text-align: center; ">{{ $data->employee_id }}</th>
+                            <td>{{ $data->full_name }}</td>
+                            <td style="text-align: center; ">{{ $data->department->department_name }}</td>
+                            <td style="text-align: center; ">{{ $data->position->position_name }}</td>
+                            <td style="text-align: center; ">{{ $data->email }}</td>
+                            <td style="text-align: center; ">{{ $data->role }}</td>
+                            <td style="gap: 8px; display: flex; justify-content: center; ">
+                                <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                    action="{{ route('employee.destroy', $data->employee_id) }}" method="POST">
+                                    <a href="{{ route('employee.edit', $data->employee_id) }}" class="uwuq"
+                                        data-bs-toggle="modal" data-bs-target="#editModal-{{ $data->employee_id }}"
+                                        style="width: fit-content; ">Edit</a>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger "
+                                        style="width: fit-content; ">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @include('partials.edit_employee_modal', [
+                            'data' => $data,
+                            'department' => $department,
+                            'position' => $position,
+                        ])
+                    @empty
+                        <div class="alert alert-danger">
+                            Data Post belum Tersedia.
+                        </div>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection
 <!--Modal-->
@@ -137,7 +144,7 @@
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
-                <img class="img-8" src="{{asset("image/Narasi_Logo.svg")}}" alt=" " />
+                <img class="img-8" src="{{ asset('image/Narasi_Logo.svg') }}" alt=" " />
             </div>
         </div>
     </div>

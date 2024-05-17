@@ -41,6 +41,10 @@ Route::middleware(['auth'])->group(function () {
         return view('approval.index');
     });
 
+    Route::get('/report', function () {
+        return view('report.index');
+    });
+
     Route::get('/approval-detail', function () {
         return view('approval.detail');
     });
@@ -65,7 +69,17 @@ Route::middleware(['auth'])->group(function () {
         return view('vendor.edit');
     });
 
+    Route::get('/category', function () {
+        return view('category.index');
+    });
 
+    Route::get('/sop', function () {
+        return view('sop.index');
+    });
+
+    Route::get('/testhome', function () {
+        return view('testhome');
+    });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     // Other protected routes

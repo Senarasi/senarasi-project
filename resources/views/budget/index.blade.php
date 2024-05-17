@@ -5,14 +5,14 @@
 @section('content')
     <div class="judulhalaman" style="display: flex; align-items: center">
         Input Budget Narasi
-        <form style="margin-left: 12px" class="d-flex has-search" role="search ">
-            <input style="font-size: 14px; justify-content: center" class="form-control me-2" type="search "
-                placeholder="Search " aria-label="Search" />
-        </form>
+        {{-- <form style="margin-left: 12px" class="d-flex has-search" role="search ">
+        <input style="font-size: 14px; justify-content: center" class="form-control me-2" type="search "
+            placeholder="Search " aria-label="Search" />
+    </form> --}}
     </div>
     <form>
         <div style="display: flex; justify-content: space-between">
-            <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#modal1">
+            <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Input Budget
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -31,96 +31,114 @@
             </button>
         </div>
         <div class="tablenih">
-            <table class="table table-hover"
-                style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
-                <thead style="font-weight: 500">
-                    <tr class="dicobain">
-                        <th scope="col ">NO</th>
-                        <th scope="col ">Request Number</th>
-                        <th scope="col ">Nama Program</th>
-                        <th scope="col ">Budget</th>
-                        <th scope="col ">User Submit</th>
-                        <th scope="col ">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($budget as $key => $data)
-                        <tr>
-                            <th scope="row" style="text-align: center;">{{ $budget->firstItem() + $key }}</th>
-                            <td>{{ $data->budget_code }}</td>
-                            <td>{{ $data->name }}</td>
-                            @foreach ($data->yearlyBudgets as $yearly)
-                                <td>{{ $yearly->budget_amount }}</td>
-                            @endforeach
-                            <td>{{ $data->employee->full_name }}</td>
-                            <td>
-                                <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                    action="{{ route('budget.destroy', $data->budget_name_id) }}" method="POST">
-                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#modal2-{{ $data->budget_name_id }}">
-                                        Edit
-                                    </a>
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger "
-                                        style="width: fit-content; ">Delete</button>
-                                </form>
-                            </td>
+            <div class="table-responsive p-3">
+                <table id="datatable" class="table table-hover"
+                    style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
+                    <thead style="font-weight: 500">
+                        <tr class="dicobain">
+                            <th scope="col ">NO</th>
+                            <th scope="col ">Request Number</th>
+                            <th scope="col ">Nama Program</th>
+                            <th scope="col ">Budget</th>
+                            <th scope="col ">User Submit</th>
+                            <th scope="col ">Action</th>
                         </tr>
-                        @include('partials.edit_budget_modal', ['data' => $data])
-                    @empty
-                        <div class="alert alert-danger">
-                            Data Not Found.
-                        </div>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @forelse ($budget as $data)
+                            @foreach ($data->quarterlyBudgets as $quarterlyBudget)
+                                <tr>
+                                    {{-- <th scope="row" style="text-align: center;">{{ $data->firstItem() + $key }}
+                                    </th> --}}
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $quarterlyBudget->budget_code }}</td>
+                                    <td>{{ $quarterlyBudget->program->program_name }}</td>
+                                    <td>{{ $quarterlyBudget->quarter_budget }}</td>
+                                    <td>{{ $quarterlyBudget->employee->full_name }}</td>
+                                    <td>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            action="{{ route('budget.destroy', $quarterlyBudget->quarterly_budget_id) }}"
+                                            method="POST">
+                                            <a href="#" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#modal2-{{ $quarterlyBudget->quarterly_budget_id }}">
+                                                Edit
+                                            </a>
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger "
+                                                style="width: fit-content; ">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @include('partials.edit_budget_modal', ['data' => $data])
+                            @endforeach
+                        @empty
+                            <div class="alert alert-danger">
+                                Data Not Found.
+                            </div>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </form>
 @endsection
 @section('modal')
     <!-- Modal 1 -->
-    <div class="modal justify-content-center fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false "
-        tabindex="-1" aria-labelledby="staticBackdropLabel " aria-hidden="true">
+    <div class="modal justify-content-center fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body bg-white">
                     <form action="{{ route('budget.store') }}" method="POST" class="modal-form-check"
                         style="font: 500 14px Narasi Sans, sans-serif">
                         @csrf
-                        <fieldset disabled>
-                            <div class="mb-3">
-                                <label for="employee_id" class="form-label">User</label>
-                                <input type="text" id="employee_id" class="form-control" name="employee_id"
-                                    value="{{ Auth::user()->full_name }}" placeholder="{{ Auth::user()->full_name }}"
-                                    readonly />
-                            </div>
-                        </fieldset>
+                        {{-- <fieldset disabled> --}}
                         <div class="mb-3">
-                            <label for="budget_code" class="form-label">Budget Code</label>
-                            <input type="text " class="form-control" id="budget_code" name="budget_code" />
+                            <label for="employee_id" class="form-label">User</label>
+                            <input type="text" id="employee_id" class="form-control" name="employee_id"
+                                value="{{ Auth::user()->full_name }}" placeholder="{{ Auth::user()->full_name }}" />
                         </div>
+                        {{-- </fieldset> --}}
                         <div class="mb-3">
-                            <label for="program_name" class="form-label">Nama Program</label>
-                            <input type="text" class="form-control" id="program_name" name="program_name" required />
-                        </div>
-                        {{-- <div class="mb-3 ">
-                            <label for="departemen " class="form-label ">Kategori</label>
-                            <select id="departemen " class="form-select ">
-                                <option style="color: rgb(189, 189, 189) ">Choose One</option>
-                                <option>REGULAR</option>
-                                <option>EVENT</option>
+                            <label for="namaprogram " class="form-label">Nama Program</label>
+                            {{-- <input type="text " class="form-control" id="namaprogram " /> --}}
+                            <select id="namaprogram" class="form-select ">
+                                @forelse ($program as $program_id => $program_name)
+                                    <option value="{{ $program_id }}">{{ $program_name }}</option>
+                                @empty
+                                    <option disabled selected>Data not found</option>
+                                @endforelse
                             </select>
-                        </div> --}}
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="quarter" class="form-label">Quarter</label>
+                                {{-- <input type="text " class="form-control" id="quarter" /> --}}
+                                <select id="quarter" class="form-select ">
+                                    <option style="color: rgb(189, 189, 189) ">Choose One</option>
+                                    <option>Q1</option>
+                                    <option>Q2</option>
+                                    <option>Q3</option>
+                                    <option>Q4</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="kodebudget" class="form-label">Kode Budget</label>
+                                <input type="text " class="form-control p-2" id="kodebudget" />
+                            </div>
+                        </div>
+
                         <div class="mb-3">
-                            <label for="budget" class="form-label">Budget Tahunan</label>
+                            <label for="budget" class="form-label">Budget Quarter</label>
                             <input type="text" class="form-control" id="budget" name="budget" required />
                             <!-- Input field for entering the budget value -->
                             <input type="hidden" id="raw_budget" name="raw_budget" />
                             <!-- Hidden input field for storing the raw numeric value -->
 
                         </div>
-                        <button type="submit " class="button-submit">Submit</button>
+                        <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>

@@ -13,34 +13,6 @@
         </button>
     </a>
     <div style="margin-top: 24px"></div>
-    {{-- start code diaz --}}
-    {{-- <form action="{{ route('department.update', $department->department_id) }}" method="POST" class="formrequest">
-        @csrf
-        @method('PUT')
-        <div class="mb-3">
-            <label class="form-label">Nama Departemen</label>
-            <input type="text " name="department_name" class="form-control" placeholder="Department Name"
-                value="{{ $department->department_name }}" />
-        </div>
-        <button type="submit" class="button-general">Submit</button>
-    </form>
-    <form onsubmit="addPosisi(event)" action="{{ route('department.update', $department->department_id) }}" method="POST" class="formrequest">
-        @csrf
-        @method('PUT')
-        <div class="mb-3">
-            <label class="form-label">Nama Departemen</label>
-            <input type="text " name="department_name" class="form-control" placeholder="Department Name"
-                value="{{ $department->department_name }}" />
-        </div>
-        <div class="mb-3">
-            <label for="posisi" class="form-label">Posisi</label>
-            <div id="inputposisi"></div>
-        </div>
-        <div class="garisbutton"><button>Tambah Posisi</button></div>
-        <button type="submit" class="button-general">Submit</button>
-    </form> --}}
-    {{-- end code diaz --}}
-
     {{-- start new code --}}
     <form action="{{ route('department.update', $department->department_id) }}" method="POST">
         @csrf

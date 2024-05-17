@@ -4,6 +4,13 @@
 @endsection
 @section('content')
     <!--Badan Isi-->
+    <div class="judulhalaman" style="display: flex; align-items: center; ">Department
+        {{-- <form style="margin-left: 12px" class="d-flex has-search" role="search ">
+            <input style="font-size: 14px; justify-content: center;" class="form-control me-2" type="search "
+                placeholder="Search " aria-label="Search" />
+        </form> --}}
+    </div>
+
     <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> Add Department
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -12,47 +19,48 @@
         </svg>
     </button>
     <div class="tablenih" style="margin-top: 24px;">
-        <table class="table table-hover"
-            style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ; ;  color: #4A25AA;">
-            <thead style="font-weight: 500; text-align: center">
-                <tr class="dicobain">
-                    <th scope="col">#</th>
-                    <th scope="col" style="text-align:start;">Department</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($department as $key => $data)
-                    <tr>
-                        <th scope="row" style="text-align: center;">{{ $department->firstItem() + $key }}</th>
-                        <td style="width:200px">{{ $data->department_name }}</td>
-
-                        <td style="text-align: center; margin-top: 14px;">
-                            @forelse ($data->position->sortBy('department_name') as $position)
-                                <span
-                                    style="font: 300 12px Narasi sans, sans-serif; color: black; border: 1px solid #4A25AA; border-radius:4px ;background-color: #eceaef; padding: 4px 8px; display: inline-block; margin: 4px;"><small>{{ $position->position_name }}</small></span>
-                            @empty
-                                <small><i>Position doesn't exist</i></small>
-                            @endforelse
-                        </td>
-
-                        <td>
-                            <span style="display: flex; gap: 8px;">
-                                <a href="{{ route('department.edit', $data->department_id) }}" class="uwuq">
-                                    <button type="button" class="uwuq">Edit</button>
-                                </a>
-                                <button type="button " class="btn btn-danger ">Delete</button>
-                            </span>
-                        </td>
+        <div class="table-responsive p-3">
+            <table id="datatable" class="table table-hover"
+                style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ; ;  color: #4A25AA;">
+                <thead style="font-weight: 500; text-align: center">
+                    <tr class="dicobain">
+                        <th scope="col">#</th>
+                        <th class="blablabla" scope="col" style="text-align:start; width:400px ">Department</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Action</th>
                     </tr>
-                @empty
-                    <div class="alert alert-danger">
-                        Data Post belum Tersedia.
-                    </div>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($department as $key => $data)
+                        <tr>
+                            <th scope="row" style="text-align: center;">{{ $department->firstItem() + $key }}</th>
+                            <td style="width:200px">{{ $data->department_name }}</td>
+
+                            <td style="text-align: center; margin-top: 14px;">
+                                @forelse ($data->position->sortBy('department_name') as $position)
+                                    <span
+                                        style="font: 300 12px Narasi sans, sans-serif; color: black; border: 1px solid #4A25AA; border-radius:4px ;background-color: #eceaef; padding: 4px 8px; display: inline-block; margin: 4px;"><small>{{ $position->position_name }}</small></span>
+                                @empty
+                                    <small><i>Position doesn't exist</i></small>
+                                @endforelse
+                            </td>
+                            <td>
+                                <span style="display: flex; justify-content: center; gap: 8px;">
+                                    <a href="{{ route('department.edit', $data->department_id) }}" class="uwuq" type="button">
+                                        Edit
+                                    </a>
+                                    <button type="button " class="btn btn-danger ">Delete</button>
+                                </span>
+                            </td>
+                        </tr>
+                    @empty
+                        <div class="alert alert-danger">
+                            Data Post belum Tersedia.
+                        </div>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection
 @section('modal')
@@ -72,7 +80,7 @@
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
-                <img class="img-8" src="{{asset("image/Narasi_Logo.svg")}}" alt=" " />
+                <img class="img-8" src="{{ asset('image/Narasi_Logo.svg') }}" alt=" " />
             </div>
         </div>
     </div>
