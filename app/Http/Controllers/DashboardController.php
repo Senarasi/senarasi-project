@@ -21,6 +21,9 @@ class DashboardController extends Controller
     {
         $budget = YearlyBudget::with('employee', 'program', 'quarterlyBudgets.monthlyBudgets')->get();
         $program = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id')->prepend('Select Program', '');
-        return view('dashboard.budget', compact('budget', 'program'));
+        $totalBudget = $budget->sum('yearly_budget');
+        $totalRemainingBudget = $budget->sum('remaining_budget');
+        $totalSpendingBudget = $totalBudget - $totalRemainingBudget;
+        return view('dashboard.budget', compact('budget', 'program', 'totalBudget', 'totalRemainingBudget', 'totalSpendingBudget'));
     }
 }
