@@ -37,7 +37,9 @@
                     <thead style="font-weight: 500">
                         <tr class="dicobain">
                             <th scope="col ">NO</th>
-                            <th scope="col ">Request Number</th>
+                            <th scope="col ">Quarter</th>
+                            <th scope="col ">Tahun</th>
+                            <th scope="col ">Kode Budget</th>
                             <th scope="col ">Nama Program</th>
                             <th scope="col ">Budget</th>
                             <th scope="col ">User Submit</th>
@@ -45,22 +47,30 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $counter = 1;
+                        @endphp
                         @forelse ($budget as $data)
                             @foreach ($data->quarterlyBudgets as $quarterlyBudget)
                                 <tr>
                                     {{-- <th scope="row" style="text-align: center;">{{ $data->firstItem() + $key }}
                                     </th> --}}
-                                    <th>{{ $loop->iteration }}</th>
+                                    <th>{{ $counter++ }}</th>
+                                    @php
+                                        $romanNumerals = ['I', 'II', 'III', 'IV'];
+                                    @endphp
+                                    <td>{{ $romanNumerals[$quarterlyBudget->quarter - 1] }}</td>
+                                    <td>{{ $data->year }}</td>
                                     <td>{{ $quarterlyBudget->budget_code }}</td>
                                     <td>{{ $quarterlyBudget->program->program_name }}</td>
-                                    <td>{{ $quarterlyBudget->quarter_budget }}</td>
+                                    <td> Rp. {{ number_format($quarterlyBudget->quarter_budget, 2) }}</td>
                                     <td>{{ $quarterlyBudget->employee->full_name }}</td>
                                     <td>
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');"
                                             action="{{ route('budget.destroy', $quarterlyBudget->quarterly_budget_id) }}"
                                             method="POST">
                                             <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#modal2-{{ $quarterlyBudget->quarterly_budget_id }}">
+                                                data-bs-target="#modal2-{{ $data->yearly_budget_id }}">
                                                 Edit
                                             </a>
                                             @csrf
@@ -96,14 +106,16 @@
                         {{-- <fieldset disabled> --}}
                         <div class="mb-3">
                             <label for="employee_id" class="form-label">User</label>
-                            <input type="text" id="employee_id" class="form-control" name="employee_id"
+                            <input type="text" id="display_name" class="form-control" name="display_name"
                                 value="{{ Auth::user()->full_name }}" placeholder="{{ Auth::user()->full_name }}" />
+                            <input type="hidden" id="employee_id" name="employee_id"
+                                value="{{ Auth::user()->employee_id }}" />
                         </div>
                         {{-- </fieldset> --}}
                         <div class="mb-3">
-                            <label for="namaprogram " class="form-label">Nama Program</label>
+                            <label for="program_name" class="form-label">Nama Program</label>
                             {{-- <input type="text " class="form-control" id="namaprogram " /> --}}
-                            <select id="namaprogram" class="form-select ">
+                            <select name="program_id" id="program_option" class="form-select ">
                                 @forelse ($program as $program_id => $program_name)
                                     <option value="{{ $program_id }}">{{ $program_name }}</option>
                                 @empty
@@ -116,25 +128,26 @@
                             <div class="col">
                                 <label for="quarter" class="form-label">Quarter</label>
                                 {{-- <input type="text " class="form-control" id="quarter" /> --}}
-                                <select id="quarter" class="form-select ">
+                                <select name="quarter" id="quarter" class="form-select ">
                                     <option style="color: rgb(189, 189, 189) ">Choose One</option>
-                                    <option>Q1</option>
-                                    <option>Q2</option>
-                                    <option>Q3</option>
-                                    <option>Q4</option>
+                                    <option value="1">Q1</option>
+                                    <option value="2">Q2</option>
+                                    <option value="3">Q3</option>
+                                    <option value="4">Q4</option>
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="kodebudget" class="form-label">Kode Budget</label>
-                                <input type="text " class="form-control p-2" id="kodebudget" />
+                                <label for="budget_code" class="form-label">Kode Budget</label>
+                                <input type="text " class="form-control p-2" name="budget_code" id="budget_code" />
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="budget" class="form-label">Budget Quarter</label>
-                            <input type="text" class="form-control" id="budget" name="budget" required />
+                            <label for="quarter_budget" class="form-label">Budget Quarter</label>
+                            <input type="text" class="form-control" name="quarter_budget" id="quarter_budget"
+                                name="budget" required />
                             <!-- Input field for entering the budget value -->
-                            <input type="hidden" id="raw_budget" name="raw_budget" />
+                            {{-- <input type="hidden" id="raw_budget" name="raw_budget" /> --}}
                             <!-- Hidden input field for storing the raw numeric value -->
 
                         </div>
@@ -148,8 +161,8 @@
     </div>
 @endsection
 @section('custom-js')
-    <script>
-        var budgetInput = document.getElementById('budget');
+    {{-- <script>
+        var budgetInput = document.getElementById('quarter_budget');
         var rawBudgetInput = document.getElementById('raw_budget');
 
         budgetInput.addEventListener('keyup', function(e) {
@@ -160,7 +173,7 @@
         });
 
         /* Dengan Rupiah */
-        var budgettahunan = document.getElementById('budget');
+        var budgettahunan = document.getElementById('quarter_budget');
         budgettahunan.addEventListener('keyup', function(e) {
             budgettahunan.value = formatRupiah(this.value, 'Rp');
         });
@@ -187,5 +200,5 @@
             var rawValue = formattedBudget.replace(/[^\d]/g, '');
             return rawValue;
         }
-    </script>
+    </script> --}}
 @endsection

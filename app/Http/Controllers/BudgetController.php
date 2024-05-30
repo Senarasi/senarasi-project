@@ -9,6 +9,7 @@ use App\Models\Program;
 use App\Models\YearlyBudget;
 use App\Models\QuarterlyBudget;
 use App\Models\MonthlyBudget;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 
@@ -27,61 +28,79 @@ class BudgetController extends Controller
         $budget = YearlyBudget::with(['employee', 'program', 'quarterlyBudgets.monthlyBudgets'])->when($request->cari, function ($query) use ($request) {
             $query->where('name', 'like', "%{$request->cari}%");
         })->orderBy('yearly_budget_id', 'asc')->paginate(15);
+        $totalBudget = $budget->sum('yearly_budget');
+        $totalRemainingBudget = $budget->sum('remaining_budget');
+        $totalSpendingBudget = $totalBudget - $totalRemainingBudget;
+        $employee = Employee::orderBy('full_name', 'asc')->pluck('full_name', 'employee_id')->prepend('Select Employee', '');
         $program = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id')->prepend('Select Program', '');
-        return view('budget.index', compact('budget', 'program'));
+        return view('budget.index', compact('budget', 'program', 'employee', 'totalBudget', 'totalRemainingBudget', 'totalSpendingBudget'));
     }
 
     public function create()
     {
-        // $budget = BudgetName::orderBy('name', 'asc')->pluck('name', 'budget_name_id')->prepend('Select Budget', '');
+        // $program = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id')->prepend('Select Program', '');
         // $employee = Employee::orderBy('full_name', 'asc')->pluck('full_name', 'employee_id')->prepend('Select Employee', '');
-        // return view('budget.create', compact('budget', 'employee'));
+        // return view('budget.create2', compact('program', 'employee'));
     }
 
     public function store(Request $request)
     {
+        $currentYear = Carbon::now()->year;
         $request->validate([
-            'program_name' => 'required|string|max:255',
-            'raw_budget' => 'required|numeric',
+            'employee_id' => 'required|exists:employees,employee_id',
+            'program_id' => 'required|exists:programs,program_id',
+            'budget_code' => 'required|unique:quarterly_budgets,budget_code',
+            'quarter_budget' => 'required|numeric',
+            'quarter' => 'required|in:1,2,3,4',
         ]);
 
-        $budgetName = BudgetName::create([
-            'name' => $request->input('program_name'),
-            'employee_id' => Auth::user()->employee_id,
-            'budget_code' => $request->input('budget_code')
+        // Find or create the yearly budget
+        $yearlyBudget = YearlyBudget::firstOrCreate(
+            [
+                'employee_id' => $request->employee_id,
+                'program_id' => $request->program_id,
+                'year' => $currentYear,
+            ],
+            [
+                'budget_code' => $request->budget_code, // Assuming yearly budget code can be same as the quarterly for simplification
+                'yearly_budget' => 0,
+                'remaining_budget' => 0,
+            ]
+        );
+
+        // Update the yearly budget totals
+        $yearlyBudget->yearly_budget += $request->quarter_budget;
+        $yearlyBudget->remaining_budget += $request->quarter_budget;
+        $yearlyBudget->save();
+
+        $quarterlyBudget = QuarterlyBudget::create([
+            'yearly_budget_id' => $yearlyBudget->yearly_budget_id,
+            'employee_id' => $request->employee_id,
+            'program_id' => $request->program_id,
+            'budget_code' => $request->budget_code,
+            'quarter' => $request->quarter,
+            'quarter_budget' => $request->quarter_budget,
+            'remaining_budget' => $request->quarter_budget,
         ]);
 
-        $yearlyBudget = $budgetName->yearlyBudgets()->create([
-            'year' => date('Y'), // Example: Set the year to the current year
-            'budget_amount' => $request->input('raw_budget'), // Example: Set the initial amount
-            'remaining_budget' => $request->input('raw_budget'), // Example: Set the initial remaining amount
-        ]);
+        $monthlyBudgetAmount = $request->quarter_budget / 3;
 
-        $quarterlyBudgetAmount = $yearlyBudget->budget_amount / 4;
-
-        // Create quarterly budgets for each quarter
-        for ($quarter = 1; $quarter <= 4; $quarter++) {
-            $quarterlyBudget = $yearlyBudget->quarterlyBudgets()->create([
-                'quarter' => $quarter,
-                'budget_amount' => $quarterlyBudgetAmount,
-                'remaining_budget' => $quarterlyBudgetAmount, // Set initial remaining amount
+        for ($month = 1; $month <= 3; $month++) {
+            MonthlyBudget::create([
+                'quarterly_budget_id' => $quarterlyBudget->quarterly_budget_id,
+                'employee_id' => $request->employee_id,
+                'program_id' => $request->program_id,
+                'budget_code' => $request->budget_code . '-' . $month, // Assuming monthly budget code derived from quarterly code
+                'month' => ($request->quarter - 1) * 3 + $month,
+                'monthly_budget' => $monthlyBudgetAmount,
+                'remaining_budget' => $monthlyBudgetAmount,
             ]);
-
-            // Calculate the budget amount for each month within the quarter
-            $monthlyBudgetAmount = $quarterlyBudgetAmount / 3;
-
-            // Create monthly budgets for each month within the quarter
-            for ($month = ($quarter - 1) * 3 + 1; $month <= $quarter * 3; $month++) {
-                $monthlyBudget = $quarterlyBudget->monthlyBudgets()->create([
-                    'month' => $month,
-                    'budget_amount' => $monthlyBudgetAmount,
-                    'remaining_budget' => $monthlyBudgetAmount, // Set initial remaining amount
-                ]);
-
-                // Add logic to create budget details if needed
-            }
         }
-        return redirect()->route('budget.index');
+
+        return redirect()->route('budget.index')->with('success', 'Quarterly Budget created successfully.');
+        return response()->json([
+            'message' => 'Data stored successfully!',
+        ]);
     }
 
     public function edit($id)

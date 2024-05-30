@@ -31,7 +31,7 @@
                 </svg><span class="text-center">approval disetujui</span>
             </div>
         </div>
-        <a  href="/create-budget" type="button" class="button-departemen" style="text-decoration: none">
+        <a  href="{{route('requestbudget.create')}}" type="button" class="button-departemen" style="text-decoration: none">
             Request Budget
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path fill-rule="evenodd" clip-rule="evenodd"

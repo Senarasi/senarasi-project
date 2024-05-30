@@ -85,24 +85,22 @@
         </table>
     </div> --}}
     <div class="row">
-        @foreach ($budget as $yearlyBudget)
             <div class="col-lg-4 col-sm-6">
-
                 <div class="card-budget">
                     <div class="text-body-tertiary">Remaining Budget</div>
                     <div class="d-flex align-items-center">
-                        <div class="text-sisa"> Rp. {{ number_format($yearlyBudget->remaining_budget, 2) }}</div>
-                        <span class="badge text-bg-warning rounded-pill ms-2">
+                        <div class="text-sisa"> Rp. {{ number_format($totalRemainingBudget, 2) }}</div>
+                        {{-- <span class="badge text-bg-warning rounded-pill ms-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="8" height="10" viewBox="0 0 384 512">
                                 <path
                                     d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
                             </svg>
                             10%
-                        </span>
+                        </span> --}}
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="text-body-tertiary me-1"> From total </div>
-                        <div class="text-success ">Rp. {{ number_format($yearlyBudget->yearly_budget, 2) }}</div>
+                        <div class="text-success ">Rp. {{ number_format($totalBudget, 2) }}</div>
                     </div>
 
                 </div>
@@ -111,30 +109,29 @@
                 <div class="card-budget">
                     <div class="text-body-tertiary">Spending Budget</div>
                     <div class="d-flex align-items-center">
-                        <div class="text-sisa"> Rp. {{ number_format($yearlyBudget->yearly_budget - $yearlyBudget->remaining_budget, 2) }}</div>
-                        <span class="badge text-bg-danger rounded-pill ms-2">
+                        <div class="text-sisa"> Rp. {{ number_format($totalSpendingBudget, 2) }}</div>
+                        {{-- <span class="badge text-bg-danger rounded-pill ms-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="8" height="10" viewBox="0 0 384 512"
                                 fill="white">
                                 <path
                                     d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
                             </svg>
                             10%
-                        </span>
+                        </span> --}}
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="text-body-tertiary me-1"> From total </div>
-                        <div class="text-success ">Rp. {{ number_format($yearlyBudget->yearly_budget, 2) }}</div>
+                        <div class="text-success ">Rp. {{ number_format($totalBudget, 2) }}</div>
                     </div>
                 </div>
             </div>
-        @endforeach
         <div class="col-lg-4 col-sm-12">
             <div class="button-dashboard">
                 <button class="button-ini mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     INPUT
                     <span style="color: #ffe900">BUDGET</span>
                 </button>
-                <a href="/create-budget" class="text-decoration-none text-end">
+                <a href="{{route('requestbudget.create')}}" class="text-decoration-none text-end">
                     <button class="button-ini">REQUEST <span style="color: #ffe900">BUDGET</span></button>
                 </a>
             </div>
@@ -239,17 +236,22 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body bg-white">
-                    <form class="modal-form-check">
-                        <fieldset disabled>
-                            <div class="mb-3">
-                                <label for="disabledTextInput" class="form-label">User</label>
-                                <input type="text" id="disabledTextInput " class="form-control" value="Admin" />
-                            </div>
-                        </fieldset>
+                    <form action="{{ route('budget.store') }}" method="POST" class="modal-form-check"
+                        style="font: 500 14px Narasi Sans, sans-serif">
+                        @csrf
+                        {{-- <fieldset disabled> --}}
                         <div class="mb-3">
-                            <label for="namaprogram " class="form-label">Nama Program</label>
+                            <label for="employee_id" class="form-label">User</label>
+                            <input type="text" id="display_name" class="form-control" name="display_name"
+                                value="{{ Auth::user()->full_name }}" placeholder="{{ Auth::user()->full_name }}" />
+                            <input type="hidden" id="employee_id" name="employee_id"
+                                value="{{ Auth::user()->employee_id }}" />
+                        </div>
+                        {{-- </fieldset> --}}
+                        <div class="mb-3">
+                            <label for="program_name" class="form-label">Nama Program</label>
                             {{-- <input type="text " class="form-control" id="namaprogram " /> --}}
-                            <select id="namaprogram" class="form-select ">
+                            <select name="program_id" id="program_option" class="form-select ">
                                 @forelse ($program as $program_id => $program_name)
                                     <option value="{{ $program_id }}">{{ $program_name }}</option>
                                 @empty
@@ -262,32 +264,27 @@
                             <div class="col">
                                 <label for="quarter" class="form-label">Quarter</label>
                                 {{-- <input type="text " class="form-control" id="quarter" /> --}}
-                                <select id="quarter" class="form-select ">
+                                <select name="quarter" id="quarter" class="form-select ">
                                     <option style="color: rgb(189, 189, 189) ">Choose One</option>
-                                    <option>Q1</option>
-                                    <option>Q2</option>
-                                    <option>Q3</option>
-                                    <option>Q4</option>
+                                    <option value="1">Q1</option>
+                                    <option value="2">Q2</option>
+                                    <option value="3">Q3</option>
+                                    <option value="4">Q4</option>
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="kodebudget" class="form-label">Kode Budget</label>
-                                <input type="text " class="form-control p-2" id="kodebudget" />
+                                <label for="budget_code" class="form-label">Kode Budget</label>
+                                <input type="text " class="form-control p-2" name="budget_code" id="budget_code" />
                             </div>
-
                         </div>
 
-                        <!-- <div class="mb-3 ">
-                                        <label for="departemen " class="form-label ">Kategori</label>
-                                        <select id="departemen " class="form-select ">
-                                        <option style="color: rgb(189, 189, 189) ">Choose One</option>
-                                        <option>REGULAR</option>
-                                        <option>EVENT</option>
-                                    </select>
-                            </div> -->
                         <div class="mb-3">
-                            <label for="budgettahunan" class="form-label">Budget Quarter</label>
-                            <input type="text" class="form-control" id="budgettahunan" />
+                            <label for="quarter_budget" class="form-label">Budget Quarter</label>
+                            <input type="text" class="form-control" name="quarter_budget" id="quarter_budget" name="budget" required />
+                            <!-- Input field for entering the budget value -->
+                            {{-- <input type="hidden" id="raw_budget" name="raw_budget" /> --}}
+                            <!-- Hidden input field for storing the raw numeric value -->
+
                         </div>
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>

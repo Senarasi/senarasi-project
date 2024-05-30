@@ -33,10 +33,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('requestbudget', 'App\Http\Controllers\RequestBudgetController');
 
-    Route::get('/create-budget', function () {
-        return view('requestbudget.create');
-    });
-
     Route::get('/approval', function () {
         return view('approval.index');
     });

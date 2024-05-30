@@ -52,8 +52,12 @@
                 <div style="display: grid; gap: 24px; grid-template-columns: 1fr 1fr">
                     <div class="mb-3">
                         <label for="Select " class="form-label">Pilih Program</label>
-                        <select id="Select " class="form-select">
-                            <option>Choose One</option>
+                        <select id="program_name" class="form-select ">
+                            @forelse ($program as $program_id => $program_name)
+                                <option value="{{ $program_id }}">{{ $program_name }}</option>
+                            @empty
+                                <option disabled selected>Data not found</option>
+                            @endforelse
                         </select>
                     </div>
                     <div class="mb-3">
@@ -68,7 +72,6 @@
                             <option>June</option>
                             <option>July</option>
                             <option>August</option>
-
                             <option>September</option>
                             <option>October</option>
                             <option>November</option>
@@ -77,23 +80,15 @@
                     </div>
 
                 </div>
-                {{-- <fieldset disabled>
-
-                </fieldset> --}}
 
                 <fieldset disabled>
-
                     <div style="display: grid; gap: 24px; grid-template-columns: 1fr 1fr">
                         <div class="mb-3"><label for="disabledTextInput" class="form-label">Kode Budget</label>
-                            <input type="text " id="disabledTextInput " class="form-control" placeholder=" " />
+                            <input type="text " id="kodeBudget" class="form-control" placeholder=" " />
                         </div>
-                        {{-- <div class="mb-3">
-                            <label for="disabledTextInput" class="form-label">Budget Quarter</label>
-                            <input type="text " id="disabledTextInput " class="form-control" placeholder="Rp10.000.000 " />
-                        </div> --}}
                         <div class="mb-3">
                             <label for="disabledTextInput " class="form-label">Remaining Budget</label>
-                            <input type="text " id="disabledTextInput " class="form-control" placeholder="" />
+                            <input type="text " id="remainingBudget" class="form-control" placeholder="" />
                         </div>
                     </div>
                 </fieldset>
@@ -407,4 +402,71 @@
 
 @section('custom-js')
     <script src="{{ asset('js/formrequest.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const programSelect = document.getElementById('namaprogram');
+            const monthSelect = document.getElementById('month');
+            const kodeBudgetInput = document.getElementById('kodeBudget');
+            const remainingBudgetInput = document.getElementById('remainingBudget');
+
+            const budgetData = {
+                // Example data structure for budget
+                // program_id: {quarter: {kodeBudget: '', remainingBudget: ''}}
+                1: {
+                    Q1: { kodeBudget: '101-Q1', remainingBudget: '1000' },
+                    Q2: { kodeBudget: '101-Q2', remainingBudget: '2000' },
+                    Q3: { kodeBudget: '101-Q3', remainingBudget: '3000' },
+                    Q4: { kodeBudget: '101-Q4', remainingBudget: '4000' }
+                },
+                2: {
+                    Q1: { kodeBudget: '102-Q1', remainingBudget: '1500' },
+                    Q2: { kodeBudget: '102-Q2', remainingBudget: '2500' },
+                    Q3: { kodeBudget: '102-Q3', remainingBudget: '3500' },
+                    Q4: { kodeBudget: '102-Q4', remainingBudget: '4500' }
+                }
+            };
+
+            function getQuarter(month) {
+                switch (month) {
+                    case 'January':
+                    case 'February':
+                    case 'March':
+                        return 'Q1';
+                    case 'April':
+                    case 'May':
+                    case 'June':
+                        return 'Q2';
+                    case 'July':
+                    case 'August':
+                    case 'September':
+                        return 'Q3';
+                    case 'October':
+                    case 'November':
+                    case 'December':
+                        return 'Q4';
+                    default:
+                        return null;
+                }
+            }
+
+            function updateInputs() {
+                const selectedProgram = programSelect.value;
+                const selectedMonth = monthSelect.value;
+                const selectedQuarter = getQuarter(selectedMonth);
+
+                if (selectedProgram && selectedQuarter && budgetData[selectedProgram] && budgetData[selectedProgram][selectedQuarter]) {
+                    const budgetInfo = budgetData[selectedProgram][selectedQuarter];
+                    kodeBudgetInput.value = budgetInfo.kodeBudget;
+                    remainingBudgetInput.value = budgetInfo.remainingBudget;
+                } else {
+                    kodeBudgetInput.value = '';
+                    remainingBudgetInput.value = '';
+                }
+            }
+
+            programSelect.addEventListener('change', updateInputs);
+            monthSelect.addEventListener('change', updateInputs);
+        });
+        </script>
+
 @endsection
