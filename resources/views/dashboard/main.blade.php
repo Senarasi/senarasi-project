@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
         <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 
     </head>
+
     <body class="antialiased">
         <div class="wrapper">
             @include('layout.navbar')
@@ -22,56 +24,72 @@
                 <div class="badanisi" style="margin-left: -160px">
 
 
-                           <div class="kitacobain">
-        <div class="containerr">
-            <div class="beruda">
-                <div style="display: flex; gap: 8px">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46" fill="none">
-                        <rect width="46" height="46" rx="23" fill="#F1F1F1" />
-                        <path d="M23 19.7143C26.2663 19.7143 28.9143 17.0664 28.9143 13.8C28.9143 10.5336 26.2663 7.88571 23 7.88571C19.7336 7.88571 17.0857 10.5336 17.0857 13.8C17.0857 17.0664 19.7336 19.7143 23 19.7143Z" fill="#75757E" />
-                        <path
-                            d="M34.1715 31.5429C34.1715 35.1718 34.1715 38.1143 23 38.1143C11.8286 38.1143 11.8286 35.1718 11.8286 31.5429C11.8286 27.914 16.8306 24.9714 23 24.9714C29.1695 24.9714 34.1715 27.914 34.1715 31.5429Z"
-                            fill="#75757E"
-                        />
-                    </svg>
-                    <div>
-                        <p style="font-weight: 500; margin-bottom: -4px">IT NARASI</p>
-                        <p style="font-weight: 300; font-size: 14px">27 Maret 2024</p>
+                    <div class="kitacobain">
+                        <div class="containerr">
+                            <div class="beruda">
+                                <div style="display: flex; gap: 8px">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46"
+                                        viewBox="0 0 46 46" fill="none">
+                                        <rect width="46" height="46" rx="23" fill="#F1F1F1" />
+                                        <path
+                                            d="M23 19.7143C26.2663 19.7143 28.9143 17.0664 28.9143 13.8C28.9143 10.5336 26.2663 7.88571 23 7.88571C19.7336 7.88571 17.0857 10.5336 17.0857 13.8C17.0857 17.0664 19.7336 19.7143 23 19.7143Z"
+                                            fill="#75757E" />
+                                        <path
+                                            d="M34.1715 31.5429C34.1715 35.1718 34.1715 38.1143 23 38.1143C11.8286 38.1143 11.8286 35.1718 11.8286 31.5429C11.8286 27.914 16.8306 24.9714 23 24.9714C29.1695 24.9714 34.1715 27.914 34.1715 31.5429Z"
+                                            fill="#75757E" />
+                                    </svg>
+                                    <div>
+                                        <p style="font-weight: 500; margin-bottom: -4px">IT NARASI</p>
+                                        <p style="font-weight: 300; font-size: 14px">27 Maret 2024</p>
+                                    </div>
+                                </div>
+                                {{-- <img src="{{ asset('asset/image/construction.jpg') }}"  style="width:700px; height:700px; justify-" alt="Responsive image" /> --}}
+                                <div style="margin-top: 100px">
+                                    <img src="{{ asset('/image/construction.png') }}" alt=""
+                                        style="margin-bottom: -350px; margin-left: 550px">
+                                    <p
+                                        style="text-align: center; padding-top: 310px; font: 600 48px Narasi Sans, sans-serif; color: #4a25aa">
+                                        WEBSITE UNDER CONSTRUCTION</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-absolute  end-0">
+                            <div class="wokwok" style="margin-top: -32px; margin-bottom: 24px; margin-right: 42px;">
+                                <div class="wkwk"></div>
+                                <div class="wikwik"></div>
+                            </div>
+                            <div>
+                                <a href="#" class="markicob">
+                                    <div class="bercoba">Asset Management System</div>
+                                    <div class="bercabe">Asset Information and Requests</div>
+                                </a>
+                                <a href="/dashboard-budget" class="markicob">
+                                    <div class="bercoba">Budgeting System</div>
+                                    <div class="bercabe">Budget Information and Budget Requests</div>
+                                </a>
+                                <a href="/sop" class="markicob">
+                                    <div class="bercoba">Company File Documents</div>
+                                    <div class="bercabe">List of Company File Document </div>
+                                </a>
+                                <a href="/transport-request" class="markicob">
+                                    <div class="bercoba">Transportation Request</div>
+                                    <div class="bercabe">Request Driver and Transportation</div>
+                                </a>
+                                <a href="/payment-request" class="markicob">
+                                    <div class="bercoba">Payment Request</div>
+                                    <div class="bercabe">Request for Payment of Company Invoices </div>
+                                </a>
+                                <a href="#" class="markicob">
+                                    <div class="bercoba">Booking Room</div>
+                                    <div class="bercabe">Book Room Meeting</div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                {{-- <img src="{{ asset('asset/image/construction.jpg') }}"  style="width:700px; height:700px; justify-" alt="Responsive image" /> --}}
-                <div style="margin-top: 100px">
-                    <img src="{{ asset('/image/construction.png') }}" alt="" style="margin-bottom: -350px; margin-left: 550px">
-                    <p style="text-align: center; padding-top: 310px; font: 600 48px Narasi Sans, sans-serif; color: #4a25aa">WEBSITE UNDER CONSTRUCTION</p>
-                </div>
             </div>
         </div>
-        <div class="position-absolute  end-0">
-            <div class="wokwok" style="margin-top: -32px; margin-bottom: 24px; margin-right: 42px;">
-                <div class="wkwk"></div>
-                <div class="wikwik"></div>
-            </div>
-            <div>
-                {{-- <a href="#" class="markicob">
-                    <div class="bercoba">Asset Management</div>
-                    <div class="bercabe">Informasi mengenai list asset dan peminjaman asset</div>
-                </a> --}}
-                <a href="/dashboard-budget" class="markicob">
-                    <div class="bercoba">Budgeting System</div>
-                    <div class="bercabe">Informasi mengenai budget dan request budget</div>
-                </a>
-                <a href="/sop" class="markicob">
-                    <div class="bercoba">Legal</div>
-                    <div class="bercabe">Informasi mengenai budget dan request budget</div>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-                </div>
-            </div>
-            @include('layout.footer')
+        @include('layout.footer')
         </div>
         @yield('modal')
         <!-- Libs JS -->
@@ -82,9 +100,10 @@
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r " crossorigin="anonymous ">
         </script>
         <script src="{{ asset('js/bootstrap.bundle.min.js') }} "></script>
-        <script src="{{ asset('js/datatables.min.js')}}"></script>
-        <script src="{{ asset('js/datatables.init.js')}}"></script>
-        <script>        // Mengambil elemen-elemen dengan kelas yang sesuai
+        <script src="{{ asset('js/datatables.min.js') }}"></script>
+        <script src="{{ asset('js/datatables.init.js') }}"></script>
+        <script>
+            // Mengambil elemen-elemen dengan kelas yang sesuai
             const wkwkElement = document.querySelector('.wkwk');
             const wikwikElement = document.querySelector('.wikwik');
 
@@ -121,11 +140,13 @@
             setInterval(updateDateTime, 1000);
 
             // Memanggil updateDateTime saat pertama kali halaman dimuat
-            updateDateTime();</script>
+            updateDateTime();
+        </script>
         @yield('custom-js')
     </body>
+
 </html>
-    {{-- <div class="body" style="margin-top: 65px; margin-left: 132px">
+{{-- <div class="body" style="margin-top: 65px; margin-left: 132px">
         <div class="badanisi">
             <div class="container">
                 <div class="div-15">

@@ -19,11 +19,11 @@ class DashboardController extends Controller
 
     public function dashboardbudget()
     {
-        $budget = YearlyBudget::with('employee', 'program', 'quarterlyBudgets.monthlyBudgets')->get();
-        $program = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id')->prepend('Select Program', '');
-        $totalBudget = $budget->sum('yearly_budget');
-        $totalRemainingBudget = $budget->sum('remaining_budget');
+        $yearlybudget = YearlyBudget::with('employee', 'program', 'quarterlyBudgets.monthlyBudgets')->get();
+        $program = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id');
+        $totalBudget = $yearlybudget->sum('yearly_budget');
+        $totalRemainingBudget = $yearlybudget->sum('remaining_budget');
         $totalSpendingBudget = $totalBudget - $totalRemainingBudget;
-        return view('dashboard.budget', compact('budget', 'program', 'totalBudget', 'totalRemainingBudget', 'totalSpendingBudget'));
+        return view('dashboard.budget', compact('yearlybudget', 'program', 'totalBudget', 'totalRemainingBudget', 'totalSpendingBudget'));
     }
 }

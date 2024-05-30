@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\YearlyBudget;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,4 +16,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/getProgramData/{program_id}', function ($program_id) {
+    $yearlyBudgets = YearlyBudget::where('program_id', $program_id)->get();
+
+    if ($yearlyBudgets->isEmpty()) {
+        return response()->json(['error' => 'Program not found or no data available'], 404);
+    }
+
+    // Format the data for the pie chart
+    $data = $yearlyBudgets->map(function($yearlyBudget) {
+        return [
+            'budget_code' => $yearlyBudget->budget_code,
+            'remaining_budget' => (float) $yearlyBudget->remaining_budget,
+            'yearly_budget' => (float) $yearlyBudget->yearly_budget,
+        ];
+    });
+
+    return response()->json($data);
 });

@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/budget/store', 'App\Http\Controllers\BudgetController@store')->name('budget.store');
 
     Route::resource('requestbudget', 'App\Http\Controllers\RequestBudgetController');
+    Route::get('/get-monthly-budget', [App\Http\Controllers\RequestBudgetController::class, 'getMonthlyBudget'])->name('getMonthlyBudget');
 
     Route::get('/approval', function () {
         return view('approval.index');
@@ -75,6 +76,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/testhome', function () {
         return view('testhome');
+    });
+
+    Route::get('/transport-request', function () {
+        return view('transportrequest.index');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

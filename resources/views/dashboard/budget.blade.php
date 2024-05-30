@@ -3,135 +3,39 @@
     Budget Dashboard
 @endsection
 @section('content')
-    {{-- <div class="judulhalaman">Budgeting System Narasi</div>
-    <div class="button-dashboard">
-        <button type="button" class="button-ini" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            INPUT
-            <span style="color: #ffe900">BUDGET</span>
-        </button>
-        <a href="/create-budget" class="text-decoration-none text-end">
-            <button class="button-ini">REQUEST <span style="color: #ffe900">BUDGET</span></button>
-        </a>
-    </div>
-
-    <div class="tablenih" style="margin-top: 110px; margin-left: 42px">
-        <table class="table table-hover"
-            style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
-            <thead style="font-weight: 500">
-                <tr class="dicobain">
-                    <th scope="col ">NO</th>
-                    <th scope="col ">Request Number</th>
-                    <th scope="col ">Nama Program</th>
-                    <th scope="col ">Approval 1</th>
-                    <th scope="col ">Approval 2</th>
-                    <th scope="col ">Approval 3</th>
-                    <th scope="col ">User Submit</th>
-                    <th scope="col ">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row ">1</th>
-                    <td>1</td>
-                    <td>Mata Najwa</td>
-                    <td>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none">
-                            <circle cx="12" cy="12" r="12" fill="#E73638" />
-                        </svg>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="gap: 8px; display: flex; justify-content: center">
-                        <a href="#" class="text-decoration-none text-end"><button type="button "
-                                class="button-general" style="width: fit-content">DETAIL</button>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope=" row ">2</th>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none">
-                            <circle cx="12" cy="12" r="12" fill="#E73638" />
-                        </svg>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="gap: 8px; display: flex; justify-content: center"><button type="button "
-                            class="button-general" style="width: fit-content">DETAIL</button></td>
-                </tr>
-                <tr>
-                    <th scope="row ">3</th>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none">
-                            <circle cx="12" cy="12" r="12" fill="#E73638" />
-                        </svg>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="gap: 8px; display: flex; justify-content: center"><button type="button "
-                            class="button-general" style="width: fit-content">DETAIL</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div> --}}
     <div class="row">
-            <div class="col-lg-4 col-sm-6">
-                <div class="card-budget">
-                    <div class="text-body-tertiary">Remaining Budget</div>
-                    <div class="d-flex align-items-center">
-                        <div class="text-sisa"> Rp. {{ number_format($totalRemainingBudget, 2) }}</div>
-                        {{-- <span class="badge text-bg-warning rounded-pill ms-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="10" viewBox="0 0 384 512">
-                                <path
-                                    d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
-                            </svg>
-                            10%
-                        </span> --}}
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="text-body-tertiary me-1"> From total </div>
-                        <div class="text-success ">Rp. {{ number_format($totalBudget, 2) }}</div>
-                    </div>
+        <div class="col-lg-4 col-sm-6">
+            <div class="card-budget">
+                <div class="text-body-tertiary">Remaining Budget</div>
+                <div class="d-flex align-items-center">
+                    <div class="text-sisa"> Rp. {{ number_format($totalRemainingBudget, 2) }}</div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="text-body-tertiary me-1"> From total </div>
+                    <div class="text-success ">Rp. {{ number_format($totalBudget, 2) }}</div>
+                </div>
 
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+            <div class="card-budget">
+                <div class="text-body-tertiary">Spending Budget</div>
+                <div class="d-flex align-items-center">
+                    <div class="text-sisa"> Rp. {{ number_format($totalSpendingBudget, 2) }}</div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="text-body-tertiary me-1"> From total </div>
+                    <div class="text-success ">Rp. {{ number_format($totalBudget, 2) }}</div>
                 </div>
             </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="card-budget">
-                    <div class="text-body-tertiary">Spending Budget</div>
-                    <div class="d-flex align-items-center">
-                        <div class="text-sisa"> Rp. {{ number_format($totalSpendingBudget, 2) }}</div>
-                        {{-- <span class="badge text-bg-danger rounded-pill ms-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="10" viewBox="0 0 384 512"
-                                fill="white">
-                                <path
-                                    d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
-                            </svg>
-                            10%
-                        </span> --}}
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="text-body-tertiary me-1"> From total </div>
-                        <div class="text-success ">Rp. {{ number_format($totalBudget, 2) }}</div>
-                    </div>
-                </div>
-            </div>
+        </div>
         <div class="col-lg-4 col-sm-12">
             <div class="button-dashboard">
                 <button class="button-ini mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     INPUT
                     <span style="color: #ffe900">BUDGET</span>
                 </button>
-                <a href="{{route('requestbudget.create')}}" class="text-decoration-none text-end">
+                <a href="{{ route('requestbudget.create') }}" class="text-decoration-none text-end">
                     <button class="button-ini">REQUEST <span style="color: #ffe900">BUDGET</span></button>
                 </a>
             </div>
@@ -141,14 +45,18 @@
     <div class="tablenih mb-4" style="border: none; box-shadow: 0px 1px 8px -1px rgba(76, 37, 176, 0.505);">
         <div class="row p-3">
             <div class="col-lg-8 col-sm-12">
-                <div id="columnchart_material" style="height: 600px; "></div>
+                <div id="columnchart_material" style="height: 600px; position:relative; z-index:-1;"></div>
             </div>
             <div class="col-lg-4 col-sm-12" style="margin-right:0px;">
                 <div style="font: 350 Narasi sans, sans-serif; ">
-                    <label for="chartType" class="form-label">Choose Chart Type for drawChart2: </label>
+                    <label for="chartType" class="form-label">Select Graphics by Program: </label>
                     <select id="chartType" class="form-select" onchange="changeChartType()">
-                        <option value="pie">Pie Chart</option>
-                        <option value="column">Bar Chart</option>
+                        <option disabled>Select Program</option>
+                        @forelse ($yearlybudget as $budget)
+                            <option value="{{ $budget->program_id }}">{{ $budget->program->program_name }}</option>
+                        @empty
+                            <option disabled selected>Data not found</option>
+                        @endforelse
                     </select>
                 </div>
                 <div id="donutchart" style=" height: 500px;"></div>
@@ -280,7 +188,8 @@
 
                         <div class="mb-3">
                             <label for="quarter_budget" class="form-label">Budget Quarter</label>
-                            <input type="text" class="form-control" name="quarter_budget" id="quarter_budget" name="budget" required />
+                            <input type="text" class="form-control" name="quarter_budget" id="quarter_budget"
+                                name="budget" required />
                             <!-- Input field for entering the budget value -->
                             {{-- <input type="hidden" id="raw_budget" name="raw_budget" /> --}}
                             <!-- Hidden input field for storing the raw numeric value -->
@@ -305,7 +214,7 @@
 
         function drawChart() {
             drawChart1();
-            drawChart2(); // By default, draw the pie chart
+            drawPieChart(); // By default, draw the pie chart
         }
 
         function drawChart1() {
@@ -343,59 +252,59 @@
             chart.draw(data, google.charts.Bar.convertOptions(options));
         }
 
-        function drawChart2() {
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Work', 11],
-                ['Eat', 2],
-                ['Commute', 2],
-                ['Watch TV', 2],
-                ['Sleep', 7]
-            ]);
+        // function drawChart2() {
+        //     var data = google.visualization.arrayToDataTable([
+        //         ['Task', 'Hours per Day'],
+        //         ['Work', 11],
+        //         ['Eat', 2],
+        //         ['Commute', 2],
+        //         ['Watch TV', 2],
+        //         ['Sleep', 7]
+        //     ]);
 
-            var options = {
-                // title: 'Mata Najwa',
-                pieHole: 0.4,
-                backgroundColor: 'transparent',
-                chartArea: {
-                    width: '100%',
-                    height: '100%',
-                    left: 60,
-                    top: 50,
-                }, // Mengatur chartArea tanpa margin/padding
-                // width: auto, // Ubah lebar chart menjadi 400 piksel
-                // height: auto // Ubah tinggi chart menjadi 300 piksel
-            };
+        //     var options = {
+        //         // title: 'Mata Najwa',
+        //         pieHole: 0.4,
+        //         backgroundColor: 'transparent',
+        //         chartArea: {
+        //             width: '100%',
+        //             height: '100%',
+        //             left: 60,
+        //             top: 50,
+        //         }, // Mengatur chartArea tanpa margin/padding
+        //         // width: auto, // Ubah lebar chart menjadi 400 piksel
+        //         // height: auto // Ubah tinggi chart menjadi 300 piksel
+        //     };
 
-            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-            chart.draw(data, options);
-        }
+        //     var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        //     chart.draw(data, options);
+        // }
 
-        function drawChart3() {
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Bong', 11],
-                ['Sleep', 7]
-            ]);
+        // function drawChart3() {
+        //     var data = google.visualization.arrayToDataTable([
+        //         ['Task', 'Hours per Day'],
+        //         ['Bong', 11],
+        //         ['Sleep', 7]
+        //     ]);
 
-            var options = {
-                // title: 'My Daily Activities',
-                pieHole: 0.4,
-                backgroundColor: 'transparent',
-                chartArea: {
-                    width: '100%',
-                    height: '100%',
-                    left: 60,
-                    top: 50
-                }, // Mengatur chartArea tanpa margin/padding
-                // width: auto, // Ubah lebar chart menjadi 400 piksel
-                // height: auto, // Ubah tinggi chart menjadi 300 piksel
+        //     var options = {
+        //         // title: 'My Daily Activities',
+        //         pieHole: 0.4,
+        //         backgroundColor: 'transparent',
+        //         chartArea: {
+        //             width: '100%',
+        //             height: '100%',
+        //             left: 60,
+        //             top: 50
+        //         }, // Mengatur chartArea tanpa margin/padding
+        //         // width: auto, // Ubah lebar chart menjadi 400 piksel
+        //         // height: auto, // Ubah tinggi chart menjadi 300 piksel
 
-            };
+        //     };
 
-            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-            chart.draw(data, options);
-        }
+        //     var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        //     chart.draw(data, options);
+        // }
 
 
 
@@ -433,14 +342,65 @@
             var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
             chart.draw(data, google.charts.Bar.convertOptions(options));
         }
+
+        // function changeChartType() {
+        //     var selectedChart = document.getElementById("chartType").value;
+        //     if (selectedChart === "pie") {
+        //         drawChart2(); // Draw pie chart
+        //     } else if (selectedChart === "column") {
+        //         drawChart3(); // Draw column chart
+        //     }
+        // }
 
         function changeChartType() {
-            var selectedChart = document.getElementById("chartType").value;
-            if (selectedChart === "pie") {
-                drawChart2(); // Draw pie chart
-            } else if (selectedChart === "column") {
-                drawChart3(); // Draw column chart
+            var selectedProgramId = document.getElementById("chartType").value;
+
+            if (selectedProgramId) {
+                fetch(`/api/getProgramData/${selectedProgramId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            console.error('Error from API:', data.error);
+                        } else {
+                            drawPieChart(data); // Pass the fetched data to the drawPieChart function
+                        }
+                    })
+                    .catch(error => console.error('Error fetching program data:', error));
             }
+        }
+
+        function drawPieChart(data) {
+            // Example using Google Charts
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
+            google.charts.setOnLoadCallback(function() {
+                var dataTable = new google.visualization.DataTable();
+                dataTable.addColumn('string', 'Type');
+                dataTable.addColumn('number', 'Amount');
+
+                data.forEach(item => {
+                    var usedBudget = item.yearly_budget - item.remaining_budget;
+                    dataTable.addRow(['Remaining Budget', item
+                    .remaining_budget]);
+                    dataTable.addRow(['Used Budget', usedBudget]);
+                });
+
+                var options = {
+                    title: 'Budget Distribution by Program',
+                    pieHole: 0.4,
+                    backgroundColor: 'transparent',
+                    chartArea: { width: '100%', height: '100%', left: 60, top: 50,},
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                chart.draw(dataTable, options);
+            });
         }
     </script>
     <script>
