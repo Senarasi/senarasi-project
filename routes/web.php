@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/vendor', function () {
         return view('vendor.index');
     });
+    Route::resource('vendor', 'App\Http\Controllers\VendorController');
 
     Route::get('/vendor-edit', function () {
         return view('vendor.edit');
@@ -70,8 +71,35 @@ Route::middleware(['auth'])->group(function () {
         return view('category.index');
     });
 
+    Route::get('/transport-request/create', function () {
+        return view('transportrequest.create');
+    });
+
+    Route::get('/approval-transportvoucher', function () {
+        return view('approvaltransportvoucher.index');
+    });
+
+    Route::get('approval-transportvoucher/detail', function () {
+        return view('approvaltransportvoucher.detail');
+    });
+
+    Route::get('/voucher-transportrequest', function () {
+        return view('vouchertransportrequest.index');
+    });
+
+    Route::get('/voucher-transportrequest/create', function () {
+        return view('vouchertransportrequest.create');
+    });
+
     Route::get('/sop', function () {
         return view('sop.index');
+    });
+    Route::get('/sop-detail', function () {
+        return view('sop.detail');
+    });
+
+    Route::get('/payment-request', function () {
+        return view('paymentrequest.index');
     });
 
     Route::get('/testhome', function () {

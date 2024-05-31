@@ -27,7 +27,7 @@
         <div class="tablenih" style="padding-top: -24px;">
             <div class="table-responsive p-3">
                 <table id="datatable" class="table table-hover"
-                style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ;  color: #4A25AA;">
+                    style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ;  color: #4A25AA;">
                     <thead style="font-weight: 500; text-align: center">
                         <tr class="dicobain">
                             <th scope="col">No.</th>
@@ -40,50 +40,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row" style="text-align: center;">1</th>
-                            <td>Laptop (Legion 5 Gen 7 (15″ AMD))</td>
-                            <td style="text-align: center;">20402170001</td>
-                            <td></td>
-                            <td></td>
+                        @php
+                            $counter = 1;
+                        @endphp
+                        @forelse ($vendor as $key => $data)
+                            <tr>
+                                <th scope="row" style="text-align: center;">{{ $counter++ }}</th>
+                                <td>{{ $data->vendor_name }}</td>
+                                <td style="text-align: center;">{{ $data->vendor_pic }}</td>
+                                <td>{{ $data->vendor_contact }}</td>
+                                <td>{{ $data->vendor_email }}</td>
 
-                            <td style="gap: 8px; display: flex; justify-content: center;">
-                                <a href="/vendor-edit" class="text-decoration-none text-end">
-                                    <button type="button" class="uwuq" style="width: fit-content;">Edit</button>
-                                </a>
-                                <button type="button" class="btn btn-danger" style="width: fit-content;">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope=" row " style="text-align: center; ">2</th>
-                            <td>Mouse Logitech M275 </td>
-                            <td style="text-align: center; ">20402170001</td>
-                            <td></td>
-                            <td></td>
-
-                            <td style="gap: 8px; display: flex; justify-content: center;">
-                                <a href="/vendor-edit" class="text-decoration-none text-end">
-                                    <button type="button" class="uwuq" style="width: fit-content;">Edit</button>
-                                </a>
-                                <button type="button" class="btn btn-danger" style="width: fit-content;">Delete</button>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row " style="text-align: center; ">3</th>
-                            <td>Kabel LAN</td>
-                            <td style="text-align: center; ">20402170001</td>
-                            <td></td>
-                            <td></td>
-
-                            <td style="gap: 8px; display: flex; justify-content: center;">
-                                <a href="/vendor-edit" class="text-decoration-none text-end">
-                                    <button type="button" class="uwuq" style="width: fit-content;">Edit</button>
-                                </a>
-                                <button type="button" class="btn btn-danger" style="width: fit-content;">Delete</button>
-                            </td>
-
-                        </tr>
+                                <td style="gap: 8px; display: flex; justify-content: center;">
+                                    <a href="/vendor-edit" class="text-decoration-none text-end">
+                                        <button type="button" class="uwuq" style="width: fit-content;">Edit</button>
+                                    </a>
+                                    <button type="button" class="btn btn-danger"
+                                        style="width: fit-content;">Delete</button>
+                                </td>
+                            </tr>
+                        @empty
+                            <div class="alert alert-danger">
+                                Data Post belum Tersedia.
+                            </div>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -95,8 +75,8 @@
 @endsection
 
 @section('modal')
-    <div class="modal justify-content-center fade" id="modal1"  data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal justify-content-center fade" id="modal1" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-body bg-white">
@@ -124,7 +104,7 @@
                         <div class="mb-3">
                             <label for="vendor" class="form-label">Alamat Vendor</label>
 
-                            <textarea class="form-control"  id="alamatvendor" style="height: 100px"></textarea>
+                            <textarea class="form-control" id="alamatvendor" style="height: 100px"></textarea>
 
                         </div>
 
@@ -133,9 +113,8 @@
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
-                <img class="img-8" src="{{ asset('asset/image/Narasi_Logo.svg')  }}" alt=" " />
+                <img class="img-8" src="{{ asset('asset/image/Narasi_Logo.svg') }}" alt=" " />
             </div>
         </div>
     </div>
-
 @endsection

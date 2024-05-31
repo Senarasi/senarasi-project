@@ -4,12 +4,11 @@
         border: none; /* Remove the border */
     }
 </style>
-
 <!--Navbar-->
 <nav class="navbar fixed-top navbar-expand-lg">
     <div class="container-fluid">
         <a href="/dashboard-main" class="header ms-3" style="margin: 6px">
-            <img style="width: 208px; height: 38" src="{{ asset('image/senarasi_logo.png') }}" alt="" />
+            <img style="width: 208px; height: 38" src="{{ asset('asset/image/senarasi_logo1.png') }}" alt="" />
         </a>
         <form class="d-flex has-search form-search" role="search">
             <input class="form-control" style="text-align: center" type="search" placeholder="Search" aria-label="Search" />
@@ -18,8 +17,10 @@
             aria-controls="navbarnih" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarnih">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+
             <!-- Dropdown Profile-->
             <div class="navbar-nav order-md-last">
                 <a class="maindashboardlink" href="/dashboard-main" >Main Dashboard</a>
@@ -80,6 +81,7 @@
         </div>
     </div>
 </nav>
+
 <!-- Modal Button Profile -->
 <div class="modal justify-content-center fade" id="staticBackdrop-profile"  data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -106,21 +108,6 @@
                         <label for="namakaryawan" class="form-label">Nama Karyawan</label>
                         <input type="text" class="form-control" id="namakaryawan" disabled readonly/>
                     </div>
-
-                    {{-- <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <div class="col-12">
-                            <div class="input-group mb-3">
-                                <input style="font-size: 14px" name="password" type="password" value=""
-                                    class="input form-control" id="password" placeholder="password" required="true"
-                                    aria-label="password" aria-describedby="basic-addon1" />
-                                <span class="input-group-text" onclick="password_show_hide();">
-                                    <i class="fas fa-eye" id="show_eye"></i>
-                                    <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div> --}}
                     <div class="departposisi">
                         <div style="font: 300 12; justify-content: space-between; align-items: center; flex: 1 0 0">
                             <label for="departemen" class="form-label">Departemen</label>
@@ -155,8 +142,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <button type="add" class="button-submit">Submit</button>
                     <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                 </form>
