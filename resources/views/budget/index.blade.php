@@ -116,6 +116,7 @@
                             <label for="program_name" class="form-label">Nama Program</label>
                             {{-- <input type="text " class="form-control" id="namaprogram " /> --}}
                             <select name="program_id" id="program_option" class="form-select ">
+                                <option selected disabled>Select Program</option>
                                 @forelse ($program as $program_id => $program_name)
                                     <option value="{{ $program_id }}">{{ $program_name }}</option>
                                 @empty
@@ -129,7 +130,7 @@
                                 <label for="quarter" class="form-label">Quarter</label>
                                 {{-- <input type="text " class="form-control" id="quarter" /> --}}
                                 <select name="quarter" id="quarter" class="form-select ">
-                                    <option style="color: rgb(189, 189, 189) ">Choose One</option>
+                                    <option selected disabled>Choose One</option>
                                     <option value="1">Q1</option>
                                     <option value="2">Q2</option>
                                     <option value="3">Q3</option>
@@ -147,7 +148,7 @@
                             <input type="text" class="form-control" name="quarter_budget" id="quarter_budget"
                                 name="budget" required />
                             <!-- Input field for entering the budget value -->
-                            {{-- <input type="hidden" id="raw_budget" name="raw_budget" /> --}}
+                            <input type="hidden" id="raw_budget" name="raw_budget" />
                             <!-- Hidden input field for storing the raw numeric value -->
 
                         </div>
@@ -161,7 +162,14 @@
     </div>
 @endsection
 @section('custom-js')
-    {{-- <script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#staticBackdrop').on('hidden.bs.modal', function() {
+                $(this).find('form')[0].reset();
+            });
+        });
+    </script>
+    <script>
         var budgetInput = document.getElementById('quarter_budget');
         var rawBudgetInput = document.getElementById('raw_budget');
 
@@ -200,5 +208,5 @@
             var rawValue = formattedBudget.replace(/[^\d]/g, '');
             return rawValue;
         }
-    </script> --}}
+    </script>
 @endsection

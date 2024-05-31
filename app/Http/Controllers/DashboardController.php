@@ -24,6 +24,6 @@ class DashboardController extends Controller
         $totalBudget = $yearlybudget->sum('yearly_budget');
         $totalRemainingBudget = $yearlybudget->sum('remaining_budget');
         $totalSpendingBudget = $totalBudget - $totalRemainingBudget;
-        return view('dashboard.budget', compact('yearlybudget', 'program', 'totalBudget', 'totalRemainingBudget', 'totalSpendingBudget'));
+        return view('dashboard.budget', compact('yearlybudget', 'program', 'totalBudget', 'totalRemainingBudget', 'totalSpendingBudget',));
     }
 }

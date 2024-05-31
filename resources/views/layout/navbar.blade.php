@@ -35,7 +35,7 @@
                             </div>
                             <div class="col" style="font:300 14px Narasi Sans, sans-serif">
                                 <div class="mt-1">{{ Auth::user()->full_name }}</div>
-                                <div class="text-secondary">position</div>
+                                <div class="text-secondary">{{ Auth::user()->position->position_name }}</div>
                             </div>
 
                         </div>
@@ -93,25 +93,25 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label for="idkaryawan" class="form-label">ID Karyawan</label>
-                                <input type="text" class="form-control" id="idkaryawan" disabled readonly/>
+                                <input type="text" class="form-control" id="idkaryawan" value="{{ Auth::user()->employee_id }}" disabled readonly/>
                             </div>
                         </div>
                         <div class="col">
                             <div class="mb-3">
                                 <label for="emailkaryawan" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="emailkaryawan" disabled readonly/>
+                                <input type="email" class="form-control" id="emailkaryawan" value="{{ Auth::user()->email }}" disabled readonly/>
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="namakaryawan" class="form-label">Nama Karyawan</label>
-                        <input type="text" class="form-control" id="namakaryawan" disabled readonly/>
+                        <input type="text" class="form-control" id="namakaryawan" value="{{ Auth::user()->full_name }}" disabled readonly/>
                     </div>
                     <div class="departposisi">
                         <div style="font: 300 12; justify-content: space-between; align-items: center; flex: 1 0 0">
                             <label for="departemen" class="form-label">Departemen</label>
-                            <input type="text" class="form-control" id="departemen" disabled readonly/>
+                            <input type="text" class="form-control" id="departemen" value="{{ Auth::user()->department->department_name }}" disabled readonly/>
                         </div>
                         <div style="font: 300 12; justify-content: space-between; align-items: center; flex: 1 0 0">
                             <label for="statuskaryawan" class="form-label">Status</label>

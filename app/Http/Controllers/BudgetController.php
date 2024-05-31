@@ -31,8 +31,8 @@ class BudgetController extends Controller
         $totalBudget = $budget->sum('yearly_budget');
         $totalRemainingBudget = $budget->sum('remaining_budget');
         $totalSpendingBudget = $totalBudget - $totalRemainingBudget;
-        $employee = Employee::orderBy('full_name', 'asc')->pluck('full_name', 'employee_id')->prepend('Select Employee', '');
-        $program = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id')->prepend('Select Program', '');
+        $employee = Employee::orderBy('full_name', 'asc')->pluck('full_name', 'employee_id');
+        $program = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id');
         return view('budget.index', compact('budget', 'program', 'employee', 'totalBudget', 'totalRemainingBudget', 'totalSpendingBudget'));
     }
 
@@ -50,7 +50,7 @@ class BudgetController extends Controller
             'employee_id' => 'required|exists:employees,employee_id',
             'program_id' => 'required|exists:programs,program_id',
             'budget_code' => 'required|unique:quarterly_budgets,budget_code',
-            'quarter_budget' => 'required|numeric',
+            'raw_budget' => 'required|numeric',
             'quarter' => 'required|in:1,2,3,4',
         ]);
 
@@ -69,8 +69,8 @@ class BudgetController extends Controller
         );
 
         // Update the yearly budget totals
-        $yearlyBudget->yearly_budget += $request->quarter_budget;
-        $yearlyBudget->remaining_budget += $request->quarter_budget;
+        $yearlyBudget->yearly_budget += $request->raw_budget;
+        $yearlyBudget->remaining_budget += $request->raw_budget;
         $yearlyBudget->save();
 
         $quarterlyBudget = QuarterlyBudget::create([
@@ -79,11 +79,11 @@ class BudgetController extends Controller
             'program_id' => $request->program_id,
             'budget_code' => $request->budget_code,
             'quarter' => $request->quarter,
-            'quarter_budget' => $request->quarter_budget,
-            'remaining_budget' => $request->quarter_budget,
+            'quarter_budget' => $request->raw_budget,
+            'remaining_budget' => $request->raw_budget,
         ]);
 
-        $monthlyBudgetAmount = $request->quarter_budget / 3;
+        $monthlyBudgetAmount = $request->raw_budget / 3;
 
         for ($month = 1; $month <= 3; $month++) {
             MonthlyBudget::create([

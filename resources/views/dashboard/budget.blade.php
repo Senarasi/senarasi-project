@@ -51,7 +51,8 @@
                 <div style="font: 350 Narasi sans, sans-serif; ">
                     <label for="chartType" class="form-label">Select Graphics by Program: </label>
                     <select id="chartType" class="form-select" onchange="changeChartType()">
-                        <option disabled>Select Program</option>
+                        <option selected disabled>Select Program</option>
+                        <option value="total">Total Budget</option>
                         @forelse ($yearlybudget as $budget)
                             <option value="{{ $budget->program_id }}">{{ $budget->program->program_name }}</option>
                         @empty
@@ -104,43 +105,9 @@
     </div>
 @endsection
 @section('modal')
-    {{-- <div class="modal justify-content-center fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+    <!-- Modal 1 -->
+    <div class="modal justify-content-center fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body bg-white">
-                    <form action="{{ route('budget.store') }}" method="POST" class="modal-form-check"
-                        style="font: 500 14px Narasi Sans, sans-serif">
-                        @csrf
-                        <!-- <fieldset disabled> -->
-                        <div class="mb-3">
-                            <label for="employee_id" class="form-label">User</label>
-                            <input type="text" id="employee_id" class="form-control" name="employee_id"
-                                value="{{ Auth::user()->full_name }}" placeholder="{{ Auth::user()->full_name }}" />
-                        </div>
-                        <!-- </fieldset> -->
-                        <div class="mb-3">
-                            <label for="program_name" class="form-label">Nama Program</label>
-                            <input type="text" class="form-control" id="program_name" name="program_name" required />
-                        </div>
-                        <div class="mb-3">
-                            <label for="budget" class="form-label">Budget Tahunan</label>
-                            <input type="text" class="form-control" id="budget" name="budget" required />
-                            <!-- Input field for entering the budget value -->
-                            <input type="hidden" id="raw_budget" name="raw_budget" />
-                            <!-- Hidden input field for storing the raw numeric value -->
-
-                        </div>
-                        <button type="submit" class="button-submit">Submit</button>
-                        <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
-                    </form>
-                </div>
-                <img class="img-8" src="{{asset("image/Narasi_Logo.svg")}}" alt=" " />
-            </div>
-        </div>
-    </div> --}}
-    <div class="modal justify-content-center fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body bg-white">
@@ -160,6 +127,7 @@
                             <label for="program_name" class="form-label">Nama Program</label>
                             {{-- <input type="text " class="form-control" id="namaprogram " /> --}}
                             <select name="program_id" id="program_option" class="form-select ">
+                                <option selected disabled>Select Program</option>
                                 @forelse ($program as $program_id => $program_name)
                                     <option value="{{ $program_id }}">{{ $program_name }}</option>
                                 @empty
@@ -173,7 +141,7 @@
                                 <label for="quarter" class="form-label">Quarter</label>
                                 {{-- <input type="text " class="form-control" id="quarter" /> --}}
                                 <select name="quarter" id="quarter" class="form-select ">
-                                    <option style="color: rgb(189, 189, 189) ">Choose One</option>
+                                    <option selected disabled>Choose One</option>
                                     <option value="1">Q1</option>
                                     <option value="2">Q2</option>
                                     <option value="3">Q3</option>
@@ -191,7 +159,7 @@
                             <input type="text" class="form-control" name="quarter_budget" id="quarter_budget"
                                 name="budget" required />
                             <!-- Input field for entering the budget value -->
-                            {{-- <input type="hidden" id="raw_budget" name="raw_budget" /> --}}
+                            <input type="hidden" id="raw_budget" name="raw_budget" />
                             <!-- Hidden input field for storing the raw numeric value -->
 
                         </div>
@@ -207,150 +175,22 @@
 @section('custom-js')
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+        $(document).ready(function() {
+            $('#staticBackdrop').on('hidden.bs.modal', function() {
+                $(this).find('form')[0].reset();
+            });
+        });
+    </script>
+    <script type="text/javascript">
         google.charts.load('current', {
             'packages': ['bar', 'corechart']
         });
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            drawChart1();
-            drawPieChart(); // By default, draw the pie chart
+            drawChart1(); // By default, draw the column chart
+            drawChart2(); // By default, draw the pie chart
         }
-
-        function drawChart1() {
-            var data = google.visualization.arrayToDataTable([
-                ['Month', 'Mata Najwa', 'Musyawarah', 'Mata Najwa', 'Musyawarah', 'Mata Najwa'],
-                ['Jan', 1000, 400, 200, 500, 300],
-                ['Feb', 1170, 460, 250, 460, 500],
-                ['March', 660, 1120, 300, 400, 200],
-                ['Apr', 1030, 540, 350, 550, 750],
-                ['May', 1000, 400, 200, 500, 300],
-                ['Jun', 1170, 460, 250, 460, 500],
-                ['Jul', 660, 1120, 300, 400, 200],
-                ['Aug', 1030, 540, 350, 550, 750],
-                ['Sept', 1000, 400, 200, 500, 300],
-                ['Okt', 1170, 460, 250, 460, 500],
-                ['Nov', 660, 1120, 300, 400, 200],
-                ['Des', 1030, 540, 350, 550, 750]
-            ]);
-
-            var options = {
-                chart: {
-                    title: 'Company Performance',
-                    subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-                    backgroundColor: 'transparent',
-                    chartArea: {
-                        width: '200px',
-                        height: '100%',
-                        left: 60,
-                        top: 50
-                    },
-                }
-            };
-
-            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-            chart.draw(data, google.charts.Bar.convertOptions(options));
-        }
-
-        // function drawChart2() {
-        //     var data = google.visualization.arrayToDataTable([
-        //         ['Task', 'Hours per Day'],
-        //         ['Work', 11],
-        //         ['Eat', 2],
-        //         ['Commute', 2],
-        //         ['Watch TV', 2],
-        //         ['Sleep', 7]
-        //     ]);
-
-        //     var options = {
-        //         // title: 'Mata Najwa',
-        //         pieHole: 0.4,
-        //         backgroundColor: 'transparent',
-        //         chartArea: {
-        //             width: '100%',
-        //             height: '100%',
-        //             left: 60,
-        //             top: 50,
-        //         }, // Mengatur chartArea tanpa margin/padding
-        //         // width: auto, // Ubah lebar chart menjadi 400 piksel
-        //         // height: auto // Ubah tinggi chart menjadi 300 piksel
-        //     };
-
-        //     var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        //     chart.draw(data, options);
-        // }
-
-        // function drawChart3() {
-        //     var data = google.visualization.arrayToDataTable([
-        //         ['Task', 'Hours per Day'],
-        //         ['Bong', 11],
-        //         ['Sleep', 7]
-        //     ]);
-
-        //     var options = {
-        //         // title: 'My Daily Activities',
-        //         pieHole: 0.4,
-        //         backgroundColor: 'transparent',
-        //         chartArea: {
-        //             width: '100%',
-        //             height: '100%',
-        //             left: 60,
-        //             top: 50
-        //         }, // Mengatur chartArea tanpa margin/padding
-        //         // width: auto, // Ubah lebar chart menjadi 400 piksel
-        //         // height: auto, // Ubah tinggi chart menjadi 300 piksel
-
-        //     };
-
-        //     var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        //     chart.draw(data, options);
-        // }
-
-
-
-        function drawChart1() {
-            var data = google.visualization.arrayToDataTable([
-                ['Month', 'Mata Najwa', 'Musyawarah', 'Mata Najwa', 'Musyawarah', 'Mata Najwa'],
-                ['Jan', 1000, 400, 200, 500, 300],
-                ['Feb', 1170, 460, 250, 460, 500],
-                ['March', 660, 1120, 300, 400, 200],
-                ['Apr', 1030, 540, 350, 550, 750],
-                ['May', 1000, 400, 200, 500, 300],
-                ['Jun', 1170, 460, 250, 460, 500],
-                ['Jul', 660, 1120, 300, 400, 200],
-                ['Aug', 1030, 540, 350, 550, 750],
-                ['Sept', 1000, 400, 200, 500, 300],
-                ['Okt', 1170, 460, 250, 460, 500],
-                ['Nov', 660, 1120, 300, 400, 200],
-                ['Des', 1030, 540, 350, 550, 750]
-            ]);
-
-            var options = {
-                chart: {
-                    title: 'Company Performance',
-                    subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-                    backgroundColor: 'transparent',
-                    chartArea: {
-                        width: '200px',
-                        height: '100%',
-                        left: 60,
-                        top: 50
-                    },
-                }
-            };
-
-            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-            chart.draw(data, google.charts.Bar.convertOptions(options));
-        }
-
-        // function changeChartType() {
-        //     var selectedChart = document.getElementById("chartType").value;
-        //     if (selectedChart === "pie") {
-        //         drawChart2(); // Draw pie chart
-        //     } else if (selectedChart === "column") {
-        //         drawChart3(); // Draw column chart
-        //     }
-        // }
 
         function changeChartType() {
             var selectedProgramId = document.getElementById("chartType").value;
@@ -387,7 +227,8 @@
                 data.forEach(item => {
                     var usedBudget = item.yearly_budget - item.remaining_budget;
                     dataTable.addRow(['Remaining Budget', item
-                    .remaining_budget]);
+                        .remaining_budget
+                    ]);
                     dataTable.addRow(['Used Budget', usedBudget]);
                 });
 
@@ -395,16 +236,81 @@
                     title: 'Budget Distribution by Program',
                     pieHole: 0.4,
                     backgroundColor: 'transparent',
-                    chartArea: { width: '100%', height: '100%', left: 60, top: 50,},
+                    chartArea: {
+                        width: '100%',
+                        height: '100%',
+                        left: 60,
+                        top: 50,
+                    },
                 };
 
                 var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
                 chart.draw(dataTable, options);
             });
         }
+
+        function drawChart1() {
+            var data = google.visualization.arrayToDataTable([
+                ['Month', 'Mata Najwa', 'Musyawarah', 'Mata Najwa', 'Musyawarah', 'Mata Najwa'],
+                ['Jan', 1000, 400, 200, 500, 300],
+                ['Feb', 1170, 460, 250, 460, 500],
+                ['March', 660, 1120, 300, 400, 200],
+                ['Apr', 1030, 540, 350, 550, 750],
+                ['May', 1000, 400, 200, 500, 300],
+                ['Jun', 1170, 460, 250, 460, 500],
+                ['Jul', 660, 1120, 300, 400, 200],
+                ['Aug', 1030, 540, 350, 550, 750],
+                ['Sept', 1000, 400, 200, 500, 300],
+                ['Okt', 1170, 460, 250, 460, 500],
+                ['Nov', 660, 1120, 300, 400, 200],
+                ['Des', 1030, 540, 350, 550, 750]
+            ]);
+
+            var options = {
+                chart: {
+                    title: 'Company Performance',
+                    subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                    backgroundColor: 'transparent',
+                    chartArea: {
+                        width: '200px',
+                        height: '100%',
+                        left: 60,
+                        top: 50
+                    },
+                }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+
+        function drawChart2() {
+            var totalYearlyBudget = "{{ $totalBudget }}";
+            var totalRemainingBudget = "{{ $totalSpendingBudget }}";
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Budget'],
+                ['Total Yearly Budget', parseInt(totalYearlyBudget)],
+                ['Total Remaining Budget', parseInt(totalRemainingBudget)]
+            ]);
+
+            var options = {
+                title: 'Budget Distribution by Total',
+                pieHole: 0.4,
+                backgroundColor: 'transparent',
+                chartArea: {
+                    width: '100%',
+                    height: '100%',
+                    left: 60,
+                    top: 50,
+                },
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+        }
     </script>
     <script>
-        var budgetInput = document.getElementById('budget');
+        var budgetInput = document.getElementById('quarter_budget');
         var rawBudgetInput = document.getElementById('raw_budget');
 
         budgetInput.addEventListener('keyup', function(e) {
@@ -415,7 +321,7 @@
         });
 
         /* Dengan Rupiah */
-        var budgettahunan = document.getElementById('budget');
+        var budgettahunan = document.getElementById('quarter_budget');
         budgettahunan.addEventListener('keyup', function(e) {
             budgettahunan.value = formatRupiah(this.value, 'Rp');
         });
