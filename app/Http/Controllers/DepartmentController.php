@@ -11,9 +11,7 @@ class DepartmentController extends Controller
 {
     public function index(Request $request)
     {
-        $department = Department::with('position')->when($request->cari, function ($query) use ($request) {
-            $query->where('department_name', 'like', "%{$request->cari}%");
-        })->paginate(15);
+        $department = Department::orderBy('department_name', 'asc')->with('position')->get();
         $total_department = $department->count();
         return view('department.index', compact('department', 'total_department'));
     }
@@ -60,5 +58,12 @@ class DepartmentController extends Controller
         }
 
         return redirect()->route('department.index');
+    }
+
+    public function destroy($department_id): RedirectResponse
+    {
+        $department = Department::findOrFail($department_id);
+        $department->delete();
+        return redirect()->route('department.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }
