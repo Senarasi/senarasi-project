@@ -4,12 +4,7 @@
 @endsection
 @section('content')
     <!--Badan Isi-->
-    <div class="judulhalaman" style="display: flex; align-items: center; ">Department
-        {{-- <form style="margin-left: 12px" class="d-flex has-search" role="search ">
-            <input style="font-size: 14px; justify-content: center;" class="form-control me-2" type="search "
-                placeholder="Search " aria-label="Search" />
-        </form> --}}
-    </div>
+    <div class="judulhalaman" style="display: flex; align-items: center; ">Department</div>
 
     <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> Add Department
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -31,13 +26,15 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $counter = 1;
+                    @endphp
                     @forelse ($department as $key => $data)
                         <tr>
-                            <th scope="row" style="text-align: center;">{{ $department->firstItem() + $key }}</th>
+                            <th scope="row" style="text-align: center;">{{ $counter++ }}</th>
                             <td style="width:200px">{{ $data->department_name }}</td>
-
                             <td style="text-align: center; margin-top: 14px;">
-                                @forelse ($data->position->sortBy('department_name') as $position)
+                                @forelse ($data->position->sortBy('position_name') as $position)
                                     <span
                                         style="font: 300 12px Narasi sans, sans-serif; color: black; border: 1px solid #4A25AA; border-radius:4px ;background-color: #eceaef; padding: 4px 8px; display: inline-block; margin: 4px;"><small>{{ $position->position_name }}</small></span>
                                 @empty
@@ -45,12 +42,19 @@
                                 @endforelse
                             </td>
                             <td>
-                                <span style="display: flex; justify-content: center; gap: 8px;">
-                                    <a href="{{ route('department.edit', $data->department_id) }}" class="uwuq" type="button">
-                                        Edit
-                                    </a>
-                                    <button type="button " class="btn btn-danger ">Delete</button>
-                                </span>
+
+                                <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                    action="{{ route('department.destroy', $data->department_id) }}" method="POST">
+                                    <span style="display: flex; justify-content: center; gap: 8px;">
+                                        <a href="{{ route('department.edit', $data->department_id) }}" class="uwuq"
+                                            type="button">
+                                            Edit
+                                        </a>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </span>
+                                </form>
                             </td>
                         </tr>
                     @empty

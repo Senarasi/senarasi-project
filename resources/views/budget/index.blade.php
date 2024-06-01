@@ -53,8 +53,6 @@
                         @forelse ($budget as $data)
                             @foreach ($data->quarterlyBudgets as $quarterlyBudget)
                                 <tr>
-                                    {{-- <th scope="row" style="text-align: center;">{{ $data->firstItem() + $key }}
-                                    </th> --}}
                                     <th>{{ $counter++ }}</th>
                                     @php
                                         $romanNumerals = ['I', 'II', 'III', 'IV'];

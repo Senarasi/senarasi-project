@@ -34,56 +34,57 @@
         <div class="garisbutton"><button type="button" onclick="addPositionInput()">Add Position</button></div>
 
         <!-- Submit Button -->
-        <button type="submit">Submit</button>
+        <button type="submit" class="button-general">Submit</button>
     </form>
     {{-- end new code --}}
 @endsection
 @section('custom-js')
-    {{-- start code diaz --}}
-    {{-- <script>
-        const array = [{
-            posisi: '',
-        }, ];
-        const generatePosisi = () => {
-            document.getElementById('inputposisi').innerHTML = array
-                .map((item, index) => {
-                    return `
-                <input style="${index === 0 ? '' : 'margin-top: 12px;'}" value="${array[index].posisi}" type="text" class="form-control" id="posisi-${index}" onchange="handleChange(event, ${index})" />
-                `;
-                })
-                .join('');
-        };
-        const addPosisi = (e) => {
-            e.preventDefault();
-            console.log(e);
-            array.push({
-                posisi: '',
-            });
-            generatePosisi();
-        };
-
-        const handleChange = (e, index) => {
-            array[index].posisi = e.target.value;
-            document.getElementById(`posisi-${index}`).value = e.target.value;
-            console.log(array);
-        };
-
-        generatePosisi();
-    </script> --}}
-    {{-- end code diaz --}}
-
     <script>
         function addPositionInput() {
             const positionInputs = document.getElementById('position_inputs');
             const index = positionInputs.childElementCount;
 
+            // Membuat div untuk mengelompokkan input dan tombol delete
+            const inputGroup = document.createElement('div');
+            inputGroup.classList.add('position-input-group', 'mb-3');
+
+            // Membuat wrapper untuk input dan tombol delete
+            const inputWrapper = document.createElement('div');
+            inputWrapper.classList.add('input-group');
+
+            // Membuat input untuk nama posisi
             const input = document.createElement('input');
             input.type = 'text';
             input.name = 'positions[]';
             input.placeholder = 'Position Name';
             input.classList.add('form-control');
 
-            positionInputs.appendChild(input);
+            // Membuat tombol delete
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1.5-.5m2.5 0a.5.5 0 0 1.5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1.5-.5m3.5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                        </svg>`;
+            deleteButton.classList.add('button', 'delete-button');
+            deleteButton.style.background = 'none'; // Menambah gaya padding
+            deleteButton.style.border = 'none'; // Menambah gaya border radius
+            deleteButton.addEventListener('click', function() {
+                positionInputs.removeChild(inputGroup);
+            });
+
+            // Menambahkan input dan tombol delete ke dalam wrapper
+            inputWrapper.appendChild(input);
+            const span = document.createElement('span');
+            span.classList.add('input-group-text');
+            span.appendChild(deleteButton);
+            inputWrapper.appendChild(span);
+
+            // Menambahkan wrapper ke dalam div pengelompokan
+            inputGroup.appendChild(inputWrapper);
+
+            // Menambahkan div pengelompokan ke dalam kontainer input posisi
+            positionInputs.appendChild(inputGroup);
         }
     </script>
 @endsection
