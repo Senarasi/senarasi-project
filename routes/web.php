@@ -110,6 +110,22 @@ Route::middleware(['auth'])->group(function () {
         return view('transportrequest.index');
     });
 
+    Route::get('/booking-room', function () {
+        return view('bookingroom.index');
+    });
+
+    Route::get('/booking-room/create', function () {
+        return view('bookingroom.create');
+    });
+
+    Route::get('/booking-room/list', function () {
+        return view('bookingroom.list');
+    });
+
+    Route::get('/manage-room', function () {
+        return view('bookingroom.manage-room');
+    });
+
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     // Other protected routes
 });
