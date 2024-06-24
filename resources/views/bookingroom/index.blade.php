@@ -4,10 +4,17 @@
    Booking Room
 @endsection
 
+@auth
+    <script>
+        window.authUserId = {{ auth()->user()->id }};
+        window.userRole = "{{ Auth::user()->role }}";
+    </script>
+@endauth
+
 @section('content')
     <!--Badan Isi-->
     <div style="margin-left: 24px; ">
-        <div class="judulhalaman" style="display: flex; align-items: center; ">Booking Room Narasi</div>
+        <div class="judulhalaman" style="display: flex; align-items: center; margin-top: -12px;">Booking Room Narasi</div>
             {{-- <div style="display: inline-flex; gap: 12px; margin-left:4px;">
                 <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#modal-sop"> Upload
                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
@@ -35,41 +42,19 @@
                         </tr>
                     </thead>
                     <tbody style="vertical-align: middle;" class="text-center">
-                        {{-- @foreach ($rooms as $room) --}}
+                        @foreach ($rooms as $room)
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Room 1</td>
-                            <td>10</td>
-                            <td class="text-start">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                            <th scope="row" class="text-center">{{$loop->iteration}}</th>
+                            <td>{{ $room->room_name }}</td>
+                            <td>{{ $room->capacity }}</td>
+                            <td>{{ $room->desc }}</td>
                             <td>
-                                 <a href="booking-room/create" class="text-decoration-none text-end">
-                                    <button type="button" class="uwuq" style="width: fit-content;">Book</button>
-                                </a>
-                            </td>
+                                <a href="{{ route('bookingroom.create', $room->id )}}" class="text-decoration-none text-end">
+                                   <button type="button" class="uwuq" style="width: fit-content;">Book</button>
+                               </a>
+                           </td>
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Room 2</td>
-                            <td>20</td>
-                            <td class="text-start">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
-                            <td>
-                                 <a href="booking-room/create" class="text-decoration-none text-end">
-                                    <button type="button" class="uwuq" style="width: fit-content;">Book</button>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Room 3</td>
-                            <td>30</td>
-                            <td class="text-start">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
-                            <td>
-                                <a href="booking-room/create" class="text-decoration-none text-end">
-                                    <button type="button" class="uwuq" style="width: fit-content;">Book</button>
-                                </a>
-                            </td>
-                        </tr>
-                        {{-- @endforeach --}}
+                        @endforeach
                     </tbody>
                     </table>
                 </div>
@@ -83,12 +68,9 @@
                         <div class="col-6">
                             <select class="form-select" name="room" id="roomSelect">
                                 <option selected>Select Room</option>
-                                <option>Room 1</option>
-                                <option>Room 2</option>
-                                <option>Room 3</option>
-                                {{-- @foreach ($rooms as $room)
+                                @foreach ($rooms as $room)
                                 <option value="{{ $room->id }}">{{ $room->room_name }}</option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-auto">
@@ -115,10 +97,10 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> --}}
             <div class="modal-body  bg-white">
-                <h5 id="eventModalTitle"></h5>
+                <h5 class="mb-4"  id="eventModalTitle"></h5>
                 <div class="mb-3"><strong>Booked By : </strong> <span class="fw-lighter" id="eventModalUser" ></span></div>
 
-                <div class="mb-3"><strong>Contact (WhatsApp) : </strong> <span id="eventModalTelephone"></span></div>
+                <div class="mb-3"><strong>Contact (WhatsApp) : </strong> <a style="text-decoration: none" id="eventModalTelephone" href="#" target="_blank"></a></div>
 
                 <div class="row mb-3">
                   <div class="col">
@@ -130,6 +112,8 @@
                 </div>
 
                 <div class="mb-3"><strong>Description : </strong> <span id="eventModalDesc"></span></div>
+
+                <input type="hidden" id="eventModalBookingId" value="">
                 <div class="text-end">
                     <button type="button" class="btn btn-danger" id="deleteBookingBtn">Delete</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -143,47 +127,105 @@
 
 @section('custom-js')
 <script>
+
     document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl = document.getElementById('calendar');
+        var calendarEl = document.getElementById('calendar');
+        var roomFilterForm = document.getElementById('roomFilterForm');
+        var roomSelect = document.getElementById('roomSelect');
 
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-        },
-        navLinks: true, // can click day/week names to navigate views
-        editable: true,
-        displayEventTime: true,
-        displayEventEnd: true,
-        dayMaxEvents: true, // allow "more" link when too many events
-        events: [
-          {
-            title: 'Meeting',
-            start: '2024-06-12T10:30:00',
-            end: '2024-06-12T12:30:00'
-          },
-          ],
-          eventClick: function(info) {
-          // Populate modal with event data
-          document.getElementById('eventModalTitle').innerText = info.event.title;
-          document.getElementById('eventModalStart').innerText = info.event.start.toLocaleString();
-          document.getElementById('eventModalEnd').innerText = info.event.end.toLocaleString();
-          document.getElementById('eventModalDesc').innerText = info.event.extendedProps.description || '';
-          document.getElementById('eventModalUser').innerText = info.event.extendedProps.user || '';
-          document.getElementById('eventModalTelephone').innerText = info.event.extendedProps.telephone || '';
+        // Initialize FullCalendar
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            },
+            navLinks: true,
+            editable: true,
+            displayEventTime: true,
+            displayEventEnd: true,
+            dayMaxEvents: true, // allow "more" link when too many events
+            events: function(fetchInfo, successCallback, failureCallback) {
+                var room_id = roomSelect.value;
 
-          // Show the modal
-          var eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
-          eventModal.show();
-        }
-      });
+                if (room_id === "Select Room") {
+                    successCallback([]); // No events if no room selected
+                    return;
+                }
 
-      calendar.render();
+                $.ajax({
+                    url: '/getevents',
+                    type: 'GET',
+                    data: {
+                        room_id: room_id,
+                        start: fetchInfo.startStr,
+                        end: fetchInfo.endStr
+                    },
+                    success: function(response) {
+                        successCallback(response.events);
+                    },
+                    error: function() {
+                        failureCallback();
+                    }
+                });
+            },
+            eventClick: function(info) {
+                var startDate = moment(info.event.start).format('DD-MM-YYYY HH:mm');
+                var endDate = moment(info.event.end).format('DD-MM-YYYY HH:mm');
+
+                // Open modal and populate with event details
+                $('#eventModalTitle').text(info.event.title);
+                $('#eventModalUser').text(info.event.extendedProps.user.name);
+                $('#eventModalStart').text(startDate);
+                $('#eventModalEnd').text(endDate);
+                $('#eventModalDesc').text(info.event.extendedProps.desc);
+
+                var telephone = info.event.extendedProps.telephone;
+                var whatsappLink = 'https://wa.me/+62' + telephone.replace(/[^0-9]/g, ''); // Clean non-numeric characters
+
+                $('#eventModalTelephone').text(telephone).attr('href', whatsappLink);
+                $('#eventModalBookingId').val(info.event.id);
+
+                // Show or hide delete button based on ownership
+                if (window.authUserId == info.event.extendedProps.user_id || window.userRole === 'admin') {
+                    $('#deleteBookingBtn').show();
+                } else {
+                    $('#deleteBookingBtn').hide();
+                }
+
+                $('#eventModal').modal('show');
+            }
+        });
+        calendar.render();
+
+
+        // Handle delete booking
+        $('#deleteBookingBtn').on('click', function() {
+            var bookingId = $('#eventModalBookingId').val();
+
+            $.ajax({
+                url: '/bookingroom/' + bookingId,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}' // Add CSRF token
+                },
+                success: function(response) {
+                    // Hide modal after booking is successfully deleted
+                    location.reload();
+                    alert('Booking successfully deleted.');
+                },
+                error: function(response) {
+                    // Show error message
+                    location.reload();
+                }
+            });
+        });
+
+        // Handle form submission
+        roomFilterForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+            calendar.refetchEvents(); // Fetch events based on the selected room
+        });
     });
-
-    $(function () {
-      $('.datetimepicker').datetimepicker();
-    });
-  </script>
+</script>
 @endsection

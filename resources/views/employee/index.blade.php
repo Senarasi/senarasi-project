@@ -28,11 +28,11 @@
                         <th scope="col">Posisi</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" style="width: 140px">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($employee as $key => $data)
+                    @forelse ($employees as $key => $data)
                         <tr>
                             <th scope="row" style="text-align: center; ">{{ $data->employee_id }}</th>
                             <td>{{ $data->full_name }}</td>
@@ -55,8 +55,8 @@
                         </tr>
                         @include('partials.edit_employee_modal', [
                             'data' => $data,
-                            'department' => $department,
-                            'position' => $position,
+                            'department' => $departments,
+                            'position' => $positions,
                         ])
                     @empty
                         <div class="alert alert-danger">
@@ -109,7 +109,7 @@
                                 <label for="department_id" class="form-label">Departemen</label>
                                 <select name="department_id" class="form-select" id="department_option" required>
                                     <option disabled selected>Select Department</option>
-                                    @forelse ($department as $department_id => $department_name)
+                                    @forelse ($departments as $department_id => $department_name)
                                         <option value="{{ $department_id }}">{{ $department_name }}</option>
                                     @empty
                                         <option disabled selected>Data not found</option>
@@ -120,7 +120,7 @@
                                 <label for="position_id" class="form-label">Posisi</label>
                                 <select name="position_id" id="position_option" class="form-select">
                                     <option disabled selected>Select Position</option>
-                                    @forelse ($position as $position_id => $position_name)
+                                    @forelse ($positions as $position_id => $position_name)
                                         <option value="{{ $position_id }}">{{ $position_name }}</option>
                                     @empty
                                         <option disabled selected>Data not found</option>
@@ -128,14 +128,25 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="managername mb-3" style="font: 300 12; justify-content: space-between; align-items: center; flex: 1 0 0">
+                            <label for="managername" class="form-label">Manager</label>
+                            <select name="managername" class="form-select" id="managername">
+                                <option disabled selected>Select Manager</option>
+                                @forelse ($managers as $manager )
+                                    <option value="{{ $manager->employee_id }}">{{ $manager->full_name }}</option>
+                                @empty
+                                    <option disabled selected>Data not found</option>
+                                @endforelse
+                            </select>
+                        </div>
                         <div class="status">
                             <div style="font: 300 12px; justify-content: space-between; align-items: center; flex: 1 0 0">
                                 <label for="role" class="form-label">Role</label>
                                 <select id="role_option" name="role" class="form-select" style="font: 300 12">
                                     <option style="color: rgb(189, 189, 189)">Choose One</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="manager">Manager</option>
-                                    <option value="staff">Staff</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Staff">Staff</option>
                                 </select>
                             </div>
                         </div>

@@ -33,6 +33,26 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('requestbudget', 'App\Http\Controllers\RequestBudgetController');
     Route::get('/get-monthly-budget', [App\Http\Controllers\RequestBudgetController::class, 'getMonthlyBudget'])->name('getMonthlyBudget');
+    Route::get('/requestbudget/performer/{id}', [App\Http\Controllers\RequestBudgetController::class, 'performer'])->name('requestbudget.performer');
+    Route::get('/requestbudget/productioncrew/{id}', [App\Http\Controllers\RequestBudgetController::class, 'productioncrew'])->name('requestbudget.productioncrew');
+    Route::get('/requestbudget/productiontool/{id}', [App\Http\Controllers\RequestBudgetController::class, 'productiontool'])->name('requestbudget.productiontool');
+    Route::get('/requestbudget/operational/{id}', [App\Http\Controllers\RequestBudgetController::class, 'operational'])->name('requestbudget.operational');
+    Route::get('/requestbudget/location/{id}', [App\Http\Controllers\RequestBudgetController::class, 'location'])->name('requestbudget.location');
+    Route::get('/requestbudget/preview/{id}', [App\Http\Controllers\RequestBudgetController::class, 'preview'])->name('requestbudget.preview');
+    Route::get('/requestbudget/preview/{id}/view', [App\Http\Controllers\RequestBudgetController::class, 'report'])->name('requestbudget.report');
+
+    Route::resource('performer', 'App\Http\Controllers\PerformerController');
+    Route::get('/get-performer-price', [App\Http\Controllers\PerformerController::class, 'getPerformerPrice'])->name('getPerformerPrice');
+    Route::resource('production-crew', 'App\Http\Controllers\ProductionCrewController');
+    Route::resource('production-tool', 'App\Http\Controllers\ProductionToolController');
+    Route::get('/fetch-types', [App\Http\Controllers\ProductionToolController::class, 'fetchTypes'])->name('fetchTypes');
+    Route::get('/fetch-tools', [App\Http\Controllers\ProductionToolController::class, 'fetchTools'])->name('fetchTools');
+    Route::get('/fetch-price', [App\Http\Controllers\ProductionToolController::class, 'fetchPrice'])->name('fetchPrice');
+    Route::get('/fetch-tool-price', 'App\Http\Controllers\ProductionToolControllerr@fetchToolPrice')->name('fetchToolPrice');
+    Route::resource('operational', 'App\Http\Controllers\OperationalController');
+    Route::resource('location', 'App\Http\Controllers\LocationController');
+    Route::resource('preview', 'App\Http\Controllers\PreviewController');
+
 
     Route::get('/approval', function () {
         return view('approval.index');
@@ -48,6 +68,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/detail-budget', function () {
         return view('requestbudget.index');
+    });
+
+    Route::get('/detail-request', function () {
+        return view('requestbudget.detail');
     });
 
     Route::resource('department', 'App\Http\Controllers\DepartmentController');

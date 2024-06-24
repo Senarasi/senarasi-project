@@ -41,7 +41,7 @@
                                 <label for="department_id" class="form-label">Departemen</label>
                                 <select name="department_id" class="form-select" id="department_option" required>
                                     <option disabled selected>Select Department</option>
-                                    @forelse ($department as $department_id => $department_name)
+                                    @forelse ($departments as $department_id => $department_name)
                                         <option value="{{ $department_id }}"
                                             {{ $data->department_id == $department_id ? 'selected' : '' }}>
                                             {{ $department_name }} </option>
@@ -54,7 +54,7 @@
                                 <label for="position_id" class="form-label">Posisi</label>
                                 <select name="position_id" id="position_option" class="form-select">
                                     <option disabled selected>Select Position</option>
-                                    @forelse ($position as $position_id => $position_name)
+                                    @forelse ($positions as $position_id => $position_name)
                                         <option value="{{ $position_id }}"
                                             {{ $data->position_id == $position_id ? 'selected' : '' }}>
                                             {{ $position_name }}</option>
@@ -69,9 +69,9 @@
                                 <label for="role" class="form-label">Role</label>
                                 <select id="role_option" name="role" class="form-select" style="font: 300 12">
                                     <option style="color: rgb(189, 189, 189)">Choose One</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="manager">Manager</option>
-                                    <option value="staff">Staff</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Staff">Staff</option>
                                 </select>
                             </div>
                         </div>

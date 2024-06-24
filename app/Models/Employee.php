@@ -20,7 +20,8 @@ class Employee extends Authenticatable
         'email_verified_at',
         'password',
         'department_id',
-        'position_id'
+        'position_id',
+        'manager_id',
     ];
 
     protected $hidden = [
@@ -36,5 +37,11 @@ class Employee extends Authenticatable
 
     public function position(){
         return $this->belongsTo(Position::class, 'position_id');
+    }
+
+    // Define the relationship to itself (for manager)
+    public function manager()
+    {
+        return $this->belongsTo(Employee::class, 'manager_id');
     }
 }

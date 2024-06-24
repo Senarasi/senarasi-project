@@ -15,6 +15,7 @@ class RequestBudget extends Model
         'producer_id',
         'manager_id',
         'employee_id',
+        'month',
         'monthly_budget_id',
         'episode',
         'location',
@@ -22,6 +23,9 @@ class RequestBudget extends Model
         'date_start',
         'date_end',
         'date_upload',
+        'budget_code',
+        'budget',
+        'request_budget_number'
     ];
 
     public function program()

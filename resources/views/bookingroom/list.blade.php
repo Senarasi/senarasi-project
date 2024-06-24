@@ -7,7 +7,7 @@
 @section('content')
     <!--Badan Isi-->
     <div style="margin-left: 24px; ">
-        <div class="judulhalaman" style="display: flex; align-items: center; ">Booking List</div>
+        <div class="judulhalaman" style="display: flex; align-items: center; margin-top: -12px; ">Booking List</div>
             {{-- <div style="display: inline-flex; gap: 12px; margin-left:4px;">
                 <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#modal-sop"> Upload
                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
@@ -20,6 +20,11 @@
             </div> --}}
 
             <div class="tablenih" style="padding-top: -24px;">
+                @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                 {{-- <div class="judulhalaman " style="text-align: start;">Booking Room</div> --}}
                 <div class="table-responsive p-3">
                     <table id="datatable" class="table table-hover"
@@ -37,30 +42,31 @@
                         </tr>
                     </thead>
                     <tbody style="vertical-align: middle;" class="text-center">
-                        {{-- @foreach ($bookings as $booking) --}}
+                        @foreach ($bookings as $booking)
                             <tr>
-                                <th scope="row" class="text-center">1</th>
-                                <td>Room 1</td>
-                                <td>User 1</td>
-                                <td>08123456787</td>
-                                <td>Meeting</td>
-                                <td>2024-06-12 10:30</td>
-                                <td>2024-06-12 12:30</td>
+                                <th scope="row" class="text-center">{{$loop->iteration}}</th>
+                                <td>{{ $booking->room->room_name }}</td>
+                                <td>{{ $booking->user->name }}</td>
+                                <td>
+                                    <a style="text-decoration: none;" href="https://wa.me/+62{{ $booking->telephone }}" target="_blank">{{ $booking->telephone }}</a>
+                                </td>
+                                <td>{{ $booking->title }}</td>
+                                <td>{{ $booking->start }}</td>
+                                <td>{{ $booking->end }}</td>
                                 <td>
 
-                                    {{-- @can('owner', $booking)
-                                        <form action="{{ route('bookings.destroy', $booking->id) }}" method="POST">
+                                    @can('owner', $booking)
+                                        <form action="{{ route('bookingroom.destroy', $booking->id) }}" method="POST">
                                             @csrf
-                                            @method('DELETE') --}}
+                                            @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Delete</button>
-                                        {{-- </form> --}}
-                                    {{-- @endcan --}}
+                                        </form>
+                                    @endcan
 
 
                                 </td>
-
                             </tr>
-                        {{-- @endforeach --}}
+                        @endforeach
                     </tbody>
                     </table>
                 </div>
