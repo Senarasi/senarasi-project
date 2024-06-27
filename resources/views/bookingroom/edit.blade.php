@@ -42,7 +42,7 @@
 
                 <div class="tablenih" style="padding-top: -24px; margin-top: 32px;" >
 
-                    <p style="font: 700 24px Narasi Sans, sans-serif; color: #4A25AA; margin: 12px;">{{ $room->room_name }} Calendar</p>
+                    <p style="font: 700 24px Narasi Sans, sans-serif; color: #4A25AA; margin: 12px;">{{ $booking->room->room_name }} Calendar</p>
 
                     <div id="calendar" class="p-3"></div>
                 </div>
@@ -50,28 +50,29 @@
             <div class="col-md-4">
                 <div class="tablenih p-3" style="padding-top: -24px; margin-top: 32px;" >
                 <p style="font: 700 24px Narasi Sans, sans-serif; color: #4A25AA; margin: 12px;">Form Booking Room</p>
-                    <form method="POST" action="{{ route('bookingroom.store') }}" style="margin:12px">
+                    <form method="POST" action="{{ route('bookingroom.update', $booking->id) }}" style="margin:12px">
                         @csrf
+                        @method('PATCH')
 
-                        <input type="hidden" class="form-control" name="room_id" value="{{ $room->id }}">
+                        <input type="hidden" class="form-control" name="room_id" value="{{ $booking->room->id }}">
                         <div class="row">
                             <div class="col mb-3">
                                 <label class="d-flex" for="inputroom_name">Room Name  </label>
                                 <input type="text" class="form-control"
-                                id="inputroom_name" name="room_name" value="{{old('room_name') ?? $room->room_name }} " disabled>
+                                id="inputroom_name" name="room_name" value="{{old('room_name') ?? $booking->room->room_name }} " disabled>
                             </div>
 
                             <div class="col mb-3">
                                 <label class="d-flex" for="inputcapacity">Max Capacity</label>
                                 <input type="text" class="form-control"
-                                id="inputcapacity" name="capacity" value="{{old('capacity') ?? $room->capacity }}" disabled>
+                                id="inputcapacity" name="capacity" value="{{old('capacity') ?? $booking->room->capacity }}" disabled>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="d-flex" for="inputdesc">Description </label>
                             <input type="text" class="form-control @error('desc') is-invalid @enderror"
-                            id="inputdesc" name="desc" value="{{old('desc')}} ">
+                            id="inputdesc" name="desc" value="{{old('desc') ?? $booking->desc}} ">
                             @error('desc')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -81,7 +82,7 @@
                             <div class="col mb-3">
                                 <label class="d-flex" for="inputstart">Start Time</label>
                                 <input type="text" class="form-control datetimepicker @error('start') is-invalid @enderror"
-                                id="inputstart" name="start" value="{{old('start')}}">
+                                id="inputstart" name="start" value="{{old('start') ?? $booking->start}}">
                                 @error('start')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -89,7 +90,7 @@
                             <div class="col mb-3">
                                 <label class="d-flex" for="inputend">End Time</label>
                                 <input type="text" class="form-control datetimepicker @error('end') is-invalid @enderror"
-                                id="inputend" name="end" value="{{old('end')}}">
+                                id="inputend" name="end" value="{{old('end') ?? $booking->end}}">
                                 @error('end')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -107,20 +108,23 @@
                         </div> --}}
 
                         <div class="mb-3">
-                            <label for="guests"  class="d-flex">Employee</label>
-                                <select class="form-control @error('guests') is-invalid @enderror" id="select2" name="guests[]" multiple="multiple">
-                                    @foreach ($users as $user)
-                                        @if ($user->id !== auth()->id())
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
+                            <label for="guests" class="d-flex">Employee</label>
+                            <select class="form-control @error('guests') is-invalid @enderror" id="select2" name="guests[]" multiple="multiple">
+                                @foreach ($users as $user)
+                                    @if ($user->id !== auth()->id())
+                                        <option value="{{ $user->id }}"
+                                            {{ $booking->guests->pluck('user_id')->contains($user->id) ? 'selected' : '' }}>
+                                            {{ $user->name }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            </select>
 
-                                @error('guests')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            @error('guests')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
                         {{-- <div class="mb-3">
@@ -136,19 +140,21 @@
                         <div class="mb-3">
                             <label for="additional_emails" class="d-flex">External Guests</label>
                             <select class="form-control @error('additional_emails') is-invalid @enderror" id="additional_emails" name="additional_emails[]" multiple="multiple">
-                                <!-- Options will be added dynamically by Select2 -->
+                                @foreach ($booking->externalguests as $externalguest)
+                                    <option value="{{ $externalguest->email }}" selected>{{ $externalguest->email }}</option>
+                                @endforeach
                             </select>
                             @error('additional_emails')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                             @enderror
                         </div>
 
 
 
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="uwuq w-100 mt-3">Book</button>
+                            <button type="submit" class="uwuq w-100 mt-3">Update</button>
                         </div>
 
                     </form>
@@ -228,7 +234,7 @@
                 }
             },
             events: function(fetchInfo, successCallback, failureCallback) {
-                var room_id = '{{ $room->id }}'; // Get the room ID from the Blade variable
+                var room_id = '{{ $booking->room->id }}'; // Get the room ID from the Blade variable
                 $.ajax({
                     url: '/getevents',
                     type: 'GET',
@@ -296,6 +302,7 @@
                     $('#editBookingBtn').hide();
                 }
 
+
                 $('#eventModal').modal('show');
             }
 
@@ -327,10 +334,7 @@
             var bookingId = $('#eventModalBookingId').val();
             window.location.href = '/bookingroom/' + bookingId + '/edit';
         });
-
     });
-
-
 
   $(function () {
     $('.datetimepicker').datetimepicker();
@@ -380,7 +384,7 @@
                 }
             });
         });
-</script>
+    </script>
 @endsection
 
 

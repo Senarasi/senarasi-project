@@ -31,15 +31,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('budget', 'App\Http\Controllers\BudgetController');
     Route::post('/budget/store', 'App\Http\Controllers\BudgetController@store')->name('budget.store');
 
-    Route::resource('requestbudget', 'App\Http\Controllers\RequestBudgetController');
+    Route::resource('request-budget', 'App\Http\Controllers\RequestBudgetController');
     Route::get('/get-monthly-budget', [App\Http\Controllers\RequestBudgetController::class, 'getMonthlyBudget'])->name('getMonthlyBudget');
-    Route::get('/requestbudget/performer/{id}', [App\Http\Controllers\RequestBudgetController::class, 'performer'])->name('requestbudget.performer');
-    Route::get('/requestbudget/productioncrew/{id}', [App\Http\Controllers\RequestBudgetController::class, 'productioncrew'])->name('requestbudget.productioncrew');
-    Route::get('/requestbudget/productiontool/{id}', [App\Http\Controllers\RequestBudgetController::class, 'productiontool'])->name('requestbudget.productiontool');
-    Route::get('/requestbudget/operational/{id}', [App\Http\Controllers\RequestBudgetController::class, 'operational'])->name('requestbudget.operational');
-    Route::get('/requestbudget/location/{id}', [App\Http\Controllers\RequestBudgetController::class, 'location'])->name('requestbudget.location');
-    Route::get('/requestbudget/preview/{id}', [App\Http\Controllers\RequestBudgetController::class, 'preview'])->name('requestbudget.preview');
-    Route::get('/requestbudget/preview/{id}/view', [App\Http\Controllers\RequestBudgetController::class, 'report'])->name('requestbudget.report');
+    Route::get('/request-budget/performer/{id}', [App\Http\Controllers\RequestBudgetController::class, 'performer'])->name('request-budget.performer');
+    Route::get('/request-budget/productioncrew/{id}', [App\Http\Controllers\RequestBudgetController::class, 'productioncrew'])->name('request-budget.productioncrew');
+    Route::get('/request-budget/productiontool/{id}', [App\Http\Controllers\RequestBudgetController::class, 'productiontool'])->name('request-budget.productiontool');
+    Route::get('/request-budget/operational/{id}', [App\Http\Controllers\RequestBudgetController::class, 'operational'])->name('request-budget.operational');
+    Route::get('/request-budget/location/{id}', [App\Http\Controllers\RequestBudgetController::class, 'location'])->name('request-budget.location');
+    Route::get('/request-budget/preview/{id}', [App\Http\Controllers\RequestBudgetController::class, 'preview'])->name('request-budget.preview');
+    Route::get('/request-budget/preview/{id}/view', [App\Http\Controllers\RequestBudgetController::class, 'report'])->name('request-budget.report');
 
     Route::resource('performer', 'App\Http\Controllers\PerformerController');
     Route::get('/get-performer-price', [App\Http\Controllers\PerformerController::class, 'getPerformerPrice'])->name('getPerformerPrice');

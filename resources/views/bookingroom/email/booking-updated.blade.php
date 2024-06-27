@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Booking Room Confirmation</title>
+    <title>Booking Room Updated</title>
 </head>
 <body>
-    <h3>The room has been successfully booked.</h3>
+    <h3>Booking room has been successfully Updated.</h3>
     Booking Room Details:
     <p><strong>Description:</strong> {{ $desc }}</p>
     <p><strong>Location:</strong> INTILAND TOWER LT. 20, Jl. Jend. Sudirman Kav. 32, Jakarta Pusat, 10220 </p>

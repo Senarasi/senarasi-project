@@ -21,7 +21,7 @@
                     <div class="col-9">
                         <div class="header">
                             <img style="margin-bottom: 8px" src="/image/senarasi_login.png" alt="" />
-                            <div class="underfontjudul">Electronic System Narasi</div>
+                            <div class="underfontjudul">Sistem Elektronik Narasi</div>
                         </div>
                         <form action="{{ route('login') }}" method="POST">
                             @csrf

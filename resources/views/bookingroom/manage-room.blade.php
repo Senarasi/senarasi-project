@@ -26,11 +26,10 @@
                     style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ;  color: #4A25AA; ">
                     <thead style="font-weight: 500; text-align: center">
                         <tr class="text-center">
-                            <th scope="col">No.</th>
+                            <th scope="col" style="width: 120px">No.</th>
                             <th scope="col">Room  Name</th>
-                            <th scope="col">Capacity</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Max Capacity</th>
+                            <th scope="col" style="width: 120px">Action</th>
 
                         </tr>
                     </thead>
@@ -40,17 +39,16 @@
                                 <th scope="row" class="text-center">{{$loop->iteration}}</th>
                                     <td>{{ $room->room_name }}</td>
                                     <td>{{ $room->capacity }}</td>
-                                    <td>{{ $room->desc }}</td>
                                 <td class="text-center">
 
-                                        <span style="display: flex; gap: 8px; justify-content: center">
+                                        <span style="display: flex; gap: 2px; justify-content: center">
                                             <a type="button" class="uwuq" data-bs-toggle="modal" data-bs-target="#modal-edit-room" data-id="{{ $room->id }}" data-name="{{ $room->room_name }}" data-capacity="{{ $room->capacity }}" data-desc="{{ $room->desc }}">
                                                 Edit
                                             </a>
                                             <form method="POST" action="{{ route('manage-rooms.destroy', $room->id )}}" class="">
                                                 @csrf
                                                 @method('delete')
-                                            <button type="submit" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i> Hapus</button>
+                                            <button type="submit" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i>Delete</button>
                                             </form>
                                         </span>
 
@@ -92,16 +90,6 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="desc" class="form-label">{{ __('Room description') }}</label>
-                            <input id="desc" type="text" class="form-control @error('desc') is-invalid @enderror" name="desc" value="{{ old('desc') }}" required autocomplete="desc">
-
-                            @error('desc')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
@@ -111,49 +99,6 @@
         </div>
     </div>
 
-    {{-- <div class="modal justify-content-center fade" id="modal-edit-room"  data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body bg-white">
-                    <form class="modal-form-check" style="font: 500 14px Narasi Sans, sans-serif">
-                        <div class="mb-3">
-                            <label for="room_name" class="form-label">{{ __('Room Name') }}</label>
-                            <input id="room_name" type="text" class="form-control @error('room_name') is-invalid @enderror" name="room_name" value="Room 1" required autocomplete="room_name">
-                            @error('room_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="capacity" class="form-label">{{ __('Room Capacity') }}</label>
-                            <input id="capacity" type="number" class="form-control @error('capacity') is-invalid @enderror" name="capacity" value="10" required autocomplete="capacity">
-
-                            @error('capacity')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="desc" class="form-label">{{ __('Room description') }}</label>
-                            <input id="desc" type="text" class="form-control @error('desc') is-invalid @enderror" name="desc" value="Lorem ipsum dolor sit amet consectetur adipisicing elit." required autocomplete="desc">
-
-                            @error('desc')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <button type="submit" class="button-submit">Submit</button>
-                        <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
-                    </form>
-                </div>
-                <img class="img-8" src="{{ asset('asset/image/Narasi_Logo.svg')  }}" alt=" " />
-            </div>
-        </div>
-    </div> --}}
 
     <div class="modal justify-content-center fade" id="modal-edit-room" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -181,15 +126,6 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="desc" class="form-label">{{ __('Room description') }}</label>
-                            <input id="modal-desc" type="text" class="form-control @error('desc') is-invalid @enderror" name="desc" value="{{ old('desc') }}" required autocomplete="desc">
-                            @error('desc')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
@@ -208,20 +144,18 @@
     var editForm = document.getElementById('edit-room-form');
     var roomNameInput = document.getElementById('modal-room-name');
     var capacityInput = document.getElementById('modal-capacity');
-    var descInput = document.getElementById('modal-desc');
 
     editButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             var roomId = this.getAttribute('data-id');
             var roomName = this.getAttribute('data-name');
             var capacity = this.getAttribute('data-capacity');
-            var desc = this.getAttribute('data-desc');
+
 
             editForm.setAttribute('action', '/manage-rooms/' + roomId + '/update');
 
             roomNameInput.value = roomName;
             capacityInput.value = capacity;
-            descInput.value = desc;
         });
     });
 });

@@ -18,37 +18,37 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false" disabled>Header</button>
+            <button class="nav-link tablinks" id="home-tab" data-bs-toggle="tab" data-url="{{route('request-budget.edit', $id)}}" data-bs-target="#home-tab-pane"
+                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">Header</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="data1-tab" data-url="{{ route('requestbudget.performer', $id) }}"
+            <button class="nav-link tablinks" id="data1-tab" data-url="{{ route('request-budget.performer', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data1-tab-pane" type="button" role="tab"
                 aria-controls="data1-tab-pane" aria-selected="false">Performer</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="data2-tab" data-url="{{ route('requestbudget.productioncrew', $id) }}"
+            <button class="nav-link tablinks" id="data2-tab" data-url="{{ route('request-budget.productioncrew', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data2-tab-pane" type="button" role="tab"
                 aria-controls="data2-tab-pane" aria-selected="false">Production Crews</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="data3-tab" data-url="{{ route('requestbudget.productiontool', $id) }}"
+            <button class="nav-link tablinks" id="data3-tab" data-url="{{ route('request-budget.productiontool', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data3-tab-pane" type="button" role="tab"
                 aria-controls="data3-tab-pane" aria-selected="false">Production
                 Tools</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link active tablinks" id="data4-tab" data-url="{{ route('requestbudget.operational', $id) }}"
+            <button class="nav-link active tablinks" id="data4-tab" data-url="{{ route('request-budget.operational', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data4-tab-pane" type="button" role="tab"
-                aria-controls="data4-tab-pane" aria-selected="false">Operational</button>
+                aria-controls="data4-tab-pane" aria-selected="false" disabled>Operational</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="data5-tab" data-url="{{ route('requestbudget.location', $id) }}"
+            <button class="nav-link tablinks" id="data5-tab" data-url="{{ route('request-budget.location', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data5-tab-pane" type="button" role="tab"
                 aria-controls="data1-tab-pane" aria-selected="false">Location</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="preview-tab" data-url="{{ route('requestbudget.preview', $id) }}"
+            <button class="nav-link tablinks" id="preview-tab" data-url="{{ route('request-budget.preview', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#preview-tab-pane" type="button" role="tab"
                 aria-controls="preview-tab-pane" aria-selected="false">Preview</button>
         </li>
@@ -187,7 +187,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="url_back"
-                                    value="{{ route('requestbudget.operational', $requestbudget->request_budget_id) }}">
+                                    value="{{ route('request-budget.operational', $requestbudget->request_budget_id) }}">
                                 <a href="#" onclick="$(this).closest('form').submit();"
                                     class="btn btn-danger btn-sm">Hapus</a>
                             </form>
@@ -302,7 +302,7 @@
                         </div>
                         <input type="hidden" name="request_budget_id" value="{{ $id }}">
                         <input type="hidden" name="url_back"
-                            value="{{ route('requestbudget.operational', $requestbudget->request_budget_id) }}">
+                            value="{{ route('request-budget.operational', $requestbudget->request_budget_id) }}">
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>

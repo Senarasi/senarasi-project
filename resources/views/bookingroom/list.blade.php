@@ -34,10 +34,12 @@
                             <th scope="col">No.</th>
                             <th scope="col">Room  Name</th>
                             <th scope="col">Booked by</th>
-                            <th scope="col">Contact</th>
-                            <th scope="col">Title</th>
+                            <th scope="col">CP Booking</th>
+                            <th scope="col">Description</th>
                             <th scope="col">Start Time</th>
                             <th scope="col">End Time</th>
+                            <th scope="col">Person</th>
+
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -48,22 +50,34 @@
                                 <td>{{ $booking->room->room_name }}</td>
                                 <td>{{ $booking->user->name }}</td>
                                 <td>
-                                    <a style="text-decoration: none;" href="https://wa.me/+62{{ $booking->telephone }}" target="_blank">{{ $booking->telephone }}</a>
+                                    <a style="text-decoration: none;" href="https://wa.me/+62{{ $booking->user->telephone }}" target="_blank">{{ $booking->user->telephone }}</a>
                                 </td>
-                                <td>{{ $booking->title }}</td>
+                                <td>{{ $booking->desc }}</td>
                                 <td>{{ $booking->start }}</td>
                                 <td>{{ $booking->end }}</td>
-                                <td>
+                                {{-- <td>
 
-                                    @can('owner', $booking)
+                                        @foreach ($booking->guests as $guest)
+                                            <span class="badge rounded-pill text-bg-secondary">{{ $guest->user->name }}</span>
+                                        @endforeach
+                                </td> --}}
+                                <td>
+                                    <a href="#" style="text-decoration: none;"  class="show-guests" data-guests="{{ $booking->guests->pluck('user.name')->implode(', ') }}" data-externalguests="{{ $booking->externalGuests->pluck('email')->implode(', ') }}">
+                                        {{ $booking->guests->count() + $booking->externalGuests->count() }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <span style="display: flex; gap: 8px; justify-content: center">
+                                        @can('owner', $booking)
+                                        <a href="{{ route('bookingroom.edit', $booking->id) }}" type="button" class="uwuq">Edit</a>
                                         <form action="{{ route('bookingroom.destroy', $booking->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
-                                    @endcan
 
-
+                                        @endcan
+                                    </span>
                                 </td>
                             </tr>
                         @endforeach
@@ -75,5 +89,72 @@
 
     </div>
 
+@endsection
+
+@section('modal')
+<div class="modal justify-content-center fade" id="guestsModal"  data-bs-keyboard="false"
+        tabindex="-1"  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+            <div class="modal-body  bg-white">
+
+                <div class="mb-3"><strong>Employee : </strong></div>
+                <div class="mb-3"><ul id="guestsList" class="list-group">
+                    <!-- List of guests will be inserted here dynamically -->
+                </ul></div>
+
+                <div class="mb-3"><strong>External Guests:</strong></div>
+                <div class="mb-3"><ul id="externalGuestsList" class="list-group">
+                        <!-- List of external guests will be inserted here dynamically -->
+                </ul></div>
+
+                <input type="hidden" id="eventModalBookingId" value="">
+                <div class="text-end">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+            <img class="img-8" src="{{ asset('asset/image/Narasi_Logo.svg')  }}" alt=" " />
+        </div>
+    </div>
+@endsection
+
+@section('custom-js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var guestLinks = document.querySelectorAll('.show-guests');
+
+        guestLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                var internalGuests = this.getAttribute('data-guests').split(',');
+                var externalGuests = this.getAttribute('data-externalguests').split(',');
+                var guestsList = document.getElementById('guestsList');
+                var externalGuestsList = document.getElementById('externalGuestsList');
+
+                guestsList.innerHTML = '';
+                externalGuestsList.innerHTML = '';
+
+                internalGuests.forEach(function(guest) {
+                    var listItem = document.createElement('li');
+                    listItem.classList.add('list-group-item');
+                    listItem.textContent = guest.trim();
+                    guestsList.appendChild(listItem);
+                });
+
+                externalGuests.forEach(function(guest) {
+                    var listItem = document.createElement('li');
+                    listItem.classList.add('list-group-item');
+                    listItem.textContent = guest.trim();
+                    externalGuestsList.appendChild(listItem);
+                });
+
+                var guestsModal = new bootstrap.Modal(document.getElementById('guestsModal'));
+                guestsModal.show();
+            });
+        });
+    });
+</script>
 @endsection
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
 use App\Models\CrewPosition;
 use Illuminate\Http\Request;
 use App\Models\Employee;
@@ -28,8 +29,18 @@ class RequestBudgetController extends Controller
 {
     public function index(Request $request)
     {
+        $requestBudgets = RequestBudget::with([
+            'program',
+            'approval' => function ($query) {
+                $query->whereIn('stage', ['approval 1', 'reviewer', 'approval 2', 'approval 3'])
+                    ->with('employee');
+            },
+        ])->get();
 
-        return view('requestbudget.index');
+        // Check if any request budget has approval 3
+        $hasApproval3 = $requestBudgets->pluck('approvals')->flatten()->where('stage', 'approval 3')->isNotEmpty();
+
+        return view('requestbudget.index', compact('requestBudgets', 'hasApproval3'));
     }
 
     public function create()
@@ -124,7 +135,89 @@ class RequestBudgetController extends Controller
 
         $requestBudget = RequestBudget::create($validatedData);
 
-        return redirect()->route('requestbudget.performer', ['id' => $requestBudget->request_budget_id]);
+        return redirect()->route('request-budget.performer', ['id' => $requestBudget->request_budget_id]);
+    }
+
+    public function show($id)
+    {
+        $requestBudgets = RequestBudget::with([
+            'program',
+            'performer',
+            'productionCrew',
+            'productionTool',
+            'operational',
+            'location',
+            'approval' => function ($query) {
+                $query->whereIn('stage', ['approval 1', 'reviewer', 'approval 2', 'approval 3'])
+                    ->with('employee');
+            },
+        ])->findOrFail($id);
+
+        // Check if any request budget has approval 3
+        $hasApproval3 = Approval::pluck('approvals')->flatten()->where('stage', 'approval 3')->isNotEmpty();
+
+        $approval1 = Employee::findOrFail(120017081704);
+        $approval2 = Employee::findOrFail(120021071261);
+        $reviewer = Employee::findOrFail(220017110117);
+
+        $performer = Performer::where('request_budget_id', $id)->get();
+        $totalperformer = $performer->sum('total_cost');
+        $productioncrew = ProductionCrew::where('request_budget_id', $id)->get();
+        $totalproductioncrew = $productioncrew->sum('total_cost');
+        $productiontool = ProductionTool::where('request_budget_id', $id)->get();
+        $totalproductiontool = $productiontool->sum('total_cost');
+        $operational = Operational::where('request_budget_id', $id)->get();
+        $totaloperational = $operational->sum('total_cost');
+        $location = Location::where('request_budget_id', $id)->get();
+        $totallocation = $location->sum('total_cost');
+        $total = $totalperformer + $totalproductioncrew + $totalproductiontool + $totaloperational + $totallocation;
+
+        return view('requestbudget.detail', compact('approval1', 'approval2', 'reviewer', 'hasApproval3', 'requestBudgets', 'performer', 'totalperformer', 'productioncrew', 'totalproductioncrew', 'productiontool', 'totalproductiontool', 'operational', 'totaloperational', 'location', 'totallocation', 'total'));
+    }
+
+    public function edit($id)
+    {
+        $requestBudget = RequestBudget::findOrFail($id);
+        $programs = Program::pluck('program_name', 'program_id');
+        $producers = Employee::join('positions', 'employees.position_id', '=', 'positions.position_id')
+            ->where('positions.position_name', 'like', '%PRODUCER%')
+            ->get();
+        $manager = Employee::find($requestBudget->manager_id);
+
+        return view('requestbudget.edit', compact('requestBudget', 'programs', 'producers', 'manager'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Fetch the existing request budget
+        $requestBudget = RequestBudget::findOrFail($id);
+
+        // Validate the request data
+        $validatedData = $request->validate([
+            'program_id' => 'required|exists:programs,program_id',
+            'month' => 'required|integer|between:1,12',
+            'producer_id' => 'required|exists:employees,employee_id',
+            'manager_id' => 'required|exists:employees,employee_id',
+            'monthly_budget_id' => 'required|exists:monthly_budgets,monthly_budget_id',
+            'budget_code' => 'required|string|max:255',
+            'budget' => 'required|numeric',
+            'episode' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'date_start' => 'required|date',
+            'date_end' => 'required|date',
+            'type' => 'required|string|max:255',
+            'date_upload' => 'required|date',
+        ]);
+
+        // Preserve the existing request_budget_number
+        $validatedData['request_budget_number'] = $requestBudget->request_budget_number;
+        $validatedData['employee_id'] = $requestBudget->employee_id;
+
+        // Update the request budget
+        $requestBudget->update($validatedData);
+
+        return redirect()->route('request-budget.performer', ['id' => $requestBudget->request_budget_id])
+            ->with('success', 'Request budget updated successfully!');
     }
 
     public function performer($id)
@@ -339,7 +432,7 @@ class RequestBudgetController extends Controller
         $approval2 = Employee::findOrFail(120021071261);
         $reviewer = Employee::findOrFail(220017110117);
         $totalcost = $totalPerformerCost + $totalProductionCrewCost + $totalProductionToolCost + $totalOperationalCost + $totalLocationCost;
-        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approval1','approval2','reviewer','requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalcost', 'totalRepCrewCounts', 'totalRepPerformerCounts'));
+        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approval1', 'approval2', 'reviewer', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalcost', 'totalRepCrewCounts', 'totalRepPerformerCounts'));
         // Mengatur format kertas menjadi lanskap
         $pdf->setPaper('LEGAL', 'landscape');
         return $pdf->stream('document.pdf');

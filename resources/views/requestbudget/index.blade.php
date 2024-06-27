@@ -8,25 +8,26 @@
     <div class="judulhalaman" style="display: flex; align-items: center; ">Request Budget Narasi</div>
 
     <div style="display: flex; justify-content: space-between;">
-        <div class="keteranganbudget" >
+        <div class="keteranganbudget">
             <div class="tunggu">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="12" fill="#FFE900"/>
-            </svg><span class="text-center">waiting for approval</span>
+                    <circle cx="12" cy="12" r="12" fill="#FFE900" />
+                </svg><span class="text-center">waiting for approval</span>
             </div>
-            <div class="tolak" >
+            <div class="tolak">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="12" fill="#E73638"/>
-            </svg><span class="text-center">approval rejected</span>
+                    <circle cx="12" cy="12" r="12" fill="#E73638" />
+                </svg><span class="text-center">approval rejected</span>
             </div>
             <div class="diterima">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="12" fill="#009579"/>
-            </svg><span class="text-center">approval approved</span>
+                    <circle cx="12" cy="12" r="12" fill="#009579" />
+                </svg><span class="text-center">approval approved</span>
             </div>
         </div>
         <div class="text-end ms-3">
-            <a  href="{{route('requestbudget.create')}}" type="button" class="button-departemen" style="text-decoration: none">
+            <a href="{{ route('request-budget.create') }}" type="button" class="button-departemen"
+                style="text-decoration: none">
                 Request Budget
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -37,73 +38,115 @@
         </div>
     </div>
 
-        <div class="tablenih">
-            <div class="table-responsive p-3">
-                <table id="datatable" class="table table-hover "
+    <div class="tablenih">
+        <div class="table-responsive p-3">
+            <table id="datatable" class="table table-hover "
                 style="font: 300 16px Narasi Sans, sans-serif;width: 100% ; margin-top: 12px; margin-bottom: 12px; text-align: center; ">
-                    <thead style="font-weight: 500; ">
-                        <tr class="dicobain ">
-                            <th scope="col ">No</th>
-                            <th scope="col ">Request Number</th>
-                            <th scope="col ">Program Name</th>
-                            <th scope="col ">Approval 1</th>
-                            <th scope="col ">Approval 2</th>
-                            <th scope="col ">Approval 3</th>
-                            <th scope="col ">User Submit</th>
-                            <th scope="col ">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody style="vertical-align: middle;">
-                        <tr>
-                            <th scope="row ">1</th>
-                            <td>1</td>
-                            <td> Mata Najwa</td>
-                            <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <circle cx="12" cy="12" r="12" fill="#E73638" />
-                                </svg></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                <thead style="font-weight: 500; ">
+                    <tr class="dicobain ">
+                        <th scope="col ">No</th>
+                        <th scope="col ">Request Number</th>
+                        <th scope="col ">Program Name</th>
+                        <th scope="col ">Approval Manager</th>
+                        <th scope="col ">Review</th>
+                        <th scope="col ">Approval 1</th>
+                        <th scope="col ">Approval 2</th>
+                        <th scope="col ">User Submit</th>
+                        <th scope="col ">Action</th>
+                    </tr>
+                </thead>
+                <tbody style="vertical-align: middle;">
+                    <tr>
+                        @php
+                            $counter = 1;
+                        @endphp
+                        @forelse ($requestBudgets as $data)
+                            <th scope="row ">{{ $counter++ }}</th>
+                            <td>{{ $data->request_budget_number }}</td>
+                            <td> {{ $data->program->program_name }}</td>
+                            @if (($data->approval->where('stage', 'approval 1')->first()->status ?? '-') == 'pending')
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#FFE900" />
+                                    </svg></td>
+                            @elseif (($data->approval->where('stage', 'approval 1')->first()->status ?? '-') == 'approved')
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#009579" />
+                                    </svg></td>
+                            @else
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#E73638" />
+                                    </svg></td>
+                            @endif
+                            @if (($data->approval->where('stage', 'reviewer')->first()->status ?? '-') == 'pending')
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#FFE900" />
+                                    </svg></td>
+                            @elseif (($data->approval->where('stage', 'reviewer')->first()->status ?? '-') == 'approved')
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#009579" />
+                                    </svg></td>
+                            @else
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#E73638" />
+                                    </svg></td>
+                            @endif
+                            @if (($data->approval->where('stage', 'approval 2')->first()->status ?? '-') == 'pending')
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#FFE900" />
+                                    </svg></td>
+                            @elseif (($data->approval->where('stage', 'approval 2')->first()->status ?? '-') == 'approved')
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#009579" />
+                                    </svg></td>
+                            @else
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#E73638" />
+                                    </svg></td>
+                            @endif
+                            @if ($hasApproval3)
+                                @if (($data->approval->where('stage', 'approval 3')->first()->status ?? '-') == 'pending')
+                                    <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <circle cx="12" cy="12" r="12" fill="#FFE900" />
+                                        </svg></td>
+                                @elseif (($data->approval->where('stage', 'approval 3')->first()->status ?? '-') == 'approved')
+                                    <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <circle cx="12" cy="12" r="12" fill="#009579" />
+                                        </svg></td>
+                                @else
+                                    <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <circle cx="12" cy="12" r="12" fill="#E73638" />
+                                        </svg></td>
+                                @endif
+                            @else
+                                <td>-</td>
+                            @endif
+                            <td>{{ $data->employee->full_name }}</td>
                             <td style="gap: 8px; display: flex; justify-content: center; ">
-                                <a href="/detail-request"  style="text-decoration: none"> <button type="button "
-                                    class="button-general" style="width: fit-content; ">DETAIL</button>
-                                </a></td>
+                                <a href="{{ route('request-budget.show', $data->request_budget_id) }}" style="text-decoration: none"> <button type="button "
+                                        class="button-general" style="width: fit-content; ">DETAIL</button>
+                                </a>
+                            </td>
+                        @empty
+                            <div class="alert alert-danger">
+                                Data Post belum Tersedia.
+                            </div>
+                        @endforelse
 
-                        </tr>
-                        <tr>
-                            <th scope=" row ">2</th>
-                            <td> </td>
-                            <td></td>
-                            <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <circle cx="12" cy="12" r="12" fill="#E73638" />
-                                </svg></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td style="gap: 8px; display: flex; justify-content: center; "><button type="button "
-                                    class="button-general" style="width: fit-content; ">DETAIL</button></td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row ">3</th>
-                            <td></td>
-                            <td></td>
-                            <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <circle cx="12" cy="12" r="12" fill="#E73638" />
-                                </svg></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td style="gap: 8px; display: flex; justify-content: center; "><button type="button "
-                                    class="button-general" style="width: fit-content; ">DETAIL</button></td>
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
+    </div>
 @endsection

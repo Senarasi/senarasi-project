@@ -8,10 +8,16 @@
         {{-- ngok meta tag --}}
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="shortcut icon" href="{{ asset('asset/image/narasi_logomark.png') }}" type="image/x-icon">
+        <link rel="shortcut_icon" href="{{ asset('asset/image/narasi_logomark.png') }}" type="image/x-icon">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
         <link rel="stylesheet"  href="{{ asset('asset/datetimepicker/jquery.datetimepicker.css') }}">
+        <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+        <!-- Tagify CSS -->
+        <link href="{{ asset('css/tagify.css') }}" rel="stylesheet">
+        <!-- Tagify JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.0.0/tagify.min.js"></script>
+        <link href="{{ asset('js/tagify.min.js') }}" rel="stylesheet">
         <script src="{{ asset('asset/fullcalendar/dist/index.global.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <!-- Data Tables -->
@@ -26,8 +32,6 @@
                 align-items: center;
                 position: fixed;
                 z-index: 4;
-
-
             }
 
             .topbar a {
@@ -103,6 +107,7 @@
         <script src="{{ asset('asset/datetimepicker/build/jquery.datetimepicker.full.min.js') }}"></script>
         <script src="{{ asset('js/datatables.min.js')}}"></script>
         <script src="{{ asset('js/datatables.init.js')}}"></script>
+        <script src="{{ asset('js/select2.min.js') }}"></script>
         <script>
             // Mendapatkan URL saat ini
             const currentUrl = window.location.pathname;

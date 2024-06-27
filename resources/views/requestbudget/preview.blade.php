@@ -18,39 +18,39 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false" disabled>Header</button>
+            <button class="nav-link tablinks" id="home-tab" data-bs-toggle="tab" data-url="{{route('request-budget.edit', $id)}}" data-bs-target="#home-tab-pane"
+                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">Header</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="data1-tab" data-url="{{ route('requestbudget.performer', $id) }}"
+            <button class="nav-link tablinks" id="data1-tab" data-url="{{ route('request-budget.performer', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data1-tab-pane" type="button" role="tab"
                 aria-controls="data1-tab-pane" aria-selected="false">Performer</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="data2-tab" data-url="{{ route('requestbudget.productioncrew', $id) }}"
+            <button class="nav-link tablinks" id="data2-tab" data-url="{{ route('request-budget.productioncrew', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data2-tab-pane" type="button" role="tab"
                 aria-controls="data2-tab-pane" aria-selected="false">Production Crews</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="data3-tab" data-url="{{ route('requestbudget.productiontool', $id) }}"
+            <button class="nav-link tablinks" id="data3-tab" data-url="{{ route('request-budget.productiontool', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data3-tab-pane" type="button" role="tab"
                 aria-controls="data3-tab-pane" aria-selected="false">Production
                 Tools</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="data4-tab" data-url="{{ route('requestbudget.operational', $id) }}"
+            <button class="nav-link tablinks" id="data4-tab" data-url="{{ route('request-budget.operational', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data4-tab-pane" type="button" role="tab"
                 aria-controls="data4-tab-pane" aria-selected="false">Operational</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="data5-tab" data-url="{{ route('requestbudget.location', $id) }}"
+            <button class="nav-link tablinks" id="data5-tab" data-url="{{ route('request-budget.location', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data5-tab-pane" type="button" role="tab"
                 aria-controls="data1-tab-pane" aria-selected="false">Location</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link active tablinks" id="preview-tab" data-url="{{ route('requestbudget.preview', $id) }}"
+            <button class="nav-link active tablinks" id="preview-tab" data-url="{{ route('request-budget.preview', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#preview-tab-pane" type="button" role="tab"
-                aria-controls="preview-tab-pane" aria-selected="false">Preview</button>
+                aria-controls="preview-tab-pane" aria-selected="false" disabled>Preview</button>
         </li>
         <li class="nav-item" role="presentation">
         </li>
@@ -119,7 +119,7 @@
         </div>
 
         <div class="d-flex">
-            <a href="{{ route('requestbudget.report', $id) }}" target="_blank" type="button"
+            <a href="{{ route('request-budget.report', $id) }}" target="_blank" type="button"
                 class="button-permintaan"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                     viewBox="0 0 32 32" fill="none">
                     <path

@@ -35,7 +35,7 @@
                     INPUT
                     <span style="color: #ffe900">BUDGET</span>
                 </button>
-                <a href="{{ route('requestbudget.create') }}" class="text-decoration-none text-end">
+                <a href="{{ route('request-budget.create') }}" class="text-decoration-none text-end">
                     <button class="button-ini">REQUEST <span style="color: #ffe900">BUDGET</span></button>
                 </a>
             </div>
