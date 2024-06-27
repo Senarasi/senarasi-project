@@ -7,7 +7,7 @@
 @section('content')
     <!--Badan Isi-->
     <div style="margin-left: 24px; ">
-        <div class="judulhalaman" style="display: flex; align-items: center; ">Booking List</div>
+        <div class="judulhalaman" style="display: flex; align-items: center; margin-top: -12px;">Manage Room</div>
             <div style="display: inline-flex; gap: 12px; margin-left:4px;">
                 <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#modal-create-room"> Add New Room
                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
@@ -26,31 +26,36 @@
                     style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ;  color: #4A25AA; ">
                     <thead style="font-weight: 500; text-align: center">
                         <tr class="text-center">
-                            <th scope="col">No.</th>
+                            <th scope="col" style="width: 120px">No.</th>
                             <th scope="col">Room  Name</th>
-                            <th scope="col">Capacity</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Max Capacity</th>
+                            <th scope="col" style="width: 120px">Action</th>
 
                         </tr>
                     </thead>
                     <tbody style="vertical-align: middle;" class="text-center">
-                        {{-- @foreach ($rooms as $room) --}}
+                        @foreach ($rooms as $room)
                             <tr>
-                                <th scope="row" class="text-center">1</th>
-                                <td>Room 1</td>
-                                <td>10</td>
-                                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. </td>
+                                <th scope="row" class="text-center">{{$loop->iteration}}</th>
+                                    <td>{{ $room->room_name }}</td>
+                                    <td>{{ $room->capacity }}</td>
                                 <td class="text-center">
-                                    {{-- <form method="POST" action="{{ route('rooms.destroy', $room->id )}}" class="">
-                                        @csrf
-                                        @method('delete') --}}
-                                        <button type="button " class="uwuq" data-bs-toggle="modal" data-bs-target="#modal-edit-room">Edit</button>
-                                        <button type="submit" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i> Hapus</button>
-                                    {{-- </form> --}}
+
+                                        <span style="display: flex; gap: 2px; justify-content: center">
+                                            <a type="button" class="uwuq" data-bs-toggle="modal" data-bs-target="#modal-edit-room" data-id="{{ $room->id }}" data-name="{{ $room->room_name }}" data-capacity="{{ $room->capacity }}" data-desc="{{ $room->desc }}">
+                                                Edit
+                                            </a>
+                                            <form method="POST" action="{{ route('manage-rooms.destroy', $room->id )}}" class="">
+                                                @csrf
+                                                @method('delete')
+                                            <button type="submit" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i>Delete</button>
+                                            </form>
+                                        </span>
+
                                 </td>
+
                             </tr>
-                        {{-- @endforeach --}}
+                        @endforeach
                     </tbody>
                     </table>
                 </div>
@@ -64,7 +69,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body bg-white">
-                    <form class="modal-form-check" style="font: 500 14px Narasi Sans, sans-serif">
+                    <form method="POST" action="{{ route('manage-rooms.store') }}" class="modal-form-check" style="font: 500 14px Narasi Sans, sans-serif">
+                        @csrf
                         <div class="mb-3">
                             <label for="room_name" class="form-label">{{ __('Room Name') }}</label>
                             <input id="room_name" type="text" class="form-control @error('room_name') is-invalid @enderror" name="room_name" value="{{ old('room_name') }}" required autocomplete="room_name">
@@ -84,16 +90,6 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="desc" class="form-label">{{ __('Room description') }}</label>
-                            <input id="desc" type="text" class="form-control @error('desc') is-invalid @enderror" name="desc" value="{{ old('desc') }}" required autocomplete="desc">
-
-                            @error('desc')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
@@ -103,41 +99,33 @@
         </div>
     </div>
 
-    <div class="modal justify-content-center fade" id="modal-edit-room"  data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal justify-content-center fade" id="modal-edit-room" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body bg-white">
-                    <form class="modal-form-check" style="font: 500 14px Narasi Sans, sans-serif">
+                    <form method="POST" action="" class="modal-form-check" style="font: 500 14px Narasi Sans, sans-serif" id="edit-room-form">
+                        @csrf
+                        @method('PATCH')
+
                         <div class="mb-3">
                             <label for="room_name" class="form-label">{{ __('Room Name') }}</label>
-                            <input id="room_name" type="text" class="form-control @error('room_name') is-invalid @enderror" name="room_name" value="Room 1" required autocomplete="room_name">
+                            <input id="modal-room-name" type="text" class="form-control @error('room_name') is-invalid @enderror" name="room_name" value="{{ old('room_name') }}" required autocomplete="room_name">
                             @error('room_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="capacity" class="form-label">{{ __('Room Capacity') }}</label>
-                            <input id="capacity" type="number" class="form-control @error('capacity') is-invalid @enderror" name="capacity" value="10" required autocomplete="capacity">
-
+                            <input id="modal-capacity" type="number" class="form-control @error('capacity') is-invalid @enderror" name="capacity" value="{{ old('capacity') }}" required autocomplete="capacity">
                             @error('capacity')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="desc" class="form-label">{{ __('Room description') }}</label>
-                            <input id="desc" type="text" class="form-control @error('desc') is-invalid @enderror" name="desc" value="Lorem ipsum dolor sit amet consectetur adipisicing elit." required autocomplete="desc">
-
-                            @error('desc')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
@@ -146,6 +134,32 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('custom-js')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    var editButtons = document.querySelectorAll('.uwuq');
+    var editForm = document.getElementById('edit-room-form');
+    var roomNameInput = document.getElementById('modal-room-name');
+    var capacityInput = document.getElementById('modal-capacity');
+
+    editButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var roomId = this.getAttribute('data-id');
+            var roomName = this.getAttribute('data-name');
+            var capacity = this.getAttribute('data-capacity');
+
+
+            editForm.setAttribute('action', '/manage-rooms/' + roomId + '/update');
+
+            roomNameInput.value = roomName;
+            capacityInput.value = capacity;
+        });
+    });
+});
+</script>
 
 @endsection
 

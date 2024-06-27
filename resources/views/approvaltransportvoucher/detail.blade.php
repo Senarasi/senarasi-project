@@ -1,11 +1,11 @@
-@extends('layout.index2')
+@extends('layout.index3')
 
 @section('title')
     Detail Approval Voucher - Budgeting System
 @endsection
 
 @section('content')
-<div style="margin-left: 24px">
+<div style="margin-top: 12px;margin-left: 24px">
     <a href="/approval-transportvoucher"  style="text-decoration: none">
         <button class="navback">
             <svg xmlns="http://www.w3.org/2000/svg " width="10" height="17 " viewBox="0 0 10 17 " fill="none ">
@@ -29,12 +29,11 @@
             </div>
 
             <div>
-                <form action="#">
                 <div class="button-approv" style="margin-top: -px;">
                     <button type="submit" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#modalapprov" style="color: white; padding: 12px 24px; margin-right: 8px ">Approv</button>
                     <button type="button" class="btn btn-danger " style="color: white; padding: 12px 24px;">Reject</button>
                 </div>
-                </form>
+
 
 
             </div>
@@ -78,7 +77,7 @@
                         </tr>
                         <tr>
                             <th scope="row ">6</th>
-                            <td style="text-align: start; ">Requirement</td>
+                            <td style="text-align: start; ">Description</td>
                             <td class="total-price" style="font-weight: 300;text-align: start ">Keperluan Meeting Bersama Klien dari Australia</td>
                         </tr>
 
@@ -100,47 +99,56 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body bg-white">
-                <form class="modal-form-check" style="font: 500 14px Narasi Sans, sans-serif">
+                <form class="modal-form-check" id="transportForm" style="font: 500 14px Narasi Sans, sans-serif">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <fieldset disabled="disabled">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="text" class="form-control" id="date" />
+                            </fieldset>
+                        </div>
+                        <div class="col mb-3">
+                            <label for="transport" class="form-label">Select Transportation</label>
+                            <select id="transport" class="form-select">
+                                <option style="color: rgb(189, 189, 189)">Choose Transportation</option>
+                                <option value="MRT">MRT</option>
+                                <option value="Grab/Gojek">Grab/Gojek</option>
+                                <option value="Driver">Driver</option>
+                            </select>
+                        </div>
+                    </div>
                     <fieldset disabled="disabled">
-                        <div class="mb-3">
-                            <label for="vendor" class="form-label">Date</label>
-                            <input type="text" class="form-control" id="vendor" />
-                        </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="PIC" class="form-label">User</label>
-                                <input type="text" class="form-control" id="pic" />
+                                <label for="user" class="form-label">User</label>
+                                <input type="text" class="form-control" id="user" />
                             </div>
                             <div class="col mb-3">
-                                <label for="PIC" class="form-label">Phone</label>
-                                <input type="text" class="form-control" id="pic" />
+                                <label for="phone" class="form-label">Phone</label>
+                                <input type="text" class="form-control" id="phone" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="PIC" class="form-label">Start Location</label>
-                                <input type="text" class="form-control" id="pic" />
+                                <label for="startLocation" class="form-label">Start Location</label>
+                                <input type="text" class="form-control" id="startLocation" />
                             </div>
                             <div class="col mb-3">
-                                <label for="PIC" class="form-label">Final Location</label>
-                                <input type="text" class="form-control" id="pic" />
+                                <label for="finalLocation" class="form-label">Final Location</label>
+                                <input type="text" class="form-control" id="finalLocation" />
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="vendor" class="form-label">Requirement</label>
-                            <input type="text" class="form-control" id="vendor" />
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="description" />
                         </div>
                     </fieldset>
-                    
-                    <div class="mb-3">
-                        <label for="vendor" class="form-label">Voucher</label>
 
-                        <textarea class="form-control"  id="alamatvendor" style="height: 100px"></textarea>
-
+                    <div class="mb-3" id="voucherDiv" style="display: none;">
+                        <label for="voucher" class="form-label">Voucher</label>
+                        <textarea class="form-control" id="voucher" style="height: 100px"></textarea>
                     </div>
-
-
-                    <button type="submit" class="button-submit" style="background:green">Approv</button>
+                    <button type="submit" class="button-submit" style="background:green">Approve</button>
                     <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                 </form>
             </div>
@@ -148,4 +156,22 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('custom-js')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('transportForm');
+        const transportSelect = document.getElementById('transport');
+        const voucherDiv = document.getElementById('voucherDiv');
+
+        transportSelect.addEventListener('change', () => {
+            if (transportSelect.value === 'Grab/Gojek') {
+                voucherDiv.style.display = 'block';
+            } else {
+                voucherDiv.style.display = 'none';
+            }
+        });
+    });
+</script>
 @endsection

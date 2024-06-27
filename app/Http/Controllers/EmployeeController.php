@@ -13,13 +13,12 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        $employee = Employee::with(['department', 'position'])->when($request->cari, function ($query) use ($request) {
-            $query->where('full_name', 'like', "%{$request->cari}%");
-        })->orderBy('employee_id', 'asc')->paginate(15);
-        $total_employee = $employee->count();
-        $department = Department::orderBy('department_name', 'asc')->pluck('department_name', 'department_id');
-        $position = Position::orderBy('position_name', 'asc')->pluck('position_name', 'position_id');
-        return view('employee.index', compact('employee', 'total_employee', 'department', 'position'));
+        $employees = Employee::with(['department', 'position'])->orderBy('employee_id', 'asc')->get();
+        $managers = Employee::where('role', 'manager')->orderBy('full_name', 'asc')->get();
+        $total_employees = $employees->count();
+        $departments = Department::orderBy('department_name', 'asc')->pluck('department_name', 'department_id');
+        $positions = Position::orderBy('position_name', 'asc')->pluck('position_name', 'position_id');
+        return view('employee.index', compact('employees', 'total_employees', 'departments', 'positions', 'managers'));
     }
 
     public function create()

@@ -1,4 +1,4 @@
-@extends('layout.index2')
+@extends('sop.layout.app')
 
 @section('title')
     Company File Documents - Budgeting System
@@ -6,11 +6,11 @@
 
 @section('content')
     <!--Badan Isi-->
-    <div style="margin-left: 24px">
+    <div style="margin-top: -12px; margin-left: 24px">
         <div class="judulhalaman" style=" display: flex; align-items: center; ">Company File Documents</div>
         <form>
             <div style="display: inline-flex; gap: 12px; margin-left:4px;">
-                <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#modal-sop"> Upload
+                <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#modal-sop"> Add Header
                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
                         fill="none">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -75,16 +75,11 @@
                             <input type="text" class="form-control" id="desc" />
                         </div>
 
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Upload File (PDF)</label>
-                            <input class="form-control" type="file" id="formFile">
-                        </div>
-
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
-                <img class="img-8" src="{{ asset('image/Narasi_Logo.svg')  }}" alt=" " />
+                <img class="img-8" src="{{ asset('asset/image/Narasi_Logo.svg')  }}" alt=" " />
             </div>
         </div>
     </div>
