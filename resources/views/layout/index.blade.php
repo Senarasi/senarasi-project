@@ -8,6 +8,7 @@
         {{-- ngok meta tag --}}
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="shortcut icon" href="{{ asset('image/narasi_logomark.png') }}" type="image/x-icon">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
         <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">

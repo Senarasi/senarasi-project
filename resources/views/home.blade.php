@@ -13,6 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    <?php
+                    echo public_path('assest/datetimepicker/jquery.js');
+                    ?>
 
                     {{ __('You are logged in!') }}
                 </div>

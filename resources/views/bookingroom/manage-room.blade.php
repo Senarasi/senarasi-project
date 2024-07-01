@@ -42,10 +42,10 @@
                                 <td class="text-center">
 
                                         <span style="display: flex; gap: 2px; justify-content: center">
-                                            <a type="button" class="uwuq" data-bs-toggle="modal" data-bs-target="#modal-edit-room" data-id="{{ $room->id }}" data-name="{{ $room->room_name }}" data-capacity="{{ $room->capacity }}" data-desc="{{ $room->desc }}">
+                                            <a type="button" class="uwuq" data-bs-toggle="modal" data-bs-target="#modal-edit-room" data-id="{{ $room->room_id }}" data-name="{{ $room->room_name }}" data-capacity="{{ $room->capacity }}" data-desc="{{ $room->desc }}">
                                                 Edit
                                             </a>
-                                            <form method="POST" action="{{ route('manage-rooms.destroy', $room->id )}}" class="">
+                                            <form method="POST" action="{{ route('manage-rooms.destroy', $room->room_id )}}" class="">
                                                 @csrf
                                                 @method('delete')
                                             <button type="submit" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i>Delete</button>
@@ -162,4 +162,3 @@
 </script>
 
 @endsection
-

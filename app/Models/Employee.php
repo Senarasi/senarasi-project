@@ -22,6 +22,7 @@ class Employee extends Authenticatable
         'department_id',
         'position_id',
         'manager_id',
+        'phone'
     ];
 
     protected $hidden = [
@@ -43,5 +44,10 @@ class Employee extends Authenticatable
     public function manager()
     {
         return $this->belongsTo(Employee::class, 'manager_id');
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(MeetingBooking::class);
     }
 }

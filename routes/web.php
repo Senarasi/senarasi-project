@@ -134,21 +134,27 @@ Route::middleware(['auth'])->group(function () {
         return view('transportrequest.index');
     });
 
-    Route::get('/booking-room', function () {
-        return view('bookingroom.index');
+    Route::prefix('manage-rooms')->controller(App\Http\Controllers\RoomController::class)->name('manage-rooms.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{room}/edit', 'edit')->name('edit');
+        Route::patch('/{room}/update', 'update')->name('update');
+        Route::delete('/{room}', 'destroy')->name('destroy');
     });
 
-    Route::get('/booking-room/create', function () {
-        return view('bookingroom.create');
+    Route::prefix('bookingroom')->controller(App\Http\Controllers\BookingMeetingController::class)->name('bookingroom.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/list', 'list')->name('list');
+        Route::get('/{room}', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('{booking}/edit', 'edit')->name('edit');
+        Route::patch('/{booking}/update', 'update')->name('update');
+        // // Route::get('/{booking}/detail', 'show')->name('detail');
+        Route::delete('/{booking}', 'destroy')->name('destroy');
     });
 
-    Route::get('/booking-room/list', function () {
-        return view('bookingroom.list');
-    });
-
-    Route::get('/manage-room', function () {
-        return view('bookingroom.manage-room');
-    });
+    Route::get('/getevents', [App\Http\Controllers\CalendarController::class, 'getevents']);
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     // Other protected routes

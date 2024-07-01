@@ -6,7 +6,7 @@
 
 @auth
     <script>
-        window.authUserId = {{ auth()->user()->id }};
+        window.authUserId = {{ auth()->user()->employee_id }};
         window.userRole = "{{ Auth::user()->role }}";
     </script>
 @endauth
@@ -28,6 +28,15 @@
     <!--Badan Isi-->
     <div style="margin-left: 24px">
         <div class="row justify-content-center" style="margin-top: -12px">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @if (session('status'))
                     <div class="alert alert-success ms-2" role="alert">
                         {{ session('status') }}
@@ -50,11 +59,11 @@
             <div class="col-md-4">
                 <div class="tablenih p-3" style="padding-top: -24px; margin-top: 32px;" >
                 <p style="font: 700 24px Narasi Sans, sans-serif; color: #4A25AA; margin: 12px;">Form Booking Room</p>
-                    <form method="POST" action="{{ route('bookingroom.update', $booking->id) }}" style="margin:12px">
+                    <form method="POST" action="{{ route('bookingroom.update', $booking->booking_id) }}" style="margin:12px">
                         @csrf
                         @method('PATCH')
 
-                        <input type="hidden" class="form-control" name="room_id" value="{{ $booking->room->id }}">
+                        <input type="hidden" class="form-control" name="room_id" value="{{ $booking->room->room_id }}">
                         <div class="row">
                             <div class="col mb-3">
                                 <label class="d-flex" for="inputroom_name">Room Name  </label>
@@ -72,7 +81,7 @@
                         <div class="mb-3">
                             <label class="d-flex" for="inputdesc">Description </label>
                             <input type="text" class="form-control @error('desc') is-invalid @enderror"
-                            id="inputdesc" name="desc" value="{{old('desc') ?? $booking->desc}} ">
+                            id="inputdesc" name="description" value="{{old('description') ?? $booking->description}} ">
                             @error('desc')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -82,7 +91,7 @@
                             <div class="col mb-3">
                                 <label class="d-flex" for="inputstart">Start Time</label>
                                 <input type="text" class="form-control datetimepicker @error('start') is-invalid @enderror"
-                                id="inputstart" name="start" value="{{old('start') ?? $booking->start}}">
+                                id="inputstart" name="start_time" value="{{old('start_time') ?? $booking->start_time}}">
                                 @error('start')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -90,7 +99,7 @@
                             <div class="col mb-3">
                                 <label class="d-flex" for="inputend">End Time</label>
                                 <input type="text" class="form-control datetimepicker @error('end') is-invalid @enderror"
-                                id="inputend" name="end" value="{{old('end') ?? $booking->end}}">
+                                id="inputend" name="end_time" value="{{old('end_time') ?? $booking->end_time}}">
                                 @error('end')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -111,10 +120,10 @@
                             <label for="guests" class="d-flex">Employee</label>
                             <select class="form-control @error('guests') is-invalid @enderror" id="select2" name="guests[]" multiple="multiple">
                                 @foreach ($users as $user)
-                                    @if ($user->id !== auth()->id())
-                                        <option value="{{ $user->id }}"
-                                            {{ $booking->guests->pluck('user_id')->contains($user->id) ? 'selected' : '' }}>
-                                            {{ $user->name }}
+                                    @if ($user->employee_id !== auth()->id())
+                                        <option value="{{ $user->employee_id }}"
+                                            {{ $booking->internalGuest->pluck('employee_id')->contains($user->employee_id) ? 'selected' : '' }}>
+                                            {{ $user->full_name }}
                                         </option>
                                     @endif
                                 @endforeach
@@ -140,7 +149,7 @@
                         <div class="mb-3">
                             <label for="additional_emails" class="d-flex">External Guests</label>
                             <select class="form-control @error('additional_emails') is-invalid @enderror" id="additional_emails" name="additional_emails[]" multiple="multiple">
-                                @foreach ($booking->externalguests as $externalguest)
+                                @foreach ($booking->externalguest as $externalguest)
                                     <option value="{{ $externalguest->email }}" selected>{{ $externalguest->email }}</option>
                                 @endforeach
                             </select>
@@ -386,5 +395,3 @@
         });
     </script>
 @endsection
-
-

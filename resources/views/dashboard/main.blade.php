@@ -55,7 +55,7 @@
                 <div class="bercoba">Payment Request</div>
                 <div class="bercabe">Request for Payment of Company Invoices </div>
             </a>
-            <a href="/booking-room" class="markicob">
+            <a href="{{ route('bookingroom.index') }}" class="markicob">
                 <div class="bercoba">Booking Room</div>
                 <div class="bercabe">Book Room Meeting</div>
             </a>
