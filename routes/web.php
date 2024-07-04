@@ -67,6 +67,10 @@ Route::middleware(['auth'])->group(function () {
         return view('approval.detail');
     });
 
+    Route::get('/approval-reject', function () {
+        return view('approval.reject');
+    });
+
     Route::get('/detail-budget', function () {
         return view('requestbudget.index');
     });

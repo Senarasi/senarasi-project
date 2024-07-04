@@ -98,7 +98,10 @@
                 <form action="#">
                 <div class="button-approv" style="margin-top: -px;">
                     <button type="submit" class="btn btn-success " style="color: white; padding: 12px 24px; margin-right: 8px ">Approv</button>
-                    <button type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#modalReject" style="color: white; padding: 12px 24px;">Reject</button>
+                    {{-- <button type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#modalReject" style="color: white; padding: 12px 24px;">Reject</button> --}}
+                    <a href="/approval-reject">
+                        <button type="button" class="btn btn-danger " style="color: white; padding: 12px 24px;">Reject</button>
+                    </a>
                 </div>
                 </form>
                 <div class="row" style="margin-top: -24px">

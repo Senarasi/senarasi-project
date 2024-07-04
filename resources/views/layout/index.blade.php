@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
         <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/selectize.default.min.css') }}" rel="stylesheet">
     </head>
     <body class="antialiased">
         <div class="wrapper">
@@ -44,6 +45,7 @@
         <script src="{{ asset('js/datatables.min.js')}}"></script>
         <script src="{{ asset('js/datatables.init.js')}}"></script>
         <script src="{{ asset('js/select2.min.js') }}"></script>
+        <script src="{{ asset('js/selectize.min.js')}}"></script>
         @yield('custom-js')
     </body>
 </html>

@@ -285,8 +285,8 @@
                                             <td>{{ $data->rep }}</td>
                                             <td>{{ $data->day }}</td>
                                             <td>{{ $data->qty }}</td>
-                                            <td>Rp. {{ number_format($data->cost) }}</td>
-                                            <td>Rp. {{ number_format($data->total_cost) }}</td>
+                                            <td  class="text-end">Rp. {{ number_format($data->cost) }}</td>
+                                            <td  class="text-end">Rp. {{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>
@@ -358,8 +358,8 @@
                                             <td>{{ $data->rep }}</td>
                                             <td>{{ $data->day }}</td>
                                             <td>{{ $data->qty }}</td>
-                                            <td>Rp. {{ number_format($data->cost) }}</td>
-                                            <td>Rp. {{ number_format($data->total_cost) }}</td>
+                                            <td  class="text-end">Rp. {{ number_format($data->cost) }}</td>
+                                            <td  class="text-end">Rp. {{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>
@@ -433,8 +433,8 @@
                                             <td>{{ $data->rep }}</td>
                                             <td>{{ $data->day }}</td>
                                             <td>{{ $data->qty }}</td>
-                                            <td>Rp. {{ number_format($data->cost) }}</td>
-                                            <td>Rp. {{ number_format($data->total_cost) }}</td>
+                                            <td  class="text-end">Rp. {{ number_format($data->cost) }}</td>
+                                            <td  class="text-end">Rp. {{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>
@@ -507,8 +507,8 @@
                                             <td>{{ $data->rep }}</td>
                                             <td>{{ $data->day }}</td>
                                             <td>{{ $data->qty }}</td>
-                                            <td>Rp. {{ number_format($data->cost) }}</td>
-                                            <td>Rp. {{ number_format($data->total_cost) }}</td>
+                                            <td  class="text-end">Rp. {{ number_format($data->cost) }}</td>
+                                            <td  class="text-end">Rp. {{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>
@@ -580,8 +580,8 @@
                                             <td>{{ $data->rep }}</td>
                                             <td>{{ $data->day }}</td>
                                             <td>{{ $data->qty }}</td>
-                                            <td>Rp. {{ number_format($data->cost) }}</td>
-                                            <td>Rp. {{ number_format($data->total_cost) }}</td>
+                                            <td class="text-end">Rp. {{ number_format($data->cost) }}</td>
+                                            <td class="text-end">Rp. {{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>

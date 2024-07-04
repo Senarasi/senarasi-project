@@ -4,12 +4,12 @@
     Booking Room
 @endsection
 
-@auth
+{{-- @auth
     <script>
         window.authUserId = {{ auth()->user()->employee_id }};
         window.userRole = "{{ Auth::user()->role }}";
     </script>
-@endauth
+@endauth --}}
 @section('costum-css')
     <style>
         .tagify {
@@ -218,6 +218,10 @@
 
     @section('custom-js')
         <script>
+            window.authUserId = {{ auth()->user()->employee_id }};
+            window.userRole = "{{ Auth::user()->role }}";
+        </script>
+        <script>
             document.addEventListener('DOMContentLoaded', function() {
                 console.log('DOM fully loaded and parsed'); // Add logging
                 var calendarEl = document.getElementById('calendar');
@@ -280,11 +284,11 @@
                         $('#eventModalStart').text(startDate);
                         $('#eventModalEnd').text(endDate);
 
-                        var telephone = info.event.extendedProps.user.phone;
-                        var whatsappLink = 'https://wa.me/+62' + telephone.replace(/[^0-9]/g,
-                            ''); // Clean non-numeric characters
+                        // var telephone = info.event.extendedProps.user.phone;
+                        // var whatsappLink = 'https://wa.me/+62' + telephone.replace(/[^0-9]/g,
+                        //     ''); // Clean non-numeric characters
 
-                        $('#eventModalTelephone').text(telephone).attr('href', whatsappLink);
+                        // $('#eventModalTelephone').text(telephone).attr('href', whatsappLink);
                         $('#eventModalBookingId').val(info.event.id);
 
                         // Show guests
@@ -293,14 +297,6 @@
                         info.event.extendedProps.guests.forEach(function(guest) {
                             guestsList.append('<li>' + guest + '</li>');
                         });
-
-
-                        // // Show external guests
-                        // var externalGuestsList = $('#eventModalExternalGuests');
-                        // externalGuestsList.empty();
-                        // info.event.extendedProps.externalGuests.forEach(function(externalGuest) {
-                        //     externalGuestsList.append('<li>' + externalGuest + '</li>');
-                        // });
 
                         var externalGuestsList = $('#eventModalExternalGuests');
                         externalGuestsList.empty();
@@ -314,7 +310,7 @@
                         }
 
                         // Show or hide delete button based on ownership
-                        if (window.authUserId == info.event.extendedProps.user_id || window.userRole ===
+                        if (window.authUserId == info.event.extendedProps.employee_id || window.userRole ===
                             'admin') {
                             $('#deleteBookingBtn').show();
                             $('#editBookingBtn').show();
