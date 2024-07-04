@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/request-budget/location/{id}', [App\Http\Controllers\RequestBudgetController::class, 'location'])->name('request-budget.location');
     Route::get('/request-budget/preview/{id}', [App\Http\Controllers\RequestBudgetController::class, 'preview'])->name('request-budget.preview');
     Route::get('/request-budget/preview/{id}/view', [App\Http\Controllers\RequestBudgetController::class, 'report'])->name('request-budget.report');
+    Route::delete('request-budget/{id}', [App\Http\Controllers\RequestBudgetController::class, 'destroy'])->name('request-budget.destroy');
 
     Route::resource('performer', 'App\Http\Controllers\PerformerController');
     Route::get('/get-performer-price', [App\Http\Controllers\PerformerController::class, 'getPerformerPrice'])->name('getPerformerPrice');

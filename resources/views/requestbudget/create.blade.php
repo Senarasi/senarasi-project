@@ -5,10 +5,23 @@
 @endsection
 
 @section('content')
+    <style>
+        .select2-container--default .select2-selection--single {
+            height: 40px;
+            /* Adjust the height as needed */
+            font-size: 16px;
+            /* Adjust the font size as needed */
+        }
+
+        .select2-container {
+            width: 100% !important;
+            /* Make the select box full width */
+        }
+    </style>
     <a href="{{ url()->previous() }}" style="text-decoration: none;"> <button class="navback">
             <svg xmlns="http://www.w3.org/2000/svg " width="10 " height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                  7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
+                                                          7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
             </svg>
             Back
         </button>
@@ -107,10 +120,10 @@
                         <label for="producer_id" class="form-label">Project Manager</label>
                         <select id="producer_id" name="producer_id" class="form-select">
                             <option disabled selected>Choose One</option>
-                            @forelse ($producers as $producer)
-                                <option value="{{ $producer->employee_id }}">{{ $producer->full_name }}</option>
+                            @forelse ($users as $user)
+                                <option value="{{ $user->employee_id }}">{{ $user->full_name }}</option>
                             @empty
-                                <option disabled selected>Data not found</option>
+                                <option disabled>Data not found</option>
                             @endforelse
                         </select>
                     </div>
@@ -235,6 +248,14 @@
                     $('#budget').val('');
                     $('#monthly_budget_id').val('');
                 }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#producer_id').select2({
+                placeholder: "Choose One",
+                allowClear: true
             });
         });
     </script>

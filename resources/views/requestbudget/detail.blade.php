@@ -6,18 +6,28 @@
 
 @section('content')
     <!--Badan Isi-->
-    <a href="/detail-budget" style="text-decoration: none">
+    <a href="/request-budget" style="text-decoration: none">
         <button class="navback">
             <svg xmlns="http://www.w3.org/2000/svg " width="10" height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                  7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
+                                                      7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
             </svg>
             Back to Detail Budget
         </button>
     </a>
-
     <form action="#">
         <div class="tablenih">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div
                 style="justify-content: space-between; display: flex; margin-left: 12px; margin-right: 12px; margin-top: 12px; margin-bottom: 24px;">
                 <div>
@@ -97,21 +107,25 @@
                 </div>
 
                 <div>
-                    <form action="#">
-                        <div class="button-approv" style="margin-top: -px;">
-                            <a href="{{route('request-budget.edit', $requestBudgets->request_budget_id)}}" type="edit " class="btn btn-success "
-                                style="color: white; padding: 12px 32px; margin-right: 8px ">Edit</a>
-                            <button type="delete " class="btn btn-danger "
-                                style="color: white; padding: 12px 32px ">Delete</button>
-                        </div>
-                    </form>
+                    <div class="button-approv" style="margin-top: -px;">
+                        <a href="{{ route('request-budget.edit', $requestBudgets->request_budget_id) }}"
+                            class="btn btn-warning">Edit</a>
+                        <form action="{{ route('request-budget.destroy', $requestBudgets->request_budget_id) }}"
+                            method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this request budget?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
                     <div class="row" style="margin-top: -24px">
                         <div class="col-3">
-                            <a href="{{ route('request-budget.report', $requestBudgets->request_budget_id) }}" target="_blank" type="preview" class="btn btn-secondary"
+                            <a href="{{ route('request-budget.report', $requestBudgets->request_budget_id) }}"
+                                target="_blank" type="preview" class="btn btn-secondary"
                                 style="border-radius: 8px; padding-bottom: 9px; padding-top: 9px; background-color:#ffff; margin-right:8px; border: 1px solid#4A25AA"
                                 data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Preview">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32"
-                                    viewBox="0 0 33 32" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32" viewBox="0 0 33 32"
+                                    fill="none">
                                     <path
                                         d="M16.5 2C13.7311 2 11.0243 2.82109 8.72202 4.35943C6.41973 5.89777 4.62532 8.08427 3.56569 10.6424C2.50607 13.2006 2.22882 16.0155 2.76901 18.7313C3.30921 21.447 4.64258 23.9416 6.60051 25.8995C8.55845 27.8574 11.053 29.1908 13.7687 29.731C16.4845 30.2712 19.2994 29.9939 21.8576 28.9343C24.4157 27.8747 26.6022 26.0803 28.1406 23.778C29.6789 21.4757 30.5 18.7689 30.5 16C30.5 12.287 29.025 8.72601 26.3995 6.1005C23.774 3.475 20.213 2 16.5 2ZM23.947 16.895L11.947 22.895C11.7945 22.9712 11.6251 23.0072 11.4548 22.9994C11.2845 22.9917 11.119 22.9406 10.974 22.8509C10.829 22.7613 10.7093 22.636 10.6264 22.4871C10.5434 22.3381 10.4999 22.1705 10.5 22V10C10.5001 9.82961 10.5437 9.66207 10.6268 9.51327C10.7098 9.36448 10.8294 9.23936 10.9744 9.14981C11.1194 9.06025 11.2848 9.00921 11.455 9.00155C11.6252 8.99388 11.7946 9.02984 11.947 9.106L23.947 15.106C24.1129 15.1891 24.2524 15.3168 24.3498 15.4747C24.4473 15.6326 24.4989 15.8145 24.4989 16C24.4989 16.1856 24.4473 16.3674 24.3498 16.5253C24.2524 16.6832 24.1129 16.8109 23.947 16.894"
                                         fill="#4A25AA" />
@@ -286,10 +300,10 @@
                             @endif
                         </tr>
                         <tr>
-                            <td>{{$requestBudgets->manager->full_name}}</td>
-                            <td>{{$reviewer->full_name}}</td>
-                            <td>{{$approval1->full_name}}</td>
-                            <td>{{$approval2->full_name}}</td>
+                            <td>{{ $requestBudgets->manager->full_name }}</td>
+                            <td>{{ $reviewer->full_name }}</td>
+                            <td>{{ $approval1->full_name }}</td>
+                            <td>{{ $approval2->full_name }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -299,7 +313,7 @@
 @endsection
 
 @section('custom-js')
-    <script>
+    {{-- <script>
         const array = [{
             vendor: '',
             budget: '',
@@ -424,5 +438,5 @@
 
         generateBudgetPrice();
         generateVendor();
-    </script>
+    </script> --}}
 @endsection

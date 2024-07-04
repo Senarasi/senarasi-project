@@ -88,7 +88,7 @@ class ProductionToolController extends Controller
         ProductionTool::create($validatedData);
 
         // Redirect back to the performer page with the appropriate request budget ID
-        return redirect()->route('requestbudget.productiontool', $request->request_budget_id)
+        return redirect()->route('request-budget.productiontool', $request->request_budget_id)
             ->with('success', 'ProductionTool added successfully!');
     }
 

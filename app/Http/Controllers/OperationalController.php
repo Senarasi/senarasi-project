@@ -39,7 +39,7 @@ class OperationalController extends Controller
         Operational::create($validatedData);
 
         // Redirect back to the performer page with the appropriate request budget ID
-        return redirect()->route('requestbudget.operational', $request->request_budget_id)
+        return redirect()->route('request-budget.operational', $request->request_budget_id)
                          ->with('success', 'Operational added successfully!');
     }
 

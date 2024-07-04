@@ -40,7 +40,7 @@ class ProductionCrewController extends Controller
         ProductionCrew::create($validatedData);
 
         // Redirect back to the performer page with the appropriate request budget ID
-        return redirect()->route('requestbudget.productioncrew', $request->request_budget_id)
+        return redirect()->route('request-budget.productioncrew', $request->request_budget_id)
                          ->with('success', 'ProductionCrew added successfully!');
     }
 

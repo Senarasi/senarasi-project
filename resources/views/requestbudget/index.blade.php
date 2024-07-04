@@ -56,11 +56,11 @@
                     </tr>
                 </thead>
                 <tbody style="vertical-align: middle;">
-                    <tr>
-                        @php
-                            $counter = 1;
-                        @endphp
-                        @forelse ($requestBudgets as $data)
+                    @php
+                        $counter = 1;
+                    @endphp
+                    @forelse ($requestBudgets as $data)
+                        <tr>
                             <th scope="row ">{{ $counter++ }}</th>
                             <td>{{ $data->request_budget_number }}</td>
                             <td> {{ $data->program->program_name }}</td>
@@ -134,16 +134,16 @@
                             @endif
                             <td>{{ $data->employee->full_name }}</td>
                             <td style="gap: 8px; display: flex; justify-content: center; ">
-                                <a href="{{ route('request-budget.show', $data->request_budget_id) }}" style="text-decoration: none"> <button type="button "
-                                        class="button-general" style="width: fit-content; ">DETAIL</button>
+                                <a href="{{ route('request-budget.show', $data->request_budget_id) }}"
+                                    style="text-decoration: none"> <button type="button " class="button-general"
+                                        style="width: fit-content; ">DETAIL</button>
                                 </a>
                             </td>
                         @empty
                             <div class="alert alert-danger">
                                 Data Post belum Tersedia.
                             </div>
-                        @endforelse
-
+                    @endforelse
                     </tr>
                 </tbody>
             </table>

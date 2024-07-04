@@ -9,7 +9,7 @@
             <svg xmlns="http://www.w3.org/2000/svg " width="10 " height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path
                     d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                                                                                      7.2501 0 7.6501 0 8.0501Z "
+                                                                                                                                                          7.2501 0 7.6501 0 8.0501Z "
                     fill="#4A25AA " />
             </svg>
             Back
@@ -20,8 +20,9 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="home-tab" data-bs-toggle="tab" data-url="{{route('request-budget.edit', $id)}}" data-bs-target="#home-tab-pane"
-                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">Header</button>
+            <button class="nav-link tablinks" id="home-tab" data-bs-toggle="tab"
+                data-url="{{ route('request-budget.edit', $id) }}" data-bs-target="#home-tab-pane" type="button"
+                role="tab" aria-controls="home-tab-pane" aria-selected="false">Header</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="data1-tab" data-url="{{ route('request-budget.performer', $id) }}"
@@ -149,7 +150,70 @@
         </div>
 
         <div id="tableContainer">
-            <table class="table table-vcenter card-table">
+            <div class="tablenih" style="margin-top: 24px;">
+                <div class="table-responsive p-3" style="max-height: 450px; overflow-y: auto;">
+                    <table id="datatablerequest" class="table table-hover">
+                        <thead style="font-weight: 500">
+                            <tr class="dicobain">
+                                <th scope="col">Sub Description</th>
+                                <th scope="col">Usage</th>
+                                <th scope="col">REP</th>
+                                <th scope="col">Name</th>
+                                <th scope="col" style="width: 80px; text-align: center">Day</th>
+                                <th scope="col" style="width: 80px; text-align: center">QTY</th>
+                                <th scope="col">Cost</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Forwarded To</th>
+                                <th scope="col">Note</th>
+                                <th scope="col" style="width: 140px" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="performerTableBody">
+                            @forelse ($productiontool as $key => $data)
+                                <tr>
+                                    <td>
+                                        {{ $data->subdescription->sub_description_name ?? '' }}
+                                    </td>
+                                    <td>{{ $data->usage ?? '' }}</td>
+                                    <td>{{ $data->rep ?? '' }}</td>
+                                    <td>{{ $data->tool_name ?? '' }}</td>
+                                    <td>{{ $data->day ?? 0 }}</td>
+                                    <td>{{ $data->qty ?? 0 }}</td>
+                                    <td>Rp. {{ number_format($data->cost) ?? 0 }}</td>
+                                    <td>Rp. {{ number_format($data->total_cost) ?? 0 }}</td>
+                                    <td>{{ $data->assign ?? '' }}</td>
+                                    <td>{{ $data->note ?? '' }}</td>
+                                    <td>
+                                        <span style="display: flex; gap: 8px; justify-content: center">
+                                            <a href="javascript:;" class="uwuq editModalBtn" style="font-size: 14px"
+                                                data-id="" data-url="" data-bs-toggle="modal"
+                                                data-bs-target="#edititem">Edit</a>
+                                            <form class="form-delete"
+                                                onsubmit="return confirm('Konfirmasi hapus data ini?')"
+                                                action="{{ route('production-tool.destroy', $data->production_tool_id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name="url_back"
+                                                    value="{{ route('request-budget.productiontool', $requestbudget->request_budget_id) }}">
+                                                <a href="#" onclick="$(this).closest('form').submit();"
+                                                    class="btn btn-danger"
+                                                    style="font-size: 14px; font-weight: 500; padding: 7px 10px;">Delete</a>
+                                            </form>
+                                        </span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td class="text-center" colspan="12">Data not found</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {{-- <table class="table table-vcenter card-table">
                 <thead style="font-weight: 500">
                     <tr class="dicobain">
                         <th scope="col">Sub Description</th>
@@ -203,7 +267,7 @@
                     @endforelse
                     </tr>
                 </tbody>
-            </table>
+            </table> --}}
         </div>
     </div>
 @endsection
@@ -259,7 +323,8 @@
                                     <select name="category" class="form-select" id="category_option" required>
                                         <option disabled selected>Select Category</option>
                                         @forelse ($itemcategory as $category)
-                                            <option value="{{ $category->item_category_id }}" data-name="{{ $category->item_category_name }}">
+                                            <option value="{{ $category->item_category_id }}"
+                                                data-name="{{ $category->item_category_name }}">
                                                 {{ $category->item_category_name }}</option>
                                         @empty
                                             <option disabled selected>Data not found</option>

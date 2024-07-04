@@ -59,8 +59,9 @@ class RequestBudgetController extends Controller
         $producers = Employee::join('positions', 'employees.position_id', '=', 'positions.position_id')
             ->where('positions.position_name', 'like', '%PRODUCER%')
             ->get();
+        $users = Employee::all();
         $programs = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id');
-        return view('requestbudget.create', compact('employees', 'managers', 'programs', 'producers', 'managerName', 'managerId'));
+        return view('requestbudget.create', compact('users', 'employees', 'managers', 'programs', 'producers', 'managerName', 'managerId'));
     }
 
     public function getMonthlyBudget(Request $request)
@@ -182,9 +183,10 @@ class RequestBudgetController extends Controller
         $producers = Employee::join('positions', 'employees.position_id', '=', 'positions.position_id')
             ->where('positions.position_name', 'like', '%PRODUCER%')
             ->get();
+        $users = Employee::all();
         $manager = Employee::find($requestBudget->manager_id);
 
-        return view('requestbudget.edit', compact('requestBudget', 'programs', 'producers', 'manager'));
+        return view('requestbudget.edit', compact('requestBudget', 'programs', 'producers', 'manager','users'));
     }
 
     public function update(Request $request, $id)
@@ -436,5 +438,27 @@ class RequestBudgetController extends Controller
         // Mengatur format kertas menjadi lanskap
         $pdf->setPaper('LEGAL', 'landscape');
         return $pdf->stream('document.pdf');
+    }
+
+    public function destroy($id)
+    {
+        try {
+            Log::info('Attempting to delete request budget with ID: ' . $id);
+
+            // Fetch the existing request budget
+            $requestBudget = RequestBudget::findOrFail($id);
+
+            // Delete the request budget
+            $requestBudget->delete();
+
+            Log::info('Request budget deleted successfully');
+
+            return redirect()->route('requestbudget.index')->with('success', 'Request budget and all associated records deleted successfully!');
+        } catch (QueryException $e) {
+            Log::error('Error deleting request budget: ' . $e->getMessage());
+
+            // Handle constraint violation exception
+            return redirect()->route('requestbudget.index')->with('error', 'Cannot delete budget. It has associated records.');
+        }
     }
 }

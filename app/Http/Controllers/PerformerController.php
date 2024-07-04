@@ -60,7 +60,7 @@ class PerformerController extends Controller
         Performer::create($validatedData);
 
         // Redirect back to the performer page with the appropriate request budget ID
-        return redirect()->route('requestbudget.performer', $request->request_budget_id)
+        return redirect()->route('request-budget.performer', $request->request_budget_id)
             ->with('success', 'Performer added successfully!');
     }
 
