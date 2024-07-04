@@ -5,7 +5,7 @@
     }
 </style>
 <!--Navbar-->
-<nav class="navbar fixed-top navbar-expand-lg">
+<nav class="navbar fixed-top navbar-expand-lg "  >
     <div class="container-fluid">
         <a href="/dashboard-main" class="header ms-3" style="margin: 6px">
             <img style="width: 208px; height: 38" src="{{ asset('asset/image/senarasi_logo1.png') }}" alt="" />
@@ -22,13 +22,13 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
             <!-- Dropdown Profile-->
-            <div class="navbar-nav order-md-last">
-                <a class="maindashboardlink" href="/dashboard-main" >Main Dashboard</a>
+            <div class="navbar-nav order-md-last" >
+                <a class="maindashboardlink" href="/dashboard-main"  >Main Dashboard</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0 " data-bs-toggle="dropdown"
                         aria-label="Open user menu">
                         <div class="row me-2">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2 ">
                                 <img loading="lazy"
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/2bfbf0aef31a2cc5791ba7283fd9129406fbb60e65f2a4985de422bb96951f3b? "
                                 class="img-3 me-1" />
@@ -68,7 +68,7 @@
                                         <path d="M18 8.5L21.5 12L18 15.5 " stroke="#FFE900 " stroke-width="2 "
                                             stroke-linecap="round " />
                                     </svg>
-                                    <span>{{ __('Logout') }}</span>
+                                    <span>{{ __('LOGOUT') }}</span>
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
