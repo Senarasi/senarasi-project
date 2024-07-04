@@ -118,7 +118,7 @@
                         <div class="mb-3">
                             <label for="employee_id" class="form-label">User</label>
                             <input type="text" id="display_name" class="form-control" name="display_name"
-                                value="{{ Auth::user()->full_name }}" placeholder="{{ Auth::user()->full_name }}" />
+                                value="{{ Auth::user()->full_name }}" placeholder="{{ Auth::user()->full_name }}" disabled/>
                             <input type="hidden" id="employee_id" name="employee_id"
                                 value="{{ Auth::user()->employee_id }}" />
                         </div>
@@ -126,7 +126,7 @@
                         <div class="mb-3">
                             <label for="program_name" class="form-label">Nama Program</label>
                             {{-- <input type="text " class="form-control" id="namaprogram " /> --}}
-                            <select name="program_id" id="program_option" class="form-select ">
+                            <select name="program_id" id="program_option" class="selectize">
                                 <option selected disabled>Select Program</option>
                                 @forelse ($program as $program_id => $program_name)
                                     <option value="{{ $program_id }}">{{ $program_name }}</option>
@@ -140,7 +140,7 @@
                             <div class="col">
                                 <label for="quarter" class="form-label">Quarter</label>
                                 {{-- <input type="text " class="form-control" id="quarter" /> --}}
-                                <select name="quarter" id="quarter" class="form-select ">
+                                <select name="quarter" id="quarter" class="selectize">
                                     <option selected disabled>Choose One</option>
                                     <option value="1">Q1</option>
                                     <option value="2">Q2</option>
@@ -348,5 +348,14 @@
             var rawValue = formattedBudget.replace(/[^\d]/g, '');
             return rawValue;
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.selectize').selectize({
+                placeholder: "Type to search...",
+                        allowClear: true,
+                        create: false
+            });
+        });
     </script>
 @endsection

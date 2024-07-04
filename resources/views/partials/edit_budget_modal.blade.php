@@ -17,7 +17,7 @@
                     <div class="mb-3">
                         <label for="namaprogram " class="form-label">Nama Program</label>
                         {{-- <input type="text " class="form-control" id="namaprogram " /> --}}
-                        <select id="namaprogram" class="form-select ">
+                        <select id="namaprogram" class="selectize">
                             @forelse ($program as $program_id => $program_name)
                                 <option value="{{ $program_id }}">{{ $program_name }}</option>
                             @empty
@@ -29,7 +29,7 @@
                         <div class="col">
                             <label for="quarter" class="form-label">Quarter</label>
                             {{-- <input type="text " class="form-control" id="quarter" /> --}}
-                            <select id="quarter" class="form-select ">
+                            <select id="quarter" class="selectize">
                                 <option style="color: rgb(189, 189, 189) ">Choose One</option>
                                 <option>Q1</option>
                                 <option>Q2</option>
