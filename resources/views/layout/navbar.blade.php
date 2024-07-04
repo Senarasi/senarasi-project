@@ -10,9 +10,9 @@
         <a href="/dashboard-main" class="header ms-3" style="margin: 6px">
             <img style="width: 208px; height: 38" src="{{ asset('asset/image/senarasi_logo1.png') }}" alt="" />
         </a>
-        <form class="d-flex has-search form-search" role="search">
+        {{-- <form class="d-flex has-search form-search" role="search">
             <input class="form-control" style="text-align: center" type="search" placeholder="Search" aria-label="Search" />
-        </form>
+        </form> --}}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarnih"
             aria-controls="navbarnih" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
