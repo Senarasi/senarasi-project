@@ -8,7 +8,7 @@
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
-                            <label for="employee_id" class="form-label">ID Karyawan</label>
+                            <label for="employee_id" class="form-label">Employee ID</label>
                             <input type="text" class="form-control" id="employee_id" name="employee_id"
                                 value="{{ $data->employee_id ?? '' }}" />
                         </div>

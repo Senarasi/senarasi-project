@@ -36,11 +36,11 @@
                     style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
                     <thead style="font-weight: 500">
                         <tr class="dicobain">
-                            <th scope="col ">NO</th>
+                            <th scope="col ">No</th>
                             <th scope="col ">Quarter</th>
-                            <th scope="col ">Tahun</th>
-                            <th scope="col ">Kode Budget</th>
-                            <th scope="col ">Nama Program</th>
+                            <th scope="col ">Year</th>
+                            <th scope="col ">Budget Code</th>
+                            <th scope="col ">Program Name</th>
                             <th scope="col ">Budget</th>
                             <th scope="col ">User Submit</th>
                             <th scope="col ">Action</th>
@@ -115,7 +115,7 @@
                         </div>
                         {{-- </fieldset> --}}
                         <div class="mb-3">
-                            <label for="program_name" class="form-label">Nama Program</label>
+                            <label for="program_name" class="form-label">Program Name</label>
                             {{-- <input type="text " class="form-control" id="namaprogram " /> --}}
                             <select name="program_id" id="program_option" class="selectize">
                                 <option selected disabled>Select Program</option>
@@ -140,7 +140,7 @@
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="budget_code" class="form-label">Kode Budget</label>
+                                <label for="budget_code" class="form-label">Budget Code</label>
                                 <input type="text " class="form-control p-2" name="budget_code" id="budget_code" />
                             </div>
                         </div>

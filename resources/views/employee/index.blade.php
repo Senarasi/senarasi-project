@@ -3,14 +3,14 @@
     Budget Dashboard
 @endsection
 @section('content')
-    <div class="judulhalaman" style="display: flex; align-items: center; ">Karyawan Narasi
+    <div class="judulhalaman" style="display: flex; align-items: center; ">Narasi Employee
         {{-- <form style="margin-left: 12px" class="d-flex has-search" role="search ">
         <input style="font-size: 14px; justify-content: center;" class="form-control me-2" type="search "
             placeholder="Search " aria-label="Search" />
     </form> --}}
     </div>
     <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add
-        Karyawan<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+        Employee<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M8.99995 2.7002C9.23865 2.7002 9.46756 2.79502 9.63635 2.9638C9.80513 3.13258 9.89995 3.3615 9.89995 3.6002V8.10019H14.4C14.6386 8.10019 14.8676 8.19502 15.0363 8.3638C15.2051 8.53258 15.3 8.7615 15.3 9.0002C15.3 9.23889 15.2051 9.46781 15.0363 9.63659C14.8676 9.80537 14.6386 9.9002 14.4 9.9002H9.89995V14.4002C9.89995 14.6389 9.80513 14.8678 9.63635 15.0366C9.46756 15.2054 9.23865 15.3002 8.99995 15.3002C8.76126 15.3002 8.53234 15.2054 8.36355 15.0366C8.19477 14.8678 8.09995 14.6389 8.09995 14.4002V9.9002H3.59995C3.36126 9.9002 3.13234 9.80537 2.96356 9.63659C2.79477 9.46781 2.69995 9.23889 2.69995 9.0002C2.69995 8.7615 2.79477 8.53258 2.96356 8.3638C3.13234 8.19502 3.36126 8.10019 3.59995 8.10019H8.09995V3.6002C8.09995 3.3615 8.19477 3.13258 8.36355 2.9638C8.53234 2.79502 8.76126 2.7002 8.99995 2.7002Z"
                 fill="white" />
@@ -22,10 +22,10 @@
                 style="font: 300 16px Narasi Sans, sans-serif; display: 100%; width: 100% ;   color: #4A25AA;">
                 <thead style="font-weight: 500; text-align: center;">
                     <tr class="dicobain">
-                        <th scope="col">ID Number</th>
-                        <th scope="col" style="text-align:start; ">Nama Karyawan</th>
-                        <th scope="col">Departemen</th>
-                        <th scope="col">Posisi</th>
+                        <th scope="col">Employee ID</th>
+                        <th scope="col" style="text-align:start; ">Employee Name</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Position</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
                         <th scope="col" style="width: 140px">Action</th>
@@ -79,11 +79,11 @@
                         style="font: 500 14px Narasi Sans, sans-serif">
                         @csrf
                         <div class="mb-3">
-                            <label for="employee_id" class="form-label">ID Karyawan</label>
+                            <label for="employee_id" class="form-label">Employee ID </label>
                             <input type="text" class="form-control" id="employee_id" name="employee_id" />
                         </div>
                         <div class="mb-3">
-                            <label for="full_name" class="form-label">Nama Karyawan</label>
+                            <label for="full_name" class="form-label">Employee Name</label>
                             <input type="text" class="form-control" id="full_name" name="full_name" />
                         </div>
                         <div class="mb-3">
@@ -106,7 +106,7 @@
                         </div>
                         <div class="departposisi">
                             <div style="font: 300 12; justify-content: space-between; align-items: center; flex: 1 0 0">
-                                <label for="department_id" class="form-label">Departemen</label>
+                                <label for="department_id" class="form-label">Departement</label>
                                 <select name="department_id" class="form-select" id="department_option" required>
                                     <option disabled selected>Select Department</option>
                                     @forelse ($departments as $department_id => $department_name)
@@ -117,7 +117,7 @@
                                 </select>
                             </div>
                             <div style="font: 300 12; justify-content: space-between; align-items: center; flex: 1 0 0">
-                                <label for="position_id" class="form-label">Posisi</label>
+                                <label for="position_id" class="form-label">Position</label>
                                 <select name="position_id" id="position_option" class="form-select">
                                     <option disabled selected>Select Position</option>
                                     @forelse ($positions as $position_id => $position_name)

@@ -15,7 +15,7 @@
                         </div>
                     </fieldset>
                     <div class="mb-3">
-                        <label for="namaprogram " class="form-label">Nama Program</label>
+                        <label for="namaprogram " class="form-label">Program Name</label>
                         {{-- <input type="text " class="form-control" id="namaprogram " /> --}}
                         <select id="namaprogram" class="selectize">
                             @forelse ($program as $program_id => $program_name)
