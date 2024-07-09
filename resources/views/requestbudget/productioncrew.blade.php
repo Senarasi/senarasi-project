@@ -232,12 +232,18 @@
                                     <select name="sub_description_id" class="form-select" id="sub_description_option"
                                         required>
                                         <option disabled selected>Select Sub Description</option>
-                                        @forelse ($subdescription as $sub_description_id => $sub_description_name)
-                                            <option value="{{ $sub_description_id }}">{{ $sub_description_name }}
+                                        {{-- @forelse ($subdescription as $sub_description_id => $sub_description_name) --}}
+                                            <option value="2">Internal Team NCS
                                             </option>
-                                        @empty
+                                            <option value="3">Production Studio
+                                            </option>
+                                            <option value="4">Business Development
+                                            </option>
+                                            <option value="5">Operational
+                                            </option>
+                                        {{-- @empty
                                             <option disabled selected>Data not found</option>
-                                        @endforelse
+                                        @endforelse --}}
                                     </select>
                                 </div>
                             </div>

@@ -60,7 +60,7 @@ class PreviewController extends Controller
          // Create the history
          History::create($validateData);
 
-         return redirect()->route('requestbudget.index')->with('success', 'Budget request submitted successfully.');
+         return redirect()->route('request-budget.index')->with('success', 'Budget request submitted successfully.');
 
     }
 }

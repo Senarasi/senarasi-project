@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/dashboard-main', [App\Http\Controllers\DashboardController::class, 'dashboardmain'])->name('dashboard.main');
     Route::get('/dashboard-budget', [App\Http\Controllers\DashboardController::class, 'dashboardbudget'])->name('dashboard.budget');
+    Route::get('/map', [App\Http\Controllers\MapController::class, 'index']);
 
     Route::resource('budget', 'App\Http\Controllers\BudgetController');
     Route::post('/budget/store', 'App\Http\Controllers\BudgetController@store')->name('budget.store');

@@ -38,7 +38,7 @@ class LocationController extends Controller
         Location::create($validatedData);
 
         // Redirect back to the performer page with the appropriate request budget ID
-        return redirect()->route('requestbudget.location', $request->request_budget_id)
+        return redirect()->route('request-budget.location', $request->request_budget_id)
                          ->with('success', 'Location added successfully!');
     }
 

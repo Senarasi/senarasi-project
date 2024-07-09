@@ -118,7 +118,7 @@
                 <div style="display: grid; gap: 24px; grid-template-columns: 1fr 1fr">
                     <div class="mb-3">
                         <label for="producer_id" class="form-label">Project Manager</label>
-                        <select id="producer_id" name="producer_id" class="form-select">
+                        <select id="producer_option" name="producer_id" class="form-select">
                             <option disabled selected>Choose One</option>
                             @forelse ($users as $user)
                                 <option value="{{ $user->employee_id }}">{{ $user->full_name }}</option>
@@ -145,7 +145,7 @@
                                 class="form-control" placeholder=" " />
                         </div>
                         <div class="mb-3">
-                            <label for="disabledTextInput " class="form-label">Remaining Budget</label>
+                            <label for="disabledTextInput " class="form-label">Budget Allocation</label>
                             <input type="text " name="budget_display" id="budget_display" class="form-control"
                                 placeholder="" />
                         </div>
@@ -157,7 +157,7 @@
 
                 <div style="display: grid; gap: 24px; grid-template-columns: 1fr 1fr">
                     <div class="mb-3">
-                        <label for="disabledTextInput " class="form-label">Episode Name</label>
+                        <label for="disabledTextInput " class="form-label">Activity Name</label>
                         <input type="text" name="episode" id="disabledTextInput " class="form-control"
                             placeholder=" " />
                     </div>
@@ -253,7 +253,15 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#producer_id').select2({
+            $('#program_option').select2({
+                placeholder: "Choose One",
+                allowClear: true
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#producer_option').select2({
                 placeholder: "Choose One",
                 allowClear: true
             });

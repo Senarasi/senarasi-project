@@ -141,7 +141,7 @@
                             </td>
                         @empty
                             <div class="alert alert-danger">
-                                Data Post belum Tersedia.
+                                No Data.
                             </div>
                     @endforelse
                     </tr>

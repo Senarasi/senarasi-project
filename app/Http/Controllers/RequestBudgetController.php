@@ -245,9 +245,7 @@ class RequestBudgetController extends Controller
     {
         $requestbudget = RequestBudget::findOrFail($id);
         $employee = Employee::pluck('full_name', 'employee_id');
-        $crew = Employee::join('positions', 'employees.position_id', '=', 'positions.position_id')
-            ->where('positions.position_name', 'like', '%STUDIO%')
-            ->get();
+        $crew = Employee::all();
         $crewposition = CrewPosition::pluck('crew_position_name', 'crew_position_id');
         $subdescription = SubDescription::pluck('sub_description_name', 'sub_description_id');
         $performer = Performer::where('request_budget_id', $id)->get();

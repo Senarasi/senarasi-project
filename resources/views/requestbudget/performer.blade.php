@@ -251,21 +251,21 @@
                                 <label for="sub_description_id" class="form-label">Sub Description</label>
                                 <select name="sub_description_id" class="form-select" id="sub_description_option"
                                     required>
-                                    <option disabled selected>Select Sub Description</option>
-                                    @forelse ($subdescription as $sub_description_id => $sub_description_name)
-                                        <option value="{{ $sub_description_id }}">{{ $sub_description_name }}
+                                    {{-- <option disabled selected>Select Sub Description</option>
+                                    @forelse ($subdescription as $sub_description_id => $sub_description_name) --}}
+                                        <option value="1">Host/Performer/Guest
                                         </option>
-                                    @empty
+                                    {{-- @empty
                                         <option disabled selected>Data not found</option>
-                                    @endforelse
+                                    @endforelse --}}
                                 </select>
                             </div>
                             <div class="col mb-3">
                                 <label for="usage" class="form-label">Usage</label>
                                 <select name="usage" class="form-select" id="usage_option" required>
-                                    <option disabled selected>Choose One</option>
+                                    {{-- <option disabled selected>Choose One</option> --}}
                                     <option value="MAN POWER">Man Power</option>
-                                    <option value="TOOLS">Tools</option>
+                                    {{-- <option value="TOOLS">Tools</option> --}}
                                 </select>
                             </div>
                         </div>
