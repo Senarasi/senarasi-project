@@ -43,7 +43,7 @@
                 <div class="bercoba">Budgeting System</div>
                 <div class="bercabe">Budget Information and Budget Requests</div>
             </a>
-            <a href="/sop" class="markicob">
+            <a href="{{ route('company-document.index') }}" class="markicob">
                 <div class="bercoba">Company File Documents</div>
                 <div class="bercabe">List of Company File Document </div>
             </a>

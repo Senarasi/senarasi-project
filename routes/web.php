@@ -55,6 +55,16 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('location', 'App\Http\Controllers\LocationController');
     Route::resource('preview', 'App\Http\Controllers\PreviewController');
 
+    Route::prefix('company-document')->controller(App\Http\Controllers\CompanyDocumentController::class)->name('company-document.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{docCategory}/list', 'detail')->name('detail');
+        Route::get('/{docCategory}/{doc}/view', 'view')->name('view');
+        Route::post('/{docCategory}/storeupload', 'storeUpload')->name('storeUpload');
+        Route::delete('/{docCategory}', 'destroy')->name('destroy');
+        Route::delete('/{docCategory}/{doc}', 'destroyFile')->name('destroyFile');
+
+    });
 
     Route::get('/approval', function () {
         return view('approval.index');
@@ -115,13 +125,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/voucher-transportrequest/create', function () {
         return view('vouchertransportrequest.create');
-    });
-
-    Route::get('/sop', function () {
-        return view('sop.index');
-    });
-    Route::get('/sop-detail', function () {
-        return view('sop.detail');
     });
 
     Route::get('/payment-request', function () {

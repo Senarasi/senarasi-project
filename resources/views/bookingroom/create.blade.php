@@ -109,15 +109,12 @@
                             </div>
                         </div>
 
-                        {{-- <div class="mb-3">
-                            <label class="d-flex" for="inputTelephone">WA Requester</label>
 
-                            <input disabled type="text" class="form-control @error('telephone') is-invalid @enderror"
-                            id="inputTelephone" name="telephone" value="{{old('telephone')}} ">
-                            @error('telephone')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
+                        {{-- <input disabled type="hidden" class="form-control @error('phone') is-invalid @enderror"
+                            id="phone" name="phone" value="{{ auth()->user()->phone }} ">
+                        @error('phone')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror --}}
 
                         <div class="mb-3">
                             <label for="guests" class="d-flex">Employee</label>

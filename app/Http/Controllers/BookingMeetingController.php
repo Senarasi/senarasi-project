@@ -53,19 +53,17 @@ class BookingMeetingController extends Controller
         }
 
         $availableRooms = MeetingRoom::where('room_id', $roomId)
-            ->whereNotIn('room_id', function ($query) use ($startDate, $endDate) {
-                $query->select('room_id')
-                    ->from('meeting_bookings')
-                    ->where(function ($query) use ($startDate, $endDate) {
-                        $query->whereBetween('start_time', [$startDate, $endDate])
-                            ->orWhereBetween('end_time', [$startDate, $endDate])
-                            ->orWhere(function ($query) use ($startDate, $endDate) {
-                                $query->where('start_time', '<=', $startDate)
-                                    ->where('end_time', '>=', $endDate);
-                            });
+        ->whereNotIn('room_id', function ($query) use ($startDate, $endDate) {
+            $query->select('room_id')
+                ->from('meeting_bookings')
+                ->where(function ($query) use ($startDate, $endDate) {
+                    $query->where(function ($query) use ($startDate, $endDate) {
+                        $query->where('start_time', '<', $endDate)
+                            ->where('end_time', '>', $startDate);
                     });
-            })
-            ->exists();
+                });
+        })
+        ->exists();
 
         if (!$availableRooms) {
             return redirect()->back()->with('error', 'Failed booking. Room at that time already booked, choose another room or time!');
@@ -82,24 +80,28 @@ class BookingMeetingController extends Controller
                 ]);
                 // Find guest user and send notification email
                 $guestUser = Employee::find($guestId);
-                // Mail::to($guestUser->email)->send(new InternalGuestNotification($booking, $guestUser));
+                Mail::to($guestUser->email)->send(new InternalGuestNotification($booking, $guestUser));
             }
 
-            // Handle external guests
-            $validatedData = $request->validate([
-                'additional_emails.*' => 'email', // Validasi setiap email
-            ]);
-
-            $externalEmails = $validatedData['additional_emails'];
-            $externalGuests = [];
-
-            foreach ($externalEmails as $email) {
-                MeetingExternalGuest::create([
-                    'email' => $email,
-                    'booking_id' => $booking->booking_id,
+            // Handle external guests if provided
+            if ($request->has('additional_emails')) {
+                $validatedData = $request->validate([
+                    'additional_emails.*' => 'email', // Validasi setiap email
                 ]);
-                $externalGuests[] = $email;
-                // Mail::to($email)->send(new ExternalGuestNotification($booking, $email));
+
+                $externalEmails = $validatedData['additional_emails'];
+                $externalGuests = [];
+
+                foreach ($externalEmails as $email) {
+                    MeetingExternalguest::create([
+                        'email' => $email,
+                        'booking_id' => $booking->booking_id,
+                    ]);
+                    $externalGuests[] = $email;
+                    Mail::to($email)->send(new ExternalGuestNotification($booking, $email));
+                }
+            } else {
+                $externalGuests = [];
             }
 
             // Send confirmation email to the user who booked
@@ -109,10 +111,10 @@ class BookingMeetingController extends Controller
 
             $data['name'] = $user->full_name;
             $data['email'] = $user->email;
-            $data['telephone'] = $user->telephone;
+            $data['telephone'] = $user->phone;
             $data['room_name'] = $room->room_name;
 
-            // Mail::to($user->email)->send(new BookingSubmitted($data, $guestUsers, $externalGuests));
+            Mail::to($user->email)->send(new BookingSubmitted($data, $guestUsers, $externalGuests));
 
             return redirect()->back()->with('status', 'The room has been successfully booked!');
         }

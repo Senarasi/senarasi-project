@@ -34,7 +34,7 @@ class BookingSubmitted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Booking Updated',
+            subject: 'Booking Submitted',
         );
     }
 
@@ -46,9 +46,9 @@ class BookingSubmitted extends Mailable
         return new Content(
             view: 'bookingroom.email.booking-submitted',
             with: [
-                'start' => $this->data['start'],
-                'end' => $this->data['end'],
-                'desc' => $this->data['desc'],
+                'start' => $this->data['start_time'],
+                'end' => $this->data['end_time'],
+                'desc' => $this->data['description'],
                 'name' => $this->data['name'],
                 'email' => $this->data['email'],
                 'telephone' => $this->data['telephone'],

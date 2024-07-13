@@ -16,7 +16,7 @@
     <p><strong>Employee:</strong></p>
     <ul>
         @foreach($guests as $guest)
-            <li>{{ $guest->name }}</li>
+            <li>{{ $guest->full_name }}</li>
         @endforeach
     </ul>
     <p><strong>Eksternal Guests:</strong></p>
