@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\BookingRoom;
 
+use App\Models\Booking;
 use App\Models\MeetingBooking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -10,20 +11,15 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ExternalGuestNotificationUpdate extends Mailable
+class BookingConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $booking;
-    public $email;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(MeetingBooking $booking, $email)
+    public function __construct(MeetingBooking $booking)
     {
         $this->booking = $booking;
-        $this->email = $email;
     }
 
     /**
@@ -32,7 +28,8 @@ class ExternalGuestNotificationUpdate extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Meeting Invitation Update',
+            subject: $this->booking->booking_number. ' Booking Room Confirmation',
+
         );
     }
 
@@ -42,7 +39,10 @@ class ExternalGuestNotificationUpdate extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'bookingroom.email.externalguestnotif-update',
+            view: 'bookingroom.email.booking-confirmation',
+            with: [
+                'booking' => $this->booking,
+            ],
         );
     }
 

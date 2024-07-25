@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\BookingRoom;
 
-use App\Models\Employee;
 use App\Models\MeetingBooking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -11,29 +10,26 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class InternalGuestNotification extends Mailable
+class BookingCancelled extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $booking;
-    public $guest;
+    public $guestUsers;
+    public $externalGuests;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(MeetingBooking $booking, Employee $guest)
+    public function __construct(MeetingBooking $booking, $guestUsers, $externalGuests)
     {
         $this->booking = $booking;
-        $this->guest = $guest;
+        $this->guestUsers = $guestUsers;
+        $this->externalGuests = $externalGuests;
     }
-
     /**
      * Get the message envelope.
      */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Meeting Invitation',
+            subject: '['.$this->booking->br_number. '] Booking Cancelled',
         );
     }
 
@@ -43,7 +39,7 @@ class InternalGuestNotification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'bookingroom.email.guestnotif',
+            view: 'bookingroom.email.booking-cancelled',
         );
     }
 

@@ -23,7 +23,7 @@
             @enderror
         </div>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRL-WJ--IJvzEicA-27cSOuOCLlePND7I&libraries=places">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv13DD7H-OxQrCSV7sE5Nc7IrNt9c0G04&libraries=places">
         </script>
         <script>
             function initAutocomplete() {

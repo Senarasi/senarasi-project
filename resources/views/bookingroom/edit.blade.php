@@ -233,7 +233,7 @@
             eventTimeFormat: { // Menentukan format waktu
                 hour: 'numeric',
                 minute: '2-digit',
-                meridiem: 'short'
+                hour12: false
             },
             drop: function(arg) {
                 // is the "remove after drop" checkbox checked?
@@ -243,7 +243,7 @@
                 }
             },
             events: function(fetchInfo, successCallback, failureCallback) {
-                var room_id = '{{ $booking->room->id }}'; // Get the room ID from the Blade variable
+                var room_id = '{{ $booking->room->room_id }}'; // Get the room ID from the Blade variable
                 $.ajax({
                     url: '/getevents',
                     type: 'GET',
@@ -266,11 +266,11 @@
 
                 // Open modal and populate with event details
                 $('#eventModalDesc').text(info.event.title);
-                $('#eventModalUser').text(info.event.extendedProps.user.name);
+                $('#eventModalUser').text(info.event.extendedProps.user.full_name);
                 $('#eventModalStart').text(startDate);
                 $('#eventModalEnd').text(endDate);
 
-                var telephone = info.event.extendedProps.user.telephone;
+                var telephone = info.event.extendedProps.user.phone;
                 var whatsappLink = 'https://wa.me/+62' + telephone.replace(/[^0-9]/g, ''); // Clean non-numeric characters
 
                 $('#eventModalTelephone').text(telephone).attr('href', whatsappLink);

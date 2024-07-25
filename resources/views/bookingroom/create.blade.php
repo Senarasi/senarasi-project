@@ -233,7 +233,7 @@
                     eventTimeFormat: { // Menentukan format waktu
                         hour: 'numeric',
                         minute: '2-digit',
-                        meridiem: 'short'
+                        hour12: false
                     },
                     drop: function(arg) {
                         // is the "remove after drop" checkbox checked?
@@ -268,8 +268,8 @@
                         });
                     },
                     eventClick: function(info) {
-                        var startDate = moment(info.event.start_time).format('DD-MM-YYYY HH:mm');
-                        var endDate = moment(info.event.end_time).format('DD-MM-YYYY HH:mm');
+                        var startDate = moment(info.event.start).format('DD-MM-YYYY HH:mm');
+                        var endDate = moment(info.event.end).format('DD-MM-YYYY HH:mm');
 
                         // Open modal and populate with event details
                         $('#eventModalDesc').text(info.event.title);

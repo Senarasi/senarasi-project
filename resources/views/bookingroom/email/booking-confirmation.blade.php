@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Meeting Invitation</title>
+    <title>Booking Room Confirmation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,14 +20,15 @@
         }
         .logo {
             text-align:left;
+            margin-top:-24px;
             margin-bottom: 20px;
+
         }
         .logo img {
-            max-width: 150px;
+            max-width: 220px;
         }
         h3 {
             color: #333;
-            text-align: center;
         }
         p, ul {
             color: #555;
@@ -51,44 +53,37 @@
         .value {
             width: 70%;
         }
+        .button-report {
+            right: 0;
+            color: #ffff !important;
+            border-radius: 6px;
+            background-color: #4a25aa;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            font: 400 16px Narasi Sans, sans-serif;
+            align-self: center;
+            padding: 10px 14px;
+            margin-top: 12px;
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <div  style="background-color: #eeeeee; padding-top: 64px; padding-bottom: 64px;">
+    <div style="background-color: #eeeeee; padding-top: 64px; padding-bottom: 64px;">
         <div class="logo container" style="text-align: center">
             <img src="https://imgur.com/GYooEjc.png" alt="Company Logo"  style="display: inline-block;">
         </div>
         <div class="email-container">
-        <h3>Dear {{ $email }},</h3>
-        <h3>You have been invited to a Meeting.</h3>
-        <table>
 
-            <tr>
-                <td class="label">Description</td>
-                <td class="value">:  {{ $booking->description }}</td>
-            </tr>
-            <tr>
-                <td class="label">Location</td>
-                <td class="value">: INTILAND TOWER LT. 20, Jl. Jend. Sudirman Kav. 32, Jakarta Pusat, 10220</td>
-            </tr>
-            <tr>
-                <td class="label">Room</td>
-                <td class="value">: {{ $booking->room->room_name }}</td>
-            </tr>
-            <tr>
-                <td class="label">Start Time</td>
-                <td class="value">: {{ $booking->start_time }}</td>
-            </tr>
-            <tr>
-                <td class="label">End Time</td>
-                <td class="value">: {{ $booking->end_time }}</td>
-            </tr>
-        </table>
-        <hr>
-        <h3>Thank You!</h3>
+            <h3 style="text-align: center;">Booking Room Confirmation.</h3>
+            <h3>Dear {{ $booking->user->name }},</h3>
+            <h3>This is a reminder that you have booked the room {{$booking->room->room_name}} for {{ $booking->desc }} from {{$booking->start}} to {{$booking->end}}.</h3>
+            <h3>If you decide not to use the room as scheduled, please cancel or manage your booking as soon as possible. If you still plan to use the room, you can ignore this email.</h3>
+            <h3>Thank you.</h3>
+            <h3><a  href="{{ route('bookingroom.list') }}" class="button-report" >Manage Booking</a></h3>
+        </div>
     </div>
-    </div>
-
 
 </body>
 </html>

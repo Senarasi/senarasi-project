@@ -162,6 +162,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/getevents', [App\Http\Controllers\CalendarController::class, 'getevents']);
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('/auth/google/callback', [App\Http\Controllers\GoogleController::class, 'handleProviderCallback'])->name('google.callback');
+    Route::get('/google/calendar/auth', [App\Http\Controllers\GoogleController::class, 'startGoogleAuth'])->name('google.calendar.auth');
     // Other protected routes
 });
 

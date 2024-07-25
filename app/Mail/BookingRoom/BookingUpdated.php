@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\BookingRoom;
 
+use App\Models\MeetingBooking;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class BookingSubmitted extends Mailable
+class BookingUpdated extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -34,7 +35,7 @@ class BookingSubmitted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Booking Submitted',
+            subject: $this->data['booking_number']. ' Booking Updated',
         );
     }
 
@@ -44,14 +45,14 @@ class BookingSubmitted extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'bookingroom.email.booking-submitted',
+            view: 'bookingroom.email.booking-updated',
             with: [
                 'start' => $this->data['start_time'],
                 'end' => $this->data['end_time'],
                 'desc' => $this->data['description'],
                 'name' => $this->data['name'],
                 'email' => $this->data['email'],
-                'telephone' => $this->data['telephone'],
+                'telephone' => $this->data['phone'],
                 'room_name' => $this->data['room_name'],
             ],
         );

@@ -21,6 +21,8 @@ class MeetingBooking extends Model
         'phone',
         'start_time',
         'end_time',
+        'booking_number',
+        'confirmation_sent',
     ];
 
     public function employee()

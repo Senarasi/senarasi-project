@@ -15,9 +15,32 @@
     <!--Badan Isi-->
     <div style="margin-left: 24px; ">
         <div class="judulhalaman" style="display: flex; align-items: center; margin-top: -12px;">Booking Room Narasi</div>
-        <div class="container-fluid">
-            <div class="row" style="gap: 32px">
-                <div class="tablenih" style="width: 600px; border-color: red">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 col-sm-12">
+                <div class="tablenih" style="padding-top: -24px; ">
+                    <p style="font: 700 24px Narasi Sans, sans-serif; color: #4A25AA; margin: 12px;">Room Calendar</p>
+                    <form id="roomFilterForm">
+                        <div class="row form-group mb-3 text-center d-flex justify-content-center">
+                            <div class="col-6">
+                                <select class="form-select" name="room" id="roomSelect">
+                                    <option selected>Select Room</option>
+                                    @foreach ($rooms as $room)
+                                        <option value="{{ $room->room_id }}">{{ $room->room_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="uwuq"
+                                    style="width: fit-content;">{{ __('Filter') }}</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div id="calendar" class="p-3"></div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-12 col-sm-12">
+                <div class="tablenih" style="padding-top: -24px; border-color: red;">
                     <div style="display: flex; gap: 8px">
                         <div>
                             <div
@@ -30,7 +53,7 @@
                                 </svg>
                                 <div
                                     style="font-size:24px; font-weight: 700; color: red ;margin: 0 12px; letter-spacing: 0.5px">
-                                    IMPORTANT INFORMATION</div>
+                                    INFORMASI PENTING</div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"
                                     fill="none">
                                     <path
@@ -39,20 +62,19 @@
                                 </svg>
                             </div>
 
-                            <p style="margin-bottom: 8px; margin-left: 8px">Please <b>read and comply with all terms and
-                                    conditions </b>for booking a room</p>
+                            <p style="margin-bottom: 8px; margin-left: 8px">Silahkan <b>baca dan patuhi</b> semua <b>syarat
+                                    dan ketentuan</b> yang berlaku.</b></p>
                             <ul style="text-align: justify;">
-                                <li>Room reservations can only be booked <b>two days</b> before the activity.</li>
-                                <li>Room reservations can be made <b>one week </b> before the activity starts.</li>
-                                <li>If those taking part in the activity exceed the maximum capacity of the room, then
-                                    seating and all other needs <b>are the responsibility of the orderer</b>.</li>
+                                <li>Ruangan hanya dapat dipesan untuk maksimal <b>satu minggu </b> kedepan.</li>
+                                <li>Jika pertisipan melebihi kapasitas ruangan, maka kursi dan kebutuhan lainnya menjadi
+                                    <b>tanggung jawab pemesan</b>.</li>
                             </ul>
-                            <p style="margin-left: 8px">ThankYou!</p>
+                            <p style="margin-left: 8px">Terima kasih.</p>
                             <p style="margin-left: 8px">-General Affair Narasi-</p>
                         </div>
                     </div>
                 </div>
-                <div class="tablenih" style="padding-top: -24px; max-width: 1170px; max-height: fit-content">
+                <div class="tablenih" style="padding-top: -24px; margin-top: 32px;">
                     <div class="table-responsive p-3">
                         <table id="datatable" class="table table-hover"
                             style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ;  color: #4A25AA; ">
@@ -84,33 +106,9 @@
                         </table>
                     </div>
                 </div>
+
             </div>
-
         </div>
-
-
-        <div class="tablenih" style="padding-top: -24px; margin-top: 32px;">
-            <p style="font: 700 24px Narasi Sans, sans-serif; color: #4A25AA; margin: 12px;">Room Calendar</p>
-            <form id="roomFilterForm">
-                <div class="row form-group mb-3 text-center d-flex justify-content-center">
-                    <div class="col-6">
-                        <select class="form-select" name="room" id="roomSelect">
-                            <option selected>Select Room</option>
-                            @foreach ($rooms as $room)
-                                <option value="{{ $room->room_id }}">{{ $room->room_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="uwuq" style="width: fit-content;">{{ __('Filter') }}</button>
-                    </div>
-                </div>
-            </form>
-
-            <div id="calendar" class="p-3"></div>
-        </div>
-
-
     </div>
 @endsection
 
@@ -139,6 +137,10 @@
 
                     <div class="mb-2"><strong class="mb-2">Employee : </strong>
                         <ul class="fw-lighter" class="mb-2" id="eventModalGuests"></ul>
+                    </div>
+
+                    <div class="mb-2"><strong class="mb-2">External Guests : </strong>
+                        <ul class="fw-lighter mb-2" id="eventModalExternalGuests"></ul>
                     </div>
 
                     <input type="hidden" id="eventModalBookingId" value="">
@@ -174,6 +176,18 @@
                     displayEventTime: true,
                     displayEventEnd: true,
                     dayMaxEvents: true, // allow "more" link when too many events
+                    eventTimeFormat: { // Menentukan format waktu
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: false
+                    },
+                    drop: function(arg) {
+                        // is the "remove after drop" checkbox checked?
+                        if (document.getElementById('drop-remove').checked) {
+                            // if so, remove the element from the "Draggable Events" list
+                            arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+                        }
+                    },
                     events: function(fetchInfo, successCallback, failureCallback) {
                         var room_id = roomSelect.value;
 
@@ -188,7 +202,7 @@
                             data: {
                                 room_id: room_id,
                                 start: fetchInfo.startStr,
-                                end: fetchInfo.endStr
+                                end: fetchInfo.endStr,
                             },
                             success: function(response) {
                                 successCallback(response.events);
@@ -222,6 +236,17 @@
                         info.event.extendedProps.guests.forEach(function(guest) {
                             guestsList.append('<li>' + guest + '</li>');
                         });
+
+                        var externalGuestsList = $('#eventModalExternalGuests');
+                        externalGuestsList.empty();
+                        if (info.event.extendedProps.externalGuests && info.event.extendedProps
+                            .externalGuests.length > 0) {
+                            info.event.extendedProps.externalGuests.forEach(function(externalGuest) {
+                                externalGuestsList.append('<li>' + externalGuest + '</li>');
+                            });
+                        } else {
+                            externalGuestsList.append('<li>No external guests</li>');
+                        }
 
                         // Show or hide delete button based on ownership
                         if (window.authUserId == info.event.extendedProps.user_id || window.userRole ===

@@ -2,21 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BookingRequest;
-use App\Mail\BookingSubmitted;
-use App\Mail\BookingUpdated;
-use App\Mail\ExternalGuestNotification;
-use App\Mail\ExternalGuestNotificationUpdate;
-use App\Mail\InternalGuestNotification;
-use App\Mail\InternalGuestNotificationUpdate;
 use Carbon\Carbon;
+use Google\Client;
 use App\Models\Employee;
 use App\Models\MeetingBooking;
 use App\Models\MeetingExternalGuest;
 use App\Models\MeetingInternalGuest;
 use App\Models\MeetingRoom;
 use Illuminate\Support\Facades\Mail;
+use Google\Service\Calendar;
+use Google\Service\Calendar\Event;
 use Illuminate\Http\Request;
+use App\Http\Requests\BookingRequest;
+use App\Mail\BookingRoom\BookingUpdated;
+use App\Mail\BookingRoom\BookingSubmitted;
+use App\Mail\BookingRoom\BookingCancelled;
+use App\Mail\BookingRoom\InternalGuestNotification;
+use App\Mail\BookingRoom\BookingConfirmation;
+use App\Mail\BookingRoom\InternalGuestNotificationUpdate;
+use App\Mail\BookingRoom\ExternalGuestNotification;
+use App\Mail\BookingRoom\ExternalGuestNotificationUpdate;
+
 
 class BookingMeetingController extends Controller
 {
@@ -69,6 +75,29 @@ class BookingMeetingController extends Controller
             return redirect()->back()->with('error', 'Failed booking. Room at that time already booked, choose another room or time!');
         } else {
             $data['employee_id'] = auth()->id();
+            $currentYear = date('Y'); // Get the current year
+            $currentMonth = date('m'); // Get the current month
+
+            // Fetch the maximum serial number for the current month and year
+            $lastRequest = MeetingBooking::whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $currentMonth)
+                ->orderBy('booking_number', 'desc')
+                ->first();
+
+            $lastSerialNumber = 0;
+            if ($lastRequest) {
+                // Extract the serial number part from the last request number
+                if (preg_match('/\d{3}(?=-\d{2}-' . $currentYear . '$)/', $lastRequest->br_number, $matches)) {
+                    $lastSerialNumber = intval($matches[0]);
+                }
+            }
+
+            // Increment the serial number
+            $newSerialNumber = $lastSerialNumber + 1;
+
+            // Format the new request number
+            $requestNumber = sprintf('NRS-BR-%03d-%02d-%d', $newSerialNumber, $currentMonth, $currentYear);
+            $data['booking_number'] = $requestNumber;
             $booking = MeetingBooking::create($data);
 
             // Handle internal guests
@@ -116,6 +145,57 @@ class BookingMeetingController extends Controller
 
             Mail::to($user->email)->send(new BookingSubmitted($data, $guestUsers, $externalGuests));
 
+            // Initialize the Google Client
+            $client = new Client();
+            $client->setAuthConfig(config_path('credentials/client_secret.json'));
+            $client->addScope(Calendar::CALENDAR);
+            $client->setAccessType('offline');
+
+            // Check if token is available or needs to be refreshed
+            $googleToken = auth()->user()->googleToken;
+            if ($googleToken) {
+                $token = json_decode($googleToken->access_token, true);
+                $client->setAccessToken($token);
+
+                if ($client->isAccessTokenExpired()) {
+                    $refreshToken = $googleToken->refresh_token;
+                    $client->fetchAccessTokenWithRefreshToken($refreshToken);
+                    $newAccessToken = $client->getAccessToken();
+                    $googleToken->update([
+                        'access_token' => json_encode($newAccessToken),
+                        'expires_at' => Carbon::now()->addSeconds($newAccessToken['expires_in']),
+                    ]);
+                }
+            } else {
+                return redirect()->route('google.calendar.auth', ['room_id' => $roomId]);
+            }
+
+            // Create Google Calendar service
+            $service = new Calendar($client);
+
+            $event = new Event([
+                'summary' => 'Meeting: ' . $data['desc'] ,
+                'description' => 'Room: ' . $room->room_name,
+                'start' => [
+                    'dateTime' => $startDate,
+                    'timeZone' => 'Asia/Jakarta',
+                ],
+                'end' => [
+                    'dateTime' => $endDate,
+                    'timeZone' => 'Asia/Jakarta',
+                ],
+                'attendees' => array_merge(
+                    array_map(fn($guestId) => ['email' => Employee::find($guestId)->email], $guests),
+                    array_map(fn($email) => ['email' => $email], $externalGuests)
+                ),
+            ]);
+
+            $calendarId = 'primary'; // Use 'primary' or specify the calendar ID
+             $createdEvent = $service->events->insert($calendarId, $event);
+
+            // Simpan google_event_id
+            $booking->update(['google_event_id' => $createdEvent->token_id]);
+
             return redirect()->back()->with('status', 'The room has been successfully booked!');
         }
     }
@@ -154,12 +234,10 @@ class BookingMeetingController extends Controller
                     ->from('meeting_bookings')
                     ->where('room_id', '<>', $booking->booking_id) // Exclude current booking
                     ->where(function ($query) use ($startDate, $endDate) {
-                        $query->whereBetween('start_time', [$startDate, $endDate])
-                            ->orWhereBetween('end_time', [$startDate, $endDate])
-                            ->orWhere(function ($query) use ($startDate, $endDate) {
-                                $query->where('start_time', '<=', $startDate)
-                                    ->where('end_time', '>=', $endDate);
-                            });
+                        $query->where(function ($query) use ($startDate, $endDate) {
+                            $query->where('start_time', '<', $endDate)
+                                ->where('end_time', '>', $startDate);
+                        });
                     });
             })
             ->exists();
@@ -179,40 +257,46 @@ class BookingMeetingController extends Controller
                     'booking_id' => $booking->booking_id,
                 ]);
                 $guestUser = Employee::find($guestId);
-                // Mail::to($guestUser->email)->send(new InternalGuestNotificationUpdate($booking, $guestUser));
+                Mail::to($guestUser->email)->send(new InternalGuestNotificationUpdate($booking, $guestUser));
             }
 
             // Handle external guests
-            $validatedData = $request->validate([
-                'additional_emails.*' => 'email', // Validate each email
-            ]);
-
-            $externalEmails = $validatedData['additional_emails'];
-            $externalGuests = [];
-
-            // Delete old external guests and re-add the new ones
-            $booking->externalGuest()->delete();
-
-            foreach ($externalEmails as $email) {
-                MeetingExternalGuest::create([
-                    'email' => $email,
-                    'booking_id' => $booking->booking_id,
+            if ($request->has('additional_emails')) {
+                $validatedData = $request->validate([
+                    'additional_emails.*' => 'email', // Validate each email
                 ]);
-                $externalGuests[] = $email;
-                // Mail::to($email)->send(new ExternalGuestNotificationUpdate($booking, $email));
+
+                $externalEmails = $validatedData['additional_emails'];
+                $externalGuests = [];
+
+                // Delete old external guests and re-add the new ones
+                $booking->externalGuest()->delete();
+
+                foreach ($externalEmails as $email) {
+                    MeetingExternalGuest::create([
+                        'email' => $email,
+                        'booking_id' => $booking->booking_id,
+                    ]);
+                    $externalGuests[] = $email;
+                    Mail::to($email)->send(new ExternalGuestNotificationUpdate($booking, $email));
+                }
+            } else {
+                $externalGuests = [];
             }
 
             // Send confirmation email to the user who booked
             $guestUsers = Employee::whereIn('employee_id', $guests)->get();
             $user = Employee::find($booking->employee_id);
             $room = MeetingRoom::find($booking->room_id);
+            $booking = $booking->booking_number;
 
             $data['name'] = $user->full_name;
             $data['email'] = $user->email;
-            $data['telephone'] = $user->telephone;
+            $data['phone'] = $user->phone;
             $data['room_name'] = $room->room_name;
+            $data['booking_number'] = $booking;
 
-            // Mail::to($user->email)->send(new BookingUpdated($data, $guestUsers, $externalGuests));
+            Mail::to($user->email)->send(new BookingUpdated($data, $guestUsers, $externalGuests));
 
             return redirect()->back()->with('status', 'The booking has been successfully updated!');
         }
@@ -230,5 +314,25 @@ class BookingMeetingController extends Controller
     {
         $bookings = MeetingBooking::all();
         return view('bookingroom.list', compact('bookings'));
+    }
+
+    public function sendConfirmationEmails()
+    {
+        $oneHourLater = Carbon::now()->addHour();
+        $bookings = MeetingBooking::where('start', '<=', $oneHourLater)
+                            ->where('start', '>', Carbon::now())
+                            ->where('confirmation_sent', false)
+                            ->get();
+
+        foreach ($bookings as $booking) {
+            $user = Employee::find($booking->employee_id);
+            if ($user) {
+                Mail::to($user->email)->send(new BookingConfirmation($booking));
+
+                // Update booking to mark that the email has been sent
+                $booking->confirmation_sent = true;
+                $booking->save();
+            }
+        }
     }
 }

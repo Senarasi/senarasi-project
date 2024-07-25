@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\BookingRoom;
 
-use App\Models\Booking;
+use App\Models\Employee;
+use App\Models\MeetingBooking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -10,23 +11,20 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class BookingUpdated extends Mailable
+class InternalGuestNotificationUpdate extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
-    public $guests;
-    public $externalguests;
+    public $booking;
+    public $guest;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($data, $guests, $externalguests)
+    public function __construct(MeetingBooking $booking, Employee $guest)
     {
-        $this->data = $data;
-        $this->guests = $guests;
-        $this->externalguests = $externalguests;
-
+        $this->booking = $booking;
+        $this->guest = $guest;
     }
 
     /**
@@ -35,7 +33,7 @@ class BookingUpdated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Booking Updated',
+            subject: '['.$this->booking->booking_number. '] Meeting Invitation Updated',
         );
     }
 
@@ -45,16 +43,7 @@ class BookingUpdated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'bookingroom.email.booking-updated',
-            with: [
-                'start' => $this->data['start_time'],
-                'end' => $this->data['end_time'],
-                'desc' => $this->data['description'],
-                'name' => $this->data['name'],
-                'email' => $this->data['email'],
-                'telephone' => $this->data['telephone'],
-                'room_name' => $this->data['room_name'],
-            ],
+            view: 'bookingroom.email.guestnotif-update',
         );
     }
 

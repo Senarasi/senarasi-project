@@ -32,14 +32,16 @@
                     <thead style="font-weight: 500; text-align: center">
                         <tr class="text-center">
                             <th scope="col">No.</th>
-                            <th scope="col">Room Name</th>
+                            <th scope="col">Booking Number</th>
+                            <th scope="col">Room  Name</th>
                             <th scope="col">Booked by</th>
                             <th scope="col">CP Booking</th>
                             <th scope="col">Description</th>
                             <th scope="col">Start Time</th>
                             <th scope="col">End Time</th>
                             <th scope="col">Person</th>
-
+                            <th scope="col">Created Date</th>
+                            <th scope="col">Updated Date</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -47,6 +49,7 @@
                         @foreach ($bookings as $booking)
                             <tr>
                                 <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                                <td>{{ $booking->booking_number }}</td>
                                 <td>{{ $booking->room->room_name }}</td>
                                 <td>{{ $booking->employee->full_name }}</td>
                                 <td>
@@ -68,6 +71,8 @@
                                         {{ $booking->internalGuest->count() + $booking->externalGuest->count() }}
                                     </a>
                                 </td>
+                                <td>{{ \Carbon\Carbon::parse($booking->created_at)->translatedFormat('d F Y H:i') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->updated_at)->translatedFormat('d F Y H:i') }}</td>
                                 <td>
                                     <span style="display: flex; gap: 8px; justify-content: center">
                                         @can('owner', $booking)
