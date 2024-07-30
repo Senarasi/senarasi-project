@@ -45,7 +45,7 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="data5-tab" data-url="{{ route('request-budget.location', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data5-tab-pane" type="button" role="tab"
-                aria-controls="data1-tab-pane" aria-selected="false">Location</button>
+                aria-controls="data1-tab-pane" aria-selected="false">Venue</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link active tablinks" id="preview-tab" data-url="{{ route('request-budget.preview', $id) }}"
@@ -101,7 +101,7 @@
                     </tr>
                     <tr>
                         <th scope="row ">5</th>
-                        <td style="text-align: start">Location</td>
+                        <td style="text-align: start">Venue</td>
 
                         <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totallocation) ?? 0 }}
                         </td>

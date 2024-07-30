@@ -5,6 +5,36 @@
 @endsection
 
 @section('content')
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist"
+        style="margin-bottom: 24px; font: 600 18px Narasi Sans, sans-serif; ">
+        <li class="nav-item" role="presentation" style="flex: 1; text-align: center;">
+            <button class="nav-link active tablinks" id="data5-tab" data-url="/detaiL-budget" data-bs-toggle="tab"
+                data-bs-target="#data5-tab-pane" type="button" role="tab" aria-controls="data1-tab-pane"
+                aria-selected="true" style="width: 100%; letter-spacing: 0.5px;">PROGRAM</button>
+        </li>
+        <li class="nav-item" role="presentation" style="flex: 1; text-align: center;">
+            <button class="nav-link tablinks" id="preview-tab" data-url="/requestpayment" data-bs-toggle="tab"
+                data-bs-target="#preview-tab-pane" type="button" role="tab" aria-controls="preview-tab-pane"
+                aria-selected="false"
+                style="width: 100%; color: #4a25aa; letter-spacing: 0.5px; font-weight: 300">PAYMENT</button>
+        </li>
+        <li class="nav-item" role="presentation" style="flex: 1; text-align: center;">
+            <button class="nav-link tablinks" id="preview-tab" data-url="/requestpurchase" data-bs-toggle="tab"
+                data-bs-target="#preview-tab-pane" type="button" role="tab" aria-controls="preview-tab-pane"
+                aria-selected="false"
+                style="width: 100%; color: #4a25aa; letter-spacing: 0.5px; font-weight: 300">PURCHASE</button>
+        </li>
+        <li class="nav-item" role="presentation" style="flex: 1; text-align: center;">
+            <button class="nav-link tablinks" id="preview-tab" data-url="/requestadvance" data-bs-toggle="tab"
+                data-bs-target="#preview-tab-pane" type="button" role="tab" aria-controls="preview-tab-pane"
+                aria-selected="false"
+                style="width: 100%; color: #4a25aa; letter-spacing: 0.5px; font-weight: 300">ADVANCE</button>
+        </li>
+        <li class="nav-item" role="presentation">
+        </li>
+    </ul>
+
     <div class="judulhalaman" style="display: flex; align-items: center; ">Request Budget Narasi</div>
 
     <div style="display: flex; justify-content: space-between;">

@@ -8,7 +8,6 @@
     <!--Badan Isi-->
     <div style="margin-top: -12px; margin-left: 24px">
         <div class="judulhalaman" style=" display: flex; align-items: center; ">Company File Documents</div>
-        <form>
             <div style="display: inline-flex; gap: 12px; margin-left:4px;">
                 <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#modal-addcategory"> Add Category
                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
@@ -68,8 +67,6 @@
                 </div>
 
             </div>
-
-        </form>
     </div>
 
 @endsection
@@ -85,13 +82,13 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
                             <select id="category_option" name="category" class="form-select" style="font: 300 12">
-                                <option disabled selected>Select Category</option>
-                                <option value="Finance">Finance</option>
-                                <option value="People">People</option>
-                                <option value="Asset">Asset</option>
-                                <option value="Legal">Legal</option>
-                                <option value="Production">Production</option>
-                                <option value="External Relation">External Relation</option>
+                                <option style="color: rgb(189, 189, 189);" disabled selected>Choose Category</option>
+                                <option value="FINANCE" {{ old('category') == 'FINANCE' ? 'selected' : '' }}>FINANCE</option>
+                                <option value="PEOPLE" {{ old('category') == 'PEOPLE' ? 'selected' : '' }}>PEOPLE</option>
+                                <option value="ASSET" {{ old('category') == 'ASSET' ? 'selected' : '' }}>ASSET</option>
+                                <option value="LEGAL" {{ old('category') == 'LEGAL' ? 'selected' : '' }}>LEGAL</option>
+                                <option value="PRODUCTION" {{ old('category') == 'PRODUCTION' ? 'selected' : '' }}>PRODUCTION</option>
+                                <option value="EKSTERNAL RELATION" {{ old('category') == 'EKSTERNAL RELATION' ? 'selected' : '' }}>EKSTERNAL RELATION</option>
                             </select>
                             @error('category')
                             <div class="text-danger">{{ $message }}</div>

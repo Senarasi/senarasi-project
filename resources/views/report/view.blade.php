@@ -216,7 +216,7 @@
 
                                             </tr>
                                             <tr>
-                                                <td>Location</td>
+                                                <td>Venue</td>
                                                 <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                                 <td>{{ $requestbudget->location }}</td>
 
@@ -553,7 +553,7 @@
                             {{-- LOCATION RENTAL --}}
                             <tbody class="text-center">
                                 <tr>
-                                    <th class="text-start" style="background-color: #dbdee8 ">LOCATION RENTAL</th>
+                                    <th class="text-start" style="background-color: #dbdee8 ">VENUE RENTAL</th>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -612,7 +612,7 @@
                                 @endforelse
                                 <tr>
                                     <td colspan="5" class="text-start "
-                                        style="font-weight: 500; background-color: #ffe900;">SUB TOTAL LOCATION RENTAL
+                                        style="font-weight: 500; background-color: #ffe900;">SUB TOTAL VENUE RENTAL
                                     </td>
                                     <td class="text-end">Rp. {{ number_format($data->sum('total_cost')) }}</td>
                                     <td></td>

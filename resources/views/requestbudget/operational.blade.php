@@ -47,7 +47,7 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="data5-tab" data-url="{{ route('request-budget.location', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data5-tab-pane" type="button" role="tab"
-                aria-controls="data1-tab-pane" aria-selected="false">Location</button>
+                aria-controls="data1-tab-pane" aria-selected="false">Venue</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="preview-tab" data-url="{{ route('request-budget.preview', $id) }}"
@@ -112,7 +112,7 @@
                     </tr>
                     <tr>
                         <th scope="row ">5</th>
-                        <td style="text-align: start">Location</td>
+                        <td style="text-align: start">Venue</td>
 
                         <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totallocation) ?? 0 }}
                         </td>
@@ -163,7 +163,7 @@
                             <th scope="col">Cost</th>
                             <th scope="col">Total</th>
                             {{-- <th scope="col">Type</th> --}}
-                            <th scope="col">Forwarded To</th>
+                            <th scope="col">Assign To</th>
                             <th scope="col">Note</th>
                             <th scope="col" style="width: 140px" class="text-center">Action</th>
                         </tr>
@@ -295,12 +295,12 @@
                         <div class="row">
                             <div class="col">
                                 <div class="mb-3">
-                                    <label for="assign" class="form-label">Forward To</label>
+                                    <label for="assign" class="form-label">Assign To</label>
                                     <select name="assign" class="form-select" id="assign_option" required>
-                                        <option disabled selected>Select Department</option>
+                                        {{-- <option disabled selected>Select Department</option>
                                         <option value="hc">HC</option>
-                                        <option value="finance">Finance</option>
-                                        <option value="procurement">Procurement</option>
+                                        <option value="finance">Finance</option> --}}
+                                        <option selected value="procurement">Procurement</option>
                                     </select>
                                 </div>
                             </div>

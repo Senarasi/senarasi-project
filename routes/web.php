@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApprovalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('budget', 'App\Http\Controllers\BudgetController');
     Route::post('/budget/store', 'App\Http\Controllers\BudgetController@store')->name('budget.store');
 
+
+
+    Route::resource('approval', ApprovalController::class);
+
     Route::resource('request-budget', 'App\Http\Controllers\RequestBudgetController');
     Route::get('/get-monthly-budget', [App\Http\Controllers\RequestBudgetController::class, 'getMonthlyBudget'])->name('getMonthlyBudget');
     Route::get('/request-budget/performer/{id}', [App\Http\Controllers\RequestBudgetController::class, 'performer'])->name('request-budget.performer');
@@ -42,6 +47,44 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/request-budget/preview/{id}', [App\Http\Controllers\RequestBudgetController::class, 'preview'])->name('request-budget.preview');
     Route::get('/request-budget/preview/{id}/view', [App\Http\Controllers\RequestBudgetController::class, 'report'])->name('request-budget.report');
     Route::delete('request-budget/{id}', [App\Http\Controllers\RequestBudgetController::class, 'destroy'])->name('request-budget.destroy');
+
+    Route::get('/requestpayment', function () {
+        return view('requestbudget.payment.index');
+    });
+
+    Route::get('/requestpayment-create', function () {
+        return view('requestbudget.payment.create');
+    });
+
+    Route::get('/requestpayment-description', function () {
+        return view('requestbudget.payment.description');
+    });
+
+    Route::get('/requestpurchase', function () {
+        return view('requestbudget.purchase.index');
+    });
+
+    Route::get('/requestpurchase-create', function () {
+        return view('requestbudget.purchase.create');
+    });
+
+    Route::get('/requestpurchase-description', function () {
+        return view('requestbudget.purchase.description');
+    });
+
+    Route::get('/requestadvance', function () {
+        return view('requestbudget.advance.index');
+    });
+
+    Route::get('/requestadvance-create', function () {
+        return view('requestbudget.advance.create');
+    });
+
+    Route::get('/requestadvance-description', function () {
+        return view('requestbudget.advance.description');
+    });
+
+
 
     Route::resource('performer', 'App\Http\Controllers\PerformerController');
     Route::get('/get-performer-price', [App\Http\Controllers\PerformerController::class, 'getPerformerPrice'])->name('getPerformerPrice');
@@ -63,12 +106,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{docCategory}/storeupload', 'storeUpload')->name('storeUpload');
         Route::delete('/{docCategory}', 'destroy')->name('destroy');
         Route::delete('/{docCategory}/{doc}', 'destroyFile')->name('destroyFile');
-
     });
 
-    Route::get('/approval', function () {
-        return view('approval.index');
-    });
+    // Route::get('/approval', function () {
+    //     return view('approval.index');
+    // });
 
     Route::get('/report', function () {
         return view('report.index');
