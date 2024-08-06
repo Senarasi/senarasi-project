@@ -9,7 +9,7 @@ use App\Models\Employee;
 use App\Models\ItemCategory;
 use App\Models\Position;
 use App\Models\Program;
-use App\Models\MonthlyBudget;
+use App\Models\ProgramMonthlyBudget;
 use App\Models\Operational;
 use App\Models\Performer;
 use App\Models\ProductionCrew;
@@ -69,7 +69,7 @@ class RequestBudgetController extends Controller
         $programId = $request->query('program_id');
         $month = $request->query('month');
 
-        $budget = MonthlyBudget::where('program_id', $programId)
+        $budget = ProgramMonthlyBudget::where('program_id', $programId)
             ->where('month', $month)
             ->first();
 

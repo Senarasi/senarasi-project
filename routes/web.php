@@ -30,8 +30,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard-budget', [App\Http\Controllers\DashboardController::class, 'dashboardbudget'])->name('dashboard.budget');
     Route::get('/map', [App\Http\Controllers\MapController::class, 'index']);
 
-    Route::resource('budget', 'App\Http\Controllers\BudgetController');
-    Route::post('/budget/store', 'App\Http\Controllers\BudgetController@store')->name('budget.store');
+    Route::resource('budget', 'App\Http\Controllers\Budget\BudgetProgramController');
+    Route::post('/budget/store', 'App\Http\Controllers\Budget\BudgetProgramController@store')->name('budget.store');
 
 
 

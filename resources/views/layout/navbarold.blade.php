@@ -5,11 +5,11 @@
     }
 </style>
 <!--Navbar-->
-<nav class="navbar navbar-expand-lg" style="padding: 16px 0px">
+<nav class="navbar fixed-top navbar-expand-lg">
     <div class="container-fluid">
-        {{-- <a href="/dashboard-main" class="header ms-3" style="margin: 6px">
+        <a href="/dashboard-main" class="header ms-3" style="margin: 6px">
             <img style="width: 208px; height: 38" src="{{ asset('asset/image/senarasi_logo1.png') }}" alt="" />
-        </a> --}}
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarnih"
             aria-controls="navbarnih" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -44,7 +44,7 @@
                             <div class="user-info text-center">
                                 <a href="" id="#" class="button-profile sidebar-link collapsed has-dropdown d-flex"
                                     data-bs-toggle="modal" data-bs-target="#staticBackdrop-profile" role="button" aria-expanded="false"
-                                    aria-controls="profile" style="margin-bottom: 12px;    border-left: none">
+                                    aria-controls="profile" style="margin-bottom: 12px">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" >
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -57,7 +57,7 @@
                                     data-bs-toggle="modal" data-bs-target="#staticBackdrop-logout" role="button" aria-expanded="false"
                                     aria-controls="profile"
                                     onclick="event.preventDefault();
-                                                                document.getElementById('logout-form').submit();" style="border-left: none">
+                                                                document.getElementById('logout-form').submit();">
                                     <svg xmlns="http://www.w3.org/2000/svg " width="25 " height="24 " viewBox="0 0 25 24 "
                                         fill="none ">
                                         <path

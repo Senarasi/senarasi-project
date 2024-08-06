@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\YearlyBudget;
+use App\Models\ProgramYearlyBudget;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/getProgramData/{program_id}', function ($program_id) {
-    $yearlyBudgets = YearlyBudget::where('program_id', $program_id)->get();
+    $yearlyBudgets = ProgramYearlyBudget::where('program_id', $program_id)->get();
 
     if ($yearlyBudgets->isEmpty()) {
         return response()->json(['error' => 'Program not found or no data available'], 404);

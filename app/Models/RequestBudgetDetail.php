@@ -75,7 +75,7 @@ class RequestBudgetDetail extends Model
 
     public function monthlyBudget()
     {
-        return $this->belongsTo(MonthlyBudget::class, 'monthly_budget_id');
+        return $this->belongsTo(ProgramMonthlyBudget::class, 'monthly_budget_id');
     }
 
     public function approval()

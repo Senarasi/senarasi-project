@@ -16,8 +16,8 @@
     </head>
     <body class="antialiased">
         <div class="wrapper">
-            @include('layout.navbar')
-            <div class="body" style="margin-top: 65px; margin-left: 132px; min-height: 100vh;">
+            @include('layout.navbarold')
+            <div class="body" style="margin-top:70px;margin-left: 132px; min-height: 100vh;">
                 <div class="badanisi" style="margin-left: -160px">
                     @yield('content')
                 </div>
@@ -31,9 +31,6 @@
         <!-- Tabler Core -->
         {{-- <script src="{{ asset('js/script.js') }}"></script> --}}
         <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
-        <script src="http://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js "
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r " crossorigin="anonymous ">
-        </script>
         <script src="{{ asset('js/bootstrap.bundle.min.js') }} "></script>
         <script src="{{ asset('js/datatables.min.js')}}"></script>
         <script src="{{ asset('js/datatables.init.js')}}"></script>

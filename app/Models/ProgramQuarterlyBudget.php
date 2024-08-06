@@ -5,19 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class YearlyBudget extends Model
+class ProgramQuarterlyBudget extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'yearly_budget_id';
+    protected $table = 'program_quarterly_budgets';
+    protected $primaryKey = 'quarterly_budget_id';
 
     protected $fillable = [
+        'yearly_budget_id',
         'employee_id',
         'program_id',
         'budget_code',
-        'yearly_budget',
+        'quarter',
+        'quarter_budget',
         'remaining_budget',
-        'year',
     ];
+
+    public function yearlyBudget()
+    {
+        return $this->belongsTo(ProgramYearlyBudget::class, 'yearly_budget_id');
+    }
 
     public function employee()
     {
@@ -29,8 +36,8 @@ class YearlyBudget extends Model
         return $this->belongsTo(Program::class, 'program_id');
     }
 
-    public function quarterlyBudgets()
+    public function monthlyBudgets()
     {
-        return $this->hasMany(QuarterlyBudget::class, 'yearly_budget_id');
+        return $this->hasMany(ProgramMonthlyBudget::class, 'quarterly_budget_id');
     }
 }

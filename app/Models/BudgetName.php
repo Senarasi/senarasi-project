@@ -20,16 +20,16 @@ class BudgetName extends Model
 
     public function yearlyBudgets()
     {
-        return $this->hasMany(YearlyBudget::class, 'budget_name_id');
+        return $this->hasMany(ProgramYearlyBudget::class, 'budget_name_id');
     }
 
     public function quarterlyBudgets()
     {
-        return $this->hasMany(QuarterlyBudget::class, 'budget_name_id');
+        return $this->hasMany(ProgramQuarterlyBudget::class, 'budget_name_id');
     }
 
     public function monthlyBudgets()
     {
-        return $this->hasMany(MonthlyBudget::class, 'budget_name_id');
+        return $this->hasMany(ProgramMonthlyBudget::class, 'budget_name_id');
     }
 }
