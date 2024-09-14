@@ -21,7 +21,7 @@
             }
 
             .judulhalaman {
-                color: #4a25aa;
+                color:  #4a25aa;
                 font-family: "Narasi Sans";
                 font-size: 32px;
                 font-style: normal;
@@ -33,7 +33,6 @@
                 margin-top: 12px;
                 margin-left: 8px;
             }
-
             .arips {
                 justify-content: space-between;
                 display: flex;
@@ -41,7 +40,6 @@
                 margin-bottom: 12px;
                 padding-top: 12px;
             }
-
             .tablecoba,
             td {
                 padding-bottom: 12px;
@@ -52,7 +50,7 @@
             }
 
             table {
-                border-collapse: collapse;
+            border-collapse: collapse;
             }
 
             .table {
@@ -63,44 +61,44 @@
 
             .table th,
             .table td {
-                padding: 0.50rem;
-                vertical-align: top;
-                /* border-top: 1px solid #eff2f7; */
+            padding: 0.50rem;
+            vertical-align: top;
+            /* border-top: 1px solid #eff2f7; */
             }
 
             .table thead th {
-                vertical-align: bottom;
-                /* border-bottom: 2px solid #eff2f7; */
+            vertical-align: bottom;
+            /* border-bottom: 2px solid #eff2f7; */
             }
 
             .table tbody+tbody {
-                border-top: 1px solid #676767;
+            border-top: 1px solid #676767;
             }
 
             .table-bordered {
-                border: 1px solid #676767;
+            border: 1px solid #676767;
             }
 
             .table-bordered th,
             .table-bordered td {
-                border: 1px solid #676767;
+            border: 1px solid #676767;
             }
 
             .table-bordered thead th,
             .table-bordered thead td {
-                border-bottom-width: 1px;
+            border-bottom-width: 1px;
             }
 
-            .text-start {
-                text-align: left !important
+            .text-start{
+                text-align:left!important
             }
 
-            .text-end {
-                text-align: right !important
+            .text-end{
+            text-align:right!important
             }
 
-            .text-center {
-                text-align: center !important
+            .text-center{
+                text-align:center!important
             }
 
             .keteranganbudget {
@@ -133,36 +131,6 @@
                 align-items: center;
                 gap: 12px;
             }
-
-            .circle-red {
-                width: 24px;
-                height: 24px;
-                background-color: #E73638;
-                border-radius: 50%;
-                /* Membuat lingkaran dengan radius setengah dari lebar/tinggi */
-                display: inline-block;
-                /* Agar elemen bisa diatur posisinya */
-            }
-
-            .circle-yellow {
-                width: 24px;
-                height: 24px;
-                background-color: #FFE900;
-                border-radius: 50%;
-                /* Membuat lingkaran dengan radius setengah dari lebar/tinggi */
-                display: inline-block;
-                /* Agar elemen bisa diatur posisinya */
-            }
-
-            .circle-green {
-                width: 24px;
-                height: 24px;
-                background-color: #009579;
-                border-radius: 50%;
-                /* Membuat lingkaran dengan radius setengah dari lebar/tinggi */
-                display: inline-block;
-                /* Agar elemen bisa diatur posisinya */
-            }
         </style>
 
     </head>
@@ -174,15 +142,19 @@
 
                 <div class="badanisi p-5">
 
-                    <div
-                        style="justify-content: space-between; display: flex; margin-left: 12px; margin-right: 12px; margin-top: 12px;">
+                    <div style="display: flex; margin-left: 12px; margin-right: 12px; margin-top: 12px;">
                         <div>
-                            <div class="text-end" style="margin-bottom: 12px">
-                                <img style="width: 142px;" src="asset/image/narasi.png" alt="">
-
+                            <div style="margin-top: -12px">
+                                <div class="text-start" style="display: inline-block; vertical-align: middle; margin-right: 774px">
+                                    <p style="margin-bottom: -8px; padding-bottom: -8px">Request Number</p>
+                                    <p style="font: 700 15px Narasi Sans, sans-serif; letter-spacing: 0.5px;">{{ $requestbudget->request_budget_number}}</p>
+                                </div>
+                                <div class="text-end" style="display: inline-block; vertical-align: middle;">
+                                    <img style="width: 164px;" src="asset/image/narasi.png" alt="">
+                                </div>
                             </div>
 
-                            <div class="arips">
+                            <div class="arips" style="margin-top: -16px">
                                 <div style="font: 400 16px Narasi Sans, sans-serif; color: black ">
                                     <table class="tablecoba ">
                                         <tbody>
@@ -239,7 +211,7 @@
                     </div>
 
 
-                    <div style=" margin-bottom: 24px; margin-top: -24px; padding:9px;">
+                    <div style=" margin-bottom: 24px; margin-top: -32px; padding:9px;">
                         <table class="table table-bordered "
                             style="font: 12px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center ">
                             <thead style="font-weight: 500; background-color: rgba(28, 187, 140, 0.25)">
@@ -285,8 +257,8 @@
                                             <td>{{ $data->rep }}</td>
                                             <td>{{ $data->day }}</td>
                                             <td>{{ $data->qty }}</td>
-                                            <td>Rp. {{ number_format($data->cost) }}</td>
-                                            <td>Rp. {{ number_format($data->total_cost) }}</td>
+                                            <td class="text-end">{{ number_format($data->cost) }}</td>
+                                            <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>
@@ -358,8 +330,8 @@
                                             <td>{{ $data->rep }}</td>
                                             <td>{{ $data->day }}</td>
                                             <td>{{ $data->qty }}</td>
-                                            <td>Rp. {{ number_format($data->cost) }}</td>
-                                            <td>Rp. {{ number_format($data->total_cost) }}</td>
+                                            <td class="text-end">{{ number_format($data->cost) }}</td>
+                                            <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>
@@ -433,8 +405,8 @@
                                             <td>{{ $data->rep }}</td>
                                             <td>{{ $data->day }}</td>
                                             <td>{{ $data->qty }}</td>
-                                            <td>Rp. {{ number_format($data->cost) }}</td>
-                                            <td>Rp. {{ number_format($data->total_cost) }}</td>
+                                            <td class="text-end">{{ number_format($data->cost) }}</td>
+                                            <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>
@@ -507,8 +479,8 @@
                                             <td>{{ $data->rep }}</td>
                                             <td>{{ $data->day }}</td>
                                             <td>{{ $data->qty }}</td>
-                                            <td>Rp. {{ number_format($data->cost) }}</td>
-                                            <td>Rp. {{ number_format($data->total_cost) }}</td>
+                                            <td class="text-end">{{ number_format($data->cost) }}</td>
+                                            <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>
@@ -580,8 +552,8 @@
                                             <td>{{ $data->rep }}</td>
                                             <td>{{ $data->day }}</td>
                                             <td>{{ $data->qty }}</td>
-                                            <td>Rp. {{ number_format($data->cost) }}</td>
-                                            <td>Rp. {{ number_format($data->total_cost) }}</td>
+                                            <td class="text-end">{{ number_format($data->cost) }}</td>
+                                            <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>
@@ -629,7 +601,7 @@
                                 <tr>
                                     <td colspan="5" class="text-start "
                                         style="font-weight: 500; background-color: #bbc8f396;">TOTAL</td>
-                                    <td class="text-end">Rp. {{ number_format($totalcost) }}</td>
+                                    <td class="text-end">Rp. {{ number_format($totalAll) }}</td>
                                     <td></td>
                                     <td></td>
 
@@ -643,8 +615,8 @@
                             <thead style="font-weight: 500; background-color: rgba(28, 187, 140, 0.25)">
                                 <tr class="dicobain">
                                     <th rowspan="2" scope="col" class="text-center"
-                                        style="background: #bbc8f396; text-align: center; vertical-align: middle;">
-                                        TOTAL CREWS</th>
+                                        style="background: #bbc8f396; text-align: center; vertical-align: middle; width: 43%;">
+                                        TOTAL CREWS & PERFORMERS</th>
                                     <th scope="col ">NCS</th>
                                     <th scope="col ">OUT</th>
                                     <th scope="col ">TOTAL</th>
@@ -661,72 +633,57 @@
                                         {{ $totalRepCrewCounts['NCS'] + $totalRepPerformerCounts['NCS'] + $totalRepCrewCounts['OUT'] + $totalRepPerformerCounts['OUT'] }}
                                     </td>
                                 </tr>
-
                             </tbody>
+                        </table>
+                        <table class="table table-bordered " style="font: 12px Narasi Sans, sans-serif; width:43%;  margin-top: 24px; margin-bottom: 12px; text-align: center ">
+                            <thead style="font-weight: 500; background-color: rgba(28, 187, 140, 0.25)">
+                                <tr class="dicobain">
+                                    <th scope="col" class="text-center" style="text-align: center; vertical-align: middle; width: 43%;">Summary</th>
+                                    <th scope="col" class="text-center" style="text-align: center; vertical-align: middle; width: 43%;">Total Cost</th>
+                                </tr>
+                            </thead>
 
+                            <tbody class="text-center" >
+                                <tr>
+                                    <td  class="text-center" style="font-weight: 500; ">Budget Approve</td>
+                                    <td  class="text-end" style="">Rp. {{ number_format($budget) }}</td>
+                                </tr>
+                                <tr>
+                                    <td  class="text-center" style="font-weight: 500;">Request Budget</td>
+                                    <td  class="text-end" style="">Rp. {{ number_format($totalAll) }}</td>
+                                </tr>
+                                <tr>
+                                    <td  class="text-center" style="font-weight: 500;">Remaining Budget</td>
+                                    <td  class="text-end" style="">Rp. {{number_format($budget-$totalAll)}}</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
-
-
-
-                    {{-- <div class="keteranganbudget" style="margin-left: 12px;">
-                        <table>
-                            <tr>
-                                <td> <div class="circle-yellow"></div></td>
-                                <td style="padding-left: 12px;"> Menunggu Approval</td>
-                                <td style="padding-left: 12px;"> <div class="circle-red"></div></td>
-                                <td style="padding-left: 12px;"> Approval Ditolak</td>
-                                <td  style="padding-left: 12px;"> <div class="circle-green"></div></td>
-                                <td style="padding-left: 12px;"> Approval Disetujui</td>
-
-                            </tr>
-                        </table>
-                    </div> --}}
 
                     <div style="margin: 12px; border-radius: 4px; border-bottom: none;">
                         <table class="table table-bordered"
                             style="font: 300 16px Narasi Sans, sans-serif;width: 100% ; margin-top: 12px; margin-bottom: 12px; text-align: center; ">
                             <thead style="font-weight: 500; ">
                                 <tr class="dicobain ">
-                                    <th scope="col ">User Submit</th>
-                                    <th scope="col ">Approval 1</th>
-                                    <th scope="col ">Review</th>
-                                    <th scope="col ">Approval 2</th>
+                                    <th scope="col ">Requester</th>
+                                    <th scope="col ">Approval Manager</th>
+                                    <th scope="col ">Studio Production Review</th>
+                                    <th scope="col ">Controller Manager</th>
                                     @if ($budget >= 200000000)
-                                        <th scope="col ">Approval 3</th>
+                                        <th scope="col ">VP Operation</th>
                                     @endif
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ $requestbudget->employee->full_name }}</td>padding-top: 12px;
-                                    <td>
-                                        <div class="position-absolute bottom-0 start-0">
-                                            {{ $requestbudget->manager->full_name }}
-                                        </div>
-                                    </td>
-                                    {{-- <td style="justify-content: center; align-items: center;"><img
-                                            style="padding-top: 8px; " src="asset/image/ttd.png" alt="">
-                                        <div style="padding-top: 8px; text-align: center; vertical-align: middle;">
-                                            Procurement</div>
-                                    </td> --}}
-                                    <td>
-                                        <div></div>
-                                        <div class="position-absolute bottom-0 start-0">{{$reviewer->full_name}}</div>
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                        <div class="position-absolute bottom-0 start-0">{{$approval1->full_name}}</div>
-                                    </td>
+                                    <td style="justify-content: center; align-items: center; width: 20%;">{{ $requestbudget->employee->full_name }}</td>
+                                    <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/pending_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{ $requestbudget->manager->full_name }}</div></td>
+                                    <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/pending_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->reviewer->full_name}}</div></td>
+                                    <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/pending_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->finance1->full_name}}</div></td>
                                     @if ($budget >= 200000000)
-                                        <td>
-                                            <div></div>
-                                            <div class="position-absolute bottom-0 start-0">{{$approval2->full_name}}</div>
-                                        </td>
+                                    <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/pending_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->finance2->full_name}}</div></td>
                                     @endif
                                 </tr>
-
                             </tbody>
                         </table>
                     </div>

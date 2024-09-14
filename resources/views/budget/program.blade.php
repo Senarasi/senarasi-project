@@ -39,19 +39,19 @@
         </div>
     @endif
     <div class="tablenih">
-        <div class="table-responsive p-3">
+        <div class="table-responsive p-2">
             <table id="datatable" class="table table-hover"
-                style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
-                <thead style="font-weight: 500">
-                    <tr class="dicobain">
-                        <th scope="col ">NO</th>
+                style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px;">
+                <thead class="table-light">
+                    <tr class="dicobain" style="">
+                        {{-- <th scope="col" class="col-1">No</th> --}}
+                        <th scope="col ">Budget Code</th>
                         <th scope="col ">Quarter</th>
                         <th scope="col ">Year</th>
-                        <th scope="col ">Budget Code</th>
                         <th scope="col ">Program Name</th>
                         <th scope="col ">Budget</th>
-                        <th scope="col ">User Submit</th>
-                        <th scope="col ">Action</th>
+                        <th scope="col ">Requester</th>
+                        <th scope="col "></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,11 +61,10 @@
                     @endphp
                     @forelse ($budget as $data)
                         @foreach ($data->quarterlyBudgets as $quarterlyBudget)
-                            <tr>
-                                <th>{{ $counter++ }}</th>
+                            <tr class="dicobain">
+                                <td>{{ $quarterlyBudget->budget_code }}</td>
                                 <td>{{ $romanNumerals[$quarterlyBudget->quarter - 1] }}</td>
                                 <td>{{ $data->year }}</td>
-                                <td>{{ $quarterlyBudget->budget_code }}</td>
                                 <td>{{ $quarterlyBudget->program->program_name }}</td>
                                 <td> Rp. {{ number_format($quarterlyBudget->quarter_budget, 2) }}</td>
                                 <td>{{ $quarterlyBudget->employee->full_name }}</td>
@@ -93,9 +92,6 @@
                             </tr>
                         @endforeach
                     @empty
-                        <tr>
-                            <td colspan="8" class="alert alert-danger">Data Not Found.</td>
-                        </tr>
                     @endforelse
                 </tbody>
             </table>
@@ -139,7 +135,7 @@
                             </div>
                             <div class="col">
                                 <label for="budget_code" class="form-label">Budget Code</label>
-                                <input type="text " class="form-control p-2" name="budget_code" id="budget_code" />
+                                <input type="text" class="form-control p-2" name="budget_code" id="budget_code" oninput="this.value = this.value.toUpperCase()" />
                             </div>
                         </div>
 
@@ -227,6 +223,67 @@
         $(document).ready(function() {
             $('#staticBackdrop').on('hidden.bs.modal', function() {
                 $(this).find('form')[0].reset();
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var budgetInput = document.getElementById('quarter_budget');
+            var rawBudgetInput = document.getElementById('raw_budget');
+
+            budgetInput.addEventListener('keyup', function(e) {
+                var formattedBudget = formatRupiah(this.value, 'Rp');
+                budgetInput.value =
+                    formattedBudget; // Update the budget input field with the formatted value
+                var rawValue = parseRawBudget(formattedBudget); // Parse the raw numeric value
+                rawBudgetInput.value = rawValue; // Store the raw numeric value in the hidden input field
+            });
+
+            /* Format budget input to Rupiah */
+            function formatRupiah(angka, prefix) {
+                var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                    split = number_string.split(','),
+                    sisa = split[0].length % 3,
+                    rupiah = split[0].substr(0, sisa),
+                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+                if (ribuan) {
+                    separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+
+                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                return prefix == undefined ? rupiah : rupiah ? 'Rp ' + rupiah : '';
+            }
+
+            /* Parse the raw budget value */
+            function parseRawBudget(formattedBudget) {
+                // Remove any non-numeric characters from the formatted budget value
+                var rawValue = formattedBudget.replace(/[^\d]/g, '');
+                return rawValue;
+            }
+
+            // This part is only needed if you have an edit functionality in the same page
+            var editButtons = document.querySelectorAll('.edit-button');
+
+            editButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var quarter = this.getAttribute('data-quarter');
+                    var budgetCode = this.getAttribute('data-budget_code');
+                    var programId = this.getAttribute('data-program_id');
+                    var quarterBudget = this.getAttribute('data-quarter_budget');
+                    var quarterlyBudgetId = this.getAttribute('data-quarterly_budget_id');
+                    var formAction = "{{ route('budget.update', ':id') }}".replace(':id',
+                        quarterlyBudgetId);
+
+                    document.getElementById('program_option').value = programId;
+                    document.getElementById('quarter').value = quarter;
+                    document.getElementById('budget_code').value = budgetCode;
+                    document.getElementById('quarter_budget').value = quarterBudget;
+                    document.getElementById('quarterlyBudgetId').value = quarterlyBudgetId;
+
+                    document.querySelector('.modal-form-check').action = formAction;
+                });
             });
         });
     </script>

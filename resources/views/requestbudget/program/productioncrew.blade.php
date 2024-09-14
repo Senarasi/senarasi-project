@@ -9,7 +9,7 @@
             <svg xmlns="http://www.w3.org/2000/svg " width="10 " height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path
                     d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                                                          7.2501 0 7.6501 0 8.0501Z "
+                                                                                                                                                                  7.2501 0 7.6501 0 8.0501Z "
                     fill="#4A25AA " />
             </svg>
             Back
@@ -22,7 +22,7 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="home-tab" data-bs-toggle="tab"
                 data-url="{{ route('request-budget.edit', $id) }}" data-bs-target="#home-tab-pane" type="button"
-                role="tab" aria-controls="home-tab-pane" aria-selected="false">Header</button>
+                role="tab" aria-controls="home-tab-pane" aria-selected="false">General</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="data1-tab" data-url="{{ route('request-budget.performer', $id) }}"
@@ -73,7 +73,7 @@
             </div>
         @endif
         <form id="mainForm" action=""></form>
-        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px">
+        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px; border-bottom:none">
             <table class="table table-hover"
                 style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
                 <thead style="font-weight: 500">
@@ -88,42 +88,45 @@
                         <th scope="row ">1</th>
                         <td style="text-align: start">Performer/Host/Guest</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totalperformer) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totalperformer) ?? 0 }}
                         </td>
                     </tr>
                     <tr>
                         <th scope=" row ">2</th>
                         <td style="text-align: start">Production Crews</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp.
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
                             {{ number_format($totalproductioncrew) ?? 0 }}</td>
                     </tr>
                     <tr>
                         <th scope="row ">3</th>
                         <td style="text-align: start">Production Tools</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp.
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
                             {{ number_format($totalproductiontool) ?? 0 }}</td>
                     </tr>
                     <tr>
                         <th scope="row ">4</th>
                         <td style="text-align: start">Operational</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totaloperational) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totaloperational) ?? 0 }}
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">5</th>
                         <td style="text-align: start">Venue</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totallocation) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totallocation) ?? 0 }}
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="border-bottom: 1px solid #c4c4c4;">
                         <td colspan="2" class="text-right" style="font-weight: 500; background-color: #dbdee8">
                             Total</td>
                         <td class="total-price">Rp.
-                            {{ number_format($totalperformer + $totalproductioncrew + $totalproductiontool + $totaloperational + $totallocation) }}
+                            {{ number_format($totalAll) }}
                             / <span style="color: red">Rp.
                                 {{ number_format($budget) }}</span></td>
                     </tr>
@@ -153,20 +156,19 @@
         <div class="tablenih" style="margin-top: 24px;">
             <div class="table-responsive p-3" style="max-height: 450px; overflow-y: auto;">
                 <table id="datatablerequest" class="table table-hover">
-                    <thead style="font-weight: 500">
+                    <thead class="table-light">
                         <tr class="dicobain">
                             <th scope="col">Sub Description</th>
-                            <th scope="col">Usage</th>
                             <th scope="col">REP</th>
                             <th scope="col">Name</th>
                             <th scope="col">Position</th>
-                            <th scope="col" style="width: 80px; text-align: center">Day</th>
-                            <th scope="col" style="width: 80px; text-align: center">QTY</th>
+                            <th scope="col" style="width: 80px;">Day</th>
+                            <th scope="col" style="width: 80px;">QTY</th>
                             <th scope="col">Cost</th>
                             <th scope="col">Total</th>
                             <th scope="col">Assign To</th>
                             <th scope="col">Note</th>
-                            <th scope="col" style="width: 140px" class="text-center">Action</th>
+                            <th scope="col" style="width: 140px" class="text-center"></th>
                         </tr>
                     </thead>
                     <tbody id="performerTableBody">
@@ -175,7 +177,6 @@
                                 <td>
                                     {{ $data->subdescription->sub_description_name ?? '' }}
                                 </td>
-                                <td>{{ $data->usage ?? '' }}</td>
                                 <td>{{ $data->rep ?? '' }}</td>
                                 <td>{{ $data->name ?? '' }}</td>
                                 <td>{{ $data->position ?? 0 }}</td>
@@ -215,6 +216,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 @section('modal')
     <div class="modal justify-content-center fade" id="additem" data-bs-keyboard="false" tabindex="-1"
@@ -233,14 +235,14 @@
                                         required>
                                         <option disabled selected>Select Sub Description</option>
                                         {{-- @forelse ($subdescription as $sub_description_id => $sub_description_name) --}}
-                                            <option value="2">Internal Team NCS
-                                            </option>
-                                            <option value="3">Production Studio
-                                            </option>
-                                            <option value="4">Business Development
-                                            </option>
-                                            <option value="5">Operational
-                                            </option>
+                                        <option value="2">Internal Team NCS
+                                        </option>
+                                        <option value="3">Production Studio
+                                        </option>
+                                        <option value="4">Business Development
+                                        </option>
+                                        <option value="5">Operational
+                                        </option>
                                         {{-- @empty
                                             <option disabled selected>Data not found</option>
                                         @endforelse --}}
@@ -251,9 +253,9 @@
                                 <div class="mb-3">
                                     <label for="usage" class="form-label">Usage</label>
                                     <select name="usage" class="form-select" id="usage_option" required>
-                                        <option disabled selected>Choose One</option>
+                                        {{-- <option disabled selected>Choose One</option> --}}
                                         <option value="Man Power">Man Power</option>
-                                        <option value="Tools">Tools</option>
+                                        {{-- <option value="Tools">Tools</option> --}}
                                     </select>
                                 </div>
                             </div>
@@ -281,7 +283,7 @@
 
                         </div>
                         <div class="col">
-                            <div class="mb-3">
+                            <div class="mb-3" id="name_container">
                                 <label for="name" class="form-label">Name</label>
                                 <div id="name_container">
                                     <select name="name" class="form-select" id="name_option" required>
@@ -326,10 +328,10 @@
                                 <div class="mb-3">
                                     <label for="assign" class="form-label">Assign To</label>
                                     <select name="assign" class="form-select" id="assign_option" required>
-                                        <option disabled selected>Select Department</option>
+                                        {{-- <option disabled selected>Select Department</option> --}}
                                         <option value="HC">HC</option>
-                                        <option value="FINANCE">Finance</option>
-                                        <option value="PROCUREMENT">Procurement</option>
+                                        {{-- <option value="FINANCE">Finance</option>
+                                        <option value="PROCUREMENT">Procurement</option> --}}
                                     </select>
                                 </div>
                             </div>
@@ -359,138 +361,6 @@
             </div>
         </div>
     </div>
-
-
-    {{-- <div class="modal justify-content-center fade" id="additem" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-body bg-white">
-                    <form action="{{ route('production-crew.store') }}" method="POST" class="modal-form-check"
-                        style="font: 500 14px Narasi Sans, sans-serif">
-                        @csrf
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="sub_description_id" class="form-label">Sub Description</label>
-                                    <select name="sub_description_id" class="form-select" id="sub_description_option"
-                                        required>
-                                        <option disabled selected>Select Sub Description</option>
-                                        @forelse ($subdescription as $sub_description_id => $sub_description_name)
-                                            <option value="{{ $sub_description_id }}">{{ $sub_description_name }}
-                                            </option>
-                                        @empty
-                                            <option disabled selected>Data not found</option>
-                                        @endforelse
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="usage" class="form-label">Usage</label>
-                                    <select name="usage" class="form-select" id="usage_option" required>
-                                        <option disabled selected>Choose One</option>
-                                        <option>Man Power</option>
-                                        <option>Tools</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="rep" class="form-label">REP</label>
-                                    <select name="rep" class="form-select" id="rep_option" required>
-                                        <option disabled selected>Choose One</option>
-                                        <option value="NCS">NCS</option>
-                                        <option value="OUT">OUT</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Name</label>
-                                    <div id="name_container">
-                                        <select name="name" class="form-select" id="name_option" required>
-                                            <option disabled selected>Select Name</option>
-                                            @forelse ($crew as $data)
-                                                <option value="{{ $data->full_name }}">{{ $data->full_name }}</option>
-                                            @empty
-                                                <option disabled selected>Data not found</option>
-                                            @endforelse
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="position" class="form-label">Position</label>
-                                    <div id="position_container">
-                                        <select name="position" class="form-select" id="position_option" required>
-                                            <option disabled selected>Select Position</option>
-                                            @forelse ($crewposition as $crew_position_id => $crew_position_name)
-                                                <option value="{{ $crew_position_name }}">{{ $crew_position_name }}
-                                                </option>
-                                            @empty
-                                                <option disabled selected>Data not found</option>
-                                            @endforelse
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="day" class="form-label">Day</label>
-                                    <input type="text" class="form-control" id="day" name="day" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="qty" class="form-label">QTY</label>
-                                    <input type="text" class="form-control" id="qty" name="qty" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="cost" class="form-label">Cost</label>
-                                    <input type="text" class="form-control" id="cost" name="cost" />
-                                    <input type="hidden" id="raw_budget" name="raw_budget" />
-                                    <!-- Hidden input field for storing the raw numeric value -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="assign" class="form-label">Forward To</label>
-                                    <select name="assign" class="form-select" id="assign_option" required>
-                                        <option disabled selected>Select Department</option>
-                                        <option value="hc">HC</option>
-                                        <option value="finance">Finance</option>
-                                        <option value="procurement">Procurement</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="note" class="form-label">Note</label>
-                                    <input type="text" class="form-control" id="note" name="note" />
-                                </div>
-                            </div>
-                        </div>
-                        <input type="hidden" name="request_budget_id" value="{{ $id }}">
-                        <input type="hidden" name="url_back"
-                            value="{{ route('request-budget.productioncrew', $requestbudget->request_budget_id) }}">
-                        <button type="submit" class="button-submit">Submit</button>
-                        <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
-                    </form>
-                </div>
-                <img class="img-8" src="{{ asset('asset/image/Narasi_Logo.svg') }}" alt=" " />
-            </div>
-        </div> --}}
-    </div>
 @endsection
 @section('custom-js')
     <script>
@@ -507,7 +377,7 @@
             });
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript">
@@ -580,7 +450,7 @@
             });
         });
     </script> --}}
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             const repOption = document.getElementById('rep_option');
             const nameContainer = document.getElementById('name_container');
@@ -627,5 +497,93 @@
                 }
             });
         });
+    </script> --}}
+    <script>
+        // Function to format numbers as money with "Rp." prefix (e.g., 1250000 -> Rp. 1.250.000)
+        function formatMoney(number) {
+            return 'Rp. ' + parseInt(number, 10).toLocaleString('id-ID');
+        }
+
+        $(document).ready(function() {
+            let repValue = null;
+
+            // When REP option is selected
+            $('#rep_option').on('change', function() {
+                repValue = $(this).val();
+
+                if (repValue === 'NCS') {
+                    $('#cost').val('0'); // Set cost to 0 when NCS is selected
+                    $('#note').val(''); // Clear the note when NCS is selected
+                    // Change name input back to dropdown
+                    $('#name_container').html(
+                        `<label for="name" class="form-label">Name</label>
+                <select name="name" class="form-select" id="name_option" required>
+                    <option disabled selected>Select Name</option>
+                    @forelse ($crew as $data)
+                        <option value="{{ $data->full_name }}">{{ $data->full_name }}</option>
+                    @empty
+                        <option disabled selected>Data not found</option>
+                    @endforelse
+                </select>`
+                    );
+                } else if (repValue === 'OUT') {
+                    $('#cost').val(''); // Clear cost field when OUT is selected
+
+                    // Change name dropdown to text input
+                    $('#name_container').html(
+                        `<label for="name" class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" id="name_option" required placeholder="Enter Name">`
+                    );
+                }
+            });
+
+            // When Position is selected and REP is OUT
+            $('#position_option').on('change', function() {
+                var positionName = $(this).val();
+
+                if (repValue === 'OUT') {
+                    // Send AJAX request to fetch position details
+                    $.ajax({
+                        url: '/get-position-details/' + positionName,
+                        method: 'GET',
+                        success: function(response) {
+                            // Format the cost and update the cost field
+                            let formattedCost = formatMoney(response.price);
+                            $('#cost').val(
+                            formattedCost); // Set cost formatted as Rp. X.XXX.XXX
+                            $('#note').val(response.note); // Set note based on position
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Could not fetch position details');
+                        }
+                    });
+                } else if (repValue === 'NCS') {
+                    // If NCS is selected, the cost remains 0 and note is cleared
+                    $('#cost').val('0');
+                    $('#note').val(''); // Clear the note field
+                }
+            });
+        });
     </script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css"
+        rel="stylesheet" />
+
+    {{-- <script>
+        $(document).ready(function() {
+            // Initialize selectize for the 'name' dropdown in the modal
+            $('#additem').on('shown.bs.modal', function () {
+                $('#name_option').selectize({
+                    placeholder: "Type to search...", // Placeholder text for the dropdown
+                    allowClear: true,
+                    onDropdownOpen: function() {
+                        // Automatically focus the input when the dropdown opens
+                        this.clear();
+                        this.$control_input.focus();
+                    }
+                });
+            });
+        });
+    </script> --}}
 @endsection

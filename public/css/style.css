@@ -6,6 +6,17 @@
     min-height: 100vh;
 }
 
+.table-light {
+    border-top: 1px solid;
+    border-color: inherit;
+    font-weight: 500;
+}
+
+th {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
 .fontjudul {
     font: 900 64px Narasi Sans, sans-serif;
     font-weight: 900;
@@ -91,6 +102,7 @@
     padding: 8px 0px 8px 0px;
     width: 100%;
     bottom: 0;
+    z-index: 10000;
 }
 
 .img-2 {
@@ -154,62 +166,6 @@
     margin-top: 4px;
     cursor: pointer;
 }
-
-
-/* 
-.sidebar-dropdown:hover {
-    display: block;
-} */
-
-
-/* #sidebar {
-    display: flex;
-    width: 280px;
-    justify-content: space-between;
-    gap: 20px;
-    height: 100%;
-    position: fixed;
-    border: none;
-    overflow: auto;
-    overflow-y: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-} */
-
-
-/* 
-#sidebar {
-    display: flex;
-    width: 190px;
-    justify-content: space-between;
-    gap: 20px;
-    height: 100%;
-    position: fixed;
-    border: none;
-    overflow: auto;
-    overflow-y: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-} */
-
-
-/* @media (max-width: 991px) {
-    #sidebar {
-        max-width: 100%;
-        flex-wrap: wrap;
-    }
-} */
-
-
-/* 
-a.sidebar-link {
-    padding: auto;
-    color: white;
-    display: block;
-    white-space: nowrap;
-    text-decoration: none;
-    letter-spacing: 0.5px;
-} */
 
 .div-9 {
     padding-bottom: 50px;
@@ -516,7 +472,7 @@ a.sidebar-link {
 
 .modal {
     border-radius: 16px;
-    font: 500 16px Narasi Sans, sans-serif;
+    font: 350 16px Narasi Sans, sans-serif;
 }
 
 .modal-dialog {
@@ -533,7 +489,7 @@ a.sidebar-link {
 }
 
 .modal-content {
-    background: var( --Semantic-Main, linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%));
+    background: var(--Semantic-Main, linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%));
     margin: 8px;
 }
 
@@ -564,7 +520,7 @@ a.sidebar-link {
     gap: 10px;
     border: none;
     border-radius: 8px;
-    background: var( --Semantic-Main, linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%));
+    background: var(--Semantic-Main, linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%));
 }
 
 .button-tutup {
@@ -856,6 +812,7 @@ a.sidebar-link {
         background: none;
         box-shadow: 0px 1px 8px -1px rgba(74, 37, 170, 0.2);
     }
+
     .button-profile {
         justify-content: start;
         background-color: transparent;
@@ -863,9 +820,11 @@ a.sidebar-link {
         padding: 8px 8px;
         margin-bottom: 0px !important;
     }
+
     .button-profile.sidebar-link {
         color: #000;
     }
+
     .button-profile.sidebar-link:hover {
         color: #f1f1f1;
         background-color: var(--Primary-Main, #4a25aa);
@@ -939,6 +898,16 @@ option {
     padding-left: 56px;
     padding-right: 48px;
     min-height: 100vh;
+    margin-left: 68px;
+    margin-top: 62px;
+}
+
+@media (max-width: 768px) {
+    .badanisi {
+        margin-left: 0px;
+        padding-left: 18px;
+        padding-right: 18px;
+    }
 }
 
 .button-departemen {
@@ -1046,11 +1015,13 @@ label .form-label {
         gap: 0px;
         padding: 8px;
     }
+
     .keteranganbudget .tunggu,
     .keteranganbudget .tolak,
     .keteranganbudget .diterima {
         padding: 3px;
     }
+
     /* .keteranganbudget .tolak {
         gap: 8px;
     }
@@ -1079,7 +1050,7 @@ label .form-label {
 }
 
 .tablenih {
-    border: 2px solid #bcc4e5;
+    /* border: 2px solid #bcc4e5; */
     border-radius: 12px;
     margin-top: 12px;
     padding: 12px;
@@ -1088,6 +1059,7 @@ label .form-label {
 
 .total-price {
     font-weight: 500;
+    text-align: end;
 }
 
 .button-permintaan {
@@ -1156,16 +1128,6 @@ label .form-label {
     background-color: #34128c;
     border-radius: 12px;
 }
-
-
-/* .sidebar-dropdown {
-    display: none;
-} */
-
-
-/* #karyawan-button:hover .sidebar-dropdown {
-    display: block;
-} */
 
 .button-export {
     width: 100%;
@@ -1473,7 +1435,7 @@ td {
     color: #000000;
     background-color: transparent;
     overflow-x: hidden;
-    background-image: linear-gradient( rgba(0, 0, 0, 0.453), rgba(0, 0, 0, 0.394)), url("../asset/image/karyawan.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.453), rgba(0, 0, 0, 0.394)), url("../asset/image/karyawan.jpg");
     background-size: cover;
     /* Ensures the background image covers the entire element */
     background-position: center;
@@ -1686,4 +1648,180 @@ a {
 
 .previewbtn:hover {
     background-color: #34128c;
+}
+
+.step-bar {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.step-bar .step {
+    position: relative;
+    text-align: center;
+    flex: 1;
+    margin: 0 10px;
+    /* Increase spacing between steps */
+}
+
+.step-bar .step .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    line-height: 30px;
+    color: #fff;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.step-bar .step.waiting .circle {
+    background-color: #ffe900;
+}
+
+.step-bar .step.waiting::before {
+    background-color: #ffe900;
+}
+
+.step-bar .step::before {
+    content: "";
+    position: absolute;
+    top: 25%;
+    left: -55%;
+    width: 100%;
+    height: 4px;
+    background-color: #ddd;
+    z-index: -1;
+    transform: translateY(-50%);
+}
+
+.step-bar .step:first-child::before {
+    content: none;
+}
+
+.dicobain {
+    text-transform: uppercase;
+}
+
+
+/* .step-bar .step.waiting + .step::before {
+    background-color: #FFE900 ;
+} */
+
+@media (max-width: 768px) {
+    .step-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .step-bar .step {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 20px 0;
+        /* Increase spacing between steps */
+    }
+
+    .step-bar .step .circle {
+        margin: 0 15px 0 0;
+        line-height: 30px;
+        /* Ensure text remains centered vertically */
+    }
+
+    .step-bar .step::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: 13px;
+        width: 4px;
+        height: 100%;
+        background-color: #ddd;
+        z-index: 0;
+        transform: translateY(-70%);
+    }
+
+    .step-bar .step:first-child::before {
+        content: none;
+    }
+
+    .step-bar .step::after {
+        content: "";
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        width: 4px;
+        height: calc(100% - 40px);
+        background-color: #ddd;
+        z-index: -1;
+        transform: translateY(-75%);
+    }
+
+    .step-bar .step:first-child::after {
+        height: calc(50% - 35px);
+        top: 15px;
+    }
+
+    .step-bar .step:last-child::after {
+        content: none;
+    }
+
+    .step-bar .step.waiting+.step::after {
+        background-color: #ffe900;
+    }
+}
+
+
+/* Styles for approved and rejected */
+
+.step-bar .step.approved .circle {
+    background-color: #28a745;
+}
+
+.step-bar .step.rejected .circle {
+    background-color: #ff0000;
+}
+
+.step-bar .step.rejected::before {
+    background-color: #ff0000;
+}
+
+.step-bar .step.approved::before {
+    background-color: #28a745;
+}
+
+
+/* Tambahkan ini di bawah CSS yang ada */
+
+@media (max-width: 768px) {
+    #sidebar {
+        transform: translateX(-100%);
+    }
+
+    #sidebar.expand {
+        transform: translateX(0);
+    }
+
+    .overlay {
+        display: none;
+        /* Sembunyikan overlay di mobile */
+    }
+
+    .overlay.show {
+        display: block;
+    }
+}
+
+
+/* CSS for responsive table */
+
+@media (max-width: 768px) {
+    .d-md-none {
+        display: block !important;
+        /* Show elements on mobile */
+    }
+
+    .d-md-table-cell {
+        display: none !important;
+        /* Hide elements on mobile */
+    }
 }

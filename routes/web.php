@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApprovalController;
+use App\Models\Approval;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +37,14 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::resource('approval', ApprovalController::class);
+    Route::get('/approval/{id}/view', [ApprovalController::class, 'report'])->name('approval.report');
+    Route::post('/approval/{id}/approve', [ApprovalController::class, 'approve'])->name('approval.approve');
+    Route::get('/approval/{id}/reject-view', [ApprovalController::class, 'rejectview'])->name('approval.rejectview');
+    Route::post('/approval/{id}/reject', [ApprovalController::class, 'submitReject'])->name('approval.submitReject');
 
     Route::resource('request-budget', 'App\Http\Controllers\RequestBudgetController');
     Route::get('/get-monthly-budget', [App\Http\Controllers\RequestBudgetController::class, 'getMonthlyBudget'])->name('getMonthlyBudget');
+    Route::get('/get-budget-data', [App\Http\Controllers\RequestBudgetController::class, 'getBudgetData'])->name('get-budget-data');
     Route::get('/request-budget/performer/{id}', [App\Http\Controllers\RequestBudgetController::class, 'performer'])->name('request-budget.performer');
     Route::get('/request-budget/productioncrew/{id}', [App\Http\Controllers\RequestBudgetController::class, 'productioncrew'])->name('request-budget.productioncrew');
     Route::get('/request-budget/productiontool/{id}', [App\Http\Controllers\RequestBudgetController::class, 'productiontool'])->name('request-budget.productiontool');
@@ -89,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('performer', 'App\Http\Controllers\PerformerController');
     Route::get('/get-performer-price', [App\Http\Controllers\PerformerController::class, 'getPerformerPrice'])->name('getPerformerPrice');
     Route::resource('production-crew', 'App\Http\Controllers\ProductionCrewController');
+    Route::get('/get-position-details/{id}', [App\Http\Controllers\ProductionCrewController::class, 'getPositionDetails']);
     Route::resource('production-tool', 'App\Http\Controllers\ProductionToolController');
     Route::get('/fetch-types', [App\Http\Controllers\ProductionToolController::class, 'fetchTypes'])->name('fetchTypes');
     Route::get('/fetch-tools', [App\Http\Controllers\ProductionToolController::class, 'fetchTools'])->name('fetchTools');
@@ -120,9 +127,9 @@ Route::middleware(['auth'])->group(function () {
         return view('approval.detail');
     });
 
-    Route::get('/detail-budget', function () {
-        return view('requestbudget.index');
-    });
+    // Route::get('/detail-budget', function () {
+    //     return view('requestbudget.program.index');
+    // });
 
     Route::get('/detail-request', function () {
         return view('requestbudget.detail');
@@ -136,9 +143,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/get-current-position', [App\Http\Controllers\AjaxController::class, 'getcurrentposition'])->name('ajax.getcurrentposition');
     Route::post('/get-position-from-department', [App\Http\Controllers\AjaxController::class, 'getpositionfromdepartment'])->name('ajax.getpositionfromdepartment');
 
-    Route::get('/vendor', function () {
-        return view('vendor.index');
-    });
+    // Route::get('/vendor', function () {
+    //     return view('vendor.index');
+    // });
     Route::resource('vendor', 'App\Http\Controllers\VendorController');
 
     Route::get('/vendor-edit', function () {

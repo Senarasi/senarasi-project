@@ -8,7 +8,7 @@
     <a href="{{ url()->previous() }}" style="text-decoration: none;"> <button class="navback">
             <svg xmlns="http://www.w3.org/2000/svg " width="10 " height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                          7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
+                                              7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
             </svg>
             Back
         </button>
@@ -18,8 +18,9 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="home-tab" data-bs-toggle="tab" data-url="{{route('request-budget.edit', $id)}}" data-bs-target="#home-tab-pane"
-                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">Header</button>
+            <button class="nav-link tablinks" id="home-tab" data-bs-toggle="tab"
+                data-url="{{ route('request-budget.edit', $id) }}" data-bs-target="#home-tab-pane" type="button"
+                role="tab" aria-controls="home-tab-pane" aria-selected="false">Header</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="data1-tab" data-url="{{ route('request-budget.performer', $id) }}"
@@ -60,7 +61,7 @@
     <div class="tab-content" id="myTabContent" style="margin-top: 24px">
         <!-- PREVIEW -->
         <form id="mainForm" action=""></form>
-        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px">
+        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px; border-bottom:none">
             <table class="table table-hover"
                 style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
                 <thead style="font-weight: 500">
@@ -75,42 +76,45 @@
                         <th scope="row ">1</th>
                         <td style="text-align: start">Performer/Host/Guest</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totalperformer) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totalperformer) ?? 0 }}
                         </td>
                     </tr>
                     <tr>
                         <th scope=" row ">2</th>
                         <td style="text-align: start">Production Crews</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp.
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
                             {{ number_format($totalproductioncrew) ?? 0 }}</td>
                     </tr>
                     <tr>
                         <th scope="row ">3</th>
                         <td style="text-align: start">Production Tools</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp.
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
                             {{ number_format($totalproductiontool) ?? 0 }}</td>
                     </tr>
                     <tr>
                         <th scope="row ">4</th>
                         <td style="text-align: start">Operational</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totaloperational) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totaloperational) ?? 0 }}
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">5</th>
                         <td style="text-align: start">Venue</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totallocation) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totallocation) ?? 0 }}
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="border-bottom: 1px solid #c4c4c4;">
                         <td colspan="2" class="text-right" style="font-weight: 500; background-color: #dbdee8">
                             Total</td>
                         <td class="total-price">Rp.
-                            {{ number_format($totalperformer + $totalproductioncrew + $totalproductiontool + $totaloperational + $totallocation) }}
+                            {{ number_format($totalAll) }}
                             / <span style="color: red">Rp.
                                 {{ number_format($budget) }}</span></td>
                     </tr>
@@ -127,12 +131,12 @@
                         fill="white" />
                 </svg>Preview</a>
         </div>
-        <form method="POST" action="{{route('preview.store')}}">
+        <form method="POST" action="{{ route('preview.store') }}">
             @csrf
-            <input type="hidden" name="manager_id" value="{{$requestbudget->manager->employee_id}}">
-            <input type="hidden" name="employee_id" value="{{Auth::id()}}">
-            <input type="hidden" name="request_budget_id" value="{{$id}}">
-            <input type="hidden" name="budget" value="{{$requestbudget->budget}}">
+            <input type="hidden" name="manager_id" value="{{ $requestbudget->manager->employee_id }}">
+            <input type="hidden" name="employee_id" value="{{ Auth::id() }}">
+            <input type="hidden" name="request_budget_id" value="{{ $id }}">
+            <input type="hidden" name="budget" value="{{ $requestbudget->budget }}">
             <input type="hidden" name="history_status" value="membuat">
             <div class="d-flex">
                 <button type="submit" class="button-departemen">Submit</button>

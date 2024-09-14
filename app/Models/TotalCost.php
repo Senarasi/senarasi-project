@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TotalCost extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'total_cost_id';
 
     protected $fillable = [
         'request_budget_id', 'total_locations_cost', 'total_operationals_cost',

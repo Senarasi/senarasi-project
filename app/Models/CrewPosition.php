@@ -10,6 +10,6 @@ class CrewPosition extends Model
     use HasFactory;
     protected $primaryKey = 'crew_position_id';
     protected $fillable = [
-        'crew_position_name',
+        'crew_position_name', 'crew_positon_price', 'notes'
     ];
 }

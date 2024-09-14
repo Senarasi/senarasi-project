@@ -6,10 +6,12 @@ use App\Models\Employee;
 use App\Models\Performer;
 use App\models\SubDescription;
 use App\Models\PerformerList;
+use App\Traits\UpdateTotalCostsTrait;
 use Illuminate\Http\Request;
 
 class PerformerController extends Controller
 {
+    use UpdateTotalCostsTrait;
     public function create()
     {
 
@@ -38,6 +40,7 @@ class PerformerController extends Controller
 
     public function store(Request $request)
     {
+
         // Validate the request
         $validatedData = $request->validate([
             'request_budget_id' => 'required|exists:request_budgets,request_budget_id',
@@ -57,7 +60,9 @@ class PerformerController extends Controller
         $validatedData['cost'] = $validatedData['raw_budget']; // Assign raw_budget to cost
 
         // Create a new performer
-        Performer::create($validatedData);
+        $performer = Performer::create($validatedData);
+
+        $this->updateTotalCosts($performer->request_budget_id);
 
         // Redirect back to the performer page with the appropriate request budget ID
         return redirect()->route('request-budget.performer', $request->request_budget_id)

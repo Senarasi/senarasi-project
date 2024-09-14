@@ -39,15 +39,14 @@
                 Tools</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link active tablinks" id="data4-tab"
-                data-url="{{ route('request-budget.operational', $id) }}" data-bs-toggle="tab"
-                data-bs-target="#data4-tab-pane" type="button" role="tab" aria-controls="data4-tab-pane"
-                aria-selected="false" disabled>Operational</button>
+            <button class="nav-link tablinks" id="data4-tab" data-url="{{ route('request-budget.operational', $id) }}"
+                data-bs-toggle="tab" data-bs-target="#data4-tab-pane" type="button" role="tab"
+                aria-controls="data4-tab-pane" aria-selected="false">Operational</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link tablinks" id="data5-tab" data-url="{{ route('request-budget.location', $id) }}"
+            <button class="nav-link active tablinks" id="data5-tab" data-url="{{ route('request-budget.location', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#data5-tab-pane" type="button" role="tab"
-                aria-controls="data1-tab-pane" aria-selected="false">Venue</button>
+                aria-controls="data1-tab-pane" aria-selected="false" disabled>Venue</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="preview-tab" data-url="{{ route('request-budget.preview', $id) }}"
@@ -60,7 +59,7 @@
 
 
     <div class="tab-content" id="myTabContent" style="margin-top: 24px">
-        <!-- OPERASIONAL -->
+        <!-- SEWA LOKASI -->
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -71,7 +70,7 @@
             </div>
         @endif
         <form id="mainForm" action=""></form>
-        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px">
+        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px; border-bottom:none">
             <table class="table table-hover"
                 style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
                 <thead style="font-weight: 500">
@@ -86,42 +85,45 @@
                         <th scope="row ">1</th>
                         <td style="text-align: start">Performer/Host/Guest</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totalperformer) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totalperformer) ?? 0 }}
                         </td>
                     </tr>
                     <tr>
                         <th scope=" row ">2</th>
                         <td style="text-align: start">Production Crews</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp.
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
                             {{ number_format($totalproductioncrew) ?? 0 }}</td>
                     </tr>
                     <tr>
                         <th scope="row ">3</th>
                         <td style="text-align: start">Production Tools</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp.
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
                             {{ number_format($totalproductiontool) ?? 0 }}</td>
                     </tr>
                     <tr>
                         <th scope="row ">4</th>
                         <td style="text-align: start">Operational</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totaloperational) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totaloperational) ?? 0 }}
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">5</th>
                         <td style="text-align: start">Venue</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totallocation) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totallocation) ?? 0 }}
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="border-bottom: 1px solid #c4c4c4;">
                         <td colspan="2" class="text-right" style="font-weight: 500; background-color: #dbdee8">
                             Total</td>
                         <td class="total-price">Rp.
-                            {{ number_format($totalperformer + $totalproductioncrew + $totalproductiontool + $totaloperational + $totallocation) }}
+                            {{ number_format($totalAll) }}
                             / <span style="color: red">Rp.
                                 {{ number_format($budget) }}</span></td>
                     </tr>
@@ -162,7 +164,6 @@
                             <th scope="col" style="width: 80px; text-align: center">QTY</th>
                             <th scope="col">Cost</th>
                             <th scope="col">Total</th>
-                            {{-- <th scope="col">Type</th> --}}
                             <th scope="col">Assign To</th>
                             <th scope="col">Note</th>
                             <th scope="col" style="width: 140px" class="text-center">Action</th>
@@ -170,7 +171,7 @@
                     </thead>
                     <tbody id="performerTableBody">
                         <tr>
-                            @forelse ($operational as $key => $data)
+                            @forelse ($location as $key => $data)
                         <tr>
                             <td>
                                 {{ $data->subdescription->sub_description_name ?? '' }}
@@ -186,19 +187,17 @@
                             <td>{{ $data->note ?? '' }}</td>
                             <td>
                                 <span style="display: flex; gap: 8px; justify-content: center">
-                                    <a href="javascript:;" class="uwuq editModalBtn" data-id="" data-url=""
-                                        data-bs-toggle="modal" data-bs-target="#edititem">Edit</a>
-                                    <form class="form-delete" onsubmit="return confirm('Konfirmasi hapus data ini?')"
-                                        action="{{ route('operational.destroy', $data->operational_id) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="hidden" name="url_back"
-                                            value="{{ route('request-budget.operational', $requestbudget->request_budget_id) }}">
-                                        <a href="#" onclick="$(this).closest('form').submit();"
-                                        class="btn btn-danger"
-                                        style="font-size: 14px; font-weight: 500; padding: 7px 10px;">Delete</a>
-                                    </form>
+                                <a href="javascript:;" class="uwuq editModalBtn" style="font-size: 14px" data-id=""
+                                    data-url="" data-bs-toggle="modal" data-bs-target="#edititem">Edit</a>
+                                <form class="form-delete" onsubmit="return confirm('Konfirmasi hapus data ini?')"
+                                    action="{{ route('location.destroy', $data->location_id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="url_back"
+                                        value="{{ route('request-budget.location', $requestbudget->request_budget_id) }}">
+                                    <a href="#" onclick="$(this).closest('form').submit();"
+                                    class="btn btn-danger" style="font-size: 14px; font-weight: 500; padding: 7px 10px;">Hapus</a>
+                                </form>
                                 </span>
                             </td>
                         </tr>
@@ -222,7 +221,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-body bg-white">
-                    <form action="{{ route('operational.store') }}" method="POST" class="modal-form-check"
+                    <form action="{{ route('location.store') }}" method="POST" class="modal-form-check"
                         style="font: 500 14px Narasi Sans, sans-serif">
                         @csrf
                         <div class="row">
@@ -233,7 +232,7 @@
                                         required>
                                         <option disabled selected>Select Sub Description</option>
                                         {{-- @forelse ($subdescription as $sub_description_id => $sub_description_name) --}}
-                                            <option value="5">Operational
+                                            <option value="12">Sewa Lokasi
                                             </option>
                                         {{-- @empty
                                             <option disabled selected>Data not found</option>
@@ -266,7 +265,9 @@
                             <div class="col">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" />
+                                    <div id="name_container">
+                                        <input type="text" class="form-control" id="name" name="name" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -297,10 +298,10 @@
                                 <div class="mb-3">
                                     <label for="assign" class="form-label">Assign To</label>
                                     <select name="assign" class="form-select" id="assign_option" required>
-                                        {{-- <option disabled selected>Select Department</option>
+                                        <option disabled selected>Select Department</option>
                                         <option value="hc">HC</option>
-                                        <option value="finance">Finance</option> --}}
-                                        <option selected value="procurement">Procurement</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Procurement">Procurement</option>
                                     </select>
                                 </div>
                             </div>
@@ -313,7 +314,7 @@
                         </div>
                         <input type="hidden" name="request_budget_id" value="{{ $id }}">
                         <input type="hidden" name="url_back"
-                            value="{{ route('request-budget.operational', $requestbudget->request_budget_id) }}">
+                            value="{{ route('request-budget.location', $requestbudget->request_budget_id) }}">
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>

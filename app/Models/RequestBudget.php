@@ -16,7 +16,7 @@ class RequestBudget extends Model
         'manager_id',
         'employee_id',
         'month',
-        'monthly_budget_id',
+        'quarterly_budget_id',
         'episode',
         'location',
         'type',
@@ -25,7 +25,10 @@ class RequestBudget extends Model
         'date_upload',
         'budget_code',
         'budget',
-        'request_budget_number'
+        'request_budget_number',
+        'reviewer_id',
+        'finance1_id',
+        'finance2_id'
     ];
 
     public function program()
@@ -73,9 +76,9 @@ class RequestBudget extends Model
         return $this->hasMany(Location::class, 'request_budget_id');
     }
 
-    public function monthlyBudget()
+    public function quarterlyBudget()
     {
-        return $this->belongsTo(ProgramMonthlyBudget::class, 'monthly_budget_id');
+        return $this->belongsTo(ProgramQuarterlyBudget::class, 'quarterly_budget_id');
     }
 
     public function approval()
@@ -86,5 +89,20 @@ class RequestBudget extends Model
     public function totalCost()
     {
         return $this->hasOne(TotalCost::class, 'request_budget_id');
+    }
+
+    public function reviewer()
+    {
+        return $this->belongsTo(Employee::class, 'reviewer_id');
+    }
+
+    public function finance1()
+    {
+        return $this->belongsTo(Employee::class, 'finance1_id');
+    }
+
+    public function finance2()
+    {
+        return $this->belongsTo(Employee::class, 'finance2_id');
     }
 }

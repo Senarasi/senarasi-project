@@ -34,7 +34,7 @@ class BudgetProgramController extends Controller
         $totalSpendingBudget = $totalBudget - $totalRemainingBudget;
         $employee = Employee::orderBy('full_name', 'asc')->pluck('full_name', 'employee_id');
         $program = Program::orderBy('program_name', 'asc')->pluck('program_name', 'program_id');
-        return view('budget.index', compact('budget', 'program', 'employee', 'totalBudget', 'totalRemainingBudget', 'totalSpendingBudget'));
+        return view('budget.program', compact('budget', 'program', 'employee', 'totalBudget', 'totalRemainingBudget', 'totalSpendingBudget'));
     }
 
     public function create()

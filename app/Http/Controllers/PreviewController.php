@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 namespace App\Http\Controllers;
 
@@ -22,23 +22,22 @@ class PreviewController extends Controller
 
     public function store(Request $request)
     {
-
         $approverIds = [
-            'manager' => $request->input('manager_id'),
-            'reviewer' => '220017110117', // Example: Employee ID for reviewer
-            'approval 1' => '120017081704', // Employee ID for approval 1
-            'approval 2' => '120021071261', // Example: Employee ID for approval 2
+            'manager' => $request->input('manager_id'), // Example: Employee ID for manager
+            'reviewer' => '3', // Example: Employee ID for reviewer
+            'hc' => '7', // Example: Employee ID for the new approver after reviewer
+            'finance 1' => '5', // Employee ID for finance 1
         ];
 
         // If budget is less than or equal to 200 million, add approval 3
         if ($request->input('budget') >= 200000000) {
-            $approverIds['approval 3'] = '003'; // Example: Employee ID for approval 3
+            $approverIds['finance 2'] = '6'; // Example: Employee ID for approval 3
         }
 
-         /// Create approval stages
+        // Create approval stages
         foreach ($approverIds as $stage => $employeeId) {
             // Validate stage to prevent check constraint violation
-            if (!in_array($stage, ['reviewer', 'approval 1', 'approval 2', 'approval 3'])) {
+            if (!in_array($stage, ['manager', 'reviewer', 'hc', 'finance 1', 'finance 2'])) {
                 continue; // Skip invalid stages
             }
 
@@ -57,10 +56,9 @@ class PreviewController extends Controller
             'history_status' => 'required|string|max:255'
         ]);
 
-         // Create the history
-         History::create($validateData);
+        // Create the history
+        History::create($validateData);
 
-         return redirect()->route('request-budget.index')->with('success', 'Budget request submitted successfully.');
-
+        return redirect()->route('request-budget.index')->with('success', 'Budget request submitted successfully.');
     }
 }

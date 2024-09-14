@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Narasi Sans';
+    src: url('../font/NarasiSans-Bold.otf') format('opentype'),
+        url('../font/NarasiSans-Light.otf') format('opentype'),
+        url('../font/NarasiSans-Medium.otf') format('opentype'),
+        url('../font/NarasiSans-SemiBold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -10,9 +10,6 @@
         text-decoration: none;
     }
 
-    li {
-        list-style: none;
-    }
 
     #sidebar {
         padding-top: 8px;
@@ -87,7 +84,8 @@
         margin-left: 12px;
     }
 
-    a.sidebar-link:hover {
+    a.sidebar-link:hover,
+    a.sidebar-link.active {
         background-color: #4a25aa;
         border-left: 3px solid #3b7ddd;
     }
@@ -106,11 +104,11 @@
         display: none;
     }
 
-    #sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
-        display: block;
-        width: 100%;
-        opacity: 1;
-    }
+    /* #sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
+display: block;
+width: 100%;
+opacity: 1;
+} */
 
     #sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
         border: solid;
@@ -153,159 +151,14 @@
     }
 </style>
 
-</head>
-
-<nav class="navbar fixed-top navbar-expand-lg p-0">
-    <div class="container-fluid">
-        <button class="toggle-btn" type="button">
-            <img style="width: 32px; height: 32px; margin-left:-12px;"
-                src="{{ asset('asset/image/narasi_logomark.png') }}" alt="" />
-        </button>
-        <a href="/dashboard-main" class="header ms-1">
-            <img style="width: 208px; height: 38" src="{{ asset('asset/image/senarasi_logo1.png') }}" alt="" />
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarnih"
-            aria-controls="navbarnih" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarnih">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0"> </ul>
-
-            <!-- Dropdown Profile-->
-            <div class="navbar-nav order-md-last">
-                <a class="maindashboardlink" href="/dashboard-main">Main Dashboard</a>
-
-                @guest
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0 " data-bs-toggle="dropdown"
-                            aria-label="Open user menu">
-                            <div class="row me-2">
-                                <div class="col-sm-3">
-                                    <img loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/2bfbf0aef31a2cc5791ba7283fd9129406fbb60e65f2a4985de422bb96951f3b? "
-                                        class="img-3 me-1" />
-                                </div>
-                                <div class="col" style="font:300 14px Narasi Sans, sans-serif">
-                                    <div class="mt-1">Nama User</div>
-                                    <div class="text-secondary">position</div>
-                                </div>
-
-                            </div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"
-                            style="background: none; right:25px;">
-                            <div class="sub-menu">
-                                <div class="user-info text-center">
-                                    <a href="" id="#"
-                                        class="button-profile sidebar-link collapsed has-dropdown d-flex"
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop-profile" role="button"
-                                        aria-expanded="false" aria-controls="profile" style="margin-bottom: 12px">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M6.66667 5.33333C6.66667 3.91885 7.22857 2.56229 8.22876 1.5621C9.22896 0.561903 10.5855 0 12 0C13.4145 0 14.771 0.561903 15.7712 1.5621C16.7714 2.56229 17.3333 3.91885 17.3333 5.33333C17.3333 6.74782 16.7714 8.10438 15.7712 9.10457C14.771 10.1048 13.4145 10.6667 12 10.6667C10.5855 10.6667 9.22896 10.1048 8.22876 9.10457C7.22857 8.10438 6.66667 6.74782 6.66667 5.33333ZM6.66667 13.3333C4.89856 13.3333 3.20286 14.0357 1.95262 15.286C0.702379 16.5362 0 18.2319 0 20C0 21.0609 0.421428 22.0783 1.17157 22.8284C1.92172 23.5786 2.93913 24 4 24H20C21.0609 24 22.0783 23.5786 22.8284 22.8284C23.5786 22.0783 24 21.0609 24 20C24 18.2319 23.2976 16.5362 22.0474 15.286C20.7971 14.0357 19.1014 13.3333 17.3333 13.3333H6.66667Z"
-                                                fill="#FFE900" />
-                                        </svg>
-                                        <span>PROFILE</span>
-                                    </a>
-                                    <a href="" id="#"
-                                        class="button-profile sidebar-link collapsed has-dropdown d-flex"
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop-logout" role="button"
-                                        aria-expanded="false" aria-controls="profile"
-                                        onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                        <svg xmlns="http://www.w3.org/2000/svg " width="25 " height="24 "
-                                            viewBox="0 0 25 24 " fill="none ">
-                                            <path
-                                                d="M16.5 5V4C16.5 3.44772 16.0523 3 15.5 3H6.5C5.94771 3 5.5 3.44772 5.5 4V20C5.5 20.5523 5.94772 21 6.5 21H15.5C16.0523 21 16.5 20.5523 16.5 20V19 "
-                                                stroke="#FFE900 " stroke-width="2 " stroke-linecap="round " />
-                                            <path d="M10.5 12H21.5 " stroke="#FFE900 " stroke-width="2 "
-                                                stroke-linecap="round " />
-                                            <path d="M18 8.5L21.5 12L18 15.5 " stroke="#FFE900 " stroke-width="2 "
-                                                stroke-linecap="round " />
-                                        </svg>
-                                        <span>LOG OUT</span>
-                                    </a>
-                                    <form id="logout-form" action="" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @else
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0 " data-bs-toggle="dropdown"
-                            aria-label="Open user menu">
-                            <div class="row me-2">
-                                <div class="col-sm-3">
-                                    <img loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/2bfbf0aef31a2cc5791ba7283fd9129406fbb60e65f2a4985de422bb96951f3b? "
-                                        class="img-3 me-1" />
-                                </div>
-                                <div class="col  ms-2" style="font:300 14px Narasi Sans, sans-serif">
-                                    <div class="mt-1">{{ Auth::user()->name }}</div>
-                                    <div class="text-secondary">{{ Auth::user()->role }}</div>
-                                </div>
-
-                            </div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"
-                            style="background: none; right:25px;">
-                            <div class="sub-menu">
-                                <div class="user-info text-center">
-                                    <a href="" id="#"
-                                        class="button-profile sidebar-link collapsed has-dropdown d-flex"
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop-profile" role="button"
-                                        aria-expanded="false" aria-controls="profile" style="margin-bottom: 12px">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M6.66667 5.33333C6.66667 3.91885 7.22857 2.56229 8.22876 1.5621C9.22896 0.561903 10.5855 0 12 0C13.4145 0 14.771 0.561903 15.7712 1.5621C16.7714 2.56229 17.3333 3.91885 17.3333 5.33333C17.3333 6.74782 16.7714 8.10438 15.7712 9.10457C14.771 10.1048 13.4145 10.6667 12 10.6667C10.5855 10.6667 9.22896 10.1048 8.22876 9.10457C7.22857 8.10438 6.66667 6.74782 6.66667 5.33333ZM6.66667 13.3333C4.89856 13.3333 3.20286 14.0357 1.95262 15.286C0.702379 16.5362 0 18.2319 0 20C0 21.0609 0.421428 22.0783 1.17157 22.8284C1.92172 23.5786 2.93913 24 4 24H20C21.0609 24 22.0783 23.5786 22.8284 22.8284C23.5786 22.0783 24 21.0609 24 20C24 18.2319 23.2976 16.5362 22.0474 15.286C20.7971 14.0357 19.1014 13.3333 17.3333 13.3333H6.66667Z"
-                                                fill="#FFE900" />
-                                        </svg>
-                                        <span>PROFILE</span>
-                                    </a>
-                                    <a href="{{ route('logout') }}" id="#"
-                                        class="button-profile sidebar-link collapsed has-dropdown d-flex"
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop-logout" role="button"
-                                        aria-expanded="false" aria-controls="profile"
-                                        onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                        <svg xmlns="http://www.w3.org/2000/svg " width="25 " height="24 "
-                                            viewBox="0 0 25 24 " fill="none ">
-                                            <path
-                                                d="M16.5 5V4C16.5 3.44772 16.0523 3 15.5 3H6.5C5.94771 3 5.5 3.44772 5.5 4V20C5.5 20.5523 5.94772 21 6.5 21H15.5C16.0523 21 16.5 20.5523 16.5 20V19 "
-                                                stroke="#FFE900 " stroke-width="2 " stroke-linecap="round " />
-                                            <path d="M10.5 12H21.5 " stroke="#FFE900 " stroke-width="2 "
-                                                stroke-linecap="round " />
-                                            <path d="M18 8.5L21.5 12L18 15.5 " stroke="#FFE900 " stroke-width="2 "
-                                                stroke-linecap="round " />
-                                        </svg>
-                                        <span>LOG OUT</span>
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endguest
-
-            </div>
-        </div>
-    </div>
-</nav>
 
 
 <aside id="sidebar">
     <ul class="sidebar-nav" style="padding-top: 60px">
-        <li class="sidebar-item">
-            <a href="/dashboard-budget" class="sidebar-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
-                    fill="none">
+        <li class="sidebar-item" style="list-style: none;">
+            <a href="/dashboard-budget"
+                class="sidebar-link {{ request()->routeIs('dashboard-budget') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M2.49231 0H2.42308C2.106 0 1.83323 1.03162e-08 1.59231 0.0567692C1.21934 0.14589 0.878331 0.336526 0.607058 0.607554C0.335785 0.878583 0.144841 1.21942 0.0553846 1.59231C-5.15809e-08 1.83323 0 2.10462 0 2.42308V5.88462C0 6.20169 1.03162e-08 6.47446 0.0567692 6.71538C0.14589 7.08835 0.336526 7.42936 0.607555 7.70063C0.878583 7.97191 1.21942 8.16285 1.59231 8.25231C1.83323 8.30769 2.10462 8.30769 2.42308 8.30769H5.88462C6.20169 8.30769 6.47446 8.30769 6.71538 8.25092C7.08835 8.1618 7.42936 7.97117 7.70063 7.70014C7.97191 7.42911 8.16285 7.08827 8.25231 6.71538C8.30769 6.47446 8.30769 6.20308 8.30769 5.88462V2.42308C8.30769 2.106 8.30769 1.83323 8.25092 1.59231C8.1618 1.21934 7.97117 0.878331 7.70014 0.607058C7.42911 0.335785 7.08827 0.144841 6.71538 0.0553846C6.47446 -5.15809e-08 6.20308 0 5.88462 0H5.81538H2.49231ZM1.91492 1.404C1.97446 1.39015 2.06723 1.38462 2.49231 1.38462H5.81538C6.24185 1.38462 6.33323 1.38877 6.39277 1.404C6.51715 1.43374 6.63086 1.49736 6.72129 1.58779C6.81172 1.67822 6.87533 1.79193 6.90508 1.91631C6.91892 1.97446 6.92308 2.06585 6.92308 2.49231V5.81538C6.92308 6.24185 6.91892 6.33323 6.90369 6.39277C6.87395 6.51715 6.81033 6.63086 6.7199 6.72129C6.62947 6.81172 6.51576 6.87533 6.39139 6.90508C6.33462 6.91754 6.24323 6.92308 5.81538 6.92308H2.49231C2.06585 6.92308 1.97446 6.91892 1.91492 6.90369C1.79054 6.87395 1.67683 6.81033 1.5864 6.7199C1.49597 6.62947 1.43236 6.51576 1.40262 6.39138C1.39015 6.33462 1.38462 6.24323 1.38462 5.81538V2.49231C1.38462 2.06585 1.38877 1.97446 1.404 1.91492C1.43374 1.79054 1.49736 1.67683 1.58779 1.5864C1.67822 1.49597 1.79193 1.43236 1.91631 1.40262M12.1846 0H12.1154C11.7983 0 11.5255 1.03162e-08 11.2846 0.0567692C10.9116 0.14589 10.5706 0.336526 10.2994 0.607554C10.0281 0.878583 9.83715 1.21942 9.74769 1.59231C9.69231 1.83323 9.69231 2.10462 9.69231 2.42308V5.88462C9.69231 6.20169 9.69231 6.47446 9.74908 6.71538C9.8382 7.08835 10.0288 7.42936 10.2999 7.70063C10.5709 7.97191 10.9117 8.16285 11.2846 8.25231C11.5255 8.30769 11.7969 8.30769 12.1154 8.30769H15.5769C15.894 8.30769 16.1668 8.30769 16.4077 8.25092C16.7807 8.1618 17.1217 7.97117 17.3929 7.70014C17.6642 7.42911 17.8552 7.08827 17.9446 6.71538C18 6.47446 18 6.20308 18 5.88462V2.42308C18 2.106 18 1.83323 17.9432 1.59231C17.8541 1.21934 17.6635 0.878331 17.3924 0.607058C17.1214 0.335785 16.7806 0.144841 16.4077 0.0553846C16.1668 -5.15809e-08 15.8954 0 15.5769 0H15.5077H12.1846ZM11.6072 1.404C11.6668 1.39015 11.7595 1.38462 12.1846 1.38462H15.5077C15.9342 1.38462 16.0255 1.38877 16.0851 1.404C16.2095 1.43374 16.3232 1.49736 16.4136 1.58779C16.504 1.67822 16.5676 1.79193 16.5974 1.91631C16.6112 1.97446 16.6154 2.06585 16.6154 2.49231V5.81538C16.6154 6.24185 16.6098 6.33323 16.596 6.39277C16.5663 6.51715 16.5026 6.63086 16.4122 6.72129C16.3218 6.81172 16.2081 6.87533 16.0837 6.90508C16.0255 6.91892 15.9342 6.92308 15.5077 6.92308H12.1846C11.7582 6.92308 11.6668 6.91892 11.6072 6.90369C11.4829 6.87395 11.3691 6.81033 11.2787 6.7199C11.1883 6.62947 11.1247 6.51576 11.0949 6.39138C11.0825 6.33462 11.0769 6.24323 11.0769 5.81538V2.49231C11.0769 2.06585 11.0811 1.97446 11.0963 1.91492C11.1261 1.79054 11.1897 1.67683 11.2801 1.5864C11.3705 1.49597 11.4842 1.43236 11.6086 1.40262M2.42308 9.69231H5.88462C6.20169 9.69231 6.47446 9.69231 6.71538 9.74908C7.08835 9.8382 7.42936 10.0288 7.70063 10.2999C7.97191 10.5709 8.16285 10.9117 8.25231 11.2846C8.30769 11.5255 8.30769 11.7969 8.30769 12.1154V15.5769C8.30769 15.894 8.30769 16.1668 8.25092 16.4077C8.1618 16.7807 7.97117 17.1217 7.70014 17.3929C7.42911 17.6642 7.08827 17.8552 6.71538 17.9446C6.47446 18 6.20308 18 5.88462 18H2.42308C2.106 18 1.83323 18 1.59231 17.9432C1.21934 17.8541 0.878331 17.6635 0.607058 17.3924C0.335785 17.1214 0.144841 16.7806 0.0553846 16.4077C-5.15809e-08 16.1668 0 15.8954 0 15.5769V12.1154C0 11.7983 1.03162e-08 11.5255 0.0567692 11.2846C0.14589 10.9116 0.336526 10.5706 0.607555 10.2994C0.878583 10.0281 1.21942 9.83715 1.59231 9.74769C1.83323 9.69231 2.10462 9.69231 2.42308 9.69231ZM2.49231 11.0769C2.06585 11.0769 1.97446 11.0811 1.91492 11.0963C1.79054 11.1261 1.67683 11.1897 1.5864 11.2801C1.49597 11.3705 1.43236 11.4842 1.40262 11.6086C1.39015 11.6654 1.38462 11.7568 1.38462 12.1846V15.5077C1.38462 15.9342 1.38877 16.0255 1.404 16.0851C1.43374 16.2095 1.49736 16.3232 1.58779 16.4136C1.67822 16.504 1.79193 16.5676 1.91631 16.5974C1.97446 16.6112 2.06585 16.6154 2.49231 16.6154H5.81538C6.24185 16.6154 6.33323 16.6098 6.39277 16.596C6.51715 16.5663 6.63086 16.5026 6.72129 16.4122C6.81172 16.3218 6.87533 16.2081 6.90508 16.0837C6.91892 16.0255 6.92308 15.9342 6.92308 15.5077V12.1846C6.92308 11.7582 6.91892 11.6668 6.90369 11.6072C6.87395 11.4829 6.81033 11.3691 6.7199 11.2787C6.62947 11.1883 6.51576 11.1247 6.39139 11.0949C6.33462 11.0825 6.24323 11.0769 5.81538 11.0769H2.49231ZM12.1846 9.69231H12.1154C11.7983 9.69231 11.5255 9.69231 11.2846 9.74908C10.9116 9.8382 10.5706 10.0288 10.2994 10.2999C10.0281 10.5709 9.83715 10.9117 9.74769 11.2846C9.69231 11.5255 9.69231 11.7969 9.69231 12.1154V15.5769C9.69231 15.894 9.69231 16.1668 9.74908 16.4077C9.8382 16.7807 10.0288 17.1217 10.2999 17.3929C10.5709 17.6642 10.9117 17.8552 11.2846 17.9446C11.5255 18.0014 11.7983 18.0014 12.1154 18.0014H15.5769C15.894 18.0014 16.1668 18.0014 16.4077 17.9446C16.7804 17.8553 17.1211 17.6645 17.3921 17.3935C17.6631 17.1225 17.8539 16.7818 17.9432 16.4091C18 16.1682 18 15.8954 18 15.5783V12.1154C18 11.7983 18 11.5255 17.9432 11.2846C17.8541 10.9116 17.6635 10.5706 17.3924 10.2994C17.1214 10.0281 16.7806 9.83715 16.4077 9.74769C16.1668 9.69231 15.8954 9.69231 15.5769 9.69231H15.5077H12.1846ZM11.6072 11.0963C11.6668 11.0825 11.7595 11.0769 12.1846 11.0769H15.5077C15.9342 11.0769 16.0255 11.0811 16.0851 11.0963C16.2095 11.1261 16.3232 11.1897 16.4136 11.2801C16.504 11.3705 16.5676 11.4842 16.5974 11.6086C16.6112 11.6668 16.6154 11.7582 16.6154 12.1846V15.5077C16.6154 15.9342 16.6098 16.0255 16.596 16.0851C16.5663 16.2095 16.5026 16.3232 16.4122 16.4136C16.3218 16.504 16.2081 16.5676 16.0837 16.5974C16.0255 16.6112 15.9342 16.6154 15.5077 16.6154H12.1846C11.7582 16.6154 11.6668 16.6098 11.6072 16.596C11.4829 16.5663 11.3691 16.5026 11.2787 16.4122C11.1883 16.3218 11.1247 16.2081 11.0949 16.0837C11.0825 16.0269 11.0769 15.9355 11.0769 15.5077V12.1846C11.0769 11.7582 11.0811 11.6668 11.0963 11.6072C11.1261 11.4829 11.1897 11.3691 11.2801 11.2787C11.3705 11.1883 11.4842 11.1247 11.6086 11.0949"
                         fill="white" />
@@ -313,9 +166,10 @@
                 <span>Dashboard</span>
             </a>
         </li>
-        <li class="sidebar-item">
-            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                data-bs-target="#budget" aria-expanded="false" aria-controls="budget">
+        <li class="sidebar-item" style="list-style: none;">
+            <a href="#"
+                class="sidebar-link collapsed has-dropdown {{ Request::is('budget*') ? 'active' : '' }} "
+                data-bs-toggle="collapse" data-bs-target="#budget" aria-expanded="false" aria-controls="budget">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
                     fill="none">
                     <g clip-path="url(#clip0_1168_1371)">
@@ -335,17 +189,18 @@
                 <span>Budget</span>
             </a>
             <ul id="budget" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="" class="sidebar-link">Budget Department</a>
+                <li class="sidebar-item" style="list-style: none;">
+                    <a href="{{ route('budget.index') }}" class="sidebar-link">Budget Department</a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="/budget" class="sidebar-link">Budget Program</a>
+                <li class="sidebar-item" style="list-style: none;">
+                    <a href="{{ route('budget.index') }}" class="sidebar-link">Budget Program</a>
                 </li>
             </ul>
         </li>
-        <li class="sidebar-item">
-            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                data-bs-target="#request" aria-expanded="false" aria-controls="request">
+        <li class="sidebar-item" style="list-style: none;">
+            <a href="#"
+                class="sidebar-link collapsed has-dropdown {{ Request::is('request-budget-*') ? 'active' : '' }} "
+                data-bs-toggle="collapse" data-bs-target="#request" aria-expanded="false" aria-controls="request">
                 <svg xmlns="http://www.w3.org/2000/svg" width="17" height="19" viewBox="0 0 17 19"
                     fill="none">
                     <path
@@ -364,102 +219,108 @@
                 <span>Request Budget</span>
             </a>
             <ul id="request" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
+                <li class="sidebar-item" style="list-style: none;">
                     <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
                         data-bs-target="#request-two" aria-expanded="false" aria-controls="request-two">
                         Department
                     </a>
                     <ul id="request-two" class="sidebar-dropdown list-unstyled collapse">
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Budget Payment</a>
+                        <li class="sidebar-item" style="list-style: none;">
+                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget Payment</a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link ps-5">Budget Purchase</a>
+                        <li class="sidebar-item"style="list-style: none;">
+                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget Purchase</a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link ps-5">Budget Advance</a>
+                        <li class="sidebar-item" style="list-style: none;">
+                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget Advance</a>
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item" style="list-style: none;">
                     <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
                         data-bs-target="#request-three" aria-expanded="false" aria-controls="request-three">
                         Program
                     </a>
                     <ul id="request-three" class="sidebar-dropdown list-unstyled collapse ">
                         <li class="sidebar-item">
-                            <a href="/request-budget" class="sidebar-link ps-5">Budget Program</a>
+                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget Program</a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Budget Payment</a>
+                        <li class="sidebar-item" style="list-style: none;">
+                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget Payment</a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Budget Purchase</a>
+                        <li class="sidebar-item" style="list-style: none;">
+                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget
+                                Purchase</a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Budget Advance</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-
-        <li class="sidebar-item">
-            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                data-bs-target="#approval" aria-expanded="false" aria-controls="approval">
-                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18"
-                    fill="none">
-                    <path
-                        d="M18.3311 9.53612L17.2701 7.86263L17.8994 5.98449C17.9409 5.86027 17.9382 5.72553 17.8918 5.60307C17.8453 5.48062 17.758 5.378 17.6445 5.31258L15.9277 4.32287L15.612 2.36721C15.5908 2.2379 15.5256 2.11987 15.4275 2.03298C15.3294 1.94609 15.2044 1.89566 15.0735 1.89016L13.0934 1.81263L11.9053 0.227148C11.8268 0.122227 11.7144 0.04776 11.5872 0.0164308C11.4599 -0.0148984 11.3258 -0.0011519 11.2076 0.0553288L9.41882 0.906044L7.62939 0.0546304C7.51098 -0.00124154 7.37694 -0.0145898 7.24984 0.0168348C7.12274 0.0482595 7.01036 0.122536 6.93163 0.227148L5.74357 1.81263L3.76346 1.89016C3.63264 1.89539 3.50765 1.94567 3.40964 2.03247C3.31164 2.11928 3.24664 2.23728 3.22565 2.36651L2.90995 4.32217L1.19315 5.31188C1.07956 5.37719 0.992058 5.47977 0.945467 5.60223C0.898876 5.72469 0.896068 5.8595 0.937518 5.98379L1.56682 7.86193L0.506573 9.53612C0.436633 9.64694 0.407121 9.77851 0.42303 9.90859C0.438939 10.0387 0.499293 10.1592 0.59388 10.2499L2.02361 11.621L1.86297 13.5948C1.85228 13.7254 1.88704 13.8557 1.96137 13.9637C2.0357 14.0716 2.14503 14.1505 2.27086 14.1871L4.17415 14.7354L4.94873 16.5591C4.99958 16.6799 5.09084 16.7794 5.2069 16.8404C5.32297 16.9014 5.45662 16.9202 5.58502 16.8936L7.52672 16.4955L9.05912 17.7506C9.16319 17.8351 9.29101 17.8791 9.41882 17.8791C9.54664 17.8791 9.67376 17.8351 9.77853 17.7506L11.3109 16.4955L13.2526 16.8936C13.5159 16.9495 13.7835 16.8077 13.8889 16.5591L14.6635 14.7354L16.5668 14.1871C16.6927 14.1506 16.8021 14.0717 16.8764 13.9638C16.9508 13.8558 16.9855 13.7255 16.9747 13.5948L16.814 11.621L18.2438 10.2499C18.3384 10.1592 18.3987 10.0387 18.4146 9.90859C18.4305 9.77851 18.401 9.64694 18.3311 9.53612ZM13.5236 6.80447L9.54873 12.7595C9.39857 12.9816 9.16598 13.1304 8.9348 13.1304C8.70431 13.1304 8.44658 13.0011 8.28244 12.8363L5.36431 9.87138C5.26866 9.77328 5.21512 9.6417 5.21512 9.50469C5.21512 9.36768 5.26866 9.23609 5.36431 9.138L6.08441 8.40463C6.1316 8.35718 6.1877 8.31952 6.24949 8.29382C6.31128 8.26813 6.37754 8.2549 6.44446 8.2549C6.51138 8.2549 6.57764 8.26813 6.63944 8.29382C6.70123 8.31952 6.75733 8.35718 6.80452 8.40463L8.70361 10.3338L11.8355 5.64155C11.8726 5.5856 11.9205 5.53759 11.9764 5.50035C12.0322 5.4631 12.095 5.43736 12.1609 5.42461C12.2268 5.41187 12.2946 5.41238 12.3603 5.42613C12.4261 5.43987 12.4884 5.46656 12.5437 5.50465L13.3881 6.08507C13.6207 6.24571 13.6808 6.56909 13.5236 6.80447Z"
-                        fill="white" />
-                </svg>
-                <span>Approval</span>
-            </a>
-            <ul id="approval" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#approval-two" aria-expanded="false" aria-controls="approval-two">
-                        Department
-                    </a>
-                    <ul id="approval-two" class="sidebar-dropdown list-unstyled collapse">
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Payment Approval</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Purchase Approval</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Advance Approval</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#approval-three" aria-expanded="false" aria-controls="approval-three">
-                        Program
-                    </a>
-                    <ul id="approval-three" class="sidebar-dropdown list-unstyled collapse ">
-                        <li class="sidebar-item">
-                            <a href="/approval" class="sidebar-link ps-5">Program Approval</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Payment Approval</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Purchase Approval</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Advance Approval</a>
+                        <li class="sidebar-item" style="list-style: none;">
+                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget
+                                Advance</a>
                         </li>
                     </ul>
                 </li>
             </ul>
         </li>
+        @if (Auth::User()->role == 'Manager' or Auth::User()->role == 'Admin')
+            <li class="sidebar-item" style="list-style: none;">
+                <a href="#"
+                    class="sidebar-link collapsed has-dropdown {{ Request::is('approval-budget-*') ? 'active' : '' }} "
+                    data-bs-toggle="collapse" data-bs-target="#approval" aria-expanded="false"
+                    aria-controls="approval">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18"
+                        fill="none">
+                        <path
+                            d="M18.3311 9.53612L17.2701 7.86263L17.8994 5.98449C17.9409 5.86027 17.9382 5.72553 17.8918 5.60307C17.8453 5.48062 17.758 5.378 17.6445 5.31258L15.9277 4.32287L15.612 2.36721C15.5908 2.2379 15.5256 2.11987 15.4275 2.03298C15.3294 1.94609 15.2044 1.89566 15.0735 1.89016L13.0934 1.81263L11.9053 0.227148C11.8268 0.122227 11.7144 0.04776 11.5872 0.0164308C11.4599 -0.0148984 11.3258 -0.0011519 11.2076 0.0553288L9.41882 0.906044L7.62939 0.0546304C7.51098 -0.00124154 7.37694 -0.0145898 7.24984 0.0168348C7.12274 0.0482595 7.01036 0.122536 6.93163 0.227148L5.74357 1.81263L3.76346 1.89016C3.63264 1.89539 3.50765 1.94567 3.40964 2.03247C3.31164 2.11928 3.24664 2.23728 3.22565 2.36651L2.90995 4.32217L1.19315 5.31188C1.07956 5.37719 0.992058 5.47977 0.945467 5.60223C0.898876 5.72469 0.896068 5.8595 0.937518 5.98379L1.56682 7.86193L0.506573 9.53612C0.436633 9.64694 0.407121 9.77851 0.42303 9.90859C0.438939 10.0387 0.499293 10.1592 0.59388 10.2499L2.02361 11.621L1.86297 13.5948C1.85228 13.7254 1.88704 13.8557 1.96137 13.9637C2.0357 14.0716 2.14503 14.1505 2.27086 14.1871L4.17415 14.7354L4.94873 16.5591C4.99958 16.6799 5.09084 16.7794 5.2069 16.8404C5.32297 16.9014 5.45662 16.9202 5.58502 16.8936L7.52672 16.4955L9.05912 17.7506C9.16319 17.8351 9.29101 17.8791 9.41882 17.8791C9.54664 17.8791 9.67376 17.8351 9.77853 17.7506L11.3109 16.4955L13.2526 16.8936C13.5159 16.9495 13.7835 16.8077 13.8889 16.5591L14.6635 14.7354L16.5668 14.1871C16.6927 14.1506 16.8021 14.0717 16.8764 13.9638C16.9508 13.8558 16.9855 13.7255 16.9747 13.5948L16.814 11.621L18.2438 10.2499C18.3384 10.1592 18.3987 10.0387 18.4146 9.90859C18.4305 9.77851 18.401 9.64694 18.3311 9.53612ZM13.5236 6.80447L9.54873 12.7595C9.39857 12.9816 9.16598 13.1304 8.9348 13.1304C8.70431 13.1304 8.44658 13.0011 8.28244 12.8363L5.36431 9.87138C5.26866 9.77328 5.21512 9.6417 5.21512 9.50469C5.21512 9.36768 5.26866 9.23609 5.36431 9.138L6.08441 8.40463C6.1316 8.35718 6.1877 8.31952 6.24949 8.29382C6.31128 8.26813 6.37754 8.2549 6.44446 8.2549C6.51138 8.2549 6.57764 8.26813 6.63944 8.29382C6.70123 8.31952 6.75733 8.35718 6.80452 8.40463L8.70361 10.3338L11.8355 5.64155C11.8726 5.5856 11.9205 5.53759 11.9764 5.50035C12.0322 5.4631 12.095 5.43736 12.1609 5.42461C12.2268 5.41187 12.2946 5.41238 12.3603 5.42613C12.4261 5.43987 12.4884 5.46656 12.5437 5.50465L13.3881 6.08507C13.6207 6.24571 13.6808 6.56909 13.5236 6.80447Z"
+                            fill="white" />
+                    </svg>
+                    <span>Approval</span>
+                </a>
+                <ul id="approval" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item" style="list-style: none;">
+                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                            data-bs-target="#approval-two" aria-expanded="false" aria-controls="approval-two">
+                            Department
+                        </a>
+                        <ul id="approval-two" class="sidebar-dropdown list-unstyled collapse">
+                            <li class="sidebar-item" style="list-style: none;">
+                                <a href="/approval-detail" class="sidebar-link ps-5">Payment Approval</a>
+                            </li>
+                            <li class="sidebar-item" style="list-style: none;">
+                                <a href="/approval-detail" class="sidebar-link ps-5">Purchase Approval</a>
+                            </li>
+                            <li class="sidebar-item" style="list-style: none;">
+                                <a href="/approval-detail" class="sidebar-link ps-5">Advance Approval</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item" style="list-style: none;">
+                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                            data-bs-target="#approval-three" aria-expanded="false" aria-controls="approval-three">
+                            Program
+                        </a>
+                        <ul id="approval-three" class="sidebar-dropdown list-unstyled collapse ">
+                            <li class="sidebar-item">
+                                <a href="/approval" class="sidebar-link ps-5">Program Approval</a>
+                            </li>
+                            <li class="sidebar-item" style="list-style: none;">
+                                <a href="/approval-detail" class="sidebar-link ps-5">Payment Approval</a>
+                            </li>
+                            <li class="sidebar-item" style="list-style: none;">
+                                <a href="/approval-detail" class="sidebar-link ps-5">Purchase Approval</a>
+                            </li>
+                            <li class="sidebar-item" style="list-style: none;">
+                                <a href="/approval-detail" class="sidebar-link ps-5">Advance Approval</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        @endif
 
 
-        <li class="sidebar-item">
-            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                data-bs-target="#report" aria-expanded="false" aria-controls="report">
+        <li class="sidebar-item" style="list-style: none;">
+            <a href="#"
+                class="sidebar-link collapsed has-dropdown {{ Request::is('report-budget-*') ? 'active' : '' }} "
+                data-bs-toggle="collapse" data-bs-target="#report" aria-expanded="false" aria-controls="report">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18" viewBox="0 0 16 18"
                     fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -475,24 +336,24 @@
                 <span>Report Budget</span>
             </a>
             <ul id="report" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
+                <li class="sidebar-item" style="list-style: none;">
                     <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
                         data-bs-target="#report-two" aria-expanded="false" aria-controls="report-two">
                         Department
                     </a>
                     <ul id="report-two" class="sidebar-dropdown list-unstyled collapse">
-                        <li class="sidebar-item">
+                        <li class="sidebar-item" style="list-style: none;">
                             <a href="/report" class="sidebar-link ps-5">Payment Report</a>
                         </li>
-                        <li class="sidebar-item">
+                        <li class="sidebar-item" style="list-style: none;">
                             <a href="/report" class="sidebar-link ps-5">Purchase Report</a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="" class="sidebar-link ps-5">Advance Report</a>
+                        <li class="sidebar-item" style="list-style: none;">
+                            <a href="/report" class="sidebar-link ps-5">Advance Report</a>
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item" style="list-style: none;">
                     <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
                         data-bs-target="#report-three" aria-expanded="false" aria-controls="report-three">
                         Program
@@ -501,22 +362,23 @@
                         <li class="sidebar-item">
                             <a href="/report" class="sidebar-link ps-5">Program Report</a>
                         </li>
-                        <li class="sidebar-item">
+                        <li class="sidebar-item" style="list-style: none;">
                             <a href="/report" class="sidebar-link ps-5">Payment Report</a>
                         </li>
-                        <li class="sidebar-item">
+                        <li class="sidebar-item" style="list-style: none;">
                             <a href="/report" class="sidebar-link ps-5">Purchase Report</a>
                         </li>
-                        <li class="sidebar-item">
+                        <li class="sidebar-item" style="list-style: none;">
                             <a href="/report" class="sidebar-link ps-5">Advance Report</a>
                         </li>
                     </ul>
                 </li>
             </ul>
         </li>
-        <li class="sidebar-item">
-            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                data-bs-target="#people" aria-expanded="false" aria-controls="people">
+        <li class="sidebar-item" style="list-style: none;">
+            <a href="#"
+                class="sidebar-link collapsed has-dropdown {{ Request::is('people*') ? 'active' : '' }}"
+                data-bs-toggle="collapse" data-bs-target="#people" aria-expanded="false" aria-controls="people">
                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="15" viewBox="0 0 19 15"
                     fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -532,17 +394,18 @@
                 <span>Narasi People</span>
             </a>
             <ul id="people" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="/department" class="sidebar-link">Department</a>
+                <li class="sidebar-item" style="list-style: none;">
+                    <a href="{{ route('department.index') }}" class="sidebar-link">Department</a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="/employee" class="sidebar-link">Employee</a>
+                <li class="sidebar-item" style="list-style: none;">
+                    <a href="{{ route('employee.index') }}" class="sidebar-link">Employee</a>
                 </li>
             </ul>
         </li>
-        <li class="sidebar-item">
-            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                data-bs-target="#vendor" aria-expanded="false" aria-controls="vendor">
+        <li class="sidebar-item" style="list-style: none;">
+            <a href="#"
+                class="sidebar-link collapsed has-dropdown {{ Request::is('vendor*') ? 'active' : '' }}"
+                data-bs-toggle="collapse" data-bs-target="#vendor" aria-expanded="false" aria-controls="vendor">
                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18"
                     fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -558,15 +421,15 @@
                 <span>Vendor</span>
             </a>
             <ul id="vendor" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="/vendor" class="sidebar-link">Name Vendor</a>
+                <li class="sidebar-item" style="list-style: none;">
+                    <a href="{{ route('vendor.index') }}" class="sidebar-link">Name Vendor</a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="/item-vendor" class="sidebar-link">Item Vendor</a>
+                <li class="sidebar-item" style="list-style: none;">
+                    <a href="{{ route('vendor.index') }}" class="sidebar-link">Item Vendor</a>
                 </li>
             </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item" style="list-style: none;">
             <a href="/category"class="sidebar-link">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
                     fill="none">
@@ -589,7 +452,7 @@
 
 
     <div class="sidebar-footer" style="border-top: 3px solid #3b7ddd; ">
-        <a href="#" class="sidebar-link" style="padding-top: 12px;">
+        <a href="" class="sidebar-link" style="padding-top: 12px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
                 fill="none">
                 <path
@@ -619,23 +482,41 @@
 </aside>
 
 <div class="overlay" id="overlay"></div>
-
 <script>
     const hamBurger = document.querySelector(".toggle-btn");
     const sidebar = document.querySelector("#sidebar");
     const overlay = document.querySelector("#overlay");
+    const sidebarLinks = document.querySelectorAll("#sidebar a"); // Asumsi elemen link adalah <a>
 
     hamBurger.addEventListener("click", function() {
         sidebar.classList.toggle("expand");
         overlay.classList.toggle("show");
     });
 
+    sidebarLinks.forEach(link => {
+        link.addEventListener("click", function() {
+            // Cek apakah sidebar sedang expand
+            if (!sidebar.classList.contains("expand")) {
+                sidebar.classList.add("expand");
+                overlay.classList.add("show");
+            } else {
+                // Jika sidebar sudah expand, tetap terbuka dan lakukan aksi lain (misalnya navigasi)
+                // Optional: window.location.href = link.href;
+            }
+        });
+    });
+
     document.addEventListener("click", function(event) {
-        const isClickInside = sidebar.contains(event.target) || hamBurger.contains(event.target);
+        const isClickInside = sidebar.contains(event.target) ||
+            hamBurger.contains(event.target) ||
+            Array.from(sidebarLinks).some(link => link.contains(event.target));
 
         if (!isClickInside) {
             sidebar.classList.remove("expand");
             overlay.classList.remove("show");
         }
     });
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script>

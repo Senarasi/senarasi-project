@@ -25,22 +25,25 @@
                     @php
                         $counter = 1;
                     @endphp
-                    @forelse ($approvals as $data)
+                    @forelse ($requestBudgets as $data)
                         <tr>
-                            <th scope="row ">{{ $counter++ }}</th>
+                            <th scope="row">{{ $counter++ }}</th>
                             <td>{{ $data->request_budget_number }}</td>
-                            <td> {{ $data->program->program_name }}</td>
-                            <td></td>
+                            <td>{{ $data->program->program_name }}</td>
+                            <td>Rp. {{ number_format($data->totalCost->total_cost) }}</td>
                             <td>{{ $data->employee->full_name }}</td>
-                            <td style="gap: 8px; display: flex; justify-content: center; ">
-                                <a href="/approval-detail" style="text-decoration: none"> <button type="button "
-                                        class="button-general" style="width: fit-content; ">DETAIL</button>
+                            <td style="gap: 8px; display: flex; justify-content: center;">
+                                <a href="{{ route('approval.show', $data->request_budget_id) }}"
+                                    style="text-decoration: none">
+                                    <button type="button" class="button-general"
+                                        style="width: fit-content;">DETAIL</button>
                                 </a>
                             </td>
-                        @empty
-                            <div class="alert alert-danger">
-                                No Data.
-                            </div>
+                        </tr>
+                    @empty
+                        <div class="alert alert-danger">
+                            No Data.
+                        </div>
                     @endforelse
                     </tr>
                 </tbody>

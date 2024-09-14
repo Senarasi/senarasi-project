@@ -72,7 +72,7 @@
             </div>
         @endif
         <form id="mainForm" action=""></form>
-        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px">
+        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px; border-bottom:none">
             <table class="table table-hover"
                 style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
                 <thead style="font-weight: 500">
@@ -87,42 +87,45 @@
                         <th scope="row ">1</th>
                         <td style="text-align: start">Performer/Host/Guest</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totalperformer) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totalperformer) ?? 0 }}
                         </td>
                     </tr>
                     <tr>
                         <th scope=" row ">2</th>
                         <td style="text-align: start">Production Crews</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp.
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
                             {{ number_format($totalproductioncrew) ?? 0 }}</td>
                     </tr>
                     <tr>
                         <th scope="row ">3</th>
                         <td style="text-align: start">Production Tools</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp.
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
                             {{ number_format($totalproductiontool) ?? 0 }}</td>
                     </tr>
                     <tr>
                         <th scope="row ">4</th>
                         <td style="text-align: start">Operational</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totaloperational) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totaloperational) ?? 0 }}
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">5</th>
                         <td style="text-align: start">Venue</td>
 
-                        <td class="total-price" style="font-weight: 300">Rp. {{ number_format($totallocation) ?? 0 }}
+                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
+                            {{ number_format($totallocation) ?? 0 }}
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="border-bottom: 1px solid #c4c4c4;">
                         <td colspan="2" class="text-right" style="font-weight: 500; background-color: #dbdee8">
                             Total</td>
                         <td class="total-price">Rp.
-                            {{ number_format($totalperformer + $totalproductioncrew + $totalproductiontool + $totaloperational + $totallocation) }}
+                            {{ number_format($totalAll) }}
                             / <span style="color: red">Rp.
                                 {{ number_format($budget) }}</span></td>
                     </tr>
@@ -300,8 +303,8 @@
                                 <div class="mb-3">
                                     <label for="usage" class="form-label">Usage</label>
                                     <select name="usage" class="form-select" id="usage_option" required>
-                                        <option>Choose One</option>
-                                        <option>Tools</option>
+                                        {{-- <option>Choose One</option> --}}
+                                        <option selected>Tools</option>
                                     </select>
                                 </div>
                             </div>
@@ -399,8 +402,8 @@
                                     <select name="assign" class="form-select" id="assign_option" required>
                                         <option disabled selected>Select Department</option>
                                         <option value="hc">HC</option>
-                                        <option value="finance">Finance</option>
-                                        <option value="procurement">Procurement</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Procurement">Procurement</option>
                                     </select>
                                 </div>
                             </div>

@@ -5,7 +5,9 @@
  * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
  */
 
-.selectize-control.plugin-drag_drop.multi>.selectize-input>div.ui-sortable-placeholder {
+.selectize-control.plugin-drag_drop.multi
+    > .selectize-input
+    > div.ui-sortable-placeholder {
     visibility: visible !important;
     background: #f2f2f2 !important;
     background: rgba(0, 0, 0, 0.06) !important;
@@ -18,7 +20,6 @@
     content: "!";
     visibility: hidden;
 }
-
 
 /* .selectize-control.plugin-drag_drop .ui-sortable-helper {
     -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -151,7 +152,7 @@
     width: 100%;
     overflow: hidden;
     position: relative;
-    z-index: 1;
+    z-index: 0;
     /* -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; */
@@ -175,7 +176,6 @@
     cursor: default !important;
 }
 
-
 /* .selectize-input.focus {
     -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
@@ -187,14 +187,14 @@
     border-radius: 6px 6px 0 0;
 }
 
-.selectize-input>* {
+.selectize-input > * {
     vertical-align: baseline;
     display: -moz-inline-stack;
     display: inline-block;
     zoom: 1;
 }
 
-.selectize-control.multi .selectize-input>div {
+.selectize-control.multi .selectize-input > div {
     cursor: pointer;
     margin: 0 3px 3px 0;
     padding: 2px 6px;
@@ -203,19 +203,19 @@
     border: 1px solid #0073bb;
 }
 
-.selectize-control.multi .selectize-input>div.active {
+.selectize-control.multi .selectize-input > div.active {
     background: #92c836;
     color: #fff;
     border: 1px solid #00578d;
 }
 
-.selectize-control.multi .selectize-input.disabled>div,
-.selectize-control.multi .selectize-input.disabled>div.active {
+.selectize-control.multi .selectize-input.disabled > div,
+.selectize-control.multi .selectize-input.disabled > div.active {
     color: #fff;
     border: 1px solid #eae9e9;
 }
 
-.selectize-input>input {
+.selectize-input > input {
     display: inline-block !important;
     padding: 0 !important;
     min-height: 0 !important;
@@ -231,11 +231,11 @@
     box-shadow: none !important;
 }
 
-.selectize-input>input::-ms-clear {
+.selectize-input > input::-ms-clear {
     display: none;
 }
 
-.selectize-input>input:focus {
+.selectize-input > input:focus {
     outline: 0 !important;
 }
 
@@ -365,7 +365,7 @@
     right: auto;
 }
 
-.selectize-control.rtl .selectize-input>input {
+.selectize-control.rtl .selectize-input > input {
     margin: 0 4px 0 -2px !important;
 }
 
@@ -403,7 +403,13 @@
     border-radius: 3px;
     background-color: #1b9dec;
     background-image: -moz-linear-gradient(top, #1da7ee, #178ee9);
-    background-image: -webkit-gradient( linear, 0 0, 0 100%, from(#1da7ee), to(#178ee9));
+    background-image: -webkit-gradient(
+        linear,
+        0 0,
+        0 100%,
+        from(#1da7ee),
+        to(#178ee9)
+    );
     background-image: -webkit-linear-gradient(top, #1da7ee, #178ee9);
     background-image: -o-linear-gradient(top, #1da7ee, #178ee9);
     background-image: linear-gradient(to bottom, #1da7ee, #178ee9);
@@ -415,13 +421,18 @@
 .selectize-control.multi .selectize-input [data-value].active {
     background-color: #0085d4;
     background-image: -moz-linear-gradient(top, #008fd8, #0075cf);
-    background-image: -webkit-gradient( linear, 0 0, 0 100%, from(#008fd8), to(#0075cf));
+    background-image: -webkit-gradient(
+        linear,
+        0 0,
+        0 100%,
+        from(#008fd8),
+        to(#0075cf)
+    );
     background-image: -webkit-linear-gradient(top, #008fd8, #0075cf);
     background-image: -o-linear-gradient(top, #008fd8, #0075cf);
     background-image: linear-gradient(to bottom, #008fd8, #0075cf);
     background-repeat: repeat-x;
 }
-
 
 /* .selectize-control.single .selectize-input {
     -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -453,6 +464,5 @@
 .selectize-dropdown .optgroup:first-child {
     border-top: 0 none;
 }
-
 
 /*# sourceMappingURL=/sm/2a7089e4ecbc4f157d9e51fc66e81d419fb4203290b562d5f912182610a13f14.map */

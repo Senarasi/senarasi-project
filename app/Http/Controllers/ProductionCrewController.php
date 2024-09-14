@@ -1,18 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Employee;
 use App\Models\ProductionCrew;
+use App\Models\CrewPosition;
 use App\Models\SubDescription;
+use App\Traits\UpdateTotalCostsTrait;
 use Illuminate\Http\Request;
 
 class ProductionCrewController extends Controller
 {
-    public function create(){
+    use UpdateTotalCostsTrait;
+    public function create()
+    {
         $employee = Employee::pluck('full_name', 'employee_id');
         $subdescription = SubDescription::pluck('sub_description_name', 'sub_description_id');
         return view('requestbudget.productioncrew', compact('employee', 'subdescription'));
-
     }
 
     public function store(Request $request)
@@ -37,11 +41,28 @@ class ProductionCrewController extends Controller
         $validatedData['cost'] = $validatedData['raw_budget']; // Assign raw_budget to cost
 
         // Create a new performer
-        ProductionCrew::create($validatedData);
+        $productioncrew = ProductionCrew::create($validatedData);
+
+        $this->updateTotalCosts($productioncrew->request_budget_id);
 
         // Redirect back to the performer page with the appropriate request budget ID
         return redirect()->route('request-budget.productioncrew', $request->request_budget_id)
-                         ->with('success', 'ProductionCrew added successfully!');
+            ->with('success', 'ProductionCrew added successfully!');
+    }
+
+    public function getPositionDetails($crew_position_name)
+    {
+        // Find the CrewPosition by its name
+        $position = CrewPosition::where('crew_position_name', $crew_position_name)->first();
+
+        if ($position) {
+            return response()->json([
+                'price' => $position->crew_position_price,
+                'note'  => $position->notes
+            ]);
+        } else {
+            return response()->json(['error' => 'Position not found'], 404);
+        }
     }
 
     public function destroy(Request $request, $production_crew_id)

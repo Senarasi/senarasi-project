@@ -16,6 +16,9 @@ class Approval extends Model
         'status',
         'reason'
     ];
+    protected $casts = [
+        'reason' => 'array',
+    ];
 
     public function requestBudget()
     {

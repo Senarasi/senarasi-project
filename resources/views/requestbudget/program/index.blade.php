@@ -6,35 +6,6 @@
 
 @section('content')
 
-    <ul class="nav nav-tabs" id="myTab" role="tablist"
-        style="margin-bottom: 24px; font: 600 18px Narasi Sans, sans-serif; ">
-        <li class="nav-item" role="presentation" style="flex: 1; text-align: center;">
-            <button class="nav-link active tablinks" id="data5-tab" data-url="/detaiL-budget" data-bs-toggle="tab"
-                data-bs-target="#data5-tab-pane" type="button" role="tab" aria-controls="data1-tab-pane"
-                aria-selected="true" style="width: 100%; letter-spacing: 0.5px;">PROGRAM</button>
-        </li>
-        <li class="nav-item" role="presentation" style="flex: 1; text-align: center;">
-            <button class="nav-link tablinks" id="preview-tab" data-url="/requestpayment" data-bs-toggle="tab"
-                data-bs-target="#preview-tab-pane" type="button" role="tab" aria-controls="preview-tab-pane"
-                aria-selected="false"
-                style="width: 100%; color: #4a25aa; letter-spacing: 0.5px; font-weight: 300">PAYMENT</button>
-        </li>
-        <li class="nav-item" role="presentation" style="flex: 1; text-align: center;">
-            <button class="nav-link tablinks" id="preview-tab" data-url="/requestpurchase" data-bs-toggle="tab"
-                data-bs-target="#preview-tab-pane" type="button" role="tab" aria-controls="preview-tab-pane"
-                aria-selected="false"
-                style="width: 100%; color: #4a25aa; letter-spacing: 0.5px; font-weight: 300">PURCHASE</button>
-        </li>
-        <li class="nav-item" role="presentation" style="flex: 1; text-align: center;">
-            <button class="nav-link tablinks" id="preview-tab" data-url="/requestadvance" data-bs-toggle="tab"
-                data-bs-target="#preview-tab-pane" type="button" role="tab" aria-controls="preview-tab-pane"
-                aria-selected="false"
-                style="width: 100%; color: #4a25aa; letter-spacing: 0.5px; font-weight: 300">ADVANCE</button>
-        </li>
-        <li class="nav-item" role="presentation">
-        </li>
-    </ul>
-
     <div class="judulhalaman" style="display: flex; align-items: center; ">Request Budget Narasi</div>
 
     <div style="display: flex; justify-content: space-between;">
@@ -71,16 +42,15 @@
     <div class="tablenih">
         <div class="table-responsive p-3">
             <table id="datatable" class="table table-hover "
-                style="font: 300 16px Narasi Sans, sans-serif;width: 100% ; margin-top: 12px; margin-bottom: 12px; text-align: center; ">
-                <thead style="font-weight: 500; ">
+                style="font: 300 16px Narasi Sans, sans-serif;width: 100% ; margin-top: 12px; margin-bottom: 12px;  ">
+                <thead class="table-light">
                     <tr class="dicobain ">
-                        <th scope="col ">No</th>
                         <th scope="col ">Request Number</th>
                         <th scope="col ">Program Name</th>
                         <th scope="col ">Approval Manager</th>
-                        <th scope="col ">Review</th>
-                        <th scope="col ">Approval 1</th>
-                        <th scope="col ">Approval 2</th>
+                        <th scope="col ">Reviewer</th>
+                        <th scope="col ">Human Capital</th>
+                        <th scope="col ">Controller Manager</th>
                         <th scope="col ">User Submit</th>
                         <th scope="col ">Action</th>
                     </tr>
@@ -94,12 +64,12 @@
                             <th scope="row ">{{ $counter++ }}</th>
                             <td>{{ $data->request_budget_number }}</td>
                             <td> {{ $data->program->program_name }}</td>
-                            @if (($data->approval->where('stage', 'approval 1')->first()->status ?? '-') == 'pending')
+                            @if (($data->approval->where('stage', 'manager')->first()->status ?? '-') == 'pending')
                                 <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none">
                                         <circle cx="12" cy="12" r="12" fill="#FFE900" />
                                     </svg></td>
-                            @elseif (($data->approval->where('stage', 'approval 1')->first()->status ?? '-') == 'approved')
+                            @elseif (($data->approval->where('stage', 'manager')->first()->status ?? '-') == 'approved')
                                 <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none">
                                         <circle cx="12" cy="12" r="12" fill="#009579" />
@@ -126,12 +96,12 @@
                                         <circle cx="12" cy="12" r="12" fill="#E73638" />
                                     </svg></td>
                             @endif
-                            @if (($data->approval->where('stage', 'approval 2')->first()->status ?? '-') == 'pending')
+                            @if (($data->approval->where('stage', 'finance 1')->first()->status ?? '-') == 'pending')
                                 <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none">
                                         <circle cx="12" cy="12" r="12" fill="#FFE900" />
                                     </svg></td>
-                            @elseif (($data->approval->where('stage', 'approval 2')->first()->status ?? '-') == 'approved')
+                            @elseif (($data->approval->where('stage', 'finance 1')->first()->status ?? '-') == 'approved')
                                 <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none">
                                         <circle cx="12" cy="12" r="12" fill="#009579" />
@@ -142,13 +112,13 @@
                                         <circle cx="12" cy="12" r="12" fill="#E73638" />
                                     </svg></td>
                             @endif
-                            @if ($hasApproval3)
-                                @if (($data->approval->where('stage', 'approval 3')->first()->status ?? '-') == 'pending')
+                            @if ($hasApprovalFinance2)
+                                @if (($data->approval->where('stage', 'finance 2')->first()->status ?? '-') == 'pending')
                                     <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none">
                                             <circle cx="12" cy="12" r="12" fill="#FFE900" />
                                         </svg></td>
-                                @elseif (($data->approval->where('stage', 'approval 3')->first()->status ?? '-') == 'approved')
+                                @elseif (($data->approval->where('stage', 'finance 2')->first()->status ?? '-') == 'approved')
                                     <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none">
                                             <circle cx="12" cy="12" r="12" fill="#009579" />
@@ -170,9 +140,6 @@
                                 </a>
                             </td>
                         @empty
-                            <div class="alert alert-danger">
-                                No Data.
-                            </div>
                     @endforelse
                     </tr>
                 </tbody>

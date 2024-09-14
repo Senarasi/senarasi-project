@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Operational;
 use App\Models\SubDescription;
+use App\Traits\UpdateTotalCostsTrait;
 use Illuminate\Http\Request;
 
 class OperationalController extends Controller
 {
+    use UpdateTotalCostsTrait;
     public function create(){
         $employee = Employee::pluck('full_name', 'employee_id');
         $subdescription = SubDescription::pluck('sub_description_name', 'sub_description_id');
@@ -36,7 +38,9 @@ class OperationalController extends Controller
         $validatedData['cost'] = $validatedData['raw_budget']; // Assign raw_budget to cost
 
         // Create a new performer
-        Operational::create($validatedData);
+        $operational = Operational::create($validatedData);
+
+        $this->updateTotalCosts($operational->request_budget_id);
 
         // Redirect back to the performer page with the appropriate request budget ID
         return redirect()->route('request-budget.operational', $request->request_budget_id)

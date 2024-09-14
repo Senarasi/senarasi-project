@@ -7,10 +7,12 @@ use App\Models\ProductionTool;
 use App\Models\SubDescription;
 use App\Models\ItemType;
 use App\Models\ItemTool;
+use App\Traits\UpdateTotalCostsTrait;
 use Illuminate\Http\Request;
 
 class ProductionToolController extends Controller
 {
+    use UpdateTotalCostsTrait;
     public function create()
     {
         $employee = Employee::pluck('full_name', 'employee_id');
@@ -85,7 +87,9 @@ class ProductionToolController extends Controller
         $validatedData['cost'] = $validatedData['raw_budget']; // Assign raw_budget to cost
 
         // Create a new performer
-        ProductionTool::create($validatedData);
+        $productiontool = ProductionTool::create($validatedData);
+
+        $this->updateTotalCosts($productiontool->request_budget_id);
 
         // Redirect back to the performer page with the appropriate request budget ID
         return redirect()->route('request-budget.productiontool', $request->request_budget_id)

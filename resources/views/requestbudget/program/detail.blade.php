@@ -10,7 +10,8 @@
         <button class="navback">
             <svg xmlns="http://www.w3.org/2000/svg " width="10" height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                  7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
+                                                                                      7.2501 0 7.6501 0 8.0501Z "
+                    fill="#4A25AA " />
             </svg>
             Back to Detail Budget
         </button>
@@ -68,7 +69,7 @@
 
                                 </tr>
                                 <tr>
-                                    <td>Episode</td>
+                                    <td>Activity</td>
                                     <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                     <td>{{ $requestBudgets->episode }}</td>
                                 </tr>
@@ -106,17 +107,20 @@
             </div>
 
             <div>
-                <form action="{{ route('request-budget.destroy', $requestBudgets->request_budget_id) }}" method="POST"
-                    onsubmit="return confirm('Are you sure you want to delete this request budget?');">
-                    @csrf
-                    @method('DELETE')
-                    <div class="button-approv" style="margin-top: -px;">
-                        <a href="{{ route('request-budget.edit', $requestBudgets->request_budget_id) }}" type="edit "
-                            class="btn btn-success " style="color: white; padding: 12px 32px; margin-right: 8px ">Edit</a>
-                        <button type="submit" class="btn btn-danger "
-                            style="color: white; padding: 12px 32px ">Delete</button>
-                    </div>
-                </form>
+                <div class="button-approv" style="margin-top: -px;">
+                    @if ($isApproved && !$isRejected)
+                        <span class="btn btn-secondary"
+                            style="padding: 12px 32px; margin-right: 8px; cursor: not-allowed;">Edit</span>
+                    @else
+                        <a href="{{ route('request-budget.edit', $requestBudgets->request_budget_id) }}"
+                            class="btn btn-success" style="color: white; padding: 12px 32px; margin-right: 8px;">Edit</a>
+                    @endif
+
+                    <button type="submit" class="btn btn-danger" style="color: white; padding: 12px 32px"
+                        @if ($isApproved && !$isRejected) disabled @endif>
+                        Delete
+                    </button>
+                </div>
                 <div class="row" style="margin-top: -24px">
                     <div class="col-3">
                         <a href="/viewpdf" target="_blank">
@@ -223,18 +227,20 @@
                         <th scope="col ">Approval Manager</th>
                         <th scope="col ">Review</th>
                         <th scope="col ">Approval 1</th>
-                        <th scope="col ">Approval 2</th>
+                        @if ($hasApprovalFinance2)
+                            <th scope="col ">Approval 2</th>
+                        @endif
 
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        @if (($requestBudgets->approval->where('stage', 'approval 1')->first()->status ?? '-') == 'pending')
+                        @if (($requestBudgets->approval->where('stage', 'manager')->first()->status ?? '-') == 'pending')
                             <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none">
                                     <circle cx="12" cy="12" r="12" fill="#FFE900" />
                                 </svg></td>
-                        @elseif (($requestBudgets->approval->where('stage', 'approval 1')->first()->status ?? '-') == 'approved')
+                        @elseif (($requestBudgets->approval->where('stage', 'manager')->first()->status ?? '-') == 'approved')
                             <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none">
                                     <circle cx="12" cy="12" r="12" fill="#009579" />
@@ -261,12 +267,12 @@
                                     <circle cx="12" cy="12" r="12" fill="#E73638" />
                                 </svg></td>
                         @endif
-                        @if (($requestBudgets->approval->where('stage', 'approval 2')->first()->status ?? '-') == 'pending')
+                        @if (($requestBudgets->approval->where('stage', 'finance 1')->first()->status ?? '-') == 'pending')
                             <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none">
                                     <circle cx="12" cy="12" r="12" fill="#FFE900" />
                                 </svg></td>
-                        @elseif (($requestBudgets->approval->where('stage', 'approval 2')->first()->status ?? '-') == 'approved')
+                        @elseif (($requestBudgets->approval->where('stage', 'finance 1')->first()->status ?? '-') == 'approved')
                             <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none">
                                     <circle cx="12" cy="12" r="12" fill="#009579" />
@@ -277,13 +283,13 @@
                                     <circle cx="12" cy="12" r="12" fill="#E73638" />
                                 </svg></td>
                         @endif
-                        @if ($hasApproval3)
-                            @if (($requestBudgets->approval->where('stage', 'approval 3')->first()->status ?? '-') == 'pending')
+                        @if ($hasApprovalFinance2)
+                            @if (($requestBudgets->approval->where('stage', 'finance 2')->first()->status ?? '-') == 'pending')
                                 <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none">
                                         <circle cx="12" cy="12" r="12" fill="#FFE900" />
                                     </svg></td>
-                            @elseif (($requestBudgets->approval->where('stage', 'approval 3')->first()->status ?? '-') == 'approved')
+                            @elseif (($requestBudgets->approval->where('stage', 'finance 2')->first()->status ?? '-') == 'approved')
                                 <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none">
                                         <circle cx="12" cy="12" r="12" fill="#009579" />
@@ -294,18 +300,47 @@
                                         <circle cx="12" cy="12" r="12" fill="#E73638" />
                                     </svg></td>
                             @endif
-                        @else
-                            <td>-</td>
                         @endif
                     </tr>
                     <tr>
                         <td>{{ $requestBudgets->manager->full_name }}</td>
-                        <td>{{ $reviewer->full_name }}</td>
-                        <td>{{ $approval1->full_name }}</td>
-                        <td>{{ $approval2->full_name }}</td>
+                        <td>{{ $requestBudgets->reviewer->full_name }}</td>
+                        <td>{{ $requestBudgets->finance1->full_name }}</td>
+                        @if ($hasApprovalFinance2)
+                            <td>{{ $requestBudgets->finance2->full_name }}</td>
+                        @endif
                     </tr>
                 </tbody>
             </table>
+            @php
+                $approvalStages = ['manager', 'reviewer', 'finance 1'];
+                if ($hasApprovalFinance2) {
+                    $approvalStages[] = 'finance 2';
+                }
+
+                $rejectionNotes = [];
+
+                foreach ($approvalStages as $stage) {
+                    $approval = $requestBudgets->approval->where('stage', $stage)->first();
+                    if ($approval && $approval->status == 'rejected' && !empty($approval->reason)) {
+                        $notes = json_decode($approval->reason, true);
+                        $rejectionNotes = array_merge($rejectionNotes, $notes);
+                    }
+                }
+            @endphp
+
+            @if (!empty($rejectionNotes))
+                <div class="notereject">
+                    <div
+                        style="color: #E73638; font-weight: 700; font-size: 24px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px">
+                        Notes Reject
+                    </div>
+                    @foreach ($rejectionNotes as $index => $note)
+                        <div class="judulreject">{{ $index + 1 }}. {{ $note['title'] }}</div>
+                        <div class="isireject">{{ $note['content'] }}</div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 @endsection
