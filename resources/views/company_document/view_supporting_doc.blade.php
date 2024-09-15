@@ -19,8 +19,8 @@
             Back
     </a>
     <div class="tablenih" style="padding-top: -24px;">
-    @if($doc->status == 'downloadable')
-        <embed id="pdf-viewer" src="{{ $doc->fileDocument() }}" width="100%" height="900px" frameborder="0" type="application/pdf" class="p-3"></embed>
+    @if($supportingDoc->supporting_doc_status == 'downloadable')
+        <embed id="pdf-viewer" src="{{ $supportingDoc->fileSupportingDoc() }}" width="100%" height="900px" frameborder="0" type="application/pdf" class="p-3"></embed>
     @else
         <div id="pdf-container"></div>
     @endif
@@ -32,7 +32,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const pdfUrl = "{{  $doc->fileDocument() }}";
+      const pdfUrl = "{{ $supportingDoc->fileSupportingDoc() }}";
       console.log('PDF URL:', pdfUrl);
 
       // Fungsi untuk merender PDF

@@ -24,7 +24,8 @@ class DocumentCategoryRequest extends FormRequest
         $validation =
             [
                 'category' => ['required'],
-
+                'title' => ['required'],
+                'description' => ['required'],
             ];
 
         return $validation;
@@ -40,6 +41,8 @@ class DocumentCategoryRequest extends FormRequest
     {
         return [
             'category.required' => 'category cannot be empty',
+            'title.required' => 'title cannot be empty',
+            'description.required' => 'description cannot be empty',
         ];
     }
 }

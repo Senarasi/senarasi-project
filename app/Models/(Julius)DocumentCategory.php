@@ -9,11 +9,17 @@ class DocumentCategory extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $primaryKey = 'document_category_id';
+    protected $fillable = [
+        'category',
+        'title',
+        'description',
+        'slug'
+    ];
 
     public function documents()
     {
-        return $this->hasMany(Document::class);
+        return $this->hasMany(Document::class, 'document_category_id');
     }
     public function getRouteKeyName()
     {

@@ -105,14 +105,23 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('location', 'App\Http\Controllers\LocationController');
     Route::resource('preview', 'App\Http\Controllers\PreviewController');
 
-    Route::prefix('company-document')->controller(App\Http\Controllers\CompanyDocumentController::class)->name('company-document.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::post('/store', 'store')->name('store');
-        Route::get('/{docCategory}/list', 'detail')->name('detail');
-        Route::get('/{docCategory}/{doc}/view', 'view')->name('view');
-        Route::post('/{docCategory}/storeupload', 'storeUpload')->name('storeUpload');
-        Route::delete('/{docCategory}', 'destroy')->name('destroy');
-        Route::delete('/{docCategory}/{doc}', 'destroyFile')->name('destroyFile');
+    Route::prefix('company-document')->name('company-document.')->group(function () {
+        Route::controller(App\Http\Controllers\CompanyDocumentController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            // Route::get('/dashboard', 'dashboard')->name('dashboard');
+            Route::post('/store', 'store')->name('store');
+            Route::delete('/{docCategory}', 'destroy')->name('destroy');
+        });
+        Route::controller(App\Http\Controllers\DocumentController::class)->group(function () {
+            Route::get('/{docCategory}/list', 'index')->name('detail');
+            Route::get('/{docCategory}/create', 'create')->name('create');
+            Route::get('/{docCategory}/{doc}/view', 'view')->name('view');
+            Route::post('/{docCategory}/store', 'store')->name('storeUpload');
+            Route::get('/{docCategory}/{doc}/edit', 'edit')->name('edit');
+            Route::put('/{docCategory}/{doc}/update', 'update')->name('updateFile');
+            Route::delete('/{docCategory}/{doc}', 'destroy')->name('destroyFile');
+            Route::get('/{docCategory}/{doc}/{supportingDoc}/view', 'supportingView')->name('supporting-doc.view');
+        });
     });
 
     // Route::get('/approval', function () {

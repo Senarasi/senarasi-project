@@ -24,21 +24,12 @@ class DocumentRequest extends FormRequest
         $validation =
         [
             'document_category_id' => ['required'],
-            'doc_number' => ['required'],
+            'file_code' => ['required'],
             'title' => ['required'],
             'description' => ['required'],
             'file_document' => ['required', 'mimes:pdf', 'max:2048'],
             'enable_download' => ['nullable','boolean'],
         ];
-
-        if ($this->isMethod('post')) {
-            $validation['file_document'] = ['required', 'mimes:pdf', 'max:2048'];
-        }
-
-        if (!$this->isMethod('post')) {
-            $validation['file_document'] = ['nullable', 'mimes:pdf', 'max:2048'];
-            $validation['file_supporting_doc.*'] = ['nullable', 'mimes:pdf', 'max:2048'];
-        }
 
     return $validation;
     }
