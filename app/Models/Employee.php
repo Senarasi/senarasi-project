@@ -48,6 +48,11 @@ class Employee extends Authenticatable
 
     public function bookings()
     {
-        return $this->hasMany(MeetingBooking::class);
+        return $this->hasMany(Booking::class);
+    }
+
+    public function googleToken()
+    {
+        return $this->hasOne(GoogleToken::class, 'employee_id');
     }
 }

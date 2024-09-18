@@ -24,10 +24,9 @@ class BookingRequest extends FormRequest
         $validation =
         [
             'room_id' => ['required'],
-            'description' => ['required'],
-            'start_time' => ['required', 'date'],
-            'end_time' => ['required', 'date', 'after:start_time'],
-
+            'desc' => ['required'],
+            'start' => ['required', 'date'],
+            'end' => ['required', 'date', 'after:start'],
         ];
         return $validation;
     }

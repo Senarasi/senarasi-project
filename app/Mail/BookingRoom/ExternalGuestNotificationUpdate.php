@@ -2,7 +2,7 @@
 
 namespace App\Mail\BookingRoom;
 
-use App\Models\MeetingBooking;
+use App\Models\Booking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -16,14 +16,18 @@ class ExternalGuestNotificationUpdate extends Mailable
 
     public $booking;
     public $email;
+    public $meetingLink;
+
 
     /**
      * Create a new message instance.
      */
-    public function __construct(MeetingBooking $booking, $email)
+    public function __construct(Booking $booking, $email, $meetingLink)
     {
         $this->booking = $booking;
         $this->email = $email;
+        $this->meetingLink = $meetingLink;
+
     }
 
     /**
@@ -32,7 +36,7 @@ class ExternalGuestNotificationUpdate extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '['.$this->booking->booking_number. '] Meeting Invitation Updated',
+            subject: 'Updated Meeting Invitation: '. $this->booking->desc,
         );
     }
 

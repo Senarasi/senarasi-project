@@ -206,23 +206,25 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{room}', 'destroy')->name('destroy');
     });
 
-    Route::prefix('bookingroom')->controller(App\Http\Controllers\BookingMeetingController::class)->name('bookingroom.')->group(function () {
+    Route::prefix('bookingroom')->controller(App\Http\Controllers\BookingController::class)->name('bookingroom.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/list', 'list')->name('list');
         Route::get('/{room}', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::get('{booking}/edit', 'edit')->name('edit');
         Route::patch('/{booking}/update', 'update')->name('update');
-        // // Route::get('/{booking}/detail', 'show')->name('detail');
+        Route::get('/{booking}/confirmDelete', 'confirmDelete')->name('confirmDelete');
         Route::delete('/{booking}', 'destroy')->name('destroy');
     });
 
     Route::get('/getevents', [App\Http\Controllers\CalendarController::class, 'getevents']);
+    Route::get('/auth/google/callback', [App\Http\Controllers\GoogleController::class, 'handleProviderCallback'])->name('google.callback');
+    Route::get('/google/calendar/auth', [App\Http\Controllers\GoogleController::class, 'startGoogleAuth'])->name('google.calendar.auth');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('/auth/google/callback', [App\Http\Controllers\GoogleController::class, 'handleProviderCallback'])->name('google.callback');
-    Route::get('/google/calendar/auth', [App\Http\Controllers\GoogleController::class, 'startGoogleAuth'])->name('google.calendar.auth');
+
+
     // Other protected routes
 });
 

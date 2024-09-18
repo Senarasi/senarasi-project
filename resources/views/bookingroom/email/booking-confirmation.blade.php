@@ -57,7 +57,7 @@
             right: 0;
             color: #ffff !important;
             border-radius: 6px;
-            background-color: #4a25aa;
+            background-color: #dc3545;
             border: none;
             text-align: center;
             text-decoration: none;
@@ -77,11 +77,11 @@
         <div class="email-container">
 
             <h3 style="text-align: center;">Booking Room Confirmation.</h3>
-            <h3>Dear {{ $booking->user->name }},</h3>
+            <h3>Dear {{ $booking->employee->full_name }},</h3>
             <h3>This is a reminder that you have booked the room {{$booking->room->room_name}} for {{ $booking->desc }} from {{$booking->start}} to {{$booking->end}}.</h3>
-            <h3>If you decide not to use the room as scheduled, please cancel or manage your booking as soon as possible. If you still plan to use the room, you can ignore this email.</h3>
+            <h3>If you decide not to use the room as scheduled, please cancel your booking as soon as possible. If you still plan to use the room, you can ignore this email.</h3>
             <h3>Thank you.</h3>
-            <h3><a  href="{{ route('bookingroom.list') }}" class="button-report" >Manage Booking</a></h3>
+            <h3><a  href="{{ route('bookingroom.confirmDelete', $booking->id) }}" class="button-report" >Cancel Booking</a></h3>
         </div>
     </div>
 

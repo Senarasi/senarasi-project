@@ -59,13 +59,13 @@
             <img src="https://imgur.com/GYooEjc.png" alt="Company Logo"  style="display: inline-block;">
         </div>
         <div class="email-container">
-        <h3>Dear {{ $email }},</h3>
-        <h3>You have been invited to a Meeting.</h3>
+        <h3 style="text-align: center">Dear {{ $email }},</h3>
+        <h3 style="text-align: center">You have been invited to a meeting by {{ $booking->user->full_name }}</h3>
         <table>
 
             <tr>
                 <td class="label">Description</td>
-                <td class="value">:  {{ $booking->description }}</td>
+                <td class="value">:  {{ $booking->desc }}</td>
             </tr>
             <tr>
                 <td class="label">Location</td>
@@ -75,13 +75,23 @@
                 <td class="label">Room</td>
                 <td class="value">: {{ $booking->room->room_name }}</td>
             </tr>
+            @if ($meetingLink)
+            <tr>
+                <td class="label">Video Conference Link:</td>
+                <td class="value">:
+                    <a href="{{ $meetingLink }}">
+                        {{ $meetingLink }}
+                    </a>
+                </td>
+            </tr>
+            @endif
             <tr>
                 <td class="label">Start Time</td>
-                <td class="value">: {{ $booking->start_time }}</td>
+                <td class="value">: {{ $booking->start }}</td>
             </tr>
             <tr>
                 <td class="label">End Time</td>
-                <td class="value">: {{ $booking->end_time }}</td>
+                <td class="value">: {{ $booking->end }}</td>
             </tr>
         </table>
         <hr>

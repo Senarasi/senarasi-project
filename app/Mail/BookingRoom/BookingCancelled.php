@@ -2,7 +2,7 @@
 
 namespace App\Mail\BookingRoom;
 
-use App\Models\MeetingBooking;
+use App\Models\Booking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -17,7 +17,7 @@ class BookingCancelled extends Mailable
     public $guestUsers;
     public $externalGuests;
 
-    public function __construct(MeetingBooking $booking, $guestUsers, $externalGuests)
+    public function __construct(Booking $booking, $guestUsers, $externalGuests)
     {
         $this->booking = $booking;
         $this->guestUsers = $guestUsers;

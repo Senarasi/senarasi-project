@@ -2,7 +2,7 @@
 
 namespace App\Mail\BookingRoom;
 
-use App\Models\MeetingBooking;
+use App\Models\Booking\BookingRoom;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -17,6 +17,8 @@ class BookingUpdated extends Mailable
     public $data;
     public $guests;
     public $externalguests;
+    public $meetingLink;
+
 
     /**
      * Create a new message instance.
@@ -26,6 +28,8 @@ class BookingUpdated extends Mailable
         $this->data = $data;
         $this->guests = $guests;
         $this->externalguests = $externalguests;
+        $this->meetingLink = $data['meeting_link'];
+
 
     }
 
@@ -35,7 +39,7 @@ class BookingUpdated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->data['booking_number']. ' Booking Updated',
+            subject: '['.$this->data['br_number']. '] Booking Updated',
         );
     }
 
@@ -47,13 +51,15 @@ class BookingUpdated extends Mailable
         return new Content(
             view: 'bookingroom.email.booking-updated',
             with: [
-                'start' => $this->data['start_time'],
-                'end' => $this->data['end_time'],
-                'desc' => $this->data['description'],
+                'start' => $this->data['start'],
+                'end' => $this->data['end'],
+                'desc' => $this->data['desc'],
                 'name' => $this->data['name'],
                 'email' => $this->data['email'],
-                'telephone' => $this->data['phone'],
+                'telephone' => $this->data['telephone'],
                 'room_name' => $this->data['room_name'],
+                'meetingLink' => $this->meetingLink,
+
             ],
         );
     }

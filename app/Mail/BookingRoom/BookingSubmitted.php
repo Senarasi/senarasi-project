@@ -3,11 +3,12 @@
 namespace App\Mail\BookingRoom;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Attachment;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class BookingSubmitted extends Mailable
 {
@@ -16,6 +17,8 @@ class BookingSubmitted extends Mailable
     public $data;
     public $guests;
     public $externalguests;
+    public $meetingLink;
+
 
     /**
      * Create a new message instance.
@@ -25,6 +28,7 @@ class BookingSubmitted extends Mailable
         $this->data = $data;
         $this->guests = $guests;
         $this->externalguests = $externalguests;
+        $this->meetingLink = $data['meeting_link'];
 
     }
 
@@ -34,7 +38,7 @@ class BookingSubmitted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '['.$this->data['booking_number']. '] Booking Submitted',
+            subject: '['.$this->data['br_number']. '] Booking Submitted'
         );
     }
 
@@ -43,16 +47,20 @@ class BookingSubmitted extends Mailable
      */
     public function content(): Content
     {
+
         return new Content(
             view: 'bookingroom.email.booking-submitted',
+
             with: [
-                'start' => $this->data['start_time'],
-                'end' => $this->data['end_time'],
-                'desc' => $this->data['description'],
+                'start' => $this->data['start'],
+                'end' => $this->data['end'],
+                'desc' => $this->data['desc'],
                 'name' => $this->data['name'],
                 'email' => $this->data['email'],
                 'telephone' => $this->data['telephone'],
                 'room_name' => $this->data['room_name'],
+                'meetingLink' => $this->meetingLink,
+
             ],
         );
     }
@@ -62,8 +70,9 @@ class BookingSubmitted extends Mailable
      *
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
-    public function attachments(): array
+    public function attachments() : array
     {
+
         return [];
     }
 }

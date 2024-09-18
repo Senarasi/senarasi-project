@@ -77,6 +77,16 @@
                     <td class="label">Room</td>
                     <td class="value">: {{ $room_name }}</td>
                 </tr>
+                @if ($meetingLink)
+                <tr>
+                    <td class="label">Video Conference Link:</td>
+                    <td class="value">:
+                        <a href="{{ $meetingLink }}">
+                            {{ $meetingLink }}
+                        </a>
+                    </td>
+                </tr>
+                @endif
                 <tr>
                     <td class="label">Start Time</td>
                     <td class="value">: {{ $start }}</td>
@@ -113,6 +123,8 @@
                         </ul>
                     </td>
                 </tr>
+
+
             </table>
             <div>
 

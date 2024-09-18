@@ -60,7 +60,7 @@
             <img src="https://imgur.com/GYooEjc.png" alt="Company Logo"  style="display: inline-block;">
         </div>
         <div class="email-container">
-            <h3>Booking room has been successfully Updated.</h3>
+            <h3>Booking room has been successfully updated.</h3>
             Booking Room Details:
             <table>
                 <tr>
@@ -75,6 +75,16 @@
                     <td class="label">Room</td>
                     <td class="value">: {{ $room_name }}</td>
                 </tr>
+                @if ($meetingLink)
+                <tr>
+                    <td class="label">Video Conference Link:</td>
+                    <td class="value">:
+                        <a href="{{ $meetingLink }}">
+                            {{ $meetingLink }}
+                        </a>
+                    </td>
+                </tr>
+                @endif
                 <tr>
                     <td class="label">Start Time</td>
                     <td class="value">: {{ $start }}</td>

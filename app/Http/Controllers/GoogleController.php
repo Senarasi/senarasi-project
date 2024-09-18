@@ -12,17 +12,6 @@ class GoogleController extends Controller
 {
     public function startGoogleAuth(Request $request)
     {
-        // $client = new Client();
-        // $client->setAuthConfig(config_path('credentials/client_secret.json'));
-        // $client->addScope(Calendar::CALENDAR);
-        // $client->setAccessType('offline');
-        // $client->setRedirectUri(route('google.callback'));
-
-        // $authUrl = $client->createAuthUrl();
-        // $request->session()->put('pending_booking', $request->input('room_id'));
-
-        // return redirect()->away($authUrl);
-
         $user = auth()->user();
         $googleToken = $user->googleToken;
 
@@ -66,7 +55,7 @@ class GoogleController extends Controller
         // Simpan token ke database
         $user = auth()->user();
         GoogleToken::updateOrCreate(
-            ['user_id' => $user->employee_id],
+            ['employee_id' => $user->employee_id],
             [
                 'access_token' => json_encode($accessToken),
                 'refresh_token' => $refreshToken,
@@ -85,8 +74,35 @@ class GoogleController extends Controller
                         ->with('status', 'Successfully authenticated with Google.');
     }
 
-    private function isTokenExpired($googleToken)
+    public function isTokenExpired($googleToken)
     {
         return Carbon::parse($googleToken->expires_at)->isPast();
+    }
+
+    public function checkAndUpdateToken()
+    {
+        $user = auth()->user();
+        $googleToken = $user->googleToken;
+
+        if ($googleToken && $this->isTokenExpired($googleToken)) {
+            $client = new Client();
+            $client->setAuthConfig(config_path('credentials/client_secret.json'));
+            $client->addScope(Calendar::CALENDAR);
+            $client->setAccessType('offline');
+
+            // Perbarui token dengan refresh token
+            $newAccessToken = $client->fetchAccessTokenWithRefreshToken($googleToken->refresh_token);
+            $expiresAt = Carbon::now()->addSeconds($newAccessToken['expires_in']);
+
+            // Simpan token yang diperbarui ke database
+            GoogleToken::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'access_token' => json_encode($newAccessToken),
+                    'refresh_token' => $googleToken->refresh_token, // Pastikan refresh token tetap sama
+                    'expires_at' => $expiresAt,
+                ]
+            );
+        }
     }
 }

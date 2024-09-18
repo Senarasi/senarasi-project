@@ -3,7 +3,6 @@
 namespace App\Mail\BookingRoom;
 
 use App\Models\Booking;
-use App\Models\MeetingBooking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -17,7 +16,7 @@ class BookingConfirmation extends Mailable
 
     public $booking;
 
-    public function __construct(MeetingBooking $booking)
+    public function __construct(Booking $booking)
     {
         $this->booking = $booking;
     }
@@ -28,7 +27,7 @@ class BookingConfirmation extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->booking->booking_number. ' Booking Room Confirmation',
+            subject: '['.$this->booking->br_number. '] Booking Room Confirmation',
 
         );
     }
