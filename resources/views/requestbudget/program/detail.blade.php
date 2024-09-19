@@ -226,6 +226,7 @@
                     <tr class="dicobain ">
                         <th scope="col ">Approval Manager</th>
                         <th scope="col ">Review</th>
+                        <th scope="col ">HC</th>
                         <th scope="col ">Approval 1</th>
                         @if ($hasApprovalFinance2)
                             <th scope="col ">Approval 2</th>
@@ -257,6 +258,22 @@
                                     <circle cx="12" cy="12" r="12" fill="#FFE900" />
                                 </svg></td>
                         @elseif (($requestBudgets->approval->where('stage', 'reviewer')->first()->status ?? '-') == 'approved')
+                            <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="12" fill="#009579" />
+                                </svg></td>
+                        @else
+                            <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="12" fill="#E73638" />
+                                </svg></td>
+                        @endif
+                        @if (($requestBudgets->approval->where('stage', 'hc')->first()->status ?? '-') == 'pending')
+                            <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="12" fill="#FFE900" />
+                                </svg></td>
+                        @elseif (($requestBudgets->approval->where('stage', 'hc')->first()->status ?? '-') == 'approved')
                             <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none">
                                     <circle cx="12" cy="12" r="12" fill="#009579" />
@@ -305,6 +322,7 @@
                     <tr>
                         <td>{{ $requestBudgets->manager->full_name }}</td>
                         <td>{{ $requestBudgets->reviewer->full_name }}</td>
+                        <td>{{ $requestBudgets->hc->full_name }}</td>
                         <td>{{ $requestBudgets->finance1->full_name }}</td>
                         @if ($hasApprovalFinance2)
                             <td>{{ $requestBudgets->finance2->full_name }}</td>

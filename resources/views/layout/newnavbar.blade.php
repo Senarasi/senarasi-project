@@ -1,9 +1,61 @@
+<style>
+    .nav-item.dropdown .dropdown-menu {
+    border: 1px solid #ccc; /* Menambahkan border abu-abu */
+    border-radius: 5px; /* Menambahkan sedikit radius untuk sudut yang halus */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan untuk efek kedalaman */
+    background-color: #ffffff; /* Warna background untuk dropdown */
+    padding:0px;
+    margin-top: 2px;
+}
+    /* Style untuk item dropdown dengan class unique-sidebar-link */
+.dropdown-menu .unique-sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    align-items: center; /* Menyelaraskan item secara vertikal di tengah */
+    justify-content: center; /* Menyelaraskan item secara horizontal di tengah */
+    transition: background-color 0.2s ease-in-out;
+    text-align: center;
+
+}
+
+/* Hover effect untuk item dropdown */
+.dropdown-menu .unique-sidebar-link:hover {
+    background-color: #f0f0f0;
+    color: #4a25aa; /* Warna teks biru saat hover */
+    font-weight: 600;
+
+}
+
+
+
+/* Style untuk ikon SVG di dalam dropdown */
+/* .dropdown-menu .unique-sidebar-link svg {
+    margin-right: 10px;
+    fill: #333;
+    transition: fill 0.2s ease-in-out;
+} */
+
+
+
+
+
+
+
+</style>
+
+
+
+
 <nav class="navbar fixed-top navbar-expand-lg p-0" >
     <div class="container-fluid">
     <button class="toggle-btn" type="button">
         <img style="width: 32px; height: 32px; margin-left:-12px;" src="{{ asset('asset/image/narasi_logomark.png') }}" alt="" />
     </button>
-    <a href="/dashboard-main" class="header ms-1" >
+    <a href="{{ route('dashboard.main') }}" class="header ms-1" >
         <img style="width: 208px; height: 38" src="{{ asset('asset/image/senarasi_logo1.png') }}" alt="" />
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarnih"
@@ -16,62 +68,57 @@
 
         <!-- Dropdown Profile-->
         <div class="navbar-nav order-md-last">
-            <a class="maindashboardlink" href="/dashboard-main" >Main Dashboard</a>
+            <a class="maindashboardlink" href="{{ route('dashboard.main') }}" >Main Dashboard</a>
 
             @guest
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link d-flex lh-1 text-reset p-0 " data-bs-toggle="dropdown"
+                <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
                     <div class="row me-2">
                         <div class="col-sm-3">
                             <img loading="lazy"
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/2bfbf0aef31a2cc5791ba7283fd9129406fbb60e65f2a4985de422bb96951f3b? "
-                            class="img-3 me-1" />
+                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/2bfbf0aef31a2cc5791ba7283fd9129406fbb60e65f2a4985de422bb96951f3b? "
+                                class="img-3 me-1" />
                         </div>
                         <div class="col" style="font:300 14px Narasi Sans, sans-serif">
                             <div class="mt-1">Nama User</div>
                             <div class="text-secondary">position</div>
                         </div>
-
                     </div>
                 </a>
-                {{-- <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="background: none; right:25px;">
-                    <div class="sub-menu">
-                        <div class="user-info text-center">
-                            <a href="" id="#" class="button-profile sidebar-link collapsed has-dropdown d-flex"
-                                data-bs-toggle="modal" data-bs-target="#staticBackdrop-profile" role="button" aria-expanded="false"
-                                aria-controls="profile" style="margin-bottom: 12px">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" >
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M6.66667 5.33333C6.66667 3.91885 7.22857 2.56229 8.22876 1.5621C9.22896 0.561903 10.5855 0 12 0C13.4145 0 14.771 0.561903 15.7712 1.5621C16.7714 2.56229 17.3333 3.91885 17.3333 5.33333C17.3333 6.74782 16.7714 8.10438 15.7712 9.10457C14.771 10.1048 13.4145 10.6667 12 10.6667C10.5855 10.6667 9.22896 10.1048 8.22876 9.10457C7.22857 8.10438 6.66667 6.74782 6.66667 5.33333ZM6.66667 13.3333C4.89856 13.3333 3.20286 14.0357 1.95262 15.286C0.702379 16.5362 0 18.2319 0 20C0 21.0609 0.421428 22.0783 1.17157 22.8284C1.92172 23.5786 2.93913 24 4 24H20C21.0609 24 22.0783 23.5786 22.8284 22.8284C23.5786 22.0783 24 21.0609 24 20C24 18.2319 23.2976 16.5362 22.0474 15.286C20.7971 14.0357 19.1014 13.3333 17.3333 13.3333H6.66667Z"
-                                        fill="#FFE900" />
-                                </svg>
-                                <span>PROFILE</span>
-                            </a>
-                            <a href="" id="#" class="button-profile sidebar-link collapsed has-dropdown d-flex"
-                                data-bs-toggle="modal" data-bs-target="#staticBackdrop-logout" role="button" aria-expanded="false"
-                                aria-controls="profile"
-                                onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">
-                                <svg xmlns="http://www.w3.org/2000/svg " width="25 " height="24 " viewBox="0 0 25 24 "
-                                    fill="none ">
-                                    <path
-                                        d="M16.5 5V4C16.5 3.44772 16.0523 3 15.5 3H6.5C5.94771 3 5.5 3.44772 5.5 4V20C5.5 20.5523 5.94772 21 6.5 21H15.5C16.0523 21 16.5 20.5523 16.5 20V19 "
-                                        stroke="#FFE900 " stroke-width="2 " stroke-linecap="round " />
-                                    <path d="M10.5 12H21.5 " stroke="#FFE900 " stroke-width="2 " stroke-linecap="round " />
-                                    <path d="M18 8.5L21.5 12L18 15.5 " stroke="#FFE900 " stroke-width="2 "
-                                        stroke-linecap="round " />
-                                </svg>
-                                <span>LOG OUT</span>
-                            </a>
-                            <form id="logout-form" action="" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </div>
-                </div> --}}
+
+                <!-- Dropdown menu -->
+                <div class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
+                    <a href="#" class="dropdown-item unique-sidebar-link" data-bs-toggle="modal" data-bs-target="#customModalUnique">
+                        {{-- Ikon bisa ditambahkan jika diperlukan --}}
+                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 18 18" fill="#ff0000;">
+                            <!-- SVG path for settings icon -->
+                            <path d="M16.2369 9.59392C16.0926 9.4297..." fill="white"/>
+                        </svg> --}}
+                        <span class="align-middle text-center">Setting</span>
+
+                    </a>
+
+                    <!-- Include modal -->
+
+
+                    <a href="{{ route('logout') }}" class="dropdown-item unique-sidebar-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="21" height="22" viewBox="0 0 19 20" fill="#ff0000;">
+                            <!-- SVG path for logout icon -->
+                            <path d="M6.5 3V2C6.5 1.44772 6.9477 1 7.5 1H16.5..." stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12.5 10H1.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M5 6.5L1.5 10L5 13.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        </svg> --}}
+                        <span class="align-middle ">Logout</span>
+                    </a>
+                </div>
+
+                <!-- Logout form -->
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </div>
+
             @else
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0 " data-bs-toggle="dropdown"
@@ -83,48 +130,43 @@
                             class="img-3 me-1" />
                         </div>
                         <div class="col  ms-2" style="font:300 14px Narasi Sans, sans-serif">
-                            <div class="mt-1">{{ Auth::user()->full_name }}</div>
+                            <div class="mt-1">{{ Auth::user()->name }}</div>
                             <div class="text-secondary">{{ Auth::user()->role }}</div>
                         </div>
 
                     </div>
                 </a>
-                {{-- <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="background: none; right:25px;">
-                    <div class="sub-menu">
-                        <div class="user-info text-center">
-                            <a href="" id="#" class="button-profile sidebar-link collapsed has-dropdown d-flex"
-                                data-bs-toggle="modal" data-bs-target="#staticBackdrop-profile" role="button" aria-expanded="false"
-                                aria-controls="profile" style="margin-bottom: 12px">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" >
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M6.66667 5.33333C6.66667 3.91885 7.22857 2.56229 8.22876 1.5621C9.22896 0.561903 10.5855 0 12 0C13.4145 0 14.771 0.561903 15.7712 1.5621C16.7714 2.56229 17.3333 3.91885 17.3333 5.33333C17.3333 6.74782 16.7714 8.10438 15.7712 9.10457C14.771 10.1048 13.4145 10.6667 12 10.6667C10.5855 10.6667 9.22896 10.1048 8.22876 9.10457C7.22857 8.10438 6.66667 6.74782 6.66667 5.33333ZM6.66667 13.3333C4.89856 13.3333 3.20286 14.0357 1.95262 15.286C0.702379 16.5362 0 18.2319 0 20C0 21.0609 0.421428 22.0783 1.17157 22.8284C1.92172 23.5786 2.93913 24 4 24H20C21.0609 24 22.0783 23.5786 22.8284 22.8284C23.5786 22.0783 24 21.0609 24 20C24 18.2319 23.2976 16.5362 22.0474 15.286C20.7971 14.0357 19.1014 13.3333 17.3333 13.3333H6.66667Z"
-                                        fill="#FFE900" />
-                                </svg>
-                                <span>PROFILE</span>
-                            </a>
-                            <a href="{{ route('logout') }}" id="#" class="button-profile sidebar-link collapsed has-dropdown d-flex"
-                                data-bs-toggle="modal" data-bs-target="#staticBackdrop-logout" role="button" aria-expanded="false"
-                                aria-controls="profile"
-                                onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">
-                                <svg xmlns="http://www.w3.org/2000/svg " width="25 " height="24 " viewBox="0 0 25 24 "
-                                    fill="none ">
-                                    <path
-                                        d="M16.5 5V4C16.5 3.44772 16.0523 3 15.5 3H6.5C5.94771 3 5.5 3.44772 5.5 4V20C5.5 20.5523 5.94772 21 6.5 21H15.5C16.0523 21 16.5 20.5523 16.5 20V19 "
-                                        stroke="#FFE900 " stroke-width="2 " stroke-linecap="round " />
-                                    <path d="M10.5 12H21.5 " stroke="#FFE900 " stroke-width="2 " stroke-linecap="round " />
-                                    <path d="M18 8.5L21.5 12L18 15.5 " stroke="#FFE900 " stroke-width="2 "
-                                        stroke-linecap="round " />
-                                </svg>
-                                <span>LOG OUT</span>
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </div>
-                </div> --}}
+
+                <!-- Dropdown menu -->
+                <div class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
+                    <a href="#" class="dropdown-item unique-sidebar-link" data-bs-toggle="modal" data-bs-target="#customModalUnique">
+                        {{-- Ikon bisa ditambahkan jika diperlukan --}}
+                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 18 18" fill="#ff0000;">
+                            <!-- SVG path for settings icon -->
+                            <path d="M16.2369 9.59392C16.0926 9.4297..." fill="white"/>
+                        </svg> --}}
+                        <span class="align-middle text-center">Setting</span>
+                    </a>
+
+
+                    <!-- Include modal -->
+
+                    <a href="{{ route('logout') }}" class="dropdown-item unique-sidebar-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="21" height="22" viewBox="0 0 19 20" fill="#ff0000;">
+                            <!-- SVG path for logout icon -->
+                            <path d="M6.5 3V2C6.5 1.44772 6.9477 1 7.5 1H16.5..." stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12.5 10H1.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M5 6.5L1.5 10L5 13.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        </svg> --}}
+                        <span class="align-middle ">Logout</span>
+                    </a>
+                </div>
+
+                <!-- Logout form -->
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+
             </div>
             @endguest
 

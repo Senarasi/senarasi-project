@@ -5,74 +5,92 @@
 @endsection
 
 @section('costum-css')
-<style>
+    <style>
+        .icon-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.icon-buttons{
-    display: flex;
-  align-items: center;
-  justify-content: center;
-}
+        .hidden {
+            display: none;
+        }
 
-  .hidden {
-    display: none;
-  }
+        ul {
+            padding-left: 0;
+            list-style-type: none;
+            /* margin: 10px 0 0 0;  */
+        }
 
-  ul {
-    padding-left: 0;
-    list-style-type: none;
-    margin: 10px 0 0 0; /* Jarak atas antara primary dan secondary */
-  }
+        td {
+            vertical-align: top;
+        }
 
-  td {
-    vertical-align: top;
-  }
+        .secondary {
+            margin-top: 10px;
+            /* Berikan jarak antara primary dan secondary */
+        }
 
-  .secondary {
-    margin-top: 10px; /* Berikan jarak antara primary dan secondary */
-  }
+        .secondary li {
+            position: relative;
+            padding: 4px 0;
+        }
 
-  .secondary li {
-    position: relative;
-    padding: 4px 0;
-  }
+        .buttons {
+            display: none;
+            margin-top: 5px;
+            font: 300 12px Narasi Sans, sans-serif;
+            text-decoration: none;
+        }
 
-  .buttons {
-    display: none;
-    margin-top: 5px;
-    font: 300 12px Narasi Sans, sans-serif;
-    text-decoration: none;
-  }
+        .secondary li:hover .buttons {
+            display: block;
 
-  .secondary li:hover .buttons {
-    display: block;
-  }
+        }
 
-  .primary-toggle {
-    color: rgb(185, 185, 185); /* Ubah warna agar terlihat seperti link */
-    text-decoration: none; /* Tambahkan underline agar terlihat seperti link */
-  }
+        .kodo {
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            vertical-align: middle;
+            letter-spacing: 0.75px
+        }
 
-    .action-buttons {
-      display: flex;
-      gap: 5px;
-      justify-content: center;
-    }
+        .kodo:hover {
+            color: #4a25aa;
+            font-weight: 400;
 
-    .ayam{
-        font: 300 14px Narasi Sans, sans-serif; text-decoration: none; color:rgb(134, 127, 127);
-    }
-  </style>
+        }
 
+        .primary-toggle {
+            color: rgb(185, 185, 185);
+            /* Ubah warna agar terlihat seperti link */
+            text-decoration: none;
+            /* Tambahkan underline agar terlihat seperti link */
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .ayam {
+            font: 300 14px Narasi Sans, sans-serif;
+            text-decoration: none;
+            color: rgb(134, 127, 127);
+        }
+    </style>
 @endsection
 
 @section('content')
     <!--Badan Isi-->
-    <div style="margin-top: 12px;">
+    <div>
         <a class="navback" href="{{ route('company-document.index') }}" style="text-decoration: none">
             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="17" viewBox="0 0 10 17" fill="none">
                 <path
                     d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2 7.2501 0 7.6501 0 8.0501Z"
-                    fill="#4A25AA"/>
+                    fill="#4A25AA" />
             </svg>
             Back
         </a>
@@ -88,11 +106,11 @@
                 </svg>
             </button> --}}
 
-            <a class="button-departemen" href="{{route('company-document.create', $docCategory->slug)}}">Upload
+            <a class="button-departemen" href="{{ route('company-document.create', $docCategory->slug) }}">Upload
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M8.99995 2.7002C9.23865 2.7002 9.46756 2.79502 9.63635 2.9638C9.80513 3.13258 9.89995 3.3615 9.89995 3.6002V8.10019H14.4C14.6386 8.10019 14.8676 8.19502 15.0363 8.3638C15.2051 8.53258 15.3 8.7615 15.3 9.0002C15.3 9.23889 15.2051 9.46781 15.0363 9.63659C14.8676 9.80537 14.6386 9.9002 14.4 9.9002H9.89995V14.4002C9.89995 14.6389 9.80513 14.8678 9.63635 15.0366C9.46756 15.2054 9.23865 15.3002 8.99995 15.3002C8.76126 15.3002 8.53234 15.2054 8.36355 15.0366C8.19477 14.8678 8.09995 14.6389 8.09995 14.4002V9.9002H3.59995C3.36126 9.9002 3.13234 9.80537 2.96356 9.63659C2.79477 9.46781 2.69995 9.23889 2.69995 9.0002C2.69995 8.7615 2.79477 8.53258 2.96356 8.3638C3.13234 8.19502 3.36126 8.10019 3.59995 8.10019H8.09995V3.6002C8.09995 3.3615 8.19477 3.13258 8.36355 2.9638C8.53234 2.79502 8.76126 2.7002 8.99995 2.7002Z"
-                        fill="white"/>
+                        fill="white" />
                 </svg>
             </a>
         </div>
@@ -100,189 +118,178 @@
 
         <div class="tablenih">
             <div class="table-responsive p-2">
-              <table id="datatable" class="table table-hover" style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px;">
-                <thead class="table-light">
-                  <tr class="dicobain">
-                    {{-- <th scope="col" class="col-1">No</th> --}}
-                    <th scope="col" class="col-2">Document Numbers</th>
-                    <th scope="col" class="col-3">File Name</th>
-                    <th scope="col" class="col-4">Description</th>
-                    <th scope="col" class="col-1"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                    @foreach ($docCategory->documents as $doc)
-                  <tr>
-                    {{-- <td scope="row" class="text-center">{{$loop->iteration}}</td> --}}
-                    <td>{{ $doc->doc_number }}</td>
-                    <td class="primary-toggle" style="cursor: pointer">{{ $doc->title }}
-                      <div class="secondary hidden">
-                        <ul>
-                            @foreach ($doc->supportingDocuments as $supportingDoc)
-                          <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="14" viewBox="0 0 17 14" fill="none">
-                                <path d="M12 5L16 9M16 9L12 13M16 9H5C3.93913 9 2.92172 8.57857 2.17157 7.82843C1.42143 7.07828 1 6.06087 1 5C1 3.93913 1.42143 2.92172 2.17157 2.17157C2.92172 1.42143 3.93913 1 5 1L6 1" stroke="#393C47" stroke-linecap="round" stroke-linejoin="round"/>
-                              </svg>
-                              <a target="_blank" href="{{ route('company-document.supporting-doc.view', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug, 'supportingDoc' => $supportingDoc->supporting_doc_slug]) }}">{{ $supportingDoc->file_name }}</a>
-                            {{-- <div class="buttons">
-                              <a target="_blank" href="{{ route('company-document.supporting-doc.view', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug, 'supportingDoc' => $supportingDoc->supporting_doc_slug]) }}" class="ayam btn btn-link">View</a>
-                            </div> --}}
-                          </li>
-                          @endforeach
-                        </ul>
-                      </div>
-                    </td>
-                    <td>{{ $doc->description }}</td>
-                    <td class="text-center">
-                        <span class="action-buttons">
-                          <a href="{{ route('company-document.view', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug]) }}" class="icon-buttons" style="
+                <table id="datatable" class="table table-hover"
+                    style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px;">
+                    <thead class="table-light">
+                        <tr class="dicobain">
+                            {{-- <th scope="col" class="col-1">No</th> --}}
+                            <th scope="col" class="col-2">Document Numbers</th>
+                            <th scope="col" class="col-3">File Name</th>
+                            <th scope="col" class="col-4">Description</th>
+                            <th scope="col" class="col-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($docCategory->documents as $doc)
+                            <tr>
+                                {{-- <td scope="row" class="text-center">{{$loop->iteration}}</td> --}}
+                                <td style="vertical-align: top">{{ $doc->doc_number }}</td>
+                                <td class="primary-toggle" style="cursor: pointer; vertical-align: top;">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24">
+                                            <g fill="none" stroke="#a6a6a6" stroke-dasharray="16" stroke-dashoffset="16"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                                <path d="M5 12h14">
+                                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s"
+                                                        values="16;0" />
+                                                </path>
+                                                <path d="M12 5v14">
+                                                    <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.2s"
+                                                        dur="0.2s" values="16;0" />
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <span style="vertical-align: middle">{{ $doc->title }}</span>
+
+
+                                    <div class="secondary hidden"
+                                        style="clear: both; font-size: 16px; text-transform:capitalize; margin-left: 16px">
+                                        <ul>
+                                            @foreach ($doc->supportingDocuments as $supportingDoc)
+                                                <li>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                        viewBox="0 0 24 24">
+                                                        <path fill="black"
+                                                            d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10s10-4.47 10-10S17.53 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8s8 3.58 8 8s-3.58 8-8 8" />
+                                                    </svg>
+                                                    <a class="kodo" style="" target="_blank"
+                                                        href="{{ route('company-document.supporting-doc.view', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug, 'supportingDoc' => $supportingDoc->supporting_doc_slug]) }}">
+                                                        {{ $supportingDoc->file_name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </td>
+
+                                <td style="vertical-align: top;">{{ $doc->description }}</td>
+                                <td class="text-center align-top">
+                                    <span class="action-buttons">
+                                        <a href="{{ route('company-document.view', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug]) }}"
+                                            class="icon-buttons"
+                                            style="
                             background: #b60f7f;
                             border-radius: 4px;
                             padding: 8px 12px"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="10" viewBox="0 0 15 10" fill="none">
-                              <path d="M7.085 2.89841C6.57253 2.89841 6.08105 3.10199 5.71868 3.46436C5.35631 3.82673 5.15273 4.31821 5.15273 4.83068C5.15273 5.34315 5.35631 5.83463 5.71868 6.19701C6.08105 6.55938 6.57253 6.76295 7.085 6.76295C7.59747 6.76295 8.08895 6.55938 8.45132 6.19701C8.81369 5.83463 9.01727 5.34315 9.01727 4.83068C9.01727 4.31821 8.81369 3.82673 8.45132 3.46436C8.08895 3.10199 7.59747 2.89841 7.085 2.89841ZM7.085 8.05114C6.23088 8.05114 5.41175 7.71184 4.80779 7.10789C4.20384 6.50393 3.86455 5.6848 3.86455 4.83068C3.86455 3.97656 4.20384 3.15743 4.80779 2.55348C5.41175 1.94952 6.23088 1.61023 7.085 1.61023C7.93912 1.61023 8.75825 1.94952 9.3622 2.55348C9.96616 3.15743 10.3055 3.97656 10.3055 4.83068C10.3055 5.6848 9.96616 6.50393 9.3622 7.10789C8.75825 7.71184 7.93912 8.05114 7.085 8.05114ZM7.085 0C3.86455 0 1.11428 2.00312 0 4.83068C1.11428 7.65824 3.86455 9.66136 7.085 9.66136C10.3055 9.66136 13.0557 7.65824 14.17 4.83068C13.0557 2.00312 10.3055 0 7.085 0Z" fill="white"/>
-                            </svg>
-                          </a>
-                          <a href="{{ route('company-document.edit', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug]) }}" class="icon-buttons" style="
+                                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="10"
+                                                viewBox="0 0 15 10" fill="none">
+                                                <path
+                                                    d="M7.085 2.89841C6.57253 2.89841 6.08105 3.10199 5.71868 3.46436C5.35631 3.82673 5.15273 4.31821 5.15273 4.83068C5.15273 5.34315 5.35631 5.83463 5.71868 6.19701C6.08105 6.55938 6.57253 6.76295 7.085 6.76295C7.59747 6.76295 8.08895 6.55938 8.45132 6.19701C8.81369 5.83463 9.01727 5.34315 9.01727 4.83068C9.01727 4.31821 8.81369 3.82673 8.45132 3.46436C8.08895 3.10199 7.59747 2.89841 7.085 2.89841ZM7.085 8.05114C6.23088 8.05114 5.41175 7.71184 4.80779 7.10789C4.20384 6.50393 3.86455 5.6848 3.86455 4.83068C3.86455 3.97656 4.20384 3.15743 4.80779 2.55348C5.41175 1.94952 6.23088 1.61023 7.085 1.61023C7.93912 1.61023 8.75825 1.94952 9.3622 2.55348C9.96616 3.15743 10.3055 3.97656 10.3055 4.83068C10.3055 5.6848 9.96616 6.50393 9.3622 7.10789C8.75825 7.71184 7.93912 8.05114 7.085 8.05114ZM7.085 0C3.86455 0 1.11428 2.00312 0 4.83068C1.11428 7.65824 3.86455 9.66136 7.085 9.66136C10.3055 9.66136 13.0557 7.65824 14.17 4.83068C13.0557 2.00312 10.3055 0 7.085 0Z"
+                                                    fill="white" />
+                                            </svg>
+                                        </a>
+                                        <a href="{{ route('company-document.edit', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug]) }}"
+                                            class="icon-buttons"
+                                            style="
                             background: #4a25aa;
                             border-radius: 4px;
                             padding: 8px 12px;"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                              <path d="M3.5 4.33301H2.66667C2.22464 4.33301 1.80072 4.5086 1.48816 4.82116C1.17559 5.13372 1 5.55765 1 5.99967V13.4997C1 13.9417 1.17559 14.3656 1.48816 14.6782C1.80072 14.9907 2.22464 15.1663 2.66667 15.1663H10.1667C10.6087 15.1663 11.0326 14.9907 11.3452 14.6782C11.6577 14.3656 11.8333 13.9417 11.8333 13.4997V12.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                              <path d="M11 2.66676L13.5 5.16676M14.6541 3.98759C14.9823 3.65938 15.1667 3.21424 15.1667 2.75009C15.1667 2.28594 14.9823 1.84079 14.6541 1.51259C14.3259 1.18438 13.8808 1 13.4166 1C12.9525 1 12.5073 1.18438 12.1791 1.51259L5.16663 8.50009V11.0001H7.66663L14.6541 3.98759Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                          </a>
-                          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('company-document.destroyFile', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug]) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="icon-buttons" style="background: red;
+                                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 16 16" fill="none">
+                                                <path
+                                                    d="M3.5 4.33301H2.66667C2.22464 4.33301 1.80072 4.5086 1.48816 4.82116C1.17559 5.13372 1 5.55765 1 5.99967V13.4997C1 13.9417 1.17559 14.3656 1.48816 14.6782C1.80072 14.9907 2.22464 15.1663 2.66667 15.1663H10.1667C10.6087 15.1663 11.0326 14.9907 11.3452 14.6782C11.6577 14.3656 11.8333 13.9417 11.8333 13.4997V12.6663"
+                                                    stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M11 2.66676L13.5 5.16676M14.6541 3.98759C14.9823 3.65938 15.1667 3.21424 15.1667 2.75009C15.1667 2.28594 14.9823 1.84079 14.6541 1.51259C14.3259 1.18438 13.8808 1 13.4166 1C12.9525 1 12.5073 1.18438 12.1791 1.51259L5.16663 8.50009V11.0001H7.66663L14.6541 3.98759Z"
+                                                    stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            action="{{ route('company-document.destroyFile', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="icon-buttons"
+                                                style="background: red;
                             border-radius: 4px;
                             border:none;
-                            padding: 10px 12px" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="15" viewBox="0 0 12 15" fill="none">
-                                <path d="M0.787222 12.5956C0.787222 13.4615 1.49572 14.17 2.36167 14.17H8.65944C9.52539 14.17 10.2339 13.4615 10.2339 12.5956V4.72333C10.2339 3.85739 9.52539 3.14889 8.65944 3.14889H2.36167C1.49572 3.14889 0.787222 3.85739 0.787222 4.72333V12.5956ZM10.2339 0.787222H8.26583L7.70691 0.228294C7.56521 0.0865944 7.36053 0 7.15585 0H3.86526C3.66058 0 3.45591 0.0865944 3.31421 0.228294L2.75528 0.787222H0.787222C0.35425 0.787222 0 1.14147 0 1.57444C0 2.00742 0.35425 2.36167 0.787222 2.36167H10.2339C10.6669 2.36167 11.0211 2.00742 11.0211 1.57444C11.0211 1.14147 10.6669 0.787222 10.2339 0.787222Z" fill="white"/>
-                              </svg>
-                            </button>
-                          </form>
-                        </span>
-                      </td>
+                            padding: 10px 12px"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="15"
+                                                    viewBox="0 0 12 15" fill="none">
+                                                    <path
+                                                        d="M0.787222 12.5956C0.787222 13.4615 1.49572 14.17 2.36167 14.17H8.65944C9.52539 14.17 10.2339 13.4615 10.2339 12.5956V4.72333C10.2339 3.85739 9.52539 3.14889 8.65944 3.14889H2.36167C1.49572 3.14889 0.787222 3.85739 0.787222 4.72333V12.5956ZM10.2339 0.787222H8.26583L7.70691 0.228294C7.56521 0.0865944 7.36053 0 7.15585 0H3.86526C3.66058 0 3.45591 0.0865944 3.31421 0.228294L2.75528 0.787222H0.787222C0.35425 0.787222 0 1.14147 0 1.57444C0 2.00742 0.35425 2.36167 0.787222 2.36167H10.2339C10.6669 2.36167 11.0211 2.00742 11.0211 1.57444C11.0211 1.14147 10.6669 0.787222 10.2339 0.787222Z"
+                                                        fill="white" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </span>
+                                </td>
 
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-          </div>
+        </div>
     </div>
 @endsection
 
 @section('modal')
     @include('layout.alert')
-    {{-- <div class="modal justify-content-center fade" id="modal-upload" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-body bg-white">
-                    <form action="{{ route('company-document.storeUpload', $docCategory->slug) }}" method="POST" enctype="multipart/form-data" class="modal-form-check" id="mainForm" style="font: 500 14px Narasi Sans, sans-serif">
-                        @csrf
-                        <input type="hidden" class="form-control" name="document_category_id" value="{{ $docCategory->id }}">
-                        <div class="mb-3">
-                            <label for="category" class="form-label">Category</label>
-                            <input type="text" name="category" class="form-control @error('category') is-invalid @enderror" id="category" placeholder="category" value="{{ old('category') ?? $docCategory->category }}" disabled>
-                            @error('category')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="doc_number" class="form-label">Code Files</label>
-                            <input type="text" name="doc_number" class="form-control @error('doc_number') is-invalid @enderror" id="doc_number" placeholder="Code Files" value="" required>
-                            @error('doc_number')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Title" value="{{ old('title') }}" required>
-                            @error('title')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <input type="text" name="description" class="form-control @error('description') is-invalid @enderror" id="description" placeholder="Description" value="{{ old('description') }}" required>
-                            @error('description')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Upload File (PDF, Max 2MB)</label>
-                            <input type="file" name="file_document" class="form-control @error('file_document') is-invalid @enderror" id="file_document" value="{{ old('file_document') }}" accept=".pdf" required>
-                            @error('file_document')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <input class="form-check-input" type="checkbox" name="enable_download" id="flexCheckDefault" value="1">
-                            <label style="padding-top: 3px; font: 350 14px Narasi Sans, sans-serif; letter-spacing: 0.5px;" class="form-check-label" for="flexCheckDefault">
-                                Download
-                            </label>
-                        </div>
-                        <button type="submit" class="button-submit">Upload</button>
-                        <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
-                    </form>
-                </div>
-                <img class="img-8" src="{{ asset('asset/image/Narasi_Logo.svg') }}" alt=" " />
-            </div>
-        </div>
-    </div> --}}
 @endsection
 
 @section('custom-js')
-{{-- <script>
+    {{-- <script>
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script> --}}
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
-    });
-</script>
+    </script>
 
 
-<script>
-    $(document).ready(function() {
-    $('.primary-toggle').on('click', function() {
-        var $row = $(this).closest('tr');
-        var $secondary = $row.find('.secondary');
+    <script>
+        $(document).ready(function() {
+            $('.primary-toggle').on('click', function() {
+                var $row = $(this).closest('tr');
+                var $secondary = $row.find('.secondary');
 
-        // Toggle visibility of secondary items
-        $secondary.toggleClass('hidden');
-    });
-    });
-</script>
+                // Toggle visibility of secondary items
+                $secondary.toggleClass('hidden');
+            });
+        });
+    </script>
 @endsection
 
 @section('alert')
-@if (session('status'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#successModal').modal('show');
-            setTimeout(function() {
-                $('#successModal').modal('hide');
-            }, 3000);
-        });
-    </script>
-@endif
-@if (session('error'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#errorModal').modal('show');
-        });
-    </script>
-@endif
+    @if (session('status'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                $('#successModal').modal('show');
+                setTimeout(function() {
+                    $('#successModal').modal('hide');
+                }, 3000);
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                $('#errorModal').modal('show');
+            });
+        </script>
+    @endif
 @endsection

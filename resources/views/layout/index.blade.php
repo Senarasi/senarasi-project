@@ -20,6 +20,7 @@
         {{-- Selectize --}}
         <link href="{{ asset('css/selectize.default.min.css') }}" rel="stylesheet">
         <script src="https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.js"></script>
+        <link href="{{ asset('asset/summernote/summernote-lite.min.css') }}" rel="stylesheet">
         @yield('costum-css')
 
     </head>
@@ -35,7 +36,8 @@
     width: 100%;
     overflow: hidden;
     transition: all 0.35s ease-in-out">
-                <div class="badanisi" style="margin-left:68px; margin-top: 52px;">
+                <div class="badanisi">
+                    @include('layout.modalin')
                     @yield('content')
                 </div>
                 @include('layout.footer')
@@ -58,6 +60,7 @@
         <!-- Summernote CSS and JS -->
         <link href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.js"></script>
+        <script src="{{ asset('asset/summernote/summernote-lite.min.js') }}"></script>
         @yield('custom-js')
     </body>
 

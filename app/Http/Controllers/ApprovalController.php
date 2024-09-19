@@ -88,7 +88,7 @@ class ApprovalController extends Controller
             'operational',
             'location',
             'approval' => function ($query) {
-                $query->whereIn('stage', ['manager', 'reviewer', 'new_approver', 'finance 1', 'finance 2'])
+                $query->whereIn('stage', ['manager', 'reviewer', 'hc', 'finance 1', 'finance 2'])
                     ->with('employee');
             },
         ])->findOrFail($id);
@@ -99,15 +99,15 @@ class ApprovalController extends Controller
         // Get approval statuses
         $managerApproval = $requestBudgets->approval->where('stage', 'manager')->first()->status ?? null;
         $reviewerApproval = $requestBudgets->approval->where('stage', 'reviewer')->first()->status ?? null;
-        $newApproverApproval = $requestBudgets->approval->where('stage', 'new_approver')->first()->status ?? null;
+        $newApproverApproval = $requestBudgets->approval->where('stage', 'hc')->first()->status ?? null;
         $finance1Approval = $requestBudgets->approval->where('stage', 'finance 1')->first()->status ?? null;
         $finance2Approval = $requestBudgets->approval->where('stage', 'finance 2')->first()->status ?? null;
 
         // Determine if each approval stage is allowed
         $canApproveManager = true; // Manager can always approve
         $canApproveReviewer = $managerApproval === 'approved';
-        $canApproveNewApprover = $canApproveReviewer && $reviewerApproval === 'approved';
-        $canApproveFinance1 = $canApproveNewApprover && $newApproverApproval === 'approved';
+        $canApproveHC = $canApproveReviewer && $reviewerApproval === 'approved';
+        $canApproveFinance1 = $canApproveHC && $newApproverApproval === 'approved';
         $canApproveFinance2 = $hasApprovalFinance2 && $canApproveFinance1 && $finance1Approval === 'approved';
 
         // Calculate total costs
@@ -129,7 +129,7 @@ class ApprovalController extends Controller
             'finance2Approval',
             'canApproveManager',
             'canApproveReviewer',
-            'canApproveNewApprover',
+            'canApproveHC',
             'canApproveFinance1',
             'canApproveFinance2',
             'requestBudgets',
@@ -225,7 +225,8 @@ class ApprovalController extends Controller
         $approval1 = Employee::findOrFail(120017081704);
         $approval2 = Employee::findOrFail(120021071261);
         $reviewer = Employee::findOrFail(220017110117);
-        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approval1', 'approval2', 'reviewer', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts'));
+        $hc = Employee::findOrFail(220017110117);
+        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approval1', 'approval2', 'reviewer', 'hc', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts'));
         // Mengatur format kertas menjadi lanskap
         $pdf->setPaper('LEGAL', 'landscape');
         return $pdf->stream('document.pdf');
@@ -271,6 +272,8 @@ class ApprovalController extends Controller
             return 'manager';
         } elseif (Auth::id() == $requestBudget->reviewer_id) {
             return 'reviewer';
+        } elseif (Auth::id() == $requestBudget->hc_id) { // Insert HC stage check
+            return 'hc';
         } elseif (Auth::id() == $requestBudget->finance1_id) {
             return 'finance 1';
         } elseif ($requestBudget->approval->where('stage', 'finance 2')->isNotEmpty() && Auth::id() == $requestBudget->finance2_id) {
@@ -283,7 +286,8 @@ class ApprovalController extends Controller
     {
         $stages = [
             'manager' => 'reviewer',
-            'reviewer' => 'finance 1',
+            'reviewer' => 'hc', // Insert HC stage after reviewer
+            'hc' => 'finance 1', // HC comes before finance 1
             'finance 1' => $requestBudget->approval->where('stage', 'finance 2')->isNotEmpty() ? 'finance 2' : null,
             'finance 2' => null, // Last stage
         ];
@@ -295,6 +299,7 @@ class ApprovalController extends Controller
     {
         $employeeIds = [
             'reviewer' => $requestBudget->reviewer_id,
+            'hc' => $requestBudget->hc_id, // Insert HC stage with corresponding employee ID
             'finance 1' => $requestBudget->finance1_id,
             'finance 2' => $requestBudget->finance2_id,
         ];
@@ -334,7 +339,7 @@ class ApprovalController extends Controller
             'operational',
             'location',
             'approval' => function ($query) {
-                $query->whereIn('stage', ['manager', 'reviewer', 'finance 1', 'finance 2'])
+                $query->whereIn('stage', ['manager', 'reviewer', 'hc', 'finance 1', 'finance 2']) // Include 'hc'
                     ->with('employee');
             },
         ])->findOrFail($id);
@@ -345,13 +350,15 @@ class ApprovalController extends Controller
         // Get approval statuses
         $managerApproval = $requestBudgets->approval->where('stage', 'manager')->first()->status ?? null;
         $reviewerApproval = $requestBudgets->approval->where('stage', 'reviewer')->first()->status ?? null;
+        $hcApproval = $requestBudgets->approval->where('stage', 'hc')->first()->status ?? null; // Get HC approval status
         $finance1Approval = $requestBudgets->approval->where('stage', 'finance 1')->first()->status ?? null;
         $finance2Approval = $requestBudgets->approval->where('stage', 'finance 2')->first()->status ?? null;
 
         // Determine if each approval stage is allowed
         $canApproveManager = true; // Manager can always approve
         $canApproveReviewer = $managerApproval === 'approved';
-        $canApproveFinance1 = $canApproveReviewer && $reviewerApproval === 'approved';
+        $canApproveHC = $canApproveReviewer && $reviewerApproval === 'approved'; // HC can approve only if Reviewer has approved
+        $canApproveFinance1 = $canApproveHC && $hcApproval === 'approved'; // Finance 1 can approve only if HC has approved
         $canApproveFinance2 = $hasApprovalFinance2 && $canApproveFinance1 && $finance1Approval === 'approved';
 
         // Calculate total costs
@@ -368,10 +375,12 @@ class ApprovalController extends Controller
             'hasApprovalFinance2',
             'managerApproval',
             'reviewerApproval',
+            'hcApproval', // Pass HC approval to the view
             'finance1Approval',
             'finance2Approval',
             'canApproveManager',
             'canApproveReviewer',
+            'canApproveHC', // Pass HC approval permissions to the view
             'canApproveFinance1',
             'canApproveFinance2',
             'requestBudgets',
@@ -441,7 +450,7 @@ class ApprovalController extends Controller
                 $currentApproval->save();
 
                 // Reject all subsequent stages without notes
-                $stages = ['manager', 'reviewer', 'finance 1', 'finance 2'];
+                $stages = ['manager', 'reviewer', 'hc', 'finance 1', 'finance 2']; // Added 'hc'
                 $currentStageIndex = array_search($currentStage, $stages);
 
                 if ($currentStageIndex !== false) {

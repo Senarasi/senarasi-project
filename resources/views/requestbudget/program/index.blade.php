@@ -61,7 +61,7 @@
                     @endphp
                     @forelse ($requestBudgets as $data)
                         <tr>
-                            <th scope="row ">{{ $counter++ }}</th>
+                            {{-- <th scope="row ">{{ $counter++ }}</th> --}}
                             <td>{{ $data->request_budget_number }}</td>
                             <td> {{ $data->program->program_name }}</td>
                             @if (($data->approval->where('stage', 'manager')->first()->status ?? '-') == 'pending')
@@ -86,6 +86,22 @@
                                         <circle cx="12" cy="12" r="12" fill="#FFE900" />
                                     </svg></td>
                             @elseif (($data->approval->where('stage', 'reviewer')->first()->status ?? '-') == 'approved')
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#009579" />
+                                    </svg></td>
+                            @else
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#E73638" />
+                                    </svg></td>
+                            @endif
+                            @if (($data->approval->where('stage', 'hc')->first()->status ?? '-') == 'pending')
+                                <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="12" fill="#FFE900" />
+                                    </svg></td>
+                            @elseif (($data->approval->where('stage', 'hc')->first()->status ?? '-') == 'approved')
                                 <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none">
                                         <circle cx="12" cy="12" r="12" fill="#009579" />

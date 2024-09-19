@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Program;
 use App\Models\ProgramYearlyBudget;
+use App\Models\Announcement;
+use App\Models\AnnouncementCategory;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,7 +16,9 @@ class DashboardController extends Controller
 
     public function dashboardmain()
     {
-        return view('dashboard.main');
+        $announcements = Announcement::latest()->get();
+        $categories = AnnouncementCategory::all();
+        return view('dashboard.main', compact('announcements', 'categories'));
     }
 
     public function dashboardbudget()

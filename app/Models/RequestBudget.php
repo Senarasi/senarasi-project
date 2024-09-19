@@ -28,7 +28,8 @@ class RequestBudget extends Model
         'request_budget_number',
         'reviewer_id',
         'finance1_id',
-        'finance2_id'
+        'finance2_id',
+        'hc_id'
     ];
 
     public function program()
@@ -95,7 +96,10 @@ class RequestBudget extends Model
     {
         return $this->belongsTo(Employee::class, 'reviewer_id');
     }
-
+    public function hc()
+    {
+        return $this->belongsTo(Employee::class, 'hc_id');
+    }
     public function finance1()
     {
         return $this->belongsTo(Employee::class, 'finance1_id');

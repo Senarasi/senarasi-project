@@ -223,6 +223,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    Route::prefix('announcement')->controller(App\Http\Controllers\AnnouncementController::class)->name('announcement.')->group(function () {
+        // Route::get('/', 'index')->name('index');
+        // Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        // Route::get('{announcement}/edit', 'edit')->name('edit');
+        Route::patch('/{announcement}/update', 'update')->name('update');
+        Route::delete('/{announcement}', 'destroy')->name('destroy');
+    });
+
 
 
     // Other protected routes

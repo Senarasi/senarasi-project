@@ -51,8 +51,8 @@
         }
 
         /* .step-bar .step.waiting + .step::before {
-                    background-color: #FFE900 ;
-                } */
+                                        background-color: #FFE900 ;
+                                    } */
         @media (max-width: 768px) {
             .step-bar {
                 flex-direction: column;
@@ -129,7 +129,8 @@
     <a class="navback" href="{{ route('approval.index') }}" style="text-decoration: none">
         <svg xmlns="http://www.w3.org/2000/svg " width="10" height="17 " viewBox="0 0 10 17 " fill="none ">
             <path d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                    7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
+                                                                                        7.2501 0 7.6501 0 8.0501Z "
+                fill="#4A25AA " />
         </svg>
         Back to Approval
     </a>
@@ -151,6 +152,11 @@
                                 @php
                                     $currentStage = null;
                                     $isPending = false;
+                                    $canApprove = true;
+
+                                    if ($requestBudgets->budget < $totalAll) {
+                                        $canApprove = false; // Budget is less than total requested, cannot approve
+                                    }
 
                                     if (Auth::id() == $requestBudgets->manager_id && $managerApproval === 'pending') {
                                         $currentStage = 'manager';
@@ -161,6 +167,13 @@
                                         $canApproveReviewer
                                     ) {
                                         $currentStage = 'reviewer';
+                                        $isPending = true;
+                                    } elseif (
+                                        Auth::id() == $requestBudgets->hc_id &&
+                                        $hcApproval === 'pending' &&
+                                        $canApproveHC
+                                    ) {
+                                        $currentStage = 'hc';
                                         $isPending = true;
                                     } elseif (
                                         Auth::id() == $requestBudgets->finance1_id &&
@@ -181,10 +194,17 @@
                                 @endphp
 
                                 @if ($isPending)
-                                    <button type="submit" class="btn btn-success text-end"
-                                        style="color: white; padding: 12px 24px; margin-right:2px">Approve</button>
+                                    <!-- Approve button is disabled only if canApprove is false (budget issue) -->
+                                    @if ($canApprove)
+                                        <button type="submit" class="btn btn-success text-end"
+                                            style="color: white; padding: 12px 24px; margin-right:2px">Approve</button>
+                                    @else
+                                        <button type="button" class="btn btn-secondary text-end"
+                                            style="color: white; padding: 12px 24px; margin-right:2px"
+                                            disabled>Approve</button>
+                                    @endif
 
-                                    <!-- Reject Button as a link -->
+                                    <!-- Reject button is always active if approval is pending -->
                                     <a href="{{ route('approval.rejectview', $id) }}" class="btn btn-danger text-end"
                                         style="color: white; padding: 12px 24px;">Reject</a>
                                 @else
@@ -430,6 +450,25 @@
                             title="Review Procurement">
                             <div class="circle">2</div>
                             <div class="label">Review</div>
+                        </div>
+                    @endif
+                    @if (($requestBudgets->approval->where('stage', 'hc')->first()->status ?? '-') == 'pending')
+                        <div class="step waiting" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Review Procurement">
+                            <div class="circle">2</div>
+                            <div class="label">HC</div>
+                        </div>
+                    @elseif (($requestBudgets->approval->where('stage', 'hc')->first()->status ?? '-') == 'approved')
+                        <div class="step approved" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Review Procurement">
+                            <div class="circle">2</div>
+                            <div class="label">HC</div>
+                        </div>
+                    @else
+                        <div class="step rejected" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Review Procurement">
+                            <div class="circle">2</div>
+                            <div class="label">HC</div>
                         </div>
                     @endif
                     @if (($requestBudgets->approval->where('stage', 'finance 1')->first()->status ?? '-') == 'pending')

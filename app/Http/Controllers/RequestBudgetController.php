@@ -34,7 +34,7 @@ class RequestBudgetController extends Controller
         $requestBudgets = RequestBudget::with([
             'program',
             'approval' => function ($query) {
-                $query->whereIn('stage', ['manager', 'reviewer', 'finance 1', 'finance 2'])
+                $query->whereIn('stage', ['manager', 'reviewer', 'hc', 'finance 1', 'finance 2'])
                     ->with('employee');
             },
         ])->get();
@@ -136,6 +136,7 @@ class RequestBudgetController extends Controller
             'reviewer_id' => 'required|exists:employees,employee_id',
             'finance1_id' => 'required|exists:employees,employee_id',
             'finance2_id' => 'required|exists:employees,employee_id',
+            'hc_id' => 'required|exists:employees,employee_id',
         ]);
         $validatedData['employee_id'] = Auth::id();
 
@@ -181,7 +182,7 @@ class RequestBudgetController extends Controller
             'operational',
             'location',
             'approval' => function ($query) {
-                $query->whereIn('stage', ['manager', 'reviewer', 'finance 1', 'finance 2'])
+                $query->whereIn('stage', ['manager', 'reviewer', 'hc', 'finance 1', 'finance 2'])
                     ->with('employee');
             },
         ])->findOrFail($id);
@@ -192,14 +193,15 @@ class RequestBudgetController extends Controller
         // Check approval statuses
         $managerApproval = $requestBudgets->approval->where('stage', 'manager')->first()->status ?? null;
         $reviewerApproval = $requestBudgets->approval->where('stage', 'reviewer')->first()->status ?? null;
+        $hcApproval = $requestBudgets->approval->where('stage', 'hc')->first()->status ?? null; // Add HC stage
         $finance1Approval = $requestBudgets->approval->where('stage', 'finance 1')->first()->status ?? null;
         $finance2Approval = $requestBudgets->approval->where('stage', 'finance 2')->first()->status ?? null;
 
         // Determine if any stage has been approved
-        $isApproved = in_array('approved', [$managerApproval, $reviewerApproval, $finance1Approval, $finance2Approval]);
+        $isApproved = in_array('approved', [$managerApproval, $reviewerApproval, $hcApproval, $finance1Approval, $finance2Approval]);
 
         // Determine if any stage has been rejected
-        $isRejected = in_array('rejected', [$managerApproval, $reviewerApproval, $finance1Approval, $finance2Approval]);
+        $isRejected = in_array('rejected', [$managerApproval, $reviewerApproval, $hcApproval, $finance1Approval, $finance2Approval]);
 
         // Perform calculations
         $performer = Performer::where('request_budget_id', $id)->get();
@@ -239,7 +241,7 @@ class RequestBudgetController extends Controller
             'total',
             'isApproved',
             'isRejected',
-            'allNotes' // Add this to pass notes to the view
+            'allNotes' // Pass notes to the view
         ));
     }
 

@@ -39,7 +39,7 @@
 
                     <div class="mb-3">
                         <label for="attachment" class="form-label">Attachment</label>
-                        <input id="attachment" type="file" class="form-control @error('attachment') is-invalid @enderror" name="attachment" value="{{ old('attachment') }}" required autofocus>
+                        <input id="attachment" type="file" class="form-control @error('attachment') is-invalid @enderror" name="attachment" value="{{ old('attachment') }}">
 
                         @error('attachment')
                             <span class="invalid-feedback" role="alert">
@@ -57,3 +57,4 @@
         </div>
     </div>
 </div>
+

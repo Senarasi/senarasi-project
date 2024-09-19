@@ -29,34 +29,50 @@ class PreviewController extends Controller
             'finance 1' => '5', // Employee ID for finance 1
         ];
 
-        // If budget is less than or equal to 200 million, add approval 3
+        // If budget is greater than or equal to 200 million, add approval for finance 2
         if ($request->input('budget') >= 200000000) {
-            $approverIds['finance 2'] = '6'; // Example: Employee ID for approval 3
+            $approverIds['finance 2'] = '6'; // Example: Employee ID for finance 2
         }
 
-        // Create approval stages
+        // Create or update approval stages
         foreach ($approverIds as $stage => $employeeId) {
             // Validate stage to prevent check constraint violation
             if (!in_array($stage, ['manager', 'reviewer', 'hc', 'finance 1', 'finance 2'])) {
                 continue; // Skip invalid stages
             }
 
-            Approval::create([
-                'request_budget_id' => $request->input('request_budget_id'),
-                'employee_id' => $employeeId,
-                'stage' => $stage,
-                'status' => 'pending',
-                // Add other fields as needed
-            ]);
+            // Check if an approval already exists for this request and stage
+            $approval = Approval::where('request_budget_id', $request->input('request_budget_id'))
+                ->where('stage', $stage)
+                ->first();
+
+            if ($approval) {
+                // If it exists, update the status back to 'pending' and clear the reason
+                $approval->update([
+                    'status' => 'pending',
+                    'reason' => null // Or you can set it to an empty array if you prefer: 'reason' => []
+                ]);
+            } else {
+                // If it doesn't exist, create a new approval
+                Approval::create([
+                    'request_budget_id' => $request->input('request_budget_id'),
+                    'employee_id' => $employeeId,
+                    'stage' => $stage,
+                    'status' => 'pending',
+                    'reason' => null, // Or 'reason' => [] if you prefer an empty JSON array
+                    // Add other fields as needed
+                ]);
+            }
         }
 
+        // Validate input data for history creation
         $validateData = $request->validate([
             'employee_id' => 'required|exists:employees,employee_id',
             'request_budget_id' => 'required|exists:request_budgets,request_budget_id',
-            'history_status' => 'required|string|max:255'
+            'history_status' => 'required|string|max:255',
         ]);
 
-        // Create the history
+        // Create the history record
         History::create($validateData);
 
         return redirect()->route('request-budget.index')->with('success', 'Budget request submitted successfully.');
