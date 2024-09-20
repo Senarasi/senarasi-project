@@ -146,7 +146,7 @@
                                         </svg></td>
                                 @endif
                             @else
-                                <td>-</td>
+                                {{-- <td>-</td> --}}
                             @endif
                             <td>{{ $data->employee->full_name }}</td>
                             <td style="gap: 8px; display: flex; justify-content: center; ">

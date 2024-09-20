@@ -9,7 +9,7 @@
             <svg xmlns="http://www.w3.org/2000/svg " width="10 " height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path
                     d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                                                                                                                  7.2501 0 7.6501 0 8.0501Z "
+                                                                                                                                                                              7.2501 0 7.6501 0 8.0501Z "
                     fill="#4A25AA " />
             </svg>
             Back
@@ -286,7 +286,7 @@
                             <div class="mb-3" id="name_container">
                                 <label for="name" class="form-label">Name</label>
                                 <div id="name_container">
-                                    <select name="name" class="form-select" id="name_option" required>
+                                    <select name="name" id="name_option" required>
                                         <option disabled selected>Select Name</option>
                                         @forelse ($crew as $data)
                                             <option value="{{ $data->full_name }}">{{ $data->full_name }}</option>
@@ -428,77 +428,6 @@
         }
     </script>
     {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const repOption = document.getElementById('rep_option');
-            const nameContainer = document.getElementById('name_container');
-
-            repOption.addEventListener('change', function() {
-                if (repOption.value === 'OUT') {
-                    nameContainer.innerHTML =
-                        '<input type="text" name="name" class="form-control" id="name_option" required>';
-                } else if (repOption.value === 'NCS') {
-                    nameContainer.innerHTML = `
-            <select name="name" class="form-select" id="name_option" required>
-                <option disabled selected>Select Name</option>
-                @forelse ($crew as $data)
-                    <option value="{{ $data->full_name }}">{{ $data->full_name }}</option>
-                @empty
-                    <option disabled selected>Data not found</option>
-                @endforelse
-            </select>`;
-                }
-            });
-        });
-    </script> --}}
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const repOption = document.getElementById('rep_option');
-            const nameContainer = document.getElementById('name_container');
-            const costInput = document.getElementById('cost');
-            const performerNameInput = document.getElementById('name');
-            const rawCostInput = document.getElementById('raw_budget');
-
-            repOption.addEventListener('change', function() {
-                if (repOption.value === 'OUT') {
-                    nameContainer.innerHTML =
-                        '<input type="text" name="name" class="form-control" id="name" required>';
-                    document.getElementById('name').addEventListener('input', function() {
-                        performerNameInput.value = this.value;
-                    });
-                } else if (repOption.value === 'NCS') {
-                    nameContainer.innerHTML = `
-            <select name="name" class="form-select" id="name_option" required>
-                <option disabled selected>Select Name</option>
-                @forelse ($crew as $data)
-                    <option value="{{ $data->full_name }}"
-                        data-price="0">{{ $data->full_name }}
-                    </option>
-                @empty
-                    <option disabled selected>Data not found</option>
-                @endforelse
-            </select>`;
-
-                    function numberFormat(number, decimals = 2, decPoint = '.', thousandsSep = ',') {
-                        number = Number(number).toFixed(decimals);
-                        let parts = number.split('.');
-                        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSep);
-                        return parts.join(decPoint);
-                    }
-                    document.getElementById('name_option').addEventListener('change', function() {
-                        let selectedOption = this.options[this.selectedIndex];
-                        let price = selectedOption.getAttribute('data-price');
-                        let formattedPrice = numberFormat(
-                            price); // Use the numberFormat function to format the price
-                        let performerName = selectedOption.text;
-                        costInput.value = formattedPrice;
-                        rawCostInput.value = price;
-                        performerNameInput.value = performerName;
-                    });
-                }
-            });
-        });
-    </script> --}}
-    <script>
         // Function to format numbers as money with "Rp." prefix (e.g., 1250000 -> Rp. 1.250.000)
         function formatMoney(number) {
             return 'Rp. ' + parseInt(number, 10).toLocaleString('id-ID');
@@ -550,7 +479,7 @@
                             // Format the cost and update the cost field
                             let formattedCost = formatMoney(response.price);
                             $('#cost').val(
-                            formattedCost); // Set cost formatted as Rp. X.XXX.XXX
+                                formattedCost); // Set cost formatted as Rp. X.XXX.XXX
                             $('#note').val(response.note); // Set note based on position
                         },
                         error: function(xhr, status, error) {
@@ -564,16 +493,16 @@
                 }
             });
         });
-    </script>
+    </script> --}}
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css"
         rel="stylesheet" />
 
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             // Initialize selectize for the 'name' dropdown in the modal
-            $('#additem').on('shown.bs.modal', function () {
+            $('#additem').on('shown.bs.modal', function() {
                 $('#name_option').selectize({
                     placeholder: "Type to search...", // Placeholder text for the dropdown
                     allowClear: true,
@@ -585,5 +514,100 @@
                 });
             });
         });
-    </script> --}}
+    </script>
+    <script>
+        // Function to format numbers as money with "Rp." prefix (e.g., 1250000 -> Rp. 1.250.000)
+        function formatMoney(number) {
+            return 'Rp. ' + parseInt(number, 10).toLocaleString('id-ID');
+        }
+
+        $(document).ready(function() {
+            let repValue = null;
+
+            // When REP option is selected
+            $('#rep_option').on('change', function() {
+                repValue = $(this).val();
+
+                if (repValue === 'NCS') {
+                    $('#cost').val('0'); // Set cost to 0 when NCS is selected
+                    $('#note').val(''); // Clear the note when NCS is selected
+
+                    // Change name input back to dropdown
+                    $('#name_container').html(
+                        `<label for="name" class="form-label">Name</label>
+                        <select name="name" id="name_option" required>
+                            <option disabled selected>Select Name</option>
+                            @forelse ($crew as $data)
+                                <option value="{{ $data->full_name }}">{{ $data->full_name }}</option>
+                            @empty
+                                <option disabled selected>Data not found</option>
+                            @endforelse
+                        </select>`
+                    );
+
+                    // Initialize selectize for the dynamically created 'name' dropdown
+                    $('#name_option').selectize({
+                        placeholder: "Type to search...", // Placeholder text for the dropdown
+                        allowClear: true,
+                        onDropdownOpen: function() {
+                            // Automatically focus the input when the dropdown opens
+                            this.clear();
+                            this.$control_input.focus();
+                        }
+                    });
+                } else if (repValue === 'OUT') {
+                    $('#cost').val(''); // Clear cost field when OUT is selected
+
+                    // Change name dropdown to text input
+                    $('#name_container').html(
+                        `<label for="name" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" id="name_option" required placeholder="Enter Name">`
+                    );
+                }
+            });
+
+            // When Position is selected and REP is OUT
+            $('#position_option').on('change', function() {
+                var positionName = $(this).val();
+
+                if (repValue === 'OUT') {
+                    // Send AJAX request to fetch position details
+                    $.ajax({
+                        url: '/get-position-details/' + positionName,
+                        method: 'GET',
+                        success: function(response) {
+                            // Format the cost and update the cost field
+                            let formattedCost = formatMoney(response.price);
+                            $('#cost').val(
+                                formattedCost); // Set cost formatted as Rp. X.XXX.XXX
+                            $('#note').val(response.note); // Set note based on position
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Could not fetch position details');
+                        }
+                    });
+                } else if (repValue === 'NCS') {
+                    // If NCS is selected, the cost remains 0 and note is cleared
+                    $('#cost').val('0');
+                    $('#raw_budget').val('0');
+                    $('#note').val(''); // Clear the note field
+                }
+            });
+
+            // Initialize selectize for the 'name' dropdown in the modal (when NCS is selected)
+            $('#additem').on('shown.bs.modal', function() {
+                if (repValue === 'NCS') {
+                    $('#name_option').selectize({
+                        placeholder: "Type to search...", // Placeholder text for the dropdown
+                        allowClear: true,
+                        onDropdownOpen: function() {
+                            // Automatically focus the input when the dropdown opens
+                            this.clear();
+                            this.$control_input.focus();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection
