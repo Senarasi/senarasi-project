@@ -138,10 +138,7 @@
     <body>
         <div class="wrapper">
             <div class="body">
-
-
                 <div class="badanisi p-5">
-
                     <div style="display: flex; margin-left: 12px; margin-right: 12px; margin-top: 12px;">
                         <div>
                             <div style="margin-top: -12px">
@@ -678,8 +675,8 @@
                                 <tr>
                                     <td style="justify-content: center; align-items: center; width: 20%;">{{ $requestbudget->employee->full_name }}</td>
                                     <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/pending_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{ $requestbudget->manager->full_name }}</div></td>
-                                    <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/pending_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->reviewer->full_name}}</div></td>
-                                    <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/pending_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->finance1->full_name}}</div></td>
+                                    <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/approve_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->reviewer->full_name}}</div></td>
+                                    <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/reject_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->finance1->full_name}}</div></td>
                                     @if ($budget >= 200000000)
                                     <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/pending_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->finance2->full_name}}</div></td>
                                     @endif

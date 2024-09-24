@@ -218,7 +218,7 @@
 
                         <div class="d-flex gap-2">
                             <div class="col">
-                                <a href="{{ route('approval.report', $id) }}" target="_blank">
+                                <a href="{{ route('approval.view', $id) }}" target="_blank">
                                     <button type="preview" class="btn btn-secondary"
                                         style="border-radius: 8px; padding-bottom: 9px; padding-top: 9px; background-color:#ffff; border: 1px solid#4A25AA"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Preview">
