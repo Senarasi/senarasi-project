@@ -130,7 +130,7 @@
                             class="img-3 me-1" />
                         </div>
                         <div class="col  ms-2" style="font:300 14px Narasi Sans, sans-serif">
-                            <div class="mt-1">{{ Auth::user()->name }}</div>
+                            <div class="mt-1">{{ Auth::user()->full_name }}</div>
                             <div class="text-secondary">{{ Auth::user()->role }}</div>
                         </div>
 

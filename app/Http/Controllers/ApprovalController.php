@@ -99,7 +99,7 @@ class ApprovalController extends Controller
         // Get approval statuses
         $managerApproval = $requestBudgets->approval->where('stage', 'manager')->first()->status ?? null;
         $reviewerApproval = $requestBudgets->approval->where('stage', 'reviewer')->first()->status ?? null;
-        $newApproverApproval = $requestBudgets->approval->where('stage', 'hc')->first()->status ?? null;
+        $hcApproval = $requestBudgets->approval->where('stage', 'hc')->first()->status ?? null;
         $finance1Approval = $requestBudgets->approval->where('stage', 'finance 1')->first()->status ?? null;
         $finance2Approval = $requestBudgets->approval->where('stage', 'finance 2')->first()->status ?? null;
 
@@ -107,7 +107,7 @@ class ApprovalController extends Controller
         $canApproveManager = true; // Manager can always approve
         $canApproveReviewer = $managerApproval === 'approved';
         $canApproveHC = $canApproveReviewer && $reviewerApproval === 'approved';
-        $canApproveFinance1 = $canApproveHC && $newApproverApproval === 'approved';
+        $canApproveFinance1 = $canApproveHC && $hcApproval === 'approved';
         $canApproveFinance2 = $hasApprovalFinance2 && $canApproveFinance1 && $finance1Approval === 'approved';
 
         // Calculate total costs
@@ -124,7 +124,7 @@ class ApprovalController extends Controller
             'hasApprovalFinance2',
             'managerApproval',
             'reviewerApproval',
-            'newApproverApproval',
+            'hcApproval',
             'finance1Approval',
             'finance2Approval',
             'canApproveManager',
@@ -238,6 +238,7 @@ class ApprovalController extends Controller
 
         $currentStage = $this->determineStage($requestBudget);
 
+        // Find the current stage approval
         $approval = $requestBudget->approval->where('stage', $currentStage)->first();
 
         if ($approval && $approval->status === 'pending') {
@@ -245,19 +246,21 @@ class ApprovalController extends Controller
             $approval->status = 'approved';
             $approval->save();
 
-            // Check if it's the final approval stage
+            // Check if there's a next stage
             $nextStage = $this->getNextStage($currentStage, $requestBudget);
+
             if (!$nextStage) {
                 // This is the final approval stage (either finance 1 or finance 2)
                 $this->deductBudget($requestBudget);
             } else {
-                // Move to the next stage
-                Approval::create([
-                    'request_budget_id' => $requestBudget->request_budget_id,
-                    'stage' => $nextStage,
-                    'status' => 'pending',
-                    'employee_id' => $this->getNextStageEmployeeId($nextStage, $requestBudget),
-                ]);
+                // Find the next stage approval and set its status to pending
+                $nextApproval = $requestBudget->approval->where('stage', $nextStage)->first();
+
+                if ($nextApproval) {
+                    // Update the status to 'pending' for the next approver
+                    $nextApproval->status = 'pending';
+                    $nextApproval->save();
+                }
             }
 
             return redirect()->route('approval.show', $id)->with('success', 'Approval successfully updated.');

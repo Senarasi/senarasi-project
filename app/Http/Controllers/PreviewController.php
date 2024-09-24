@@ -22,6 +22,72 @@ class PreviewController extends Controller
 
     public function store(Request $request)
     {
+        // $approverIds = [
+        //     'manager' => $request->input('manager_id'), // Example: Employee ID for manager
+        //     'reviewer' => '3', // Example: Employee ID for reviewer
+        //     'hc' => '7', // Example: Employee ID for the new approver after reviewer
+        //     'finance 1' => '5', // Employee ID for finance 1
+        // ];
+
+        // // If budget is less than or equal to 200 million, add approval 3
+        // if ($request->input('budget') >= 200000000) {
+        //     $approverIds['finance 2'] = '6'; // Example: Employee ID for approval 3
+        // }
+
+        // // Create approval stages
+        // foreach ($approverIds as $stage => $employeeId) {
+        //     // Validate stage to prevent check constraint violation
+        //     if (!in_array($stage, ['manager', 'reviewer', 'hc', 'finance 1', 'finance 2'])) {
+        //         continue; // Skip invalid stages
+        //     }
+
+        //     Approval::create([
+        //         'request_budget_id' => $request->input('request_budget_id'),
+        //         'employee_id' => $employeeId,
+        //         'stage' => $stage,
+        //         'status' => 'pending',
+        //         // Add other fields as needed
+        //     ]);
+        // }
+
+        // $validateData = $request->validate([
+        //     'employee_id' => 'required|exists:employees,employee_id',
+        //     'request_budget_id' => 'required|exists:request_budgets,request_budget_id',
+        //     'history_status' => 'required|string|max:255'
+        // ]);
+
+        // // Create the history
+        // History::create($validateData);
+
+        // return redirect()->route('request-budget.index')->with('success', 'Budget request submitted successfully.');
+
+        $requestBudget = RequestBudget::find($request->input('request_budget_id'));
+
+        // Check if this is a resubmission by looking for any rejected approvals
+        if ($requestBudget) {
+            // If the budget request already exists, check if any approvals are rejected
+            $hasRejected = $requestBudget->approval->contains('status', 'rejected');
+
+            if ($hasRejected) {
+                // Reset all approval statuses to 'pending' and reset the reason to an empty array
+                foreach ($requestBudget->approval as $approval) {
+                    $approval->status = 'pending';
+                    $approval->reason = []; // Resetting reason to an empty array or a default value
+                    $approval->save();
+                }
+
+                // Optionally, log the resubmission in history
+                History::create([
+                    'request_budget_id' => $requestBudget->request_budget_id,
+                    'employee_id' => $request->user()->employee_id,
+                    'history_status' => 'resubmitted',
+                ]);
+
+                return redirect()->route('request-budget.index')->with('success', 'Request resubmitted successfully. All approval statuses and reasons have been reset.');
+            }
+        }
+
+        // Process the initial submission if no budget request exists or if it's not a resubmission
         $approverIds = [
             'manager' => $request->input('manager_id'), // Example: Employee ID for manager
             'reviewer' => '3', // Example: Employee ID for reviewer
@@ -29,50 +95,39 @@ class PreviewController extends Controller
             'finance 1' => '5', // Employee ID for finance 1
         ];
 
-        // If budget is greater than or equal to 200 million, add approval for finance 2
+        // If the budget is greater than or equal to 200 million, add finance 2
         if ($request->input('budget') >= 200000000) {
-            $approverIds['finance 2'] = '6'; // Example: Employee ID for finance 2
+            $approverIds['finance 2'] = '6'; // Employee ID for finance 2
         }
 
-        // Create or update approval stages
+        // Create approval stages
         foreach ($approverIds as $stage => $employeeId) {
             // Validate stage to prevent check constraint violation
             if (!in_array($stage, ['manager', 'reviewer', 'hc', 'finance 1', 'finance 2'])) {
                 continue; // Skip invalid stages
             }
 
-            // Check if an approval already exists for this request and stage
-            $approval = Approval::where('request_budget_id', $request->input('request_budget_id'))
-                ->where('stage', $stage)
-                ->first();
-
-            if ($approval) {
-                // If it exists, update the status back to 'pending' and clear the reason
-                $approval->update([
-                    'status' => 'pending',
-                    'reason' => null // Or you can set it to an empty array if you prefer: 'reason' => []
-                ]);
-            } else {
-                // If it doesn't exist, create a new approval
+            // Create the approval record only if it doesn't already exist (initial submission)
+            $existingApproval = $requestBudget ? $requestBudget->approval->where('stage', $stage)->first() : null;
+            if (!$existingApproval) {
                 Approval::create([
                     'request_budget_id' => $request->input('request_budget_id'),
                     'employee_id' => $employeeId,
                     'stage' => $stage,
                     'status' => 'pending',
-                    'reason' => null, // Or 'reason' => [] if you prefer an empty JSON array
-                    // Add other fields as needed
+                    'reason' => [], // Set the initial reason to an empty array
                 ]);
             }
         }
 
-        // Validate input data for history creation
+        // Validate the request data for history creation
         $validateData = $request->validate([
             'employee_id' => 'required|exists:employees,employee_id',
             'request_budget_id' => 'required|exists:request_budgets,request_budget_id',
-            'history_status' => 'required|string|max:255',
+            'history_status' => 'required|string|max:255'
         ]);
 
-        // Create the history record
+        // Create the history for the initial submission or resubmission
         History::create($validateData);
 
         return redirect()->route('request-budget.index')->with('success', 'Budget request submitted successfully.');
