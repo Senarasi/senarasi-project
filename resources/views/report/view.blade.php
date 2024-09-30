@@ -21,7 +21,7 @@
             }
 
             .judulhalaman {
-                color:  #4a25aa;
+                color: #4a25aa;
                 font-family: "Narasi Sans";
                 font-size: 32px;
                 font-style: normal;
@@ -33,6 +33,7 @@
                 margin-top: 12px;
                 margin-left: 8px;
             }
+
             .arips {
                 justify-content: space-between;
                 display: flex;
@@ -40,6 +41,7 @@
                 margin-bottom: 12px;
                 padding-top: 12px;
             }
+
             .tablecoba,
             td {
                 padding-bottom: 12px;
@@ -50,7 +52,7 @@
             }
 
             table {
-            border-collapse: collapse;
+                border-collapse: collapse;
             }
 
             .table {
@@ -61,44 +63,44 @@
 
             .table th,
             .table td {
-            padding: 0.50rem;
-            vertical-align: top;
-            /* border-top: 1px solid #eff2f7; */
+                padding: 0.50rem;
+                vertical-align: top;
+                /* border-top: 1px solid #eff2f7; */
             }
 
             .table thead th {
-            vertical-align: bottom;
-            /* border-bottom: 2px solid #eff2f7; */
+                vertical-align: bottom;
+                /* border-bottom: 2px solid #eff2f7; */
             }
 
             .table tbody+tbody {
-            border-top: 1px solid #676767;
+                border-top: 1px solid #676767;
             }
 
             .table-bordered {
-            border: 1px solid #676767;
+                border: 1px solid #676767;
             }
 
             .table-bordered th,
             .table-bordered td {
-            border: 1px solid #676767;
+                border: 1px solid #676767;
             }
 
             .table-bordered thead th,
             .table-bordered thead td {
-            border-bottom-width: 1px;
+                border-bottom-width: 1px;
             }
 
-            .text-start{
-                text-align:left!important
+            .text-start {
+                text-align: left !important
             }
 
-            .text-end{
-            text-align:right!important
+            .text-end {
+                text-align: right !important
             }
 
-            .text-center{
-                text-align:center!important
+            .text-center {
+                text-align: center !important
             }
 
             .keteranganbudget {
@@ -142,9 +144,11 @@
                     <div style="display: flex; margin-left: 12px; margin-right: 12px; margin-top: 12px;">
                         <div>
                             <div style="margin-top: -12px">
-                                <div class="text-start" style="display: inline-block; vertical-align: middle; margin-right: 774px">
+                                <div class="text-start"
+                                    style="display: inline-block; vertical-align: middle; margin-right: 774px">
                                     <p style="margin-bottom: -8px; padding-bottom: -8px">Request Number</p>
-                                    <p style="font: 700 15px Narasi Sans, sans-serif; letter-spacing: 0.5px;">{{ $requestbudget->request_budget_number}}</p>
+                                    <p style="font: 700 15px Narasi Sans, sans-serif; letter-spacing: 0.5px;">
+                                        {{ $requestbudget->request_budget_number }}</p>
                                 </div>
                                 <div class="text-end" style="display: inline-block; vertical-align: middle;">
                                     <img style="width: 164px;" src="asset/image/narasi.png" alt="">
@@ -632,26 +636,30 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <table class="table table-bordered " style="font: 12px Narasi Sans, sans-serif; width:43%;  margin-top: 24px; margin-bottom: 12px; text-align: center ">
+                        <table class="table table-bordered "
+                            style="font: 12px Narasi Sans, sans-serif; width:43%;  margin-top: 24px; margin-bottom: 12px; text-align: center ">
                             <thead style="font-weight: 500; background-color: rgba(28, 187, 140, 0.25)">
                                 <tr class="dicobain">
-                                    <th scope="col" class="text-center" style="text-align: center; vertical-align: middle; width: 43%;">Summary</th>
-                                    <th scope="col" class="text-center" style="text-align: center; vertical-align: middle; width: 43%;">Total Cost</th>
+                                    <th scope="col" class="text-center"
+                                        style="text-align: center; vertical-align: middle; width: 43%;">Summary</th>
+                                    <th scope="col" class="text-center"
+                                        style="text-align: center; vertical-align: middle; width: 43%;">Total Cost</th>
                                 </tr>
                             </thead>
 
-                            <tbody class="text-center" >
+                            <tbody class="text-center">
                                 <tr>
-                                    <td  class="text-center" style="font-weight: 500; ">Budget Approve</td>
-                                    <td  class="text-end" style="">Rp. {{ number_format($budget) }}</td>
+                                    <td class="text-center" style="font-weight: 500; ">Budget Approve</td>
+                                    <td class="text-end" style="">Rp. {{ number_format($budget) }}</td>
                                 </tr>
                                 <tr>
-                                    <td  class="text-center" style="font-weight: 500;">Request Budget</td>
-                                    <td  class="text-end" style="">Rp. {{ number_format($totalAll) }}</td>
+                                    <td class="text-center" style="font-weight: 500;">Request Budget</td>
+                                    <td class="text-end" style="">Rp. {{ number_format($totalAll) }}</td>
                                 </tr>
                                 <tr>
-                                    <td  class="text-center" style="font-weight: 500;">Remaining Budget</td>
-                                    <td  class="text-end" style="">Rp. {{number_format($budget-$totalAll)}}</td>
+                                    <td class="text-center" style="font-weight: 500;">Remaining Budget</td>
+                                    <td class="text-end" style="">Rp. {{ number_format($budget - $totalAll) }}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -673,12 +681,86 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="justify-content: center; align-items: center; width: 20%;">{{ $requestbudget->employee->full_name }}</td>
+                                    {{-- <td style="justify-content: center; align-items: center; width: 20%;">{{ $requestbudget->employee->full_name }}</td>
                                     <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/pending_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{ $requestbudget->manager->full_name }}</div></td>
                                     <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/approve_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->reviewer->full_name}}</div></td>
                                     <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/reject_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->finance1->full_name}}</div></td>
                                     @if ($budget >= 200000000)
                                     <td style="justify-content: center; align-items: center; width: 20%;"><img style="width:84px; padding-bottom: -12px" src="asset/image/pending_stamp.png" alt=""><div style="text-align: center; vertical-align: middle;">{{$requestbudget->finance2->full_name}}</div></td>
+                                    @endif --}}
+
+                                    <td style="justify-content: center; align-items: center; width: 20%;">
+                                        {{ $requestbudget->employee->full_name }}
+                                    </td>
+
+                                    <!-- Manager -->
+                                    <td style="justify-content: center; align-items: center; width: 20%;">
+                                        @if (isset($approvals['manager']) && $approvals['manager']->status === 'approved')
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/approve_stamp.png" alt="">
+                                        @elseif(isset($approvals['manager']) && $approvals['manager']->status === 'rejected')
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/reject_stamp.png" alt="">
+                                        @else
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/pending_stamp.png" alt="">
+                                        @endif
+                                        <div style="text-align: center; vertical-align: middle;">
+                                            {{ $requestbudget->manager->full_name }}
+                                        </div>
+                                    </td>
+
+                                    <!-- Reviewer -->
+                                    <td style="justify-content: center; align-items: center; width: 20%;">
+                                        @if (isset($approvals['reviewer']) && $approvals['reviewer']->status === 'approved')
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/approve_stamp.png" alt="">
+                                        @elseif(isset($approvals['reviewer']) && $approvals['reviewer']->status === 'rejected')
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/reject_stamp.png" alt="">
+                                        @else
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/pending_stamp.png" alt="">
+                                        @endif
+                                        <div style="text-align: center; vertical-align: middle;">
+                                            {{ $requestbudget->reviewer->full_name }}
+                                        </div>
+                                    </td>
+
+                                    <!-- Finance 1 -->
+                                    <td style="justify-content: center; align-items: center; width: 20%;">
+                                        @if (isset($approvals['finance 1']) && $approvals['finance 1']->status === 'approved')
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/approve_stamp.png" alt="">
+                                        @elseif(isset($approvals['finance 1']) && $approvals['finance 1']->status === 'rejected')
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/reject_stamp.png" alt="">
+                                        @else
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/pending_stamp.png" alt="">
+                                        @endif
+                                        <div style="text-align: center; vertical-align: middle;">
+                                            {{ $requestbudget->finance1->full_name }}
+                                        </div>
+                                    </td>
+
+                                    <!-- Finance 2 (optional based on budget) -->
+                                    @if ($budget >= 200000000)
+                                        <td style="justify-content: center; align-items: center; width: 20%;">
+                                            @if (isset($approvals['finance 2']) && $approvals['finance 2']->status === 'approved')
+                                                <img style="width:84px; padding-bottom: -12px"
+                                                    src="asset/image/approve_stamp.png" alt="">
+                                            @elseif(isset($approvals['finance 2']) && $approvals['finance 2']->status === 'rejected')
+                                                <img style="width:84px; padding-bottom: -12px"
+                                                    src="asset/image/reject_stamp.png" alt="">
+                                            @else
+                                                <img style="width:84px; padding-bottom: -12px"
+                                                    src="asset/image/pending_stamp.png" alt="">
+                                            @endif
+                                            <div style="text-align: center; vertical-align: middle;">
+                                                {{ $requestbudget->finance2->full_name }}
+                                            </div>
+                                        </td>
                                     @endif
                                 </tr>
                             </tbody>

@@ -224,12 +224,15 @@ class ApprovalController extends Controller
             ->get()
             ->groupBy('sub_description_id');
 
+        // Fetch the approvals for the request budget
+        $approvals = Approval::where('request_budget_id', $id)->get()->keyBy('stage');
+
         // Total cost of all categories
         $approval1 = Employee::findOrFail(120017081704);
         $approval2 = Employee::findOrFail(120021071261);
         $reviewer = Employee::findOrFail(220017110117);
         $hc = Employee::findOrFail(220017110117);
-        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approval1', 'approval2', 'reviewer', 'hc', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts'));
+        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approval1', 'approval2', 'reviewer', 'hc', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts' ,'approvals'));
         // Mengatur format kertas menjadi lanskap
         $pdf->setPaper('LEGAL', 'landscape');
         return $pdf->stream('document.pdf');
@@ -492,18 +495,6 @@ class ApprovalController extends Controller
         ];
 
         return $stages[$currentStage] ?? null;
-    }
-
-    private function getNextStageEmployeeId($nextStage, $requestBudget)
-    {
-        $employeeIds = [
-            'reviewer' => $requestBudget->reviewer_id,
-            'hc' => $requestBudget->hc_id, // Insert HC stage with corresponding employee ID
-            'finance 1' => $requestBudget->finance1_id,
-            'finance 2' => $requestBudget->finance2_id,
-        ];
-
-        return $employeeIds[$nextStage] ?? null;
     }
 
     private function deductBudget($requestBudget)
