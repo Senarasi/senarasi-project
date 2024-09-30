@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::resource('approval', ApprovalController::class);
-    Route::get('/approval/{id}/view', [ApprovalController::class, 'report'])->name('approval.report');
+    Route::get('/approval/{id}/view', [ApprovalController::class, 'view'])->name('approval.view');
     Route::post('/approval/{id}/approve', [ApprovalController::class, 'approve'])->name('approval.approve');
     Route::get('/approval/{id}/reject-view', [ApprovalController::class, 'rejectview'])->name('approval.rejectview');
     Route::post('/approval/{id}/reject', [ApprovalController::class, 'submitReject'])->name('approval.submitReject');

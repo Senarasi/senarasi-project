@@ -22,6 +22,9 @@ use App\Models\PerformerList;
 use App\Models\RequestBudget;
 use App\Models\SubDescription;
 use App\Models\TotalCost;
+use App\Mail\RequestBudgetProgram\NextApproverNotificationMail;
+use App\Mail\RequestBudgetProgram\FinalApprovalNotificationMail;
+use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -142,6 +145,201 @@ class ApprovalController extends Controller
         ));
     }
 
+    public function view($id)
+    {
+        $requestbudget = RequestBudget::findOrFail($id);
+        // Fetch and group performers by sub_description_id
+        $performer = Performer::with(['subDescription', 'employee'])
+            ->where('request_budget_id', $id)
+            ->get()
+            ->groupBy('sub_description_id');
+
+        // Calculate the number of NCS and OUT entries for each sub_description_id
+        $repPerformerCounts = $performer->map(function ($group) {
+            return [
+                'NCS' => $group->where('rep', 'NCS')->count(),
+                'OUT' => $group->where('rep', 'OUT')->count(),
+            ];
+        });
+
+        // Calculate the total NCS and OUT across all sub_description_id
+        $totalRepPerformerCounts = $repPerformerCounts->reduce(function ($carry, $item) {
+            return [
+                'NCS' => $carry['NCS'] + $item['NCS'],
+                'OUT' => $carry['OUT'] + $item['OUT'],
+            ];
+        }, ['NCS' => 0, 'OUT' => 0]);
+
+        // Calculate the total cost for performers
+        $totalPerformerCost = $performer->map(function ($group) {
+            return $group->sum('total_cost');
+        })->sum();
+
+        // Fetch and group production crews by sub_description_id
+        $productioncrew = ProductionCrew::with(['subDescription', 'employee'])
+            ->where('request_budget_id', $id)
+            ->get()
+            ->groupBy('sub_description_id');
+
+        // Calculate the number of NCS and OUT entries for each sub_description_id
+        $repCrewCounts = $productioncrew->map(function ($group) {
+            return [
+                'NCS' => $group->where('rep', 'NCS')->count(),
+                'OUT' => $group->where('rep', 'OUT')->count(),
+            ];
+        });
+
+        // Calculate the total NCS and OUT across all sub_description_id
+        $totalRepCrewCounts = $repCrewCounts->reduce(function ($carry, $item) {
+            return [
+                'NCS' => $carry['NCS'] + $item['NCS'],
+                'OUT' => $carry['OUT'] + $item['OUT'],
+            ];
+        }, ['NCS' => 0, 'OUT' => 0]);
+
+        // Calculate total costs
+        $totalcost = TotalCost::where('request_budget_id', $id)->first();
+        $totalperformer = $totalcost ? $totalcost->total_performers_cost : 0;
+        $totalproductioncrew = $totalcost ? $totalcost->total_production_crews_cost : 0;
+        $totalproductiontool = $totalcost ? $totalcost->total_production_tools_cost : 0;
+        $totaloperational = $totalcost ? $totalcost->total_operationals_cost : 0;
+        $totallocation = $totalcost ? $totalcost->total_locations_cost : 0;
+        $totalAll = $totalperformer + $totalproductioncrew + $totalproductiontool + $totaloperational + $totallocation;
+
+        // Fetch and group production tools by sub_description_id
+        $productiontool = ProductionTool::with(['subDescription', 'employee'])
+            ->where('request_budget_id', $id)
+            ->get()
+            ->groupBy('sub_description_id');
+
+        // Fetch and group operational by sub_description_id
+        $operational = Operational::with(['subDescription', 'employee'])
+            ->where('request_budget_id', $id)
+            ->get()
+            ->groupBy('sub_description_id');
+
+        // Fetch and group location by sub_description_id
+        $location = Location::with(['subDescription', 'employee'])
+            ->where('request_budget_id', $id)
+            ->get()
+            ->groupBy('sub_description_id');
+
+        // Fetch the approvals for the request budget
+        $approvals = Approval::where('request_budget_id', $id)->get()->keyBy('stage');
+
+        // Total cost of all categories
+        $approval1 = Employee::findOrFail(120017081704);
+        $approval2 = Employee::findOrFail(120021071261);
+        $reviewer = Employee::findOrFail(220017110117);
+        $hc = Employee::findOrFail(220017110117);
+        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approval1', 'approval2', 'reviewer', 'hc', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts' ,'approvals'));
+        // Mengatur format kertas menjadi lanskap
+        $pdf->setPaper('LEGAL', 'landscape');
+        return $pdf->stream('document.pdf');
+    }
+
+    public function approve(Request $request, $id)
+    {
+        // $requestBudget = RequestBudget::findOrFail($id);
+
+        // $currentStage = $this->determineStage($requestBudget);
+
+        // // Find the current stage approval
+        // $approval = $requestBudget->approval->where('stage', $currentStage)->first();
+
+        // if ($approval && $approval->status === 'pending') {
+        //     // Approve the current stage
+        //     $approval->status = 'approved';
+        //     $approval->save();
+
+        //     // Check if there's a next stage
+        //     $nextStage = $this->getNextStage($currentStage, $requestBudget);
+
+        //     if (!$nextStage) {
+        //         // This is the final approval stage (either finance 1 or finance 2)
+        //         $this->deductBudget($requestBudget);
+        //     } else {
+        //         // Find the next stage approval and set its status to pending
+        //         $nextApproval = $requestBudget->approval->where('stage', $nextStage)->first();
+
+        //         if ($nextApproval) {
+        //             // Update the status to 'pending' for the next approver
+        //             $nextApproval->status = 'pending';
+        //             $nextApproval->save();
+        //         }
+        //     }
+
+        //     return redirect()->route('approval.show', $id)->with('success', 'Approval successfully updated.');
+        // }
+
+        // return redirect()->route('approval.show', $id)->with('error', 'Approval not found or already processed.');
+
+        $requestBudget = RequestBudget::findOrFail($id);
+
+        $currentStage = $this->determineStage($requestBudget);
+
+        // Find the current stage approval
+        $approval = $requestBudget->approval->where('stage', $currentStage)->first();
+
+        if ($approval && $approval->status === 'pending') {
+            // Approve the current stage
+            $approval->status = 'approved';
+            $approval->save();
+
+            // Check if there's a next stage
+            $nextStage = $this->getNextStage($currentStage, $requestBudget);
+
+            if (!$nextStage) {
+                // This is the final approval stage (either finance 1 or finance 2)
+                $this->deductBudget($requestBudget);
+
+                // Send final approval email to the submitting user
+                $totalAll = $this->calculateTotalCost($requestBudget->request_budget_id); // Calculate total cost
+                $submitterEmail = $requestBudget->employee->email;
+                // Generate the PDF report
+                $pdf = $this->report($requestBudget->request_budget_id)->output(); // Generate PDF output
+
+                if ($submitterEmail) {
+                    Mail::to($submitterEmail)->send(new FinalApprovalNotificationMail(
+                        $requestBudget,
+                        $totalAll,
+                        $pdf
+                    ));
+                }
+            } else {
+                // Find the next stage approval and set its status to pending
+                $nextApproval = $requestBudget->approval->where('stage', $nextStage)->first();
+
+                if ($nextApproval) {
+                    // Update the status to 'pending' for the next approver
+                    $nextApproval->status = 'pending';
+                    $nextApproval->save();
+
+                    // Get next approver details
+                    $nextApprover = Employee::findOrFail($nextApproval->employee_id);
+                    $totalAll = $this->calculateTotalCost($requestBudget->request_budget_id); // Calculate total cost
+                    $currentStage = $this->getCurrentStage($requestBudget); // Get the current stage
+
+                    // Generate the PDF report
+                    $pdf = $this->report($requestBudget->request_budget_id)->output(); // Generate PDF output
+
+                    // Send email notification to the next approver with the report attached
+                    Mail::to($nextApprover->email)->send(new NextApproverNotificationMail(
+                        $requestBudget,
+                        $nextApprover,
+                        $currentStage,
+                        $totalAll,
+                        $pdf // Attach the PDF report
+                    ));
+                }
+            }
+
+            return redirect()->route('approval.show', $id)->with('success', 'Approval successfully updated.');
+        }
+
+        return redirect()->route('approval.show', $id)->with('error', 'Approval not found or already processed.');
+    }
+
     public function report($id)
     {
         $requestbudget = RequestBudget::findOrFail($id);
@@ -226,48 +424,49 @@ class ApprovalController extends Controller
         $approval2 = Employee::findOrFail(120021071261);
         $reviewer = Employee::findOrFail(220017110117);
         $hc = Employee::findOrFail(220017110117);
-        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approval1', 'approval2', 'reviewer', 'hc', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts'));
-        // Mengatur format kertas menjadi lanskap
+        // Generate the PDF (but do not stream it)
+        $pdf = Pdf::loadView('report.view', [
+            'budget' => $requestbudget->budget,
+            'approval1' => $approval1,
+            'approval2' => $approval2,
+            'reviewer' => $reviewer,
+            'hc' => $hc,
+            'requestbudget' => $requestbudget,
+            'performer' => $performer,
+            'productioncrew' => $productioncrew,
+            'productiontool' => $productiontool,
+            'operational' => $operational,
+            'location' => $location,
+            'totalAll' => $totalAll,
+            'totalRepCrewCounts' => $totalRepCrewCounts,
+            'totalRepPerformerCounts' => $totalRepPerformerCounts,
+        ]);
+
+        // Set the paper format
         $pdf->setPaper('LEGAL', 'landscape');
-        return $pdf->stream('document.pdf');
+
+        // Return the PDF object (not streaming)
+        return $pdf;
     }
 
-    public function approve(Request $request, $id)
+    private function calculateTotalCost($id)
     {
-        $requestBudget = RequestBudget::findOrFail($id);
-
-        $currentStage = $this->determineStage($requestBudget);
-
-        // Find the current stage approval
-        $approval = $requestBudget->approval->where('stage', $currentStage)->first();
-
-        if ($approval && $approval->status === 'pending') {
-            // Approve the current stage
-            $approval->status = 'approved';
-            $approval->save();
-
-            // Check if there's a next stage
-            $nextStage = $this->getNextStage($currentStage, $requestBudget);
-
-            if (!$nextStage) {
-                // This is the final approval stage (either finance 1 or finance 2)
-                $this->deductBudget($requestBudget);
-            } else {
-                // Find the next stage approval and set its status to pending
-                $nextApproval = $requestBudget->approval->where('stage', $nextStage)->first();
-
-                if ($nextApproval) {
-                    // Update the status to 'pending' for the next approver
-                    $nextApproval->status = 'pending';
-                    $nextApproval->save();
-                }
-            }
-
-            return redirect()->route('approval.show', $id)->with('success', 'Approval successfully updated.');
-        }
-
-        return redirect()->route('approval.show', $id)->with('error', 'Approval not found or already processed.');
+        $totalcost = TotalCost::where('request_budget_id', $id)->first();
+        $totalperformer = $totalcost ? $totalcost->total_performers_cost : 0;
+        $totalproductioncrew = $totalcost ? $totalcost->total_production_crews_cost : 0;
+        $totalproductiontool = $totalcost ? $totalcost->total_production_tools_cost : 0;
+        $totaloperational = $totalcost ? $totalcost->total_operationals_cost : 0;
+        $totallocation = $totalcost ? $totalcost->total_locations_cost : 0;
+        return $totalperformer + $totalproductioncrew + $totalproductiontool + $totaloperational + $totallocation;
     }
+
+    private function getCurrentStage($requestBudget)
+    {
+        $pendingApproval = $requestBudget->approval->where('status', 'pending')->first();
+        return $pendingApproval ? $pendingApproval->stage : 'completed';
+    }
+
+
 
     private function determineStage($requestBudget)
     {
@@ -296,18 +495,6 @@ class ApprovalController extends Controller
         ];
 
         return $stages[$currentStage] ?? null;
-    }
-
-    private function getNextStageEmployeeId($nextStage, $requestBudget)
-    {
-        $employeeIds = [
-            'reviewer' => $requestBudget->reviewer_id,
-            'hc' => $requestBudget->hc_id, // Insert HC stage with corresponding employee ID
-            'finance 1' => $requestBudget->finance1_id,
-            'finance 2' => $requestBudget->finance2_id,
-        ];
-
-        return $employeeIds[$nextStage] ?? null;
     }
 
     private function deductBudget($requestBudget)
