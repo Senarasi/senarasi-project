@@ -489,7 +489,7 @@ th {
 }
 
 .modal-content {
-    background: var(--Semantic-Main, linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%));
+    background: var( --Semantic-Main, linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%));
     margin: 8px;
 }
 
@@ -520,7 +520,7 @@ th {
     gap: 10px;
     border: none;
     border-radius: 8px;
-    background: var(--Semantic-Main, linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%));
+    background: var( --Semantic-Main, linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%));
 }
 
 .button-tutup {
@@ -812,7 +812,6 @@ th {
         background: none;
         box-shadow: 0px 1px 8px -1px rgba(74, 37, 170, 0.2);
     }
-
     .button-profile {
         justify-content: start;
         background-color: transparent;
@@ -820,11 +819,9 @@ th {
         padding: 8px 8px;
         margin-bottom: 0px !important;
     }
-
     .button-profile.sidebar-link {
         color: #000;
     }
-
     .button-profile.sidebar-link:hover {
         color: #f1f1f1;
         background-color: var(--Primary-Main, #4a25aa);
@@ -950,7 +947,7 @@ option {
 .garisbutton {
     overflow: hidden;
     text-align: center;
-    font: 600 14px Narasi Sans, sans-serif;
+    font: 600 16px Narasi Sans, sans-serif;
     margin-bottom: 12px;
 }
 
@@ -958,6 +955,8 @@ option {
     border: none;
     background: none;
     color: #c2c1c6;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
 }
 
 .garisbutton::before,
@@ -1015,13 +1014,11 @@ label .form-label {
         gap: 0px;
         padding: 8px;
     }
-
     .keteranganbudget .tunggu,
     .keteranganbudget .tolak,
     .keteranganbudget .diterima {
         padding: 3px;
     }
-
     /* .keteranganbudget .tolak {
         gap: 8px;
     }
@@ -1399,9 +1396,11 @@ td {
     }
 }
 
+
+/*
 .dropdown:hover .dropdown-menu {
     display: block;
-}
+} */
 
 #pdf-container {
     display: flex;
@@ -1435,7 +1434,7 @@ td {
     color: #000000;
     background-color: transparent;
     overflow-x: hidden;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.453), rgba(0, 0, 0, 0.394)), url("../asset/image/karyawan.jpg");
+    background-image: linear-gradient( rgba(0, 0, 0, 0.453), rgba(0, 0, 0, 0.394)), url("../asset/image/karyawan.jpg");
     background-size: cover;
     /* Ensures the background image covers the entire element */
     background-position: center;
@@ -1607,9 +1606,10 @@ a {
 
 .notereject {
     margin-left: 12px;
+    margin-right: 12px;
     background-color: #eeb4b0;
     border: 1px solid #e73638;
-    width: 1616px;
+    /* width: 1616px; */
     padding: 12px;
     border-radius: 8px;
     margin-top: 24px;
@@ -1713,7 +1713,6 @@ a {
         flex-direction: column;
         align-items: flex-start;
     }
-
     .step-bar .step {
         display: flex;
         align-items: center;
@@ -1721,13 +1720,11 @@ a {
         margin: 20px 0;
         /* Increase spacing between steps */
     }
-
     .step-bar .step .circle {
         margin: 0 15px 0 0;
         line-height: 30px;
         /* Ensure text remains centered vertically */
     }
-
     .step-bar .step::before {
         content: "";
         position: absolute;
@@ -1739,11 +1736,9 @@ a {
         z-index: 0;
         transform: translateY(-70%);
     }
-
     .step-bar .step:first-child::before {
         content: none;
     }
-
     .step-bar .step::after {
         content: "";
         position: absolute;
@@ -1755,16 +1750,13 @@ a {
         z-index: -1;
         transform: translateY(-75%);
     }
-
     .step-bar .step:first-child::after {
         height: calc(50% - 35px);
         top: 15px;
     }
-
     .step-bar .step:last-child::after {
         content: none;
     }
-
     .step-bar .step.waiting+.step::after {
         background-color: #ffe900;
     }
@@ -1796,16 +1788,13 @@ a {
     #sidebar {
         transform: translateX(-100%);
     }
-
     #sidebar.expand {
         transform: translateX(0);
     }
-
     .overlay {
         display: none;
         /* Sembunyikan overlay di mobile */
     }
-
     .overlay.show {
         display: block;
     }
@@ -1819,9 +1808,12 @@ a {
         display: block !important;
         /* Show elements on mobile */
     }
-
     .d-md-table-cell {
         display: none !important;
         /* Hide elements on mobile */
     }
+}
+
+.buletan {
+    text-align: center;
 }

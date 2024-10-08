@@ -53,12 +53,18 @@
             text-decoration: none;
             transition: color 0.3s ease;
             vertical-align: middle;
-            letter-spacing: 0.75px
+            letter-spacing: 0.75px;
         }
 
         .kodo:hover {
             color: #4a25aa;
             font-weight: 400;
+
+        }
+
+        .kodo:hover svg path {
+            fill: #4a25aa;
+
 
         }
 
@@ -95,7 +101,7 @@
             Back
         </a>
 
-        <div class="judulhalaman" style="display: flex; align-items: center;">{{ $docCategory->category }}</div>
+        <div class="judulhalaman" style="display: flex; align-items: center; text-transform:uppercase">{{ $docCategory->category }}</div>
 
         <div style="display: inline-flex; gap: 12px; margin-left: 4px;">
             {{-- <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#modal-upload">Upload
@@ -136,10 +142,10 @@
                                 <td style="vertical-align: top">{{ $doc->doc_number }}</td>
                                 <td class="primary-toggle" style="cursor: pointer; vertical-align: top;">
                                     <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 24 24">
-                                            <g fill="none" stroke="#a6a6a6" stroke-dasharray="16" stroke-dashoffset="16"
-                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                            <g fill="none" stroke="grey" stroke-dasharray="16" stroke-dashoffset="16"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
                                                 <path d="M5 12h14">
                                                     <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s"
                                                         values="16;0" />
@@ -155,19 +161,33 @@
 
 
                                     <div class="secondary hidden"
-                                        style="clear: both; font-size: 16px; text-transform:capitalize; margin-left: 16px">
+                                        style="clear: both; font-size: 16px; text-transform:capitalize; margin-left: 6px;">
                                         <ul>
                                             @foreach ($doc->supportingDocuments as $supportingDoc)
                                                 <li>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
-                                                        viewBox="0 0 24 24">
-                                                        <path fill="black"
-                                                            d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10s10-4.47 10-10S17.53 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8s8 3.58 8 8s-3.58 8-8 8" />
-                                                    </svg>
-                                                    <a class="kodo" style="" target="_blank"
-                                                        href="{{ route('company-document.supporting-doc.view', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug, 'supportingDoc' => $supportingDoc->supporting_doc_slug]) }}">
-                                                        {{ $supportingDoc->file_name }}
+                                                    <a class="kodo" target="_blank"
+                                                        href="{{ route('company-document.supporting-doc.view', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug, 'supportingDoc' => $supportingDoc->supporting_doc_slug]) }}"
+                                                        style="display: flex; align-items: center;" data-bs-toggle="tooltip"
+                                                        data-bs-placement="left" data-bs-title="Supporting Document">
+
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" style="margin-right: 5px;">
+                                                            <path fill="grey"
+                                                                d="m18.29 15.71l-4.58 4.58c-.39.39-1.03.39-1.42 0s-.39-1.03 0-1.42L15.17 16H5c-.55 0-1-.45-1-1V5c0-.55.45-1 1-1s1 .45 1 1v9h9.17l-2.88-2.87c-.39-.39-.39-1.03 0-1.42s1.03-.39 1.42 0l4.58 4.58c.39.39.39 1.03 0 1.42" />
+                                                        </svg>
+
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                            height="20" viewBox="0 0 24 24"
+                                                            style="margin-top: 3px; margin-right:2px">>
+                                                            <path fill="grey"
+                                                                d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" />
+                                                        </svg>
+
+                                                        <span
+                                                            style="margin-top: 6px;">{{ $supportingDoc->file_name }}</span>
                                                     </a>
+
+
                                                 </li>
                                             @endforeach
                                         </ul>

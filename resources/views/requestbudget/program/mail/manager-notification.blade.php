@@ -174,7 +174,7 @@
                     <td>: Rp. {{ number_format($totalAll, 2, ',', '.') }}</td>
                 </tr>
             </table>
-            <h3><a  href="" class="button-report" >Process Approval</a></h3>
+            <h3><a  href="{{ config('app.url') }}/approval/{{ $requestBudget->request_budget_id }}" class="button-report" >Process Approval</a></h3>
             <div>
             </div>
         </div>

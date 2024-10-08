@@ -185,13 +185,12 @@
                             </select>
                         </div> --}}
 
-                    <div class="mb-3 " id="viaContainer">
-                        <label for="meetingvia" class="d-flex">Video Conference Via (Optional)</label>
-                        <select name="meetingvia" class="form-select" id="meetingvia" required>
-                            <option style="color: rgb(189, 189, 189);" disabled selected>Choose one </option>
-                            <option value="Google Meet">Google Meet</option>
-                            {{-- <option value="Zoom">Zoom</option> --}}
-                        </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="meetingvia" value="Google Meet"
+                            id="googleMeet">
+                        <label class="form-check-label" for="googleMeet">
+                            Add Google Meet Link
+                        </label>
                     </div>
 
 
@@ -230,6 +229,27 @@
                                         d="M128 0c17.7 0 32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 48 0c26.5 0 48 21.5 48 48l0 48L0 160l0-48C0 85.5 21.5 64 48 64l48 0 0-32c0-17.7 14.3-32 32-32zM0 192l448 0 0 272c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 192zm64 80l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm128 0l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM64 400l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zm112 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16z" />
                                 </svg>
                                 <span class="fw-lighter align-middle" id="eventModalDate"></span>
+                            </div>
+                            <div class="mb-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 12px;" height="16"
+                                    width="17" viewBox="0 0 576 512" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                    data-bs-title="Room Name">
+                                    <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                    <path fill="#4a25aa"
+                                        d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" />
+                                </svg>
+                                <span class="fw-lighter align-middle" id="eventModalRoom"></span>
+                            </div>
+                            <div class="mb-3" id="googleMeetContainer" style="display: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 14px" width="16"
+                                    height="16" viewBox="0 0 28 28">
+                                    <path fill="#4a25aa"
+                                        d="M6.75 5A3.75 3.75 0 0 0 3 8.75v9.083a4.7 4.7 0 0 1 1.75-.333h5.5a4.75 4.75 0 0 1 4.584 3.5h.416q.36-.001.701-.065A3.75 3.75 0 0 0 19 17.25v-8.5A3.75 3.75 0 0 0 15.25 5zM20 16.747l4.252 2.936c1.16.801 2.744-.03 2.744-1.44V7.753c0-1.41-1.583-2.242-2.744-1.44L20 9.249zM4.75 20a2.25 2.25 0 0 0 0 4.5h.5a.75.75 0 0 1 0 1.5h-.5a3.75 3.75 0 1 1 0-7.5h.5a.75.75 0 0 1 0 1.5zM4 22.25a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75m6.25 2.25a2.25 2.25 0 0 0 0-4.5h-.5a.75.75 0 0 1 0-1.5h.5a3.75 3.75 0 1 1 0 7.5h-.5a.75.75 0 0 1 0-1.5z" />
+                                </svg>
+                                <span class="fw-lighter align-middle">
+                                    <a id="eventModalGoogleMeet" href="#" target="_blank"></a>
+                                </span>
                             </div>
                             <div class="mb-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 14px;" height="16"
@@ -368,6 +388,7 @@
                         // Mengisi informasi lainnya ke dalam modal
                         $('#eventModalDesc').text(info.event.title);
                         $('#eventModalUser').text(info.event.extendedProps.user.full_name);
+                        $('#eventModalRoom').text(info.event.extendedProps.room.room_name);
 
                         var telephone = info.event.extendedProps.user.phone;
                         var whatsappLink = 'https://wa.me/+62' + telephone.replace(/[^0-9]/g,
@@ -395,6 +416,17 @@
                             externalGuestsList.show();
                         } else {
                             externalGuestsList.hide();
+                        }
+
+                        var googleMeetLink = info.event.extendedProps.google_meet_link;
+                        if (googleMeetLink) {
+                            // Tampilkan container jika ada link Google Meet
+                            var googleMeetText = googleMeetLink.replace(/^https?:\/\//, '');
+                            $('#googleMeetContainer').show(); // Menampilkan elemen dengan ikon dan link
+                            $('#eventModalGoogleMeet').text(googleMeetText).attr('href', googleMeetLink);
+                        } else {
+                            // Sembunyikan container jika tidak ada link
+                            $('#googleMeetContainer').hide();
                         }
 
                         // Menampilkan atau menyembunyikan tombol berdasarkan kepemilikan

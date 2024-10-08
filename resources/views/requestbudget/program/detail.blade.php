@@ -123,7 +123,7 @@
                 </div>
                 <div class="row" style="margin-top: -24px">
                     <div class="col-3">
-                        <a href="/viewpdf" target="_blank">
+                        <a href="{{ route('request-budget.report', $requestBudgets->request_budget_id) }}" target="_blank">
                             <button type="preview" class="btn btn-secondary"
                                 style="border-radius: 8px; padding-bottom: 9px; padding-top: 9px; background-color:#ffff; margin-right:8px; border: 1px solid#4A25AA"
                                 data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Preview">
@@ -137,8 +137,8 @@
                         </a>
                     </div>
                     <div class="col-auto">
-                        <a href="/downloadpdf"><button type="download" class="button-export" style="color: white">Export to
-                                PDF</button></a>
+                        <a href="{{ route('report.download', $requestBudgets->request_budget_id) }}"><button type="download" class="button-export"
+                                style="color: white">Export PDF</button></a>
                     </div>
                 </div>
             </div>

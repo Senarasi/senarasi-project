@@ -20,7 +20,7 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="home-tab" data-bs-toggle="tab"
                 data-url="{{ route('request-budget.edit', $id) }}" data-bs-target="#home-tab-pane" type="button"
-                role="tab" aria-controls="home-tab-pane" aria-selected="false">Header</button>
+                role="tab" aria-controls="home-tab-pane" aria-selected="false">General</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="data1-tab" data-url="{{ route('request-budget.performer', $id) }}"
@@ -51,7 +51,7 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link tablinks" id="preview-tab" data-url="{{ route('request-budget.preview', $id) }}"
                 data-bs-toggle="tab" data-bs-target="#preview-tab-pane" type="button" role="tab"
-                aria-controls="preview-tab-pane" aria-selected="false">Preview</button>
+                aria-controls="preview-tab-pane" aria-selected="false">Preview & Submit</button>
         </li>
         <li class="nav-item" role="presentation">
         </li>
@@ -70,62 +70,67 @@
             </div>
         @endif
         <form id="mainForm" action=""></form>
-        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px; border-bottom:none">
-            <table class="table table-hover"
-                style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center">
-                <thead style="font-weight: 500">
+        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px; border-top:none">
+            <table class="table table-hover align-middle"
+                style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center;">
+                <thead class="table-light" style="border:1px solid #c4c4c4">
                     <tr class="dicobain">
-                        <th scope="col ">No</th>
-                        <th scope="col ">Description</th>
+                        <th scope="col" style="width: 5%">No</th>
+                        <th scope="col" style="width: 70%">Description</th>
                         <th scope="col ">Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <th scope="row ">1</th>
-                        <td style="text-align: start">Performer/Host/Guest</td>
+                        <td style="text-align: start; font-weight: 400">Performer<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Host, Guest / Speaker )</span></td>
 
-                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
-                            {{ number_format($totalperformer) ?? 0 }}
+                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                            <span style="float: left;">Rp</span>
+                            <span style="float: right;">{{ number_format($totalperformer) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th scope=" row ">2</th>
-                        <td style="text-align: start">Production Crews</td>
-
-                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
-                            {{ number_format($totalproductioncrew) ?? 0 }}</td>
+                        <td style="text-align: start; font-weight: 400;">Production Crews<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Internal team, Production Studio, Business Development, Operational )</span></td>
+                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                            <span style="float: left;">Rp</span>
+                            <span style="float: right;">{{ number_format($totalproductioncrew) ?? 0 }}</span>
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row ">3</th>
-                        <td style="text-align: start">Production Tools</td>
-
-                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
-                            {{ number_format($totalproductiontool) ?? 0 }}</td>
+                        <td style="text-align: start; font-weight: 400">Production Tools<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px"> (Broadcast System, Audio System, Lightning System, Set/Property, Internet, Electricity )</span></td>
+                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                            <span style="float: left;">Rp</span>
+                            <span style="float: right;">{{ number_format($totalproductiontool) ?? 0 }}</span>
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row ">4</th>
-                        <td style="text-align: start">Operational</td>
-
-                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
-                            {{ number_format($totaloperational) ?? 0 }}
+                        <td style="text-align: start; font-weight: 400">Operational<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Meals, Transportaion, etc )</span></td>
+                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                            <span style="float: left;">Rp</span>
+                            <span style="float: right;">{{ number_format($totaloperational) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">5</th>
-                        <td style="text-align: start">Venue</td>
-
-                        <td class="total-price" style="font-weight: 300; text-align: end; padding-left: 24px;">Rp.
-                            {{ number_format($totallocation) ?? 0 }}
+                        <td style="text-align: start; font-weight: 400">Venue<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Location Rental, Overtime AC, etc )</span> </td>
+                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                            <span style="float: left;">Rp</span>
+                            <span style="float: right;">{{ number_format($totallocation) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr style="border-bottom: 1px solid #c4c4c4;">
-                        <td colspan="2" class="text-right" style="font-weight: 500; background-color: #dbdee8">
+                        <td colspan="2" class="text-center" style="font-weight: 500; background-color: #dbdee8">
                             Total</td>
-                        <td class="total-price">Rp.
-                            {{ number_format($totalAll) }}
-                            / <span style="color: red">Rp.
-                                {{ number_format($budget) }}</span></td>
+                            <td style="position: relative; text-align: end; padding-left: 24px; font-weight: 400; padding-right: 24px; ">
+                                <span style="float: left;">Rp</span>
+                                <span style="float: right;">{{ number_format($totalAll) }}
+                                    / <span style="color: red">Rp.
+                                        {{ number_format($budget) }}</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -140,33 +145,33 @@
                         fill="white" />
                 </svg>
             </button>
-            <button type="button" class="button-departemen me-3" onclick="addBundleItems()">Add Bundle Items<svg
+            {{-- <button type="button" class="button-departemen me-3" onclick="addBundleItems()">Add Bundle Items<svg
                     xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
                     fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M8.99995 2.7002C9.23865 2.7002 9.46756 2.79502 9.63635 2.9638C9.80513 3.13258 9.89995 3.3615 9.89995 3.6002V8.10019H14.4C14.6386 8.10019 14.8676 8.19502 15.0363 8.3638C15.2051 8.53258 15.3 8.7615 15.3 9.0002C15.3 9.23889 15.2051 9.46781 15.0363 9.63659C14.8676 9.80537 14.6386 9.9002 14.4 9.9002H9.89995V14.4002C9.89995 14.6389 9.80513 14.8678 9.63635 15.0366C9.46756 15.2054 9.23865 15.3002 8.99995 15.3002C8.76126 15.3002 8.53234 15.2054 8.36355 15.0366C8.19477 14.8678 8.09995 14.6389 8.09995 14.4002V9.9002H3.59995C3.36126 9.9002 3.13234 9.80537 2.96356 9.63659C2.79477 9.46781 2.69995 9.23889 2.69995 9.0002C2.69995 8.7615 2.79477 8.53258 2.96356 8.3638C3.13234 8.19502 3.36126 8.10019 3.59995 8.10019H8.09995V3.6002C8.09995 3.3615 8.19477 3.13258 8.36355 2.9638C8.53234 2.79502 8.76126 2.7002 8.99995 2.7002Z"
                         fill="white" />
                 </svg>
-            </button>
+            </button> --}}
         </div>
 
         {{-- <div id="tableContainer"> --}}
         <div class="tablenih" style="margin-top: 24px;">
             <div class="table-responsive p-3" style="max-height: 450px; overflow-y: auto;">
                 <table id="datatablerequest" class="table table-hover">
-                    <thead style="font-weight: 500">
+                    <thead class="table-light">
                         <tr class="dicobain">
                             <th scope="col">Sub Description</th>
                             <th scope="col">Usage</th>
                             <th scope="col">REP</th>
                             <th scope="col">Name</th>
-                            <th scope="col" style="width: 80px; text-align: center">Day</th>
-                            <th scope="col" style="width: 80px; text-align: center">QTY</th>
+                            <th scope="col" style="width: 80px;">Day</th>
+                            <th scope="col" style="width: 80px;">QTY</th>
                             <th scope="col">Cost</th>
                             <th scope="col">Total</th>
                             <th scope="col">Assign To</th>
                             <th scope="col">Note</th>
-                            <th scope="col" style="width: 140px" class="text-center">Action</th>
+                            <th scope="col" style="width: 140px" class="text-center"></th>
                         </tr>
                     </thead>
                     <tbody id="performerTableBody">
@@ -196,7 +201,7 @@
                                     <input type="hidden" name="url_back"
                                         value="{{ route('request-budget.location', $requestbudget->request_budget_id) }}">
                                     <a href="#" onclick="$(this).closest('form').submit();"
-                                    class="btn btn-danger" style="font-size: 14px; font-weight: 500; padding: 7px 10px;">Hapus</a>
+                                    class="btn btn-danger" style="font-size: 14px; font-weight: 500; padding: 7px 10px;">Delete</a>
                                 </form>
                                 </span>
                             </td>

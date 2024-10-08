@@ -292,7 +292,7 @@
                                     <td colspan="5" class="text-start "
                                         style="font-weight: 500; background-color: #ffe900;">SUB TOTAL
                                         PERFORMER/HOST/GUEST</td>
-                                    <td class="text-end">Rp. {{ number_format($data->sum('total_cost')) }}</td>
+                                    <td class="text-end">Rp. {{ number_format($totalperformer) }}</td>
                                     <td></td>
                                     <td></td>
                                 </tr>
@@ -365,7 +365,7 @@
                                     <td colspan="5" class="text-start "
                                         style="font-weight: 500; background-color: #ffe900;">SUB TOTAL PRODUCTION CREWS
                                     </td>
-                                    <td class="text-end">Rp. {{ number_format($data->sum('total_cost')) }}
+                                    <td class="text-end">Rp. {{ number_format($totalproductioncrew) }}
                                     </td>
                                     <td></td>
                                     <td></td>
@@ -440,7 +440,7 @@
                                     <td colspan="5" class="text-start "
                                         style="font-weight: 500; background-color: #ffe900;">SUB TOTAL PRODUCTION TOOLS
                                     </td>
-                                    <td class="text-end">Rp. {{ number_format($data->sum('total_cost')) }}</td>
+                                    <td class="text-end">Rp. {{ number_format($totalproductiontool) }}</td>
                                     <td></td>
                                     <td></td>
 
@@ -513,7 +513,7 @@
                                 <tr>
                                     <td colspan="5" class="text-start "
                                         style="font-weight: 500; background-color: #ffe900;">SUB TOTAL OPERATIONAL</td>
-                                    <td class="text-end">Rp. {{ number_format($data->sum('total_cost')) }}</td>
+                                    <td class="text-end">Rp. {{ number_format($totaloperational) }}</td>
                                     <td></td>
                                     <td></td>
 
@@ -587,7 +587,7 @@
                                     <td colspan="5" class="text-start "
                                         style="font-weight: 500; background-color: #ffe900;">SUB TOTAL VENUE RENTAL
                                     </td>
-                                    <td class="text-end">Rp. {{ number_format($data->sum('total_cost')) }}</td>
+                                    <td class="text-end">Rp. {{ number_format($totallocation) }}</td>
                                     <td></td>
                                     <td></td>
 

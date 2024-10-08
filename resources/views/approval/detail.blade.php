@@ -232,7 +232,7 @@
                                 </a>
                             </div>
                             <div class="col-auto">
-                                <a href="/downloadpdf"><button type="download" class="button-export"
+                                <a href="{{ route('report.download', $id) }}"><button type="download" class="button-export"
                                         style="color: white">Export PDF</button></a>
                             </div>
                         </div>

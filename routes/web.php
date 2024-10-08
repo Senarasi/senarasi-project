@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard-main', [App\Http\Controllers\DashboardController::class, 'dashboardmain'])->name('dashboard.main');
     Route::get('/dashboard-budget', [App\Http\Controllers\DashboardController::class, 'dashboardbudget'])->name('dashboard.budget');
     Route::get('/map', [App\Http\Controllers\MapController::class, 'index']);
+    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
     Route::resource('budget', 'App\Http\Controllers\Budget\BudgetProgramController');
     Route::post('/budget/store', 'App\Http\Controllers\Budget\BudgetProgramController@store')->name('budget.store');
@@ -53,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/request-budget/preview/{id}', [App\Http\Controllers\RequestBudgetController::class, 'preview'])->name('request-budget.preview');
     Route::get('/request-budget/preview/{id}/view', [App\Http\Controllers\RequestBudgetController::class, 'report'])->name('request-budget.report');
     Route::delete('request-budget/{id}', [App\Http\Controllers\RequestBudgetController::class, 'destroy'])->name('request-budget.destroy');
+    Route::get('/downloadpdf/{id}', [App\Http\Controllers\ReportController::class, 'download'])->name('report.download');
 
     Route::get('/requestpayment', function () {
         return view('requestbudget.payment.index');
