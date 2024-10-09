@@ -673,6 +673,7 @@
                                     <th scope="col ">Requester</th>
                                     <th scope="col ">Approval Manager</th>
                                     <th scope="col ">Studio Production Review</th>
+                                    <th scope="col ">Human Capital</th>
                                     <th scope="col ">Controller Manager</th>
                                     @if ($budget >= 200000000)
                                         <th scope="col ">VP Operation</th>
@@ -697,13 +698,13 @@
                                     <td style="justify-content: center; align-items: center; width: 20%;">
                                         @if (isset($approvals['manager']) && $approvals['manager']->status === 'approved')
                                             <img style="width:84px; padding-bottom: -12px"
-                                                src="asset/image/approve_stamp.png" alt="">
+                                                src="asset/image/APPROVED.png" alt="">
                                         @elseif(isset($approvals['manager']) && $approvals['manager']->status === 'rejected')
                                             <img style="width:84px; padding-bottom: -12px"
-                                                src="asset/image/reject_stamp.png" alt="">
+                                                src="asset/image/REJECT.png" alt="">
                                         @else
                                             <img style="width:84px; padding-bottom: -12px"
-                                                src="asset/image/pending_stamp.png" alt="">
+                                                src="asset/image/PENDING.png" alt="">
                                         @endif
                                         <div style="text-align: center; vertical-align: middle;">
                                             {{ $requestbudget->manager->full_name }}
@@ -714,16 +715,33 @@
                                     <td style="justify-content: center; align-items: center; width: 20%;">
                                         @if (isset($approvals['reviewer']) && $approvals['reviewer']->status === 'approved')
                                             <img style="width:84px; padding-bottom: -12px"
-                                                src="asset/image/approve_stamp.png" alt="">
+                                                src="asset/image/APPROVED.png" alt="">
                                         @elseif(isset($approvals['reviewer']) && $approvals['reviewer']->status === 'rejected')
                                             <img style="width:84px; padding-bottom: -12px"
-                                                src="asset/image/reject_stamp.png" alt="">
+                                                src="asset/image/REJECT.png" alt="">
                                         @else
                                             <img style="width:84px; padding-bottom: -12px"
-                                                src="asset/image/pending_stamp.png" alt="">
+                                                src="asset/image/PENDING.png" alt="">
                                         @endif
                                         <div style="text-align: center; vertical-align: middle;">
                                             {{ $requestbudget->reviewer->full_name }}
+                                        </div>
+                                    </td>
+
+                                    <!-- HC -->
+                                    <td style="justify-content: center; align-items: center; width: 20%;">
+                                        @if (isset($approvals['hc']) && $approvals['hc']->status === 'approved')
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/APPROVED.png" alt="">
+                                        @elseif(isset($approvals['hc']) && $approvals['hc']->status === 'rejected')
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/REJECT.png" alt="">
+                                        @else
+                                            <img style="width:84px; padding-bottom: -12px"
+                                                src="asset/image/PENDING.png" alt="">
+                                        @endif
+                                        <div style="text-align: center; vertical-align: middle;">
+                                            {{ $requestbudget->hc->full_name }}
                                         </div>
                                     </td>
 
@@ -731,13 +749,13 @@
                                     <td style="justify-content: center; align-items: center; width: 20%;">
                                         @if (isset($approvals['finance 1']) && $approvals['finance 1']->status === 'approved')
                                             <img style="width:84px; padding-bottom: -12px"
-                                                src="asset/image/approve_stamp.png" alt="">
+                                                src="asset/image/APPROVED.png" alt="">
                                         @elseif(isset($approvals['finance 1']) && $approvals['finance 1']->status === 'rejected')
                                             <img style="width:84px; padding-bottom: -12px"
-                                                src="asset/image/reject_stamp.png" alt="">
+                                                src="asset/image/REJECT.png" alt="">
                                         @else
                                             <img style="width:84px; padding-bottom: -12px"
-                                                src="asset/image/pending_stamp.png" alt="">
+                                                src="asset/image/PENDING.png" alt="">
                                         @endif
                                         <div style="text-align: center; vertical-align: middle;">
                                             {{ $requestbudget->finance1->full_name }}
@@ -749,13 +767,13 @@
                                         <td style="justify-content: center; align-items: center; width: 20%;">
                                             @if (isset($approvals['finance 2']) && $approvals['finance 2']->status === 'approved')
                                                 <img style="width:84px; padding-bottom: -12px"
-                                                    src="asset/image/approve_stamp.png" alt="">
+                                                    src="asset/image/APPROVED.png" alt="">
                                             @elseif(isset($approvals['finance 2']) && $approvals['finance 2']->status === 'rejected')
                                                 <img style="width:84px; padding-bottom: -12px"
-                                                    src="asset/image/reject_stamp.png" alt="">
+                                                    src="asset/image/REJECT.png" alt="">
                                             @else
                                                 <img style="width:84px; padding-bottom: -12px"
-                                                    src="asset/image/pending_stamp.png" alt="">
+                                                    src="asset/image/PENDING.png" alt="">
                                             @endif
                                             <div style="text-align: center; vertical-align: middle;">
                                                 {{ $requestbudget->finance2->full_name }}

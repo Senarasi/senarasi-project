@@ -9,8 +9,9 @@
     <a href="/request-budget" style="text-decoration: none">
         <button class="navback">
             <svg xmlns="http://www.w3.org/2000/svg " width="10" height="17 " viewBox="0 0 10 17 " fill="none ">
-                <path d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                                      7.2501 0 7.6501 0 8.0501Z "
+                <path
+                    d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
+                                                                                                              7.2501 0 7.6501 0 8.0501Z "
                     fill="#4A25AA " />
             </svg>
             Back to Detail Budget
@@ -115,11 +116,20 @@
                         <a href="{{ route('request-budget.edit', $requestBudgets->request_budget_id) }}"
                             class="btn btn-success" style="color: white; padding: 12px 32px; margin-right: 8px;">Edit</a>
                     @endif
-
-                    <button type="submit" class="btn btn-danger" style="color: white; padding: 12px 32px"
+                    {{-- <button type="submit" class="btn btn-danger" style="color: white; padding: 12px 32px"
                         @if ($isApproved && !$isRejected) disabled @endif>
                         Delete
-                    </button>
+                    </button> --}}
+                    <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                        action="{{ route('request-budget.destroy', $requestBudgets->request_budget_id) }}" method="POST"
+                        style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" style="color: white; padding: 12px 32px"
+                            @if ($isApproved && !$isRejected) disabled @endif>
+                            Delete
+                        </button>
+                    </form>
                 </div>
                 <div class="row" style="margin-top: -24px">
                     <div class="col-3">
@@ -137,8 +147,8 @@
                         </a>
                     </div>
                     <div class="col-auto">
-                        <a href="{{ route('report.download', $requestBudgets->request_budget_id) }}"><button type="download" class="button-export"
-                                style="color: white">Export PDF</button></a>
+                        <a href="{{ route('report.download', $requestBudgets->request_budget_id) }}"><button
+                                type="download" class="button-export" style="color: white">Export PDF</button></a>
                     </div>
                 </div>
             </div>

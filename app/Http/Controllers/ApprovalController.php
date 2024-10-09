@@ -24,6 +24,7 @@ use App\Models\SubDescription;
 use App\Models\TotalCost;
 use App\Mail\RequestBudgetProgram\NextApproverNotificationMail;
 use App\Mail\RequestBudgetProgram\FinalApprovalNotificationMail;
+use App\Mail\RequestBudgetProgram\RejectionNotificationMail;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
@@ -232,7 +233,7 @@ class ApprovalController extends Controller
         $approval2 = Employee::findOrFail(120021071261);
         $reviewer = Employee::findOrFail(220017110117);
         $hc = Employee::findOrFail(220017110117);
-        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approval1', 'approval2', 'reviewer', 'hc', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts' ,'approvals'));
+        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approvals','approval1', 'approval2', 'reviewer', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts','totalperformer','totalproductioncrew','totalproductiontool','totaloperational','totallocation'));
         // Mengatur format kertas menjadi lanskap
         $pdf->setPaper('LEGAL', 'landscape');
         return $pdf->stream('document.pdf');
@@ -630,6 +631,15 @@ class ApprovalController extends Controller
             return !empty($note['content']);
         });
 
+        // Calculate total costs
+        $totalcost = TotalCost::where('request_budget_id', $id)->first();
+        $totalperformer = $totalcost ? $totalcost->total_performers_cost : 0;
+        $totalproductioncrew = $totalcost ? $totalcost->total_production_crews_cost : 0;
+        $totalproductiontool = $totalcost ? $totalcost->total_production_tools_cost : 0;
+        $totaloperational = $totalcost ? $totalcost->total_operationals_cost : 0;
+        $totallocation = $totalcost ? $totalcost->total_locations_cost : 0;
+        $totalAll = $totalperformer + $totalproductioncrew + $totalproductiontool + $totaloperational + $totallocation;
+
         // Proceed if there are any valid notes
         if (!empty($filteredNotes)) {
             $jsonNotes = json_encode($filteredNotes);
@@ -657,6 +667,19 @@ class ApprovalController extends Controller
                             $nextApproval->save();
                         }
                     }
+                }
+
+                // Send rejection email to the submitting user
+                $submitterEmail = $requestBudget->employee->email;
+                $rejectedBy = Employee::findOrFail($currentApproval->employee_id); // The person who rejected the request
+
+                if ($submitterEmail) {
+                    Mail::to($submitterEmail)->send(new RejectionNotificationMail(
+                        $requestBudget,
+                        $rejectedBy,
+                        $jsonNotes,
+                        $totalAll
+                    ));
                 }
 
                 return redirect()->route('approval.show', $id)->with('success', 'Request has been rejected and notes saved.');

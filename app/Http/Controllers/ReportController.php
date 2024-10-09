@@ -100,6 +100,9 @@ class ReportController extends Controller
             ->get()
             ->groupBy('sub_description_id');
 
+        // Fetch the approvals for the request budget
+        $approvals = Approval::where('request_budget_id', $id)->get()->keyBy('stage');
+
         // Total cost of all categories
         $approval1 = Employee::findOrFail(120017081704);
         $approval2 = Employee::findOrFail(120021071261);
@@ -109,6 +112,7 @@ class ReportController extends Controller
         // Generate the PDF
         $pdf = Pdf::loadView('report.view', [
             'budget' => $requestbudget->budget,
+            'approvals' => $approvals,
             'approval1' => $approval1,
             'approval2' => $approval2,
             'reviewer' => $reviewer,
