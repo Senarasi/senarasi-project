@@ -578,11 +578,15 @@ class RequestBudgetController extends Controller
             ->get()
             ->groupBy('sub_description_id');
 
+        // Fetch the approvals for the request budget
+        $approvals = Approval::where('request_budget_id', $id)->get()->keyBy('stage');
+
         // Total cost of all categories
         $approval1 = Employee::findOrFail(120017081704);
         $approval2 = Employee::findOrFail(120021071261);
         $reviewer = Employee::findOrFail(220017110117);
-        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approval1', 'approval2', 'reviewer', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts','totalperformer','totalproductioncrew','totalproductiontool','totaloperational','totallocation'));
+        $hc = Employee::findOrFail(220017110117);
+        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approvals', 'approval1', 'approval2', 'reviewer', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts', 'totalperformer', 'totalproductioncrew', 'totalproductiontool', 'totaloperational', 'totallocation'));
         // Mengatur format kertas menjadi lanskap
         $pdf->setPaper('LEGAL', 'landscape');
         return $pdf->stream('document.pdf');
@@ -590,23 +594,46 @@ class RequestBudgetController extends Controller
 
     public function destroy($id)
     {
-        try {
-            Log::info('Attempting to delete request budget with ID: ' . $id);
+        // try {
+        //     Log::info('Attempting to delete request budget with ID: ' . $id);
 
-            // Fetch the existing request budget
-            $requestBudget = RequestBudget::findOrFail($id);
+        //     // Fetch the existing request budget
+        //     $requestBudget = RequestBudget::findOrFail($id);
 
-            // Delete the request budget
-            $requestBudget->delete();
+        //     // Delete the request budget
+        //     $requestBudget->delete();
 
-            Log::info('Request budget deleted successfully');
+        //     Log::info('Request budget deleted successfully');
 
-            return redirect()->route('requestbudget.program.index')->with('success', 'Request budget and all associated records deleted successfully!');
-        } catch (QueryException $e) {
-            Log::error('Error deleting request budget: ' . $e->getMessage());
+        //     return redirect()->route('requestbudget.program.index')->with('success', 'Request budget and all associated records deleted successfully!');
+        // } catch (QueryException $e) {
+        //     Log::error('Error deleting request budget: ' . $e->getMessage());
 
-            // Handle constraint violation exception
-            return redirect()->route('requestbudget.program.index')->with('error', 'Cannot delete budget. It has associated records.');
+        //     // Handle constraint violation exception
+        //     return redirect()->route('requestbudget.program.index')->with('error', 'Cannot delete budget. It has associated records.');
+        // }\
+
+        // Find the RequestBudget by its ID
+        $requestBudget = RequestBudget::findOrFail($id);
+
+        // Optionally, you can add conditions here to prevent deletion if approved/rejected.
+        if ($requestBudget->isApproved && !$requestBudget->isRejected) {
+            return redirect()->back()->with('error', 'You cannot delete an approved request.');
         }
+
+        // Deleting related records if needed (e.g., approvals, costs)
+        $requestBudget->performer()->delete();
+        $requestBudget->productionCrew()->delete();
+        $requestBudget->productionTool()->delete();
+        $requestBudget->operational()->delete();
+        $requestBudget->location()->delete();
+        $requestBudget->approval()->delete();
+        $requestBudget->totalCost()->delete();
+
+        // Delete the RequestBudget itself
+        $requestBudget->delete();
+
+        // Redirect after deletion
+        return redirect()->route('request-budget.index')->with('success', 'Request Budget deleted successfully.');
     }
 }
