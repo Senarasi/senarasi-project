@@ -102,7 +102,7 @@ class PreviewController extends Controller
         ];
 
         // If the budget is greater than or equal to 200 million, add finance 2
-        if ($request->input('budget') >= 200000000) {
+        if ($requestBudget->totalCost->total_cost >= 200000000) {
             $approverIds['finance 2'] = '6'; // Employee ID for finance 2
         }
 

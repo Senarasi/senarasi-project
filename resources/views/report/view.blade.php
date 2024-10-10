@@ -151,7 +151,7 @@
                                         {{ $requestbudget->request_budget_number }}</p>
                                 </div>
                                 <div class="text-end" style="display: inline-block; vertical-align: middle;">
-                                    <img style="width: 164px;" src="asset/image/narasi.png" alt="">
+                                    <img style="width: 164px;" src="asset/image/Narasi.png" alt="">
                                 </div>
                             </div>
 
@@ -675,7 +675,7 @@
                                     <th scope="col ">Studio Production Review</th>
                                     <th scope="col ">Human Capital</th>
                                     <th scope="col ">Controller Manager</th>
-                                    @if ($budget >= 200000000)
+                                    @if ($requestbudget->totalCost->total_cost >= 200000000)
                                         <th scope="col ">VP Operation</th>
                                     @endif
                                 </tr>
@@ -763,7 +763,7 @@
                                     </td>
 
                                     <!-- Finance 2 (optional based on budget) -->
-                                    @if ($budget >= 200000000)
+                                    @if ($requestbudget->totalCost->total_cost >= 200000000)
                                         <td style="justify-content: center; align-items: center; width: 20%;">
                                             @if (isset($approvals['finance 2']) && $approvals['finance 2']->status === 'approved')
                                                 <img style="width:84px; padding-bottom: -12px"

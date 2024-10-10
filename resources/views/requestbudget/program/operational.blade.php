@@ -84,41 +84,56 @@
                 <tbody>
                     <tr>
                         <th scope="row ">1</th>
-                        <td style="text-align: start; font-weight: 400">Performer<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Host, Guest / Speaker )</span></td>
+                        <td style="text-align: start; font-weight: 400">Performer<span
+                                style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Host, Guest /
+                                Speaker )</span></td>
 
-                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                        <td class="total-price"
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
                             <span style="float: left;">Rp</span>
                             <span style="float: right;">{{ number_format($totalperformer) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th scope=" row ">2</th>
-                        <td style="text-align: start; font-weight: 400;">Production Crews<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Internal team, Production Studio, Business Development, Operational )</span></td>
-                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                        <td style="text-align: start; font-weight: 400;">Production Crews<span
+                                style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Internal team,
+                                Production Studio, Business Development, Operational )</span></td>
+                        <td class="total-price"
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
                             <span style="float: left;">Rp</span>
                             <span style="float: right;">{{ number_format($totalproductioncrew) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">3</th>
-                        <td style="text-align: start; font-weight: 400">Production Tools<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px"> (Broadcast System, Audio System, Lightning System, Set/Property, Internet, Electricity )</span></td>
-                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                        <td style="text-align: start; font-weight: 400">Production Tools<span
+                                style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px"> (Broadcast System,
+                                Audio System, Lightning System, Set/Property, Internet, Electricity )</span></td>
+                        <td class="total-price"
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
                             <span style="float: left;">Rp</span>
                             <span style="float: right;">{{ number_format($totalproductiontool) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">4</th>
-                        <td style="text-align: start; font-weight: 400">Operational<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Meals, Transportaion, etc )</span></td>
-                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                        <td style="text-align: start; font-weight: 400">Operational<span
+                                style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Meals,
+                                Transportaion, etc )</span></td>
+                        <td class="total-price"
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
                             <span style="float: left;">Rp</span>
                             <span style="float: right;">{{ number_format($totaloperational) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">5</th>
-                        <td style="text-align: start; font-weight: 400">Venue<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Location Rental, Overtime AC, etc )</span> </td>
-                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                        <td style="text-align: start; font-weight: 400">Venue<span
+                                style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Location Rental,
+                                Overtime AC, etc )</span> </td>
+                        <td class="total-price"
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
                             <span style="float: left;">Rp</span>
                             <span style="float: right;">{{ number_format($totallocation) ?? 0 }}</span>
                         </td>
@@ -126,11 +141,12 @@
                     <tr style="border-bottom: 1px solid #c4c4c4;">
                         <td colspan="2" class="text-center" style="font-weight: 500; background-color: #dbdee8">
                             Total</td>
-                            <td style="position: relative; text-align: end; padding-left: 24px; font-weight: 400; padding-right: 24px; ">
-                                <span style="float: left;">Rp</span>
-                                <span style="float: right;">{{ number_format($totalAll) }}
-                                    / <span style="color: red">Rp.
-                                        {{ number_format($budget) }}</span>
+                        <td
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 400; padding-right: 24px; ">
+                            <span style="float: left;">Rp</span>
+                            <span style="float: right;">{{ number_format($totalAll) }}
+                                / <span style="color: red">Rp.
+                                    {{ number_format($budget) }}</span>
                         </td>
                     </tr>
                 </tbody>
