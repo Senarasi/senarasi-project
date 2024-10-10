@@ -9,7 +9,7 @@
             <svg xmlns="http://www.w3.org/2000/svg " width="10 " height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path
                     d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                                                                                                                              7.2501 0 7.6501 0 8.0501Z "
+                                                                                                                                                                                      7.2501 0 7.6501 0 8.0501Z "
                     fill="#4A25AA " />
             </svg>
             Back
@@ -86,41 +86,56 @@
                 <tbody>
                     <tr>
                         <th scope="row ">1</th>
-                        <td style="text-align: start; font-weight: 400">Performer<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Host, Guest / Speaker )</span></td>
+                        <td style="text-align: start; font-weight: 400">Performer<span
+                                style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Host, Guest /
+                                Speaker )</span></td>
 
-                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                        <td class="total-price"
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
                             <span style="float: left;">Rp</span>
                             <span style="float: right;">{{ number_format($totalperformer) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th scope=" row ">2</th>
-                        <td style="text-align: start; font-weight: 400;">Production Crews<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Internal team, Production Studio, Business Development, Operational )</span></td>
-                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                        <td style="text-align: start; font-weight: 400;">Production Crews<span
+                                style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Internal team,
+                                Production Studio, Business Development, Operational )</span></td>
+                        <td class="total-price"
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
                             <span style="float: left;">Rp</span>
                             <span style="float: right;">{{ number_format($totalproductioncrew) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">3</th>
-                        <td style="text-align: start; font-weight: 400">Production Tools<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px"> (Broadcast System, Audio System, Lightning System, Set/Property, Internet, Electricity )</span></td>
-                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                        <td style="text-align: start; font-weight: 400">Production Tools<span
+                                style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px"> (Broadcast System,
+                                Audio System, Lightning System, Set/Property, Internet, Electricity )</span></td>
+                        <td class="total-price"
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
                             <span style="float: left;">Rp</span>
                             <span style="float: right;">{{ number_format($totalproductiontool) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">4</th>
-                        <td style="text-align: start; font-weight: 400">Operational<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Meals, Transportaion, etc )</span></td>
-                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                        <td style="text-align: start; font-weight: 400">Operational<span
+                                style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Meals,
+                                Transportaion, etc )</span></td>
+                        <td class="total-price"
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
                             <span style="float: left;">Rp</span>
                             <span style="float: right;">{{ number_format($totaloperational) ?? 0 }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row ">5</th>
-                        <td style="text-align: start; font-weight: 400">Venue<span style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Location Rental, Overtime AC, etc )</span> </td>
-                        <td class="total-price" style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
+                        <td style="text-align: start; font-weight: 400">Venue<span
+                                style="font-weight: 300; color:rgb(173, 173, 173); padding-left: 12px">( Location Rental,
+                                Overtime AC, etc )</span> </td>
+                        <td class="total-price"
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 300; padding-right: 24px; ">
                             <span style="float: left;">Rp</span>
                             <span style="float: right;">{{ number_format($totallocation) ?? 0 }}</span>
                         </td>
@@ -128,11 +143,12 @@
                     <tr style="border-bottom: 1px solid #c4c4c4;">
                         <td colspan="2" class="text-center" style="font-weight: 500; background-color: #dbdee8">
                             Total</td>
-                            <td style="position: relative; text-align: end; padding-left: 24px; font-weight: 400; padding-right: 24px; ">
-                                <span style="float: left;">Rp</span>
-                                <span style="float: right;">{{ number_format($totalAll) }}
-                                    / <span style="color: red">Rp.
-                                        {{ number_format($budget) }}</span>
+                        <td
+                            style="position: relative; text-align: end; padding-left: 24px; font-weight: 400; padding-right: 24px; ">
+                            <span style="float: left;">Rp</span>
+                            <span style="float: right;">{{ number_format($totalAll) }}
+                                / <span style="color: red">Rp.
+                                    {{ number_format($budget) }}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -586,6 +602,7 @@
                             $('#cost').val(
                                 formattedCost); // Set cost formatted as Rp. X.XXX.XXX
                             $('#note').val(response.note); // Set note based on position
+                            $('#raw_budget').val(response.price);
                         },
                         error: function(xhr, status, error) {
                             alert('Could not fetch position details');
