@@ -261,7 +261,7 @@
                                             <td class="text-end">{{ number_format($data->cost) }}</td>
                                             <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
-                                            <td>{{ $data->notes }}</td>
+                                            <td>{{ $data->note }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -334,7 +334,7 @@
                                             <td class="text-end">{{ number_format($data->cost) }}</td>
                                             <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
-                                            <td>{{ $data->notes }}</td>
+                                            <td>{{ $data->note }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -409,7 +409,7 @@
                                             <td class="text-end">{{ number_format($data->cost) }}</td>
                                             <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
-                                            <td>{{ $data->notes }}</td>
+                                            <td>{{ $data->note }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -483,7 +483,7 @@
                                             <td class="text-end">{{ number_format($data->cost) }}</td>
                                             <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
-                                            <td>{{ $data->notes }}</td>
+                                            <td>{{ $data->note }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -556,7 +556,7 @@
                                             <td class="text-end">{{ number_format($data->cost) }}</td>
                                             <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
-                                            <td>{{ $data->notes }}</td>
+                                            <td>{{ $data->note }}</td>
                                         </tr>
                                     @empty
                                         <tr>

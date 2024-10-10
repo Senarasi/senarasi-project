@@ -186,7 +186,6 @@
                             <th scope="col" style="width: 80px;">QTY</th>
                             <th scope="col">Cost</th>
                             <th scope="col">Total</th>
-                            <th scope="col">Type</th>
                             <th scope="col">Assign To</th>
                             <th scope="col">Note</th>
                             <th scope="col" style="width: 140px" class="text-center"></th>
