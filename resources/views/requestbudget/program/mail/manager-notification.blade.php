@@ -139,7 +139,7 @@
             <table>
                 <tr>
                     <td class="label">Status</td>
-                    <td>: <span class="alert alert-success">{{ strtoupper($currentStage) }}</span></td>
+                    <td>: <span class="alert alert-success">PENDING</span></td>
                 </tr>
                 <tr>
                     <td class="label">User</td>

@@ -452,30 +452,6 @@
             return rawValue;
         }
     </script>
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const repOption = document.getElementById('rep_option');
-            const nameContainer = document.getElementById('name_container');
-
-            repOption.addEventListener('change', function() {
-                if (repOption.value === 'OUT') {
-                    nameContainer.innerHTML =
-                        `<select name="name" class="form-select" id="name_option" required>
-                <option disabled selected>Select Name</option>
-                <option>sewa 1</option>
-                <option>sewa 2</option>
-            </select>`;
-                } else if (repOption.value === 'NCS') {
-                    nameContainer.innerHTML = `
-            <select name="name" class="form-select" id="name_option" required>
-                <option disabled selected>Select Name</option>
-                <option>asset 1</option>
-                <option>asset 2</option>
-            </select>`;
-                }
-            });
-        });
-    </script> --}}
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
     <script type="text/javascript">
         $(document).ready(function() {
