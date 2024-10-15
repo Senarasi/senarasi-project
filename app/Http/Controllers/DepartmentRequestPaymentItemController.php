@@ -127,20 +127,20 @@ class DepartmentRequestPaymentItemController extends Controller
          $pdf = $this->report($departmentRequestPayment->department_request_payment_id)->output(); // Get the PDF output
 
          // Send email notification to the manager with the report attached
-        //  $manager = $departmentRequestPayment->manager;
+         $manager = $departmentRequestPayment->manager;
 
-        //  if ($manager && $manager->email) {
-        //      Mail::to($manager->email)->send(new ManagerNotification(
-        //          $departmentRequestPayment,
-        //          $pdf, // Attach the PDF report
-        //      ));
-        //  }
+         if ($manager && $manager->email) {
+             Mail::to($manager->email)->send(new ManagerNotification(
+                 $departmentRequestPayment,
+                 $pdf, // Attach the PDF report
+             ));
+         }
 
-         $manager = 'test-notif-senarasi@narasi.tv';
-         Mail::to($manager)->send(new ManagerNotification(
-            $departmentRequestPayment,
-            $pdf, // Attach the PDF report
-        ));
+        //  $manager = 'test-notif-senarasi@narasi.tv';
+        //  Mail::to($manager)->send(new ManagerNotification(
+        //     $departmentRequestPayment,
+        //     $pdf, // Attach the PDF report
+        // ));
 
 
 
