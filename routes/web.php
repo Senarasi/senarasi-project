@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\DepartmentBudgetController;
+use App\Http\Controllers\DepartmentRequestPaymentController;
+use App\Http\Controllers\DepartmentPaymentApprovalController;
+use App\Http\Controllers\DepartmentRequestPaymentItemController;
+use App\Http\Controllers\ReportDepartmentPaymentController;
 use App\Models\Approval;
 
 /*
@@ -54,7 +59,71 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/request-budget/preview/{id}', [App\Http\Controllers\RequestBudgetController::class, 'preview'])->name('request-budget.preview');
     Route::get('/request-budget/preview/{id}/view', [App\Http\Controllers\RequestBudgetController::class, 'report'])->name('request-budget.report');
     Route::delete('request-budget/{id}', [App\Http\Controllers\RequestBudgetController::class, 'destroy'])->name('request-budget.destroy');
-    Route::get('/downloadpdf/{id}', [App\Http\Controllers\ReportController::class, 'download'])->name('report.download');
+    Route::get('/downloadpdf/{id}', [App\Http\Controllers\ReportController::class, 'down'])->name('report.download');
+
+    Route::prefix('budgeting-system')->group(function () {
+        Route::prefix('budget-department')->controller(DepartmentBudgetController::class)->name('budget.department.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            // Route::get('/create', 'create')->name('create');
+            Route::post('/store', 'store')->name('store');
+            // Route::get('{departmentYearlyBudget}/edit', 'edit')->name('edit');
+            Route::patch('/{departmentYearlyBudget}/update', 'update')->name('update');
+            Route::delete('/{departmentYearlyBudget}', 'destroy')->name('destroy');
+        });
+
+        // request budget department
+
+        // Route::prefix('request-budget-department')->controller(DepartmentRequestPaymentController::class)->name('request-budget-department.')->group(function () {
+        Route::prefix('request-budget-department')->name('request-budget-department.')->group(function () {
+
+            Route::prefix('payment')->controller(DepartmentRequestPaymentController::class)->name('payment.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::get('/{departmentRequestPayment}/edit', 'edit')->name('edit');
+                Route::patch('/{departmentRequestPayment}/update', 'update')->name('update');
+                Route::post('/store', 'store')->name('store');
+                Route::get('/{departmentRequestPayment}/detail', 'detail')->name('detail');
+                Route::delete('/{departmentRequestPayment}', 'destroy')->name('destroy');
+                // Route::get('/description/{departmentRequestPayment}', 'description')->name('description');
+                Route::get('/get-budget-names/{department_id}', 'getBudgetNames')->name('get-budget-names');
+                Route::get('/get-budget-code', 'getBudgetCode')->name('get-budget-code');
+                Route::get('/{departmentRequestPayment}/view', 'viewPdf')->name('viewPdf');
+                Route::get('/{departmentRequestPayment}/export', 'exportPdf')->name('exportPdf');
+                Route::post('/{departmentRequestPayment}/duplicate', 'duplicate')->name('duplicate');
+            });
+
+            Route::prefix('payment')->controller(DepartmentRequestPaymentItemController::class)->name('payment.')->group(function () {
+                Route::get('/description/{departmentRequestPayment}', 'index')->name('description');
+                Route::post('/description/store', 'store')->name('description.store');
+                Route::patch('/description/{item}/update', 'update')->name('description.update');
+                Route::delete('description/{item}', 'destroy')->name('description.destroy');
+                Route::patch('{departmentRequestPayment}/submit', 'submit')->name('submit');
+                Route::get('/{departmentRequestPayment}/mail', 'mail')->name('mail');
+            });
+        });
+
+        // approval budget department
+        Route::prefix('approval-budget-department')->name('approval-budget-department.')->group(function () {
+            Route::prefix('payment')->controller(DepartmentPaymentApprovalController::class)->name('payment.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/reject', function () {
+                    return view('approval.department.payment.reject');
+                })->name('reject');
+                Route::get('{departmentRequestPayment}/detail', 'detail')->name('detail');
+                Route::post('{departmentRequestPayment}/approve', 'approve')->name('approve');
+                Route::post('{departmentRequestPayment}/reject', 'reject')->name('reject');
+            });
+        });
+
+        // report budget department
+        Route::prefix('report-budget-department')->name('report-budget-department.')->group(function () {
+            Route::prefix('payment')->controller(ReportDepartmentPaymentController::class)->name('payment.')->group(function () {
+                // Route::get('/', function () { return view('report.department.payment.index'); })->name('index');
+                Route::get('/', 'index')->name('index');
+                Route::get('/{departmentRequestPayment}/view', 'viewPdf')->name('viewPdf');
+            });
+        });
+    });
 
     Route::get('/requestpayment', function () {
         return view('requestbudget.payment.index');

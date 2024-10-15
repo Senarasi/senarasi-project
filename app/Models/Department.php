@@ -18,4 +18,9 @@ class Department extends Model
     public function position(){
         return $this->hasMany(Position::class, 'department_id');
     }
+
+    public function departmentYearlyBudgets()
+    {
+        return $this->hasMany(DepartmentYearlyBudget::class);
+    }
 }

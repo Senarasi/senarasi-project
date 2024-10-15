@@ -224,7 +224,7 @@
                                     <th scope="col ">COST</th>
                                     <th scope="col ">TOTAL COST</th>
                                     <th scope="col ">ASSIGN TO</th>
-                                    <th scope="col ">NOTES</th>
+                                    <th scope="col " style="width: 430px">NOTES</th>
                                 </tr>
                             </thead>
 
