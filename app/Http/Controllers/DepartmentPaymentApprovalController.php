@@ -113,21 +113,21 @@ class DepartmentPaymentApprovalController extends Controller
 
             $pdf = $this->report($departmentRequestPayment->department_request_payment_id)->output();
 
-            // $finance = $departmentRequestPayment->finance;
+            $finance = $departmentRequestPayment->finance;
 
-            // if ($finance && $finance->email) {
-            //     Mail::to($finance->email)->send(new FinanceNotification(
-            //         $departmentRequestPayment,
-            //         $pdf, // Attach the PDF report
-            //     ));
-            // }
+            if ($finance && $finance->email) {
+                Mail::to($finance->email)->send(new FinanceNotification(
+                    $departmentRequestPayment,
+                    $pdf, // Attach the PDF report
+                ));
+            }
 
 
-            $finance = 'test-notif-senarasi@narasi.tv';
-            Mail::to($finance)->send(new FinanceNotification(
-                $departmentRequestPayment,
-                $pdf, // Attach the PDF report
-            ));
+            // $finance = 'test-notif-senarasi@narasi.tv';
+            // Mail::to($finance)->send(new FinanceNotification(
+            //     $departmentRequestPayment,
+            //     $pdf, // Attach the PDF report
+            // ));
 
             return redirect()->back()->with('status', 'Request payment has been succcessfully approved.');
         } elseif ($approval->stage === 'finance' && $approval->status === 'pending') {

@@ -150,7 +150,7 @@
                                     <p style="font: 700 24px Narasi Sans, sans-serif; letter-spacing: 0.5px;">{{ $departmentRequestPayment->department_request_payment_number }}</p>
                                 </div>
                                 <div class="text-end" style="display: inline-block; vertical-align: middle;">
-                                    <img style="width: 164px;" src="asset/image/narasi.png" alt="">
+                                    <img style="width: 164px;" src="asset/image/Narasi.png" alt="">
                                 </div>
                             </div>
 
