@@ -55,4 +55,14 @@ class Employee extends Authenticatable
     {
         return $this->hasOne(GoogleToken::class, 'employee_id');
     }
+
+    public function departmentYearlyBudgets()
+    {
+        return $this->hasMany(DepartmentYearlyBudget::class);
+    }
+
+    public function departmentRequestPayments()
+    {
+        return $this->hasMany(DepartmentRequestPayment::class, 'employee_id');
+    }
 }

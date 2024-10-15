@@ -185,7 +185,7 @@ border: none;
                 </a>
                 <ul id="budget" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class="sidebar-item" style="list-style: none;">
-                        <a href="{{ route('budget.index') }}" class="sidebar-link">Budget Department</a>
+                        <a href="{{ route('budget.department.index') }}" class="sidebar-link">Budget Department</a>
                     </li>
                     <li class="sidebar-item" style="list-style: none;">
                         <a href="{{ route('budget.index') }}" class="sidebar-link">Budget Program</a>
@@ -211,13 +211,13 @@ border: none;
                         </a>
                         <ul id="request-two" class="sidebar-dropdown list-unstyled collapse">
                             <li class="sidebar-item" style="list-style: none;">
-                                <a href="{{ route('request-budget.index') }}"  class="sidebar-link ps-5">Budget Payment</a>
-                            </li>
-                            <li class="sidebar-item"style="list-style: none;">
-                                <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget Purchase</a>
+                                <a href="" class="sidebar-link ps-5">Budget Advance</a>
                             </li>
                             <li class="sidebar-item" style="list-style: none;">
-                                <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget Advance</a>
+                                <a href="{{ route('request-budget-department.payment.index') }}"  class="sidebar-link ps-5">Budget Payment</a>
+                            </li>
+                            <li class="sidebar-item"style="list-style: none;">
+                                <a href="" class="sidebar-link ps-5">Budget Purchase</a>
                             </li>
                         </ul>
                     </li>
@@ -260,13 +260,13 @@ border: none;
                         </a>
                         <ul id="approval-two" class="sidebar-dropdown list-unstyled collapse">
                             <li class="sidebar-item" style="list-style: none;">
-                                <a href="/approval-detail"  class="sidebar-link ps-5">Payment Approval</a>
+                                <a href=""  class="sidebar-link ps-5">Advance Approval</a>
                             </li>
                             <li class="sidebar-item" style="list-style: none;">
-                                <a href="/approval-detail"  class="sidebar-link ps-5">Purchase Approval</a>
+                                <a href="{{ route('approval-budget-department.payment.index') }}"  class="sidebar-link ps-5">Payment Approval</a>
                             </li>
                             <li class="sidebar-item" style="list-style: none;">
-                                <a href="/approval-detail"  class="sidebar-link ps-5">Advance Approval</a>
+                                <a href=""  class="sidebar-link ps-5">Purchase Approval</a>
                             </li>
                         </ul>
                     </li>
