@@ -353,14 +353,14 @@
                             data: {
                                 room_id: room_id,
                                 start: fetchInfo.startStr,
-                                end: fetchInfo.endStr
+                                end: fetchInfo.endStr,
                             },
                             success: function(response) {
                                 successCallback(response.events);
                             },
                             error: function() {
                                 failureCallback();
-                            }
+                            },
                         });
                     },
                     eventClick: function(info) {

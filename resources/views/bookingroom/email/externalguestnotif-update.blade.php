@@ -60,7 +60,7 @@
         </div>
         <div class="email-container">
             <h3 style="text-align: center">Dear {{ $email }},</h3>
-            <h3 style="text-align: center">Invitation Meeting has been updated by {{ $booking->user->full_name }}</h3>
+            <h3 style="text-align: center">Invitation Meeting has been updated by {{ $booking->employee->full_name }}</h3>
             <table>
                 <tr>
                     <td class="label">Description</td>

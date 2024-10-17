@@ -96,7 +96,7 @@
                     <td class="value">:
                         <ul>
                             @foreach($guestUsers as $guestUser)
-                                <li>{{ $guestUser->name }}</li>
+                                <li>{{ $guestUser->full_name }}</li>
                             @endforeach
                         </ul>
                     </td>
