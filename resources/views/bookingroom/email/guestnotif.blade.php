@@ -61,7 +61,7 @@
         </div>
             <div class="email-container">
         <h3 style="text-align: center">Dear {{ $guest->full_name }},</h3>
-        <h3 style="text-align: center">You have been invited to a meeting by {{ $booking->user->full_name }}</h3>
+        <h3 style="text-align: center">You have been invited to a meeting by {{ $booking->employee->full_name }}</h3>
         <table>
 
             <tr>

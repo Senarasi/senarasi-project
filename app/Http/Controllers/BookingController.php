@@ -31,7 +31,7 @@ use GuzzleHttp\Client as GuzzleClient;
 
 class BookingController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -58,9 +58,9 @@ class BookingController extends Controller
 
         $user = auth()->user();
 
-        if ($user->role !== 'admin' ) {
-        $today = Carbon::today();
-        $maxDate = $today->copy()->addWeeks(1);
+        if ($user->role !== 'admin') {
+            $today = Carbon::today();
+            $maxDate = $today->copy()->addWeeks(1);
 
             // Check if the start and end dates are within one week from today
             if ($startDate < $today || $startDate > $maxDate || $endDate < $today || $endDate > $maxDate) {
@@ -69,17 +69,17 @@ class BookingController extends Controller
         }
 
         $availableRooms = Room::where('id', $roomId)
-        ->whereNotIn('id', function ($query) use ($startDate, $endDate) {
-            $query->select('room_id')
-                ->from('bookings')
-                ->where(function ($query) use ($startDate, $endDate) {
-                    $query->where(function ($query) use ($startDate, $endDate) {
-                        $query->where('start', '<', $endDate)
-                            ->where('end', '>', $startDate);
+            ->whereNotIn('id', function ($query) use ($startDate, $endDate) {
+                $query->select('room_id')
+                    ->from('bookings')
+                    ->where(function ($query) use ($startDate, $endDate) {
+                        $query->where(function ($query) use ($startDate, $endDate) {
+                            $query->where('start', '<', $endDate)
+                                ->where('end', '>', $startDate);
+                        });
                     });
-                });
-        })
-        ->exists();
+            })
+            ->exists();
 
         if (!$availableRooms) {
             return redirect()->back()->with('error', 'Failed booking. Room at that time already booked, choose another room or time!');
@@ -122,25 +122,24 @@ class BookingController extends Controller
             }
 
             // Handle external guests if provided
-                if ($request->has('additional_emails')) {
-                    $validatedData = $request->validate([
-                        'additional_emails.*' => 'email', // Validasi setiap email
+            if ($request->has('additional_emails')) {
+                $validatedData = $request->validate([
+                    'additional_emails.*' => 'email', // Validasi setiap email
+                ]);
+
+                $externalEmails = $validatedData['additional_emails'];
+                $externalGuests = [];
+
+                foreach ($externalEmails as $email) {
+                    Externalguest::create([
+                        'email' => $email,
+                        'booking_id' => $booking->id,
                     ]);
-
-                    $externalEmails = $validatedData['additional_emails'];
-                    $externalGuests = [];
-
-                    foreach ($externalEmails as $email) {
-                        Externalguest::create([
-                            'email' => $email,
-                            'booking_id' => $booking->id,
-                        ]);
-                        $externalGuests[] = $email;
-
-                    }
-                } else {
-                    $externalGuests = [];
+                    $externalGuests[] = $email;
                 }
+            } else {
+                $externalGuests = [];
+            }
 
             // Initialize the Google Client
             $client = new Client();
@@ -150,18 +149,37 @@ class BookingController extends Controller
 
             // Check if token is available or needs to be refreshed
             $googleToken = auth()->user()->googleToken;
+            // if ($googleToken) {
+            //     $token = json_decode($googleToken->access_token, true);
+            //     $client->setAccessToken($token);
+
+            //     if ($client->isAccessTokenExpired()) {
+            //         $refreshToken = $googleToken->refresh_token;
+            //         $client->fetchAccessTokenWithRefreshToken($refreshToken);
+            //         $newAccessToken = $client->getAccessToken();
+            //         $googleToken->update([
+            //             'access_token' => json_encode($newAccessToken),
+            //             'expires_at' => Carbon::now()->addSeconds($newAccessToken['expires_in']),
+            //         ]);
+            //     }
+            // } else {
+            //     return redirect()->route('google.calendar.auth', ['room_id' => $roomId]);
+            // }
             if ($googleToken) {
                 $token = json_decode($googleToken->access_token, true);
                 $client->setAccessToken($token);
 
                 if ($client->isAccessTokenExpired()) {
                     $refreshToken = $googleToken->refresh_token;
-                    $client->fetchAccessTokenWithRefreshToken($refreshToken);
-                    $newAccessToken = $client->getAccessToken();
-                    $googleToken->update([
-                        'access_token' => json_encode($newAccessToken),
-                        'expires_at' => Carbon::now()->addSeconds($newAccessToken['expires_in']),
-                    ]);
+                    $newAccessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
+                    if (isset($newAccessToken['access_token'])) {
+                        $googleToken->update([
+                            'access_token' => json_encode($newAccessToken),
+                            'expires_at' => Carbon::now()->addSeconds($newAccessToken['expires_in']),
+                        ]);
+                    } else {
+                        return redirect()->route('google.calendar.auth', ['room_id' => $roomId]);
+                    }
                 }
             } else {
                 return redirect()->route('google.calendar.auth', ['room_id' => $roomId]);
@@ -187,7 +205,7 @@ class BookingController extends Controller
 
                 $event = new Event([
                     'summary' => 'Meeting: ' . $data['desc'],
-                    'location' => "Intiland Tower LT. 20 - ". $room->room_name. "(".$room->capacity. ")",
+                    'location' => "Intiland Tower LT. 20 - " . $room->room_name . "(" . $room->capacity . ")",
                     'start' => [
                         'dateTime' => $startDate->toRfc3339String(),
                         'timeZone' => 'Asia/Jakarta',
@@ -232,7 +250,7 @@ class BookingController extends Controller
 
                 $event = new Event([
                     'summary' => 'Meeting: ' . $data['desc'],
-                    'location' => "Intiland Tower LT. 20 - ". $room->room_name. "(".$room->capacity. ")",
+                    'location' => "Intiland Tower LT. 20 - " . $room->room_name . "(" . $room->capacity . ")",
                     'description' => "Link Zoom: " .  $zoomMeetingLink,
                     'start' => [
                         'dateTime' => $startDate->toRfc3339String(),
@@ -258,7 +276,7 @@ class BookingController extends Controller
             } else {
                 $event = new Event([
                     'summary' => 'Meeting: ' . $data['desc'],
-                    'location' => "INTILAND TOWER LT. 20 - ". $room->room_name. "(".$room->capacity. ")" ,
+                    'location' => "INTILAND TOWER LT. 20 - " . $room->room_name . "(" . $room->capacity . ")",
                     'start' => [
                         'dateTime' => $startDate->toRfc3339String(),
                         'timeZone' => 'Asia/Jakarta',
@@ -378,7 +396,7 @@ class BookingController extends Controller
     {
         $this->authorize('owner', $booking);
         $users = Employee::all();
-        return view('bookingroom.edit', compact( 'booking', 'users'));
+        return view('bookingroom.edit', compact('booking', 'users'));
     }
 
     public function update(BookingRequest $request, $id)
@@ -406,7 +424,7 @@ class BookingController extends Controller
                             $query->where('start', '<', $endDate)
                                 ->where('end', '>', $startDate);
                         })
-                        ->where('id', '<>', $booking->id); // Exclude current booking
+                            ->where('id', '<>', $booking->id); // Exclude current booking
                     });
             })
             ->exists();
@@ -430,23 +448,26 @@ class BookingController extends Controller
             }
 
             // Handle external guests
-            Externalguest::where('booking_id', $booking->id)->delete();
+            $externalGuests = [];
             if ($request->has('additional_emails')) {
                 $validatedData = $request->validate([
                     'additional_emails.*' => 'email',
                 ]);
 
                 $externalEmails = $validatedData['additional_emails'];
-                $externalGuests = [];
                 foreach ($externalEmails as $email) {
                     Externalguest::create([
                         'email' => $email,
                         'booking_id' => $booking->id,
                     ]);
+                    $externalGuests[] = $email;  // Tambahkan email ke array externalGuests
                 }
             } else {
                 $externalGuests = [];
             }
+
+            // Hapus data HybridMeeting yang ada sebelum menambah yang baru
+            HybridMeeting::where('booking_id', $booking->id)->delete();
 
             // Initialize Google Client
             $client = new Client();
@@ -461,12 +482,15 @@ class BookingController extends Controller
 
                 if ($client->isAccessTokenExpired()) {
                     $refreshToken = $googleToken->refresh_token;
-                    $client->fetchAccessTokenWithRefreshToken($refreshToken);
-                    $newAccessToken = $client->getAccessToken();
-                    $googleToken->update([
-                        'access_token' => json_encode($newAccessToken),
-                        'expires_at' => Carbon::now()->addSeconds($newAccessToken['expires_in']),
-                    ]);
+                    $newAccessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
+                    if (isset($newAccessToken['access_token'])) {
+                        $googleToken->update([
+                            'access_token' => json_encode($newAccessToken),
+                            'expires_at' => Carbon::now()->addSeconds($newAccessToken['expires_in']),
+                        ]);
+                    } else {
+                        return redirect()->route('google.calendar.auth', ['room_id' => $roomId]);
+                    }
                 }
             } else {
                 return redirect()->route('google.calendar.auth', ['room_id' => $roomId]);
@@ -487,6 +511,21 @@ class BookingController extends Controller
                 $service->events->delete('primary', $booking->google_event_id);
             }
 
+            // if ($booking->google_event_id) {
+            //     // Periksa apakah event ada di Google Calendar
+            //     $event = $service->events->get('primary', $booking->google_event_id);
+
+            //     // Jika event ada, hapus
+            //     if ($event) {
+            //         $service->events->delete('primary', $booking->google_event_id);
+            //     }
+
+            //     // Jika event tidak ada, set google_event_id ke null
+            //     if (!$event) {
+            //         $booking->google_event_id = null; // Atur menjadi null jika event tidak ada
+            //         $booking->save();
+            //     }
+            // }
             if ($meetingVia === 'Google Meet') {
                 $conferenceData = new ConferenceData();
                 $conferenceRequest = new CreateConferenceRequest();
@@ -495,7 +534,7 @@ class BookingController extends Controller
 
                 $event = new Event([
                     'summary' => 'Meeting: ' . $data['desc'],
-                    'location' => "INTILAND TOWER LT. 20 - ". $room->room_name. "(".$room->capacity. ")",
+                    'location' => "INTILAND TOWER LT. 20 - " . $room->room_name . "(" . $room->capacity . ")",
                     'start' => [
                         'dateTime' => $startDate->toRfc3339String(),
                         'timeZone' => 'Asia/Jakarta',
@@ -506,7 +545,8 @@ class BookingController extends Controller
                     ],
                     'attendees' => array_merge(
                         array_map(fn($guestId) => ['email' => Employee::find($guestId)->email], $guests),
-                        array_map(fn($email) => ['email' => $email], $externalGuests)
+                        // array_map(fn($email) => ['email' => $email], $externalGuests)
+                        array_map(fn($email) => ['email' => $email], $request->input('additional_emails', []))
                     ),
                     'conferenceData' => $conferenceData,
                 ]);
@@ -516,6 +556,12 @@ class BookingController extends Controller
 
                 $googleMeetLink = $createdEvent->getHangoutLink();
                 $booking->update(['google_event_id' => $createdEvent->id]);
+                // Buat data HybridMeeting baru
+                HybridMeeting::create([
+                    'via' => $meetingVia,
+                    'link' => $googleMeetLink,
+                    'booking_id' => $booking->id,
+                ]);
 
                 $meetingLink = $googleMeetLink;
             } elseif ($meetingVia === 'Zoom') {
@@ -524,7 +570,7 @@ class BookingController extends Controller
 
                 $event = new Event([
                     'summary' => 'Meeting: ' . $data['desc'],
-                    'location' => "Intiland Tower LT. 20 - ". $room->room_name. "(".$room->capacity. ")",
+                    'location' => "Intiland Tower LT. 20 - " . $room->room_name . "(" . $room->capacity . ")",
                     'description' => "Link Zoom: " . $zoomMeetingLink,
                     'start' => [
                         'dateTime' => $startDate->toRfc3339String(),
@@ -536,7 +582,8 @@ class BookingController extends Controller
                     ],
                     'attendees' => array_merge(
                         array_map(fn($guestId) => ['email' => Employee::find($guestId)->email], $guests),
-                        array_map(fn($email) => ['email' => $email], $externalGuests)
+                        // array_map(fn($email) => ['email' => $email], $externalGuests)
+                        array_map(fn($email) => ['email' => $email], $request->input('additional_emails', []))
                     ),
                 ]);
 
@@ -547,7 +594,7 @@ class BookingController extends Controller
             } else {
                 $event = new Event([
                     'summary' => 'Meeting: ' . $data['desc'],
-                    'location' => "Intiland Tower LT. 20 - ". $room->room_name. "(".$room->capacity. ")",
+                    'location' => "Intiland Tower LT. 20 - " . $room->room_name . "(" . $room->capacity . ")",
                     'start' => [
                         'dateTime' => $startDate->toRfc3339String(),
                         'timeZone' => 'Asia/Jakarta',
@@ -558,12 +605,14 @@ class BookingController extends Controller
                     ],
                     'attendees' => array_merge(
                         array_map(fn($guestId) => ['email' => Employee::find($guestId)->email], $guests),
-                        array_map(fn($email) => ['email' => $email], $externalGuests)
+                        // array_map(fn($email) => ['email' => $email], $externalGuests)
+                        array_map(fn($email) => ['email' => $email], $request->input('additional_emails', []))
                     ),
                 ]);
 
                 $calendarId = 'primary';
                 $createdEvent = $service->events->insert($calendarId, $event);
+                $booking->update(['google_event_id' => $createdEvent->id]);
             }
 
 
@@ -575,7 +624,7 @@ class BookingController extends Controller
             $data['br_number'] = $br_number;
 
             // Send email to the user who updated the booking
-            Mail::to($user->email)->send(new BookingUpdated($data, $guestUsers , $externalGuests));
+            Mail::to($user->email)->send(new BookingUpdated($data, $guestUsers, $externalGuests));
 
             // Send email to internal guests
             foreach (Employee::whereIn('employee_id', $guests)->get() as $guestUser) {
@@ -596,7 +645,7 @@ class BookingController extends Controller
     public function confirmDelete(Booking $booking)
     {
         $this->authorize('owner', $booking);
-        return view('bookingroom.confirmdelete', compact( 'booking'));
+        return view('bookingroom.confirmdelete', compact('booking'));
     }
 
     /**
@@ -614,53 +663,53 @@ class BookingController extends Controller
         $client->addScope(Calendar::CALENDAR);
         $client->setAccessType('offline');
 
-         // Get the Google token from the authenticated user
-    $googleToken = auth()->user()->googleToken;
+        // Get the Google token from the authenticated user
+        $googleToken = auth()->user()->googleToken;
 
-    if ($googleToken) {
-        $token = json_decode($googleToken->access_token, true);
-        $client->setAccessToken($token);
+        if ($googleToken) {
+            $token = json_decode($googleToken->access_token, true);
+            $client->setAccessToken($token);
 
-        // Check if the access token is expired
-        if ($client->isAccessTokenExpired()) {
-            // Use the refresh token to get a new access token
-            $refreshToken = $googleToken->refresh_token;
+            // Check if the access token is expired
+            if ($client->isAccessTokenExpired()) {
+                // Use the refresh token to get a new access token
+                $refreshToken = $googleToken->refresh_token;
 
-            if ($refreshToken) { // Check if the refresh token exists
-                $client->fetchAccessTokenWithRefreshToken($refreshToken);
-                $newAccessToken = $client->getAccessToken();
+                if ($refreshToken) { // Check if the refresh token exists
+                    $client->fetchAccessTokenWithRefreshToken($refreshToken);
+                    $newAccessToken = $client->getAccessToken();
 
-                // Save the new access token and update expiry time
-                $googleToken->update([
-                    'access_token' => json_encode($newAccessToken),
-                    'expires_at' => Carbon::now()->addSeconds($newAccessToken['expires_in']),
-                ]);
+                    // Save the new access token and update expiry time
+                    $googleToken->update([
+                        'access_token' => json_encode($newAccessToken),
+                        'expires_at' => Carbon::now()->addSeconds($newAccessToken['expires_in']),
+                    ]);
 
-                // Update the client with the new access token
-                $client->setAccessToken($newAccessToken);
-            } else {
-                // If no refresh token is available, force re-authentication
-                $authUrl = $client->createAuthUrl();
-                return redirect()->away($authUrl);
+                    // Update the client with the new access token
+                    $client->setAccessToken($newAccessToken);
+                } else {
+                    // If no refresh token is available, force re-authentication
+                    $authUrl = $client->createAuthUrl();
+                    return redirect()->away($authUrl);
+                }
             }
+        } else {
+            // Redirect user to Google for authorization if no token is found
+            $authUrl = $client->createAuthUrl();
+            return redirect()->away($authUrl);
         }
-    } else {
-        // Redirect user to Google for authorization if no token is found
-        $authUrl = $client->createAuthUrl();
-        return redirect()->away($authUrl);
-    }
         // Create Google Calendar service
         $service = new Calendar($client);
 
         // Delete the event from Google Calendar if google_event_id exists
         if ($booking->google_event_id) {
-                $service->events->delete('primary', $booking->google_event_id);
+            $service->events->delete('primary', $booking->google_event_id);
         }
         // Fetch the user who made the booking
         $user = Employee::find($booking->employee_id);
 
         // Fetch internal guests
-        $guestUsers = $booking->guests->map(function($guest) {
+        $guestUsers = $booking->guests->map(function ($guest) {
             return Employee::find($guest->employee_id);
         });
 
@@ -695,9 +744,9 @@ class BookingController extends Controller
     {
         $oneHourLater = Carbon::now()->addHour();
         $bookings = Booking::where('start', '<=', $oneHourLater)
-                            ->where('start', '>', Carbon::now())
-                            ->where('confirmation_sent', false)
-                            ->get();
+            ->where('start', '>', Carbon::now())
+            ->where('confirmation_sent', false)
+            ->get();
 
         // $thirtyMinutesLater = Carbon::now()->addMinutes(30);
         // $bookings = Booking::where('start', '<=', $thirtyMinutesLater)

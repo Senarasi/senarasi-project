@@ -38,7 +38,7 @@
                                     {{-- <th scope="row">{{$iteration++}}</th> --}}
                                     {{-- <td>{{ $booking->br_number }}</td> --}}
                                     <td>{{ $booking->room->room_name }}</td>
-                                    <td>{{ $booking->user->full_name }}</td>
+                                    <td>{{ $booking->employee->full_name }}</td>
                                     {{-- <td>
                                         <a style="text-decoration: none;" href="https://wa.me/+62{{ $booking->user->telephone }}" target="_blank">{{ $booking->user->telephone }}</a>
                                     </td> --}}

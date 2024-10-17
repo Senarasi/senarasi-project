@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\Room;
-use App\Models\User;
+use App\Models\Employee;
 use App\Models\Guest;
 use App\Models\Externalguest;
 use App\Models\HybridMeeting;
@@ -26,7 +26,7 @@ class Booking extends Model
         'google_event_id',
     ];
 
-    public function user()
+    public function employee()
     {
         return $this->belongsTo(Employee::class,'employee_id');
     }

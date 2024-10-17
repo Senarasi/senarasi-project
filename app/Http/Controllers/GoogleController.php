@@ -26,13 +26,13 @@ class GoogleController extends Controller
         $client->setAuthConfig(config_path('credentials/client_secret.json'));
         $client->addScope(Calendar::CALENDAR);
         $client->setAccessType('offline');
+        $client->setPrompt('consent');
         $client->setRedirectUri(route('google.callback'));
 
         $authUrl = $client->createAuthUrl();
         $request->session()->put('pending_booking', $request->input('room_id'));
 
         return redirect()->away($authUrl);
-
     }
 
 
@@ -49,8 +49,8 @@ class GoogleController extends Controller
 
         $client->fetchAccessTokenWithAuthCode($request->input('code'));
         $accessToken = $client->getAccessToken();
-        $refreshToken = $client->getRefreshToken();
-        $expiresAt = Carbon::now()->addSeconds($client->getAccessToken()['expires_in']);
+        $refreshToken = $client->getRefreshToken() ?? auth()->user()->googleToken->refresh_token;  // Gunakan refresh token yang ada jika baru null
+        $expiresAt = Carbon::now()->addSeconds($accessToken['expires_in']);
 
         // Simpan token ke database
         $user = auth()->user();
@@ -71,7 +71,7 @@ class GoogleController extends Controller
         }
 
         return redirect()->route('bookingroom.create', ['room' => $roomId])
-                        ->with('status', 'Successfully authenticated with Google.');
+            ->with('status', 'Successfully authenticated with Google.');
     }
 
     public function isTokenExpired($googleToken)
