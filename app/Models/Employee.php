@@ -77,9 +77,9 @@ class Employee extends Authenticatable
     public function hasRole($roles)
     {
         if (is_array($roles)) {
-            return $this->access->whereIn('access', $roles)->isNotEmpty();
+            return $this->access->whereIn('access_name', $roles)->isNotEmpty();
         }
-        return $this->access->contains('access', $roles);
+        return $this->access->contains('access_name', $roles);
     }
 
     public function employeeStatus()
