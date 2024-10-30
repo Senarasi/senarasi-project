@@ -69,12 +69,27 @@
                                 <label for="role" class="form-label">Role</label>
                                 <select id="role_option" name="role" class="form-select" style="font: 300 12">
                                     <option style="color: rgb(189, 189, 189)">Choose One</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="Manager">Manager</option>
-                                    <option value="Staff">Staff</option>
+                                    @forelse ($employeeStatus as $status)
+                                        <option value="{{ $status->employee_status_id}}">{{$status->status_name}}</option>
+                                    @empty
+                                        <option disabled selected>Data not found</option>
+                                    @endforelse
                                 </select>
                             </div>
                         </div>
+
+                        {{-- <div class="form-group"> --}}
+                            <label for="roles">Access</label>
+                            @foreach($access as $role)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="access[]" value="{{ $role->access_id }}"
+                                        {{ $data->access->contains($role->access_id) ? 'checked' : '' }}>
+                                    <label class="form-check-label">
+                                        {{ $role->access_name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        {{-- </div> --}}
 
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>

@@ -57,7 +57,7 @@ class RequestBudgetController extends Controller
         $managerName = $employee->manager ? $employee->manager->full_name : 'No Manager Assigned';
         $managerId = $employee->manager_id;
         $employees = Employee::orderBy('full_name', 'asc')->pluck('full_name', 'employee_id');
-        $managers = Employee::where('role', 'manager')->get();
+        $managers = Employee::where('employee_status_id', 4)->get();
         $producers = Employee::join('positions', 'employees.position_id', '=', 'positions.position_id')
             ->where('positions.position_name', 'like', '%PRODUCER%')
             ->get();

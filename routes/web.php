@@ -31,22 +31,80 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/admin', function () {
+        return view('admin.index');
+    })->name('admin');
+
+    Route::get('/announcement', function () {
+        return view('admin.hc.announcement.index');
+    })->name('announcement');
+
+    Route::get('/announcement-detail', function () {
+        return view('admin.hc.announcement.detail');
+    })->name('announcementdetail');
+
+    Route::get('/admin-department', function () {
+        return view('admin.hc.department.index');
+    })->name('department');
+
+    Route::get('/admin-department-edit', function () {
+        return view('admin.hc.department.edit');
+    })->name('departmentedit');
+
+    Route::get('/admin-employee', function () {
+        return view('admin.hc.employee.index');
+    })->name('employee');
+
+    Route::get('/admin-procurement', function () {
+        return view('admin.procurement.index');
+    })->name('procurement');
+
+    Route::get('/admin-procurement-items', function () {
+        return view('admin.procurement.itemvendor.index');
+    })->name('procurementitems');
+
+    Route::get('/admin-procurement-edit', function () {
+        return view('admin.procurement.itemvendor.edit');
+    })->name('procurementedit');
+
+    Route::get('/admin-procurement-create', function () {
+        return view('admin.procurement.itemvendor.create');
+    })->name('procurementcreate');
+
+    Route::get('/admin-finance-department', function () {
+        return view('admin.finance.department');
+    })->name('financedepartment');
+
+    Route::get('/admin-finance-program', function () {
+        return view('admin.finance.program');
+    })->name('financeprogram');
+
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/dashboard-main', [App\Http\Controllers\DashboardController::class, 'dashboardmain'])->name('dashboard.main');
     Route::get('/dashboard-budget', [App\Http\Controllers\DashboardController::class, 'dashboardbudget'])->name('dashboard.budget');
-    Route::get('/map', [App\Http\Controllers\MapController::class, 'index']);
-    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
-    Route::resource('budget', 'App\Http\Controllers\Budget\BudgetProgramController');
-    Route::post('/budget/store', 'App\Http\Controllers\Budget\BudgetProgramController@store')->name('budget.store');
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/map', [App\Http\Controllers\MapController::class, 'index']);
+        Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+    });
 
+    Route::middleware(['role:admin, ceo, finance'])->group(function () {
+        Route::resource('budget', 'App\Http\Controllers\Budget\BudgetProgramController');
+        Route::post('/budget/store', 'App\Http\Controllers\Budget\BudgetProgramController@store')->name('budget.store');
+    });
 
+    Route::middleware(['role:admin, ceo, vp, manager'])->group(function () {
+        Route::resource('approval', ApprovalController::class)->except(['create', 'edit']);
+        Route::get('approval/{id}/view', [ApprovalController::class, 'view'])->name('approval.view');
+        Route::post('approval/{id}/approve', [ApprovalController::class, 'approve'])->name('approval.approve');
+        Route::get('approval/{id}/reject-view', [ApprovalController::class, 'rejectview'])->name('approval.rejectview');
+        Route::post('approval/{id}/reject', [ApprovalController::class, 'submitReject'])->name('approval.submitReject');
+    });
 
-    Route::resource('approval', ApprovalController::class);
-    Route::get('/approval/{id}/view', [ApprovalController::class, 'view'])->name('approval.view');
-    Route::post('/approval/{id}/approve', [ApprovalController::class, 'approve'])->name('approval.approve');
-    Route::get('/approval/{id}/reject-view', [ApprovalController::class, 'rejectview'])->name('approval.rejectview');
-    Route::post('/approval/{id}/reject', [ApprovalController::class, 'submitReject'])->name('approval.submitReject');
+    Route::get('/unauthorized', function () {
+        return view('errors.unauthorized');
+    })->name('unauthorized');
 
     Route::resource('request-budget', 'App\Http\Controllers\RequestBudgetController');
     Route::get('/get-monthly-budget', [App\Http\Controllers\RequestBudgetController::class, 'getMonthlyBudget'])->name('getMonthlyBudget');
@@ -215,6 +273,8 @@ Route::middleware(['auth'])->group(function () {
         return view('requestbudget.detail');
     });
 
+
+    // Route::middleware(['role:admin, hc'])->group(function () {
     Route::resource('department', 'App\Http\Controllers\DepartmentController');
     Route::post('/department/store', 'App\Http\Controllers\DepartmentController@store')->name('department.store');
 
@@ -222,10 +282,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/employee/store', 'App\Http\Controllers\EmployeeController@store')->name('employee.store');
     Route::post('/get-current-position', [App\Http\Controllers\AjaxController::class, 'getcurrentposition'])->name('ajax.getcurrentposition');
     Route::post('/get-position-from-department', [App\Http\Controllers\AjaxController::class, 'getpositionfromdepartment'])->name('ajax.getpositionfromdepartment');
-
-    // Route::get('/vendor', function () {
-    //     return view('vendor.index');
     // });
+
     Route::resource('vendor', 'App\Http\Controllers\VendorController');
 
     Route::get('/vendor-edit', function () {
@@ -292,17 +350,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/auth/google/callback', [App\Http\Controllers\GoogleController::class, 'handleProviderCallback'])->name('google.callback');
     Route::get('/google/calendar/auth', [App\Http\Controllers\GoogleController::class, 'startGoogleAuth'])->name('google.calendar.auth');
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    Route::prefix('announcement')->controller(App\Http\Controllers\AnnouncementController::class)->name('announcement.')->group(function () {
-        // Route::get('/', 'index')->name('index');
-        // Route::get('/create', 'create')->name('create');
-        Route::post('/store', 'store')->name('store');
-        // Route::get('{announcement}/edit', 'edit')->name('edit');
-        Route::patch('/{announcement}/update', 'update')->name('update');
-        Route::delete('/{announcement}', 'destroy')->name('destroy');
+    Route::middleware(['role:admin, hc'])->group(function () {
+        Route::prefix('announcement')->controller(App\Http\Controllers\AnnouncementController::class)->name('announcement.')->group(function () {
+            // Route::get('/', 'index')->name('index');
+            // Route::get('/create', 'create')->name('create');
+            Route::post('/store', 'store')->name('store');
+            // Route::get('{announcement}/edit', 'edit')->name('edit');
+            Route::patch('/{announcement}/update', 'update')->name('update');
+            Route::delete('/{announcement}', 'destroy')->name('destroy');
+        });
     });
 
+    // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
     // Other protected routes

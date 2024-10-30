@@ -1,6 +1,6 @@
-@extends('layout.index')
+@extends('admin.layout.app')
 @section('title')
-    Budget Dashboard
+    Budget Program - Budgeting System
 @endsection
 @section('content')
     <div class="judulhalaman" style="display: flex; align-items: center">
