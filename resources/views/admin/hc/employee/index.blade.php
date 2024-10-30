@@ -1,8 +1,9 @@
-@extends('layout.index')
+@extends('admin.layout.app')
 
 @section('title')
-    Employee Narasi
+    Employee - Admin System
 @endsection
+
 @section('content')
     <div class="judulhalaman" style="display: flex; align-items: center; ">Narasi Employee
         {{-- <form style="margin-left: 12px" class="d-flex has-search" role="search ">
@@ -164,7 +165,8 @@
                                 </select>
                             </div>
                         </div>
-                            <label for="roles">Level</label>
+                        <div class="form-group">
+                            <label for="roles">Roles</label>
                             @foreach ($access as $role)
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="access[]"
@@ -174,6 +176,7 @@
                                     </label>
                                 </div>
                             @endforeach
+                        </div>
 
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>

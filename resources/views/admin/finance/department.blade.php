@@ -1,13 +1,15 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Budget Department - Budgeting System
+    Admin - Budget
 @endsection
 
 @section('content')
     <div class="judulhalaman" style="display: flex; align-items: center">
         Input Budget Department Narasi
     </div>
+
+
     <div class="tab-content" id="myTabContent" >
         <div style="display: flex; justify-content: space-between">
             <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#modal-add-budget-department">
@@ -47,32 +49,30 @@
                         </tr>
                     </thead>
                     <tbody style="">
-                        @foreach ($departmentYearlyBudgets as $budgetYearly)
+                  
                         <tr>
                             {{-- <th scope="row ">1</th> --}}
-                            <td>{{ $budgetYearly->budget_code }}</td>
-                            <td>{{ $budgetYearly->year }}</td>
-                            <td>{{ $budgetYearly->department->department_name}}</td>
-                            <td>{{ $budgetYearly->budget_name }}</td>
-                            <td style="text-transform:none">{{ 'Rp ' . number_format($budgetYearly->budget_yearly, 0, ',', '.') }}</td>
-                            <td style="text-transform:none">{{ 'Rp ' . number_format($budgetYearly->budget_monthly, 0, ',', '.') }}</td>
-                            <td style="text-transform:none">{{ 'Rp ' . number_format($budgetYearly->remaining_budget, 0, ',', '.') }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-transform:none"></td>
+                            <td style="text-transform:none"></td>
+                            <td style="text-transform:none"></td>
 
                             <td>
                                 <span style="display: flex; gap: 8px; justify-content: center">
-                                    <a type="button " class="uwuq" data-bs-toggle="modal" data-bs-target="#modal-edit-budget-department-{{ $budgetYearly->department_yearly_budget_id}}" >Edit</a>
+                                    <a type="button " class="uwuq" data-bs-toggle="modal" data-bs-target="#modal-edit-budget-department" >Edit</a>
 
-                                    <form method="POST" action="{{ route('budget.department.destroy', $budgetYearly->department_yearly_budget_id )}}" class="" onsubmit="return confirmDelete()">
-                                        @csrf
-                                        @method('delete')
+                                    <form method="POST" action="" class="" onsubmit="return confirmDelete()">
+
                                         <button type="submit" class="btn btn-danger">DELETE</button>
                                     </form>
                                 </span>
                             </td>
-                            @include('budget.modal_edit_budget_department', ['data' => $budgetYearly])
+                            @include('admin.finance.modal_edit_budget_department')
                         </tr>
 
-                        @endforeach
 
                     </tbody>
                 </table>
@@ -84,68 +84,47 @@
 
 @section('modal')
     <!-- Modal add -->
-    <div class="modal justify-content-center fade" id="modal-add-budget-department" data-bs-keyboard="false"
-        tabindex="-1 " aria-labelledby="staticBackdropLabel " aria-hidden="true">
+    <div class="modal justify-content-center fade" id="modal-add-budget-department" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body bg-white">
-                    <form action="{{ route('budget.department.store') }}" method="POST" class=" " id="mainForm" style="font:Narasi Sans, sans-serif">
-                        @csrf
+                    <form method="POST" id="mainForm" style="font: Narasi Sans, sans-serif">
                         <div class="row mb-3">
-                            <div class="col ">
-                                <label for="namaprogram " class="form-label">Budget Name</label>
-                                <input type="text" class="form-control p-2  @error('budget_name') is-invalid @enderror" id="budgetname" name="budget_name" oninput="this.value = this.value.toUpperCase()" />
-                                @error('budget_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class="col">
+                                <label for="namaprogram" class="form-label">Budget Name</label>
+                                <input type="text" class="form-control p-2" id="budgetname" name="budget_name" />
                             </div>
                             <div class="col">
                                 <label for="department_option" class="form-label">Department</label>
-                                <select name="department_id"  class="selectize" id="department_option" required>
+                                <select name="department_id" class="selectize" id="department_option" required>
                                     <option disabled selected>Select Department</option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{ $department->department_id }}">{{ $department->department_name }}</option>
-                                    @endforeach
+                                    <!-- Static department options -->
+                                    <option value="1">Department 1</option>
+                                    <option value="2">Department 2</option>
                                 </select>
                             </div>
-
                         </div>
-
+    
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="year" class="form-label">Year</label>
-                                <select class="year selectize"  name="year">
+                                <select class="year selectize" name="year">
                                     <option style="color: rgb(189, 189, 189);">Choose Year</option>
                                 </select>
                             </div>
-
                             <div class="col">
                                 <label for="kodebudget" class="form-label">Budget Code</label>
-                                <input type="text " class="form-control p-2  @error('budget_code') is-invalid @enderror" id="kodebudget" name="budget_code" oninput="this.value = this.value.toUpperCase()"/>
+                                <input type="text" class="form-control p-2" id="kodebudget" name="budget_code"/>
                             </div>
-                            @error('budget_code')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-
                         </div>
-
+    
                         <div class="mb-3">
                             <label for="budgetyearly" class="form-label">Budget Yearly</label>
                             <input type="text" class="form-control p-2" id="formatted_budget_yearly" name="formatted_budget_yearly" />
-                            <input type="hidden" id="budget_yearly" name="budget_yearly" class="@error('budget_yearly') is-invalid @enderror" />
-                            @error('budget_yearly')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <input type="hidden" id="budget_yearly" name="budget_yearly" />
                         </div>
-
-
-                        <button type="submit " class="button-submit">Submit</button>
+    
+                        <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
@@ -153,7 +132,7 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Modal alert -->
     @include('layout.alert')
 

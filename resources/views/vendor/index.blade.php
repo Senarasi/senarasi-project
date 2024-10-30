@@ -1,7 +1,7 @@
-@extends('layout.index')
+@extends('vendor.layout.app')
 
 @section('title')
-    Budget Dashboard
+    Vendor Narasi
 @endsection
 
 @section('content')

@@ -10,7 +10,8 @@
         /* Warna background untuk dropdown */
         padding: 0px;
         margin-top: 2px;
-        width: max-content; /* Mengatur lebar dropdown mengikuti panjang konten */
+        width: max-content;
+        /* Mengatur lebar dropdown mengikuti panjang konten */
         min-width: 150px;
     }
 
@@ -24,6 +25,32 @@
         text-decoration: none;
         text-align: center;
     }
+
+    .unique {
+        position: relative;
+        text-decoration: none;
+        color: black;
+        font-family: 'Narasi Sans';
+        font-weight: 200;
+        letter-spacing: 0.5px;
+    }
+
+    .unique::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 0;
+        height: 2px;
+        background-color: #4a25aa;
+        transition: width 0.3s ease;
+
+    }
+
+    .unique:hover::after,
+    .unique:active::after {
+        width: 100%;
+    }
 </style>
 <!--Navbar-->
 <nav class="navbar fixed-top navbar-expand-lg">
@@ -36,10 +63,21 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarnih">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0"> </ul>
+        <div class="collapse navbar-collapse" id="navbarnih" style="justify-content: space-between; ">
 
-            <div class="navbar-nav order-md-last">
+
+
+            <div style="display:flex">
+                <a class="unique ms-5" href="{{ route('employee.index') }}">Employee</a>
+                <a href="{{ route('vendor.index') }}" class="unique ms-4">Name Vendor</a>
+                @if (auth()->user()->hasRole(['admin', 'manager']))
+                    <a href="{{ route('admin') }}" class="unique ms-4">Admin</a>
+                @endif
+            </div>
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+
+            <div class="navbar-nav order-md-last text-end">
                 <a class="maindashboardlink" href="{{ route('dashboard.main') }}">Main Dashboard</a>
 
                 @guest
@@ -110,17 +148,13 @@
                                 <div class="text-secondary">{{ Auth::user()->role }}</div>
                             </div>
                             <hr style="margin-bottom: 0">
-                            <a href="#" class="dropdown-item unique-sidebar-link" data-bs-toggle="modal"
-                                data-bs-target="#customModalUnique">
+                            <a href="#" class="dropdown-item unique-sidebar-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
                                     <path fill="#bab5b5"
                                         d="M19.9 12.66a1 1 0 0 1 0-1.32l1.28-1.44a1 1 0 0 0 .12-1.17l-2-3.46a1 1 0 0 0-1.07-.48l-1.88.38a1 1 0 0 1-1.15-.66l-.61-1.83a1 1 0 0 0-.95-.68h-4a1 1 0 0 0-1 .68l-.56 1.83a1 1 0 0 1-1.15.66L5 4.79a1 1 0 0 0-1 .48L2 8.73a1 1 0 0 0 .1 1.17l1.27 1.44a1 1 0 0 1 0 1.32L2.1 14.1a1 1 0 0 0-.1 1.17l2 3.46a1 1 0 0 0 1.07.48l1.88-.38a1 1 0 0 1 1.15.66l.61 1.83a1 1 0 0 0 1 .68h4a1 1 0 0 0 .95-.68l.61-1.83a1 1 0 0 1 1.15-.66l1.88.38a1 1 0 0 0 1.07-.48l2-3.46a1 1 0 0 0-.12-1.17ZM18.41 14l.8.9l-1.28 2.22l-1.18-.24a3 3 0 0 0-3.45 2L12.92 20h-2.56L10 18.86a3 3 0 0 0-3.45-2l-1.18.24l-1.3-2.21l.8-.9a3 3 0 0 0 0-4l-.8-.9l1.28-2.2l1.18.24a3 3 0 0 0 3.45-2L10.36 4h2.56l.38 1.14a3 3 0 0 0 3.45 2l1.18-.24l1.28 2.22l-.8.9a3 3 0 0 0 0 3.98m-6.77-6a4 4 0 1 0 4 4a4 4 0 0 0-4-4m0 6a2 2 0 1 1 2-2a2 2 0 0 1-2 2" />
                                 </svg>
                                 <span class="align-middle ms-2">Setting</span>
                             </a>
-
-
-                            <!-- Include modal -->
 
                             <a href="{{ route('logout') }}" class="dropdown-item unique-sidebar-link"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -142,6 +176,7 @@
 
             </div>
         </div>
+
     </div>
 </nav>
 <script>

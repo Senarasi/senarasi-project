@@ -16,13 +16,14 @@ class Employee extends Authenticatable
     protected $fillable = [
         'full_name',
         'email',
-        'role',
+        'employee_status_id',
         'email_verified_at',
         'password',
         'department_id',
         'position_id',
         'manager_id',
-        'phone'
+        'phone',
+        'employee_status_id',
     ];
 
     protected $hidden = [
@@ -32,11 +33,13 @@ class Employee extends Authenticatable
 
     use HasFactory;
 
-    public function department(){
+    public function department()
+    {
         return $this->belongsTo(Department::class, 'department_id');
     }
 
-    public function position(){
+    public function position()
+    {
         return $this->belongsTo(Position::class, 'position_id');
     }
 
@@ -64,5 +67,23 @@ class Employee extends Authenticatable
     public function departmentRequestPayments()
     {
         return $this->hasMany(DepartmentRequestPayment::class, 'employee_id');
+    }
+
+    public function access()
+    {
+        return $this->belongsToMany(Access::class, 'employee_access', 'employee_id', 'access_id');
+    }
+
+    public function hasRole($roles)
+    {
+        if (is_array($roles)) {
+            return $this->access->whereIn('access', $roles)->isNotEmpty();
+        }
+        return $this->access->contains('access', $roles);
+    }
+
+    public function employeeStatus()
+    {
+        return $this->belongsTo(EmployeeStatus::class, 'employee_status_id');
     }
 }
