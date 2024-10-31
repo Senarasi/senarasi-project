@@ -16,7 +16,7 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $employees = Employee::with(['department', 'position'])->orderBy('employee_id', 'asc')->get();
-        $managers = Employee::where('employee_status_id', '4')->orderBy('full_name', 'asc')->get();
+        $managers = Employee::whereIn('employee_status_id', [2, 3, 4])->orderBy('full_name', 'asc')->get();
         $total_employees = $employees->count();
         $departments = Department::orderBy('department_name', 'asc')->pluck('department_name', 'department_id');
         $positions = Position::orderBy('position_name', 'asc')->pluck('position_name', 'position_id');
@@ -28,7 +28,7 @@ class EmployeeController extends Controller
     public function show(Request $request)
     {
         $employees = Employee::with(['department', 'position'])->orderBy('employee_id', 'asc')->get();
-        $managers = Employee::where('employee_status_id', '4')->orderBy('full_name', 'asc')->get();
+        $managers = Employee::whereIn('employee_status_id', [2, 3, 4])->orderBy('full_name', 'asc')->get();
         $total_employees = $employees->count();
         $departments = Department::orderBy('department_name', 'asc')->pluck('department_name', 'department_id');
         $positions = Position::orderBy('position_name', 'asc')->pluck('position_name', 'position_id');
