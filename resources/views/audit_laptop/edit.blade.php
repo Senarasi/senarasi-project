@@ -164,6 +164,16 @@
                     <input type="text" name="lainnya" id="lainnya" class="form-control"
                         value="{{ $laptop->lainnya }}">
                 </div>
+
+                <div class="mb-3">
+                    <label for="picture" class="form-label">Update Picture</label>
+                    @if ($laptop->picture)
+                        <img src="{{ asset('storage/' . $laptop->picture) }}" alt="Current Picture"
+                            style="max-width: 150px;">
+                    @endif
+                    <input type="file" id="picture" name="picture" accept="image/*" capture="environment">
+                    <button type="button" id="cameraButton">Take a Photo</button>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
         </form>
@@ -196,5 +206,14 @@
                 otherInput.value = '';
             }
         }
+    </script>
+    <script>
+        const fileInput = document.getElementById('picture');
+        const cameraButton = document.getElementById('cameraButton');
+
+        cameraButton.addEventListener('click', () => {
+            fileInput.setAttribute('capture', 'camera');
+            fileInput.click();
+        });
     </script>
 @endsection

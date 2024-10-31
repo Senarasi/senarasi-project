@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AuditLaptop;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Storage;
 
 class AuditLaptopController extends Controller
 {
@@ -42,7 +43,13 @@ class AuditLaptopController extends Controller
             'speaker' => 'required|string',
             'kamera' => 'required|string',
             'lainnya' => 'nullable|string',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
+        if ($request->hasFile('picture')) {
+            $path = $request->file('picture')->store('audit/laptop', 'public');
+            $validated['picture'] = $path;
+        }
 
         // Use custom input if 'Other' is selected
         $validated['ssd'] = $request->ssd === 'other' ? $request->ssd_other : $request->ssd;
@@ -81,10 +88,22 @@ class AuditLaptopController extends Controller
             'speaker' => 'required|string|max:255',
             'kamera' => 'required|string|max:255',
             'lainnya' => 'required|string|max:255',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         // Find the laptop by ID
         $laptop = AuditLaptop::findOrFail($id);
+
+        if ($request->hasFile('picture')) {
+            // Delete old picture if exists
+            if ($laptop->picture) {
+                Storage::disk('public')->delete($laptop->picture);
+            }
+
+            $path = $request->file('picture')->store('audit/laptop', 'public');
+            $laptop->picture = $path;
+        }
+
 
         // Update fields with provided data
         $laptop->employee_id = $request->employee_id;
@@ -113,8 +132,20 @@ class AuditLaptopController extends Controller
         return redirect()->route('audit_laptop.index')->with('success', 'Audit laptop created successfully.');
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-        return view('audit_laptop.index');
+        // Find the laptop record by ID
+        $laptop = AuditLaptop::findOrFail($id);
+
+        // Check if the image file exists and delete it
+        if ($laptop->picture) {
+            Storage::disk('public')->delete($laptop->picture);
+        }
+
+        // Delete the laptop record from the database
+        $laptop->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('audit_laptop.index')->with('success', 'Laptop deleted successfully!');
     }
 }

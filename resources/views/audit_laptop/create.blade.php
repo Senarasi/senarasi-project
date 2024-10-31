@@ -3,12 +3,30 @@
 @section('title')
     Employee Narasi
 @endsection
+
+<style>
+    #cameraButton {
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+</style>
 @section('content')
     <div class="container">
         <h2>Insert New Record</h2>
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
 
         <form action="{{ route('audit_laptop.store') }}" method="POST" enctype="multipart/form-data">
@@ -58,7 +76,8 @@
                         <option value="other">Other</option>
                     </select>
                     <input type="text" id="processor_other" name="processor_other" class="form-control mt-2"
-                        placeholder="Enter custom processor" style="display: none;" oninput="this.value = this.value.toUpperCase();">
+                        placeholder="Enter custom processor" style="display: none;"
+                        oninput="this.value = this.value.toUpperCase();">
                 </div>
 
                 <div class="mb-3">
@@ -74,7 +93,8 @@
                         <option value="other">Other</option>
                     </select>
                     <input type="text" id="ram_other" name="ram_other" class="form-control mt-2"
-                        placeholder="Enter custom RAM size" style="display: none;" oninput="this.value = this.value.toUpperCase();">
+                        placeholder="Enter custom RAM size" style="display: none;"
+                        oninput="this.value = this.value.toUpperCase();">
                 </div>
             </div>
 
@@ -91,7 +111,8 @@
                         <option value="other">Other</option>
                     </select>
                     <input type="text" id="ssd_other" name="ssd_other" class="form-control mt-2"
-                        placeholder="Enter custom SSD size" style="display: none;" oninput="this.value = this.value.toUpperCase();">
+                        placeholder="Enter custom SSD size" style="display: none;"
+                        oninput="this.value = this.value.toUpperCase();">
                 </div>
 
                 <div class="mb-3">
@@ -142,11 +163,13 @@
                     <input type="text" name="lainnya" id="lainnya" class="form-control">
                 </div>
 
-                <div class="mb-3">
-                    <label for="picture" class="form-label">Take Picture</label>
-                    <input type="file" id="picture" name="picture" class="form-control" accept="image/*" capture="environment">
-                    <input type="file" name="image" accept="image/*" capture="camera">
+                <div class="input-group">
+                    <label for="picture">Choose images:</label>
+                    <input type="file" id="picture" name="picture" accept="image/*" capture="environment"
+                        multiple>
+                    <button type="button" id="cameraButton">Take Photos</button>
                 </div>
+                <div id="preview"></div>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
         </form>
@@ -179,5 +202,26 @@
                 otherInput.value = '';
             }
         }
+    </script>
+    <script>
+        const fileInput = document.getElementById('picture');
+        const cameraButton = document.getElementById('cameraButton');
+
+        cameraButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Preview selected images
+        fileInput.addEventListener('change', function() {
+            const preview = document.getElementById('preview');
+            preview.innerHTML = ''; // Clear previous preview
+            Array.from(fileInput.files).forEach(file => {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.style.maxWidth = '100px';
+                img.style.margin = '5px';
+                preview.appendChild(img);
+            });
+        });
     </script>
 @endsection
