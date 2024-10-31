@@ -13,6 +13,10 @@ class AuditLaptop extends Model
 
     protected $primaryKey = 'audit_laptop_id';
 
+    protected $casts = [
+        'picture' => 'array',
+    ];
+
     protected $fillable = [
         'employee_id',
         'laptop_number',
@@ -29,6 +33,7 @@ class AuditLaptop extends Model
         'speaker',
         'kamera',
         'lainnya',
+        'picture',
     ];
 
     public function employee()

@@ -68,11 +68,12 @@
 
 
             <div style="display:flex">
-                <a class="unique ms-5" href="{{ route('employee.index') }}">Employee</a>
-                <a href="{{ route('vendor.index') }}" class="unique ms-4">Name Vendor</a>
                 @if (auth()->user()->hasRole(['admin', 'manager']))
                     <a href="{{ route('admin') }}" class="unique ms-4">Admin</a>
+                    <a href="{{ route('audit_laptop.index') }}" class="unique ms-4">Audit</a>
                 @endif
+                <a class="unique ms-5" href="{{ route('employee.index') }}">Employee</a>
+                <a href="{{ route('vendor.index') }}" class="unique ms-4">Name Vendor</a>
             </div>
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>

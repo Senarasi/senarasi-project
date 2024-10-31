@@ -32,7 +32,8 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::resource('audit_laptop', App\Http\Controllers\AuditLaptopController::class);
+    // Route::resource('', App\Http\Controllers\AuditLaptopController::class);
+    Route::resource('audit_laptop', 'App\Http\Controllers\AuditLaptopController');
 
     Route::get('/admin', function () {
         return view('admin.index');
