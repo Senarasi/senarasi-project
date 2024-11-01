@@ -178,7 +178,6 @@
                     <thead class="table-light">
                         <tr class="dicobain">
                             <th scope="col">Sub Description</th>
-                            <th scope="col">Usage</th>
                             <th scope="col">REP</th>
                             <th scope="col">Name</th>
                             <th scope="col" style="width: 80px; ">Day</th>
@@ -196,7 +195,6 @@
                                 <td>
                                     {{ $data->subdescription->sub_description_name ?? '' }}
                                 </td>
-                                <td>{{ $data->usage ?? '' }}</td>
                                 <td>{{ $data->rep ?? '' }}</td>
                                 <td>{{ $data->tool_name ?? '' }}</td>
                                 <td>{{ $data->day ?? 0 }}</td>

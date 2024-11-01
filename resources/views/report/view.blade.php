@@ -147,7 +147,7 @@
                                 <div class="text-start"
                                     style="display: inline-block; vertical-align: middle; margin-right: 774px">
                                     <p style="margin-bottom: -8px; padding-bottom: -8px">Request Number</p>
-                                    <p style="font: 700 15px Narasi Sans, sans-serif; letter-spacing: 0.5px;">
+                                    <p style="font: 700 24px Narasi Sans, sans-serif; letter-spacing: 0.5px;">
                                         {{ $requestbudget->request_budget_number }}</p>
                                 </div>
                                 <div class="text-end" style="display: inline-block; vertical-align: middle;">
@@ -224,7 +224,7 @@
                                     <th scope="col ">COST</th>
                                     <th scope="col ">TOTAL COST</th>
                                     <th scope="col ">ASSIGN TO</th>
-                                    <th scope="col " style="width: 430px">NOTES</th>
+                                    <th scope="col ">NOTES</th>
                                 </tr>
                             </thead>
 
@@ -261,7 +261,7 @@
                                             <td class="text-end">{{ number_format($data->cost) }}</td>
                                             <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
-                                            <td>{{ $data->note }}</td>
+                                            <td class="text-start">{{ $data->note }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -334,7 +334,7 @@
                                             <td class="text-end">{{ number_format($data->cost) }}</td>
                                             <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
-                                            <td>{{ $data->note }}</td>
+                                            <td class="text-start">{{ $data->note }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -409,7 +409,7 @@
                                             <td class="text-end">{{ number_format($data->cost) }}</td>
                                             <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
-                                            <td>{{ $data->note }}</td>
+                                            <td class="text-start">{{ $data->note }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -483,7 +483,7 @@
                                             <td class="text-end">{{ number_format($data->cost) }}</td>
                                             <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
-                                            <td>{{ $data->note }}</td>
+                                            <td class="text-start">{{ $data->note }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -556,7 +556,7 @@
                                             <td class="text-end">{{ number_format($data->cost) }}</td>
                                             <td class="text-end">{{ number_format($data->total_cost) }}</td>
                                             <td>{{ $data->assign }}</td>
-                                            <td>{{ $data->note }}</td>
+                                            <td class="text-start">{{ $data->note }}</td>
                                         </tr>
                                     @empty
                                         <tr>

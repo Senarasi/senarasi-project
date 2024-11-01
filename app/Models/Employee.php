@@ -82,6 +82,7 @@ class Employee extends Authenticatable
         return $this->access->contains('access_name', $roles);
     }
 
+
     public function employeeStatus()
     {
         return $this->belongsTo(EmployeeStatus::class, 'employee_status_id');

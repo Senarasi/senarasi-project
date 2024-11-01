@@ -16,7 +16,7 @@ class RequestBudget extends Model
         'manager_id',
         'employee_id',
         'month',
-        'quarterly_budget_id',
+        'monthly_budget_id',
         'episode',
         'location',
         'type',
@@ -77,9 +77,9 @@ class RequestBudget extends Model
         return $this->hasMany(Location::class, 'request_budget_id');
     }
 
-    public function quarterlyBudget()
+    public function monthlyBudget()
     {
-        return $this->belongsTo(ProgramQuarterlyBudget::class, 'quarterly_budget_id');
+        return $this->belongsTo(ProgramMonthlyBudget::class, 'monthly_budget_id');
     }
 
     public function approval()

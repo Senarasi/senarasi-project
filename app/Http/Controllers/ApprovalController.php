@@ -233,7 +233,7 @@ class ApprovalController extends Controller
         $approval2 = Employee::findOrFail(120021071261);
         $reviewer = Employee::findOrFail(220017110117);
         $hc = Employee::findOrFail(220017110117);
-        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approvals','approval1', 'approval2', 'reviewer', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts','totalperformer','totalproductioncrew','totalproductiontool','totaloperational','totallocation'));
+        $pdf = Pdf::loadView('report.view', ['budget' => $requestbudget->budget], compact('approvals', 'approval1', 'approval2', 'reviewer', 'requestbudget', 'performer', 'productioncrew', 'productiontool', 'operational', 'location', 'totalAll', 'totalRepCrewCounts', 'totalRepPerformerCounts', 'totalperformer', 'totalproductioncrew', 'totalproductiontool', 'totaloperational', 'totallocation'));
         // Mengatur format kertas menjadi lanskap
         $pdf->setPaper('LEGAL', 'landscape');
         return $pdf->stream('document.pdf');
@@ -503,25 +503,63 @@ class ApprovalController extends Controller
         return $stages[$currentStage] ?? null;
     }
 
+    // private function deductBudget($requestBudget)
+    // {
+    //     // Get the related total cost
+    //     $totalCost = $requestBudget->totalCost;
+
+    //     // Calculate the total amount to deduct
+    //     $totalAmountToDeduct = $totalCost->total_locations_cost +
+    //         $totalCost->total_operationals_cost +
+    //         $totalCost->total_performers_cost +
+    //         $totalCost->total_production_crews_cost +
+    //         $totalCost->total_production_tools_cost;
+
+    //     // Get the related ProgramQuarterlyBudget
+    //     $quarterlyBudget = $requestBudget->quarterlyBudget;
+
+    //     if ($quarterlyBudget) {
+    //         // Deduct the total cost from the remaining budget
+    //         $quarterlyBudget->remaining_budget -= $totalAmountToDeduct;
+    //         $quarterlyBudget->save();
+    //     }
+    // }
+
     private function deductBudget($requestBudget)
     {
-        // Get the related total cost
+        // Calculate the total amount to deduct from all budgets
         $totalCost = $requestBudget->totalCost;
-
-        // Calculate the total amount to deduct
         $totalAmountToDeduct = $totalCost->total_locations_cost +
             $totalCost->total_operationals_cost +
             $totalCost->total_performers_cost +
             $totalCost->total_production_crews_cost +
             $totalCost->total_production_tools_cost;
 
-        // Get the related ProgramQuarterlyBudget
-        $quarterlyBudget = $requestBudget->quarterlyBudget;
+        // Step 1: Deduct from the related Monthly Budget
+        $monthlyBudget = $requestBudget->monthlyBudget;
+        if ($monthlyBudget) {
+            $monthlyBudget->remaining_budget -= $totalAmountToDeduct;
+            if ($monthlyBudget->remaining_budget < 0) {
+                $monthlyBudget->remaining_budget = 0; // Ensure no negative balance
+            }
+            $monthlyBudget->save();
 
-        if ($quarterlyBudget) {
-            // Deduct the total cost from the remaining budget
-            $quarterlyBudget->remaining_budget -= $totalAmountToDeduct;
-            $quarterlyBudget->save();
+            // Step 2: Update Quarterly Budget's remaining budget by summing monthly budgets
+            $quarterlyBudget = $monthlyBudget->quarterlyBudget;
+            if ($quarterlyBudget) {
+                $quarterlyBudget->remaining_budget = $quarterlyBudget->monthlyBudgets->sum('remaining_budget');
+                $quarterlyBudget->save();
+
+                // Step 3: Update Yearly Budget's remaining budget by summing quarterly budgets
+                $yearlyBudget = $quarterlyBudget->yearlyBudget;
+                if ($yearlyBudget) {
+                    $yearlyBudget->remaining_budget = $yearlyBudget->quarterlyBudgets->sum('remaining_budget');
+                    $yearlyBudget->save();
+                }
+            }
+        } else {
+            // Handle the case where monthly budget is not found
+            \Log::error("Monthly budget not found for RequestBudget ID: " . $requestBudget->id);
         }
     }
 

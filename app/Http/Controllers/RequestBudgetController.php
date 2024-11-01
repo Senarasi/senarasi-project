@@ -124,7 +124,7 @@ class RequestBudgetController extends Controller
             'month' => 'required|integer|between:1,12',
             'producer_id' => 'required|exists:employees,employee_id',
             'manager_id' => 'required|exists:employees,employee_id',
-            'quarterly_budget_id' => 'required|exists:program_quarterly_budgets,quarterly_budget_id',
+            'monthly_budget_id' => 'required|exists:program_monthly_budgets,monthly_budget_id',
             'budget_code' => 'required|string|max:255',
             'budget' => 'required|numeric',
             'episode' => 'required|string|max:255',
