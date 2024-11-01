@@ -147,7 +147,7 @@
                 </fieldset>
                 <input type="hidden" name="budget_code" id="budget_code" />
                 <input type="hidden" name="budget" id="budget_input" />
-                <input type="hidden" name="quarterly_budget_id" id="quarterly_budget_id" />
+                <input type="hidden" name="monthly_budget_id" id="monthly_budget_id" />
                 <input type="hidden" name="reviewer_id" id="reviewer_id" value="3" />
                 <input type="hidden" name="finance1_id" id="finance1_id" value="5" />
                 <input type="hidden" name="finance2_id" id="finance2_id" value="6" />
@@ -185,7 +185,6 @@
                             <option disabled selected>Choose One</option>
                             <option value="TAPPING">TAPPING</option>
                             <option value="LIVE STREAMING">LIVE STREAMING</option>
-                            <option value="EVENT">EVENT</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -209,7 +208,7 @@
 @section('custom-js')
     {{-- <script src="{{ asset('js/formrequest.js') }}"></script> --}}
     {{-- get monthly budget based on program & month --}}
-    {{-- <script type='text/javascript'>
+    <script type='text/javascript'>
         $(document).ready(function() {
             $('#program_option, #month').on('change', function() {
                 var programId = $('#program_option').val();
@@ -252,8 +251,10 @@
                 }
             });
         });
-    </script> --}}
-    <script>
+    </script>
+
+    {{-- get quarterly budget --}}
+    {{-- <script>
         $(document).ready(function() {
             $('form button[type="submit"]').attr('disabled', true);
             $('#program_option, #month').change(function() {
@@ -291,7 +292,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
     <script>
         $(document).ready(function() {
             $('#program_option').selectize({

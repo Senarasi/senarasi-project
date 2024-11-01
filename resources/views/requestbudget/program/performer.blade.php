@@ -9,7 +9,7 @@
             <svg xmlns="http://www.w3.org/2000/svg " width="10 " height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path
                     d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                                                                                                                                                                                                                                                              7.2501 0 7.6501 0 8.0501Z "
+                                                                                                                                                                                                                                                                                                                          7.2501 0 7.6501 0 8.0501Z "
                     fill="#4A25AA " />
             </svg>
             Back
@@ -72,7 +72,7 @@
             </div>
         @endif
         <form id="mainForm" action=""></form>
-        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px; border-top:none">
+        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px; border-bottom:none; border-top:none;">
             <table class="table table-hover align-middle"
                 style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center;">
                 <thead class="table-light" style="border:1px solid #c4c4c4">
@@ -179,7 +179,6 @@
                     <thead class="table-light">
                         <tr class="dicobain">
                             <th scope="col">Sub Description</th>
-                            <th scope="col">Usage</th>
                             <th scope="col">REP</th>
                             <th scope="col">Name</th>
                             <th scope="col" style="width: 80px;">Day</th>
@@ -197,7 +196,6 @@
                                 <td>
                                     {{ $data->subdescription->sub_description_name ?? '' }}
                                 </td>
-                                <td>{{ $data->usage ?? '' }}</td>
                                 <td>{{ $data->rep ?? '' }}</td>
                                 <td>{{ $data->name ?? '' }}</td>
                                 <td>{{ $data->day ?? 0 }}</td>
@@ -208,10 +206,10 @@
                                 <td>{{ $data->note ?? '' }}</td>
                                 <td>
                                     <span style="display: flex; gap: 8px; justify-content: center">
-                                        <a href="javascript:;" class="uwuq editModalBtn" style="font-size: 14px"
+                                        {{-- <a href="javascript:;" class="uwuq editModalBtn" style="font-size: 14px"
                                             data-id="{{ $data->performer_id }}"
                                             data-url="{{ route('performer.edit', $data->performer_id) }}"
-                                            data-bs-toggle="modal" data-bs-target="#edititem">Edit</a>
+                                            data-bs-toggle="modal" data-bs-target="#edititem">Edit</a> --}}
                                         <form class="form-delete" onsubmit="return confirm('Konfirmasi hapus data ini?')"
                                             action="{{ route('performer.destroy', $data->performer_id) }}"
                                             method="POST">
@@ -272,7 +270,6 @@
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-
                                 <label for="rep" class="form-label">REP</label>
                                 <select name="rep" class="form-select" id="rep_option" required>
                                     <option disabled selected>Choose One</option>
@@ -301,14 +298,14 @@
                             <div class="col">
                                 <div class="mb-3">
                                     <label for="day" class="form-label">Day</label>
-                                    <select name="day" class="form-select" id="day" required>
+                                    {{-- <select name="day" class="form-select" id="day" required>
                                         <option disabled selected>Select Day</option>
                                         @for ($i = 1; $i <= 31; $i++)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
-                                    </select>
-                                    {{-- <input type="number" class="form-control" id="day" name="day"
-                                        style="padding: 8px" /> --}}
+                                    </select> --}}
+                                    <input type="number" class="form-control" id="day" name="day"
+                                        style="padding: 8px" />
                                 </div>
                             </div>
                             <div class="col">

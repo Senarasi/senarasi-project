@@ -20,10 +20,14 @@ class CheckAccess
             return redirect('login');
         }
 
-        $user = Auth::user();
-        if ($user->access()->whereIn('access_name', $access)->exists()) {
+        if (Auth::check() && Auth::user()->hasRole($access)) {
             return $next($request);
         }
+
+        // $user = Auth::user();
+        // if ($user->access()->whereIn('access_name', $access)->exists()) {
+        //     return $next($request);
+        // }
 
         return redirect()->route('unauthorized'); // Redirect to the unauthorized view
     }

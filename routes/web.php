@@ -97,7 +97,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/budget/store', 'App\Http\Controllers\Budget\BudgetProgramController@store')->name('budget.store');
     });
 
-    Route::middleware(['role:admin, ceo, vp, manager'])->group(function () {
+    Route::middleware(['role:admin,ceo,bod,vp,manager'])->group(function () {
         Route::resource('approval', ApprovalController::class)->except(['create', 'edit']);
         Route::get('approval/{id}/view', [ApprovalController::class, 'view'])->name('approval.view');
         Route::post('approval/{id}/approve', [ApprovalController::class, 'approve'])->name('approval.approve');
