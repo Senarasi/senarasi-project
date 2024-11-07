@@ -3,141 +3,120 @@
 @section('title')
     Detail Approval - Budgeting System
 @endsection
-@section('costum-css')
-    <style>
+{{-- @section('costum-css')
+<style>
+    .step-bar {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+    }
+    .step-bar .step {
+        position: relative;
+        text-align: center;
+        flex: 1;
+        margin: 0 10px; /* Increase spacing between steps */
+    }
+    .step-bar .step .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #ddd;
+        line-height: 30px;
+        color: #fff;
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+    .step-bar .step.waiting .circle {
+        background-color: #FFE900 ;
+    }
+    .step-bar .step::before {
+        content: '';
+        position: absolute;
+        top: 25%;
+        left: -55%;
+        width: 100%;
+        height: 4px;
+        background-color: #ddd;
+        z-index: -1;
+        transform: translateY(-50%);
+    }
+    .step-bar .step:first-child::before {
+        content: none;
+    }
+    /* .step-bar .step.waiting + .step::before {
+        background-color: #FFE900 ;
+    } */
+    @media (max-width: 768px) {
         .step-bar {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
+            flex-direction: column;
+            align-items: flex-start;
         }
-
         .step-bar .step {
-            position: relative;
+            display: flex;
+            align-items: center;
             text-align: center;
-            flex: 1;
-            margin: 0 10px;
-            /* Increase spacing between steps */
+            margin: 20px 0; /* Increase spacing between steps */
         }
-
         .step-bar .step .circle {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #ddd;
-            line-height: 30px;
-            color: #fff;
-            display: inline-block;
-            margin-bottom: 5px;
+            margin: 0 15px 0 0;
+            line-height: 30px; /* Ensure text remains centered vertically */
         }
-
-        .step-bar .step.waiting .circle {
-            background-color: #FFE900;
-        }
-
         .step-bar .step::before {
             content: '';
             position: absolute;
-            top: 25%;
-            left: -55%;
-            width: 100%;
-            height: 4px;
+            top: -50%;
+            left: 13px;
+            width: 4px;
+            height: 100%;
             background-color: #ddd;
-            z-index: -1;
-            transform: translateY(-50%);
+            z-index: 0;
+            transform: translateY(-70%);
         }
-
         .step-bar .step:first-child::before {
             content: none;
         }
-
-        /* .step-bar .step.waiting + .step::before {
-                                        background-color: #FFE900 ;
-                                    } */
-        @media (max-width: 768px) {
-            .step-bar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .step-bar .step {
-                display: flex;
-                align-items: center;
-                text-align: center;
-                margin: 20px 0;
-                /* Increase spacing between steps */
-            }
-
-            .step-bar .step .circle {
-                margin: 0 15px 0 0;
-                line-height: 30px;
-                /* Ensure text remains centered vertically */
-            }
-
-            .step-bar .step::before {
-                content: '';
-                position: absolute;
-                top: -50%;
-                left: 13px;
-                width: 4px;
-                height: 100%;
-                background-color: #ddd;
-                z-index: 0;
-                transform: translateY(-70%);
-            }
-
-            .step-bar .step:first-child::before {
-                content: none;
-            }
-
-            .step-bar .step::after {
-                content: '';
-                position: absolute;
-                left: 13px;
-                top: 50%;
-                width: 4px;
-                height: calc(100% - 40px);
-                background-color: #ddd;
-                z-index: -1;
-                transform: translateY(-75%);
-            }
-
-            .step-bar .step:first-child::after {
-                height: calc(50% - 35px);
-                top: 15px;
-            }
-
-            .step-bar .step:last-child::after {
-                content: none;
-            }
-
-            .step-bar .step.waiting+.step::after {
-                background-color: #FFE900;
-            }
+        .step-bar .step::after {
+            content: '';
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            width: 4px;
+            height: calc(100% - 40px);
+            background-color: #ddd;
+            z-index: -1;
+            transform: translateY(-75%);
         }
-
-        /* Styles for approved and rejected */
-        .step-bar .step.approved .circle {
+        .step-bar .step:first-child::after {
+            height: calc(50% - 35px);
+            top: 15px;
+        }
+        .step-bar .step:last-child::after {
+            content: none;
+        }
+        .step-bar .step.waiting + .step::after {
+            background-color: #FFE900 ;
+        }
+    }
+      /* Styles for approved and rejected */
+      /* .step-bar .step.approved .circle {
             background-color: #28a745;
         }
-
         .step-bar .step.rejected .circle {
             background-color: #FF0000;
-        }
-    </style>
-@endsection
+        } */
+</style> --}}
+{{-- @endsection --}}
 @section('content')
     <a class="navback" href="{{ route('approval.index') }}" style="text-decoration: none">
         <svg xmlns="http://www.w3.org/2000/svg " width="10" height="17 " viewBox="0 0 10 17 " fill="none ">
             <path d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                                        7.2501 0 7.6501 0 8.0501Z "
-                fill="#4A25AA " />
+                7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
         </svg>
         Back to Approval
     </a>
     <div class="tablenih">
         <div class="table-responsive p-3">
-            <div
-                style="justify-content: space-between; display: block; margin-left: 12px; margin-right: 12px; margin-top: 12px;  margin-bottom: 24px;">
+            <div style="justify-content: space-between; display: block; margin-top: 12px;  margin-bottom: 24px;">
                 <div class="row d-flex" style="justify-content: space-between;width:100%; align-self: stretch;">
                     <div class="col">
                         <p style="font: 400 16px Narasi Sans, sans-serif; color: #4A25AA; margin-left: 2px;">Request Number
@@ -254,7 +233,7 @@
                                         <td>{{ $requestBudgets->budget_code }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Project Manager</td>
+                                        <td>PIC</td>
                                         <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td>{{ $requestBudgets->producer->full_name }}</td>
                                     </tr>
@@ -276,12 +255,12 @@
 
                                     </tr>
                                     <tr>
-                                        <td>Activity</td>
+                                        <td>Program / Activity Name</td>
                                         <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td>{{ $requestBudgets->episode }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Date Of Shooting</td>
+                                        <td>Date of Production</td>
                                         <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td>{{ $requestBudgets->date_start }}</td>
                                     </tr>
@@ -292,13 +271,13 @@
                             <table class="tablecoba ">
                                 <tbody>
                                     <tr>
-                                        <td>Date Of Upload</td>
+                                        <td>Date of Upload</td>
                                         <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td>{{ $requestBudgets->date_upload }}</td>
 
                                     </tr>
                                     <tr>
-                                        <td>Type</td>
+                                        <td>Production Type</td>
                                         <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td>{{ $requestBudgets->type }}</td>
                                     </tr>
@@ -365,48 +344,115 @@
                     style="font: 300 16px Narasi Sans, sans-serif; width: 100%;  margin-bottom: 12px; text-align: center ">
                     <thead style="font-weight: 500">
                         <tr class="dicobain">
-                            <th scope="col ">No</th>
-                            <th scope="col " style="text-align: start">Description</th>
-                            <th scope="col ">Total</th>
-                            {{-- <th scope="col"> Notes </th> --}}
+                            <th scope="col" class="d-none d-md-table-cell">No</th>
+                            <!-- Hide on mobile, show on desktop -->
+                            <th scope="col" class="d-none d-md-table-cell" style="text-align: start">Description</th>
+                            <th scope="col"class="d-md-none" style="text-align: center">Description</th>
+                            <th scope="col" class="d-none d-md-table-cell">Total</th>
+                            <!-- Hide on mobile, show on desktop -->
                         </tr>
                     </thead>
                     <tbody style="text-transform: uppercase">
-                        <tr>
-                            <th scope="row ">1</th>
-                            <td style="text-align: start; ">Performer/Host/Guest</td>
-                            <td class="text-end" style="font-weight: 300">{{ number_format($totalperformer) }}</td>
-                            {{-- <td class="col-2"><input type="text" class="form-control" /></td> --}}
+
+                        <tr style="vertical-align: middle;">
+                            <th scope="row" class="d-none d-md-table-cell">1</th>
+                            <!-- Hide on mobile, show on desktop -->
+                            <td style="text-align: start; vertical-align: middle;">
+                                Performer/Host/Guest
+                                <div style="display: flex; width: 100%; justify-content: space-between; ">
+                                    <span class="total-price d-md-none"
+                                        style="font-weight: 300; padding-top: 12px;">Total:</span>
+                                    <span class="total-price d-md-none"
+                                        style="font-weight: 300; padding-top: 12px; font-weight: bold;">{{ number_format($totalperformer) }}</span>
+                                </div> <!-- Show on mobile, hide on desktop -->
+                            </td>
+                            <td class="total-price d-none d-md-table-cell" style="font-weight: 300;">{{ number_format($totalperformer) }}</td>
+                            <!-- Hide on mobile, show on desktop -->
                         </tr>
+
                         <tr>
-                            <th scope=" row ">2</th>
-                            <td style="text-align: start">Production Crews</td>
-                            <td class="text-end" style="font-weight: 300">{{ number_format($totalproductioncrew) }}</td>
-                            {{-- <td class="col-2"><input type="text" class="form-control" /></td> --}}
+                            <th scope="row" class="d-none d-md-table-cell">2</th>
+                            <!-- Hide on mobile, show on desktop -->
+                            <td style="text-align: start; vertical-align: middle;">
+                                Production Crews
+                                <div style="display: flex; width: 100%; justify-content: space-between; ">
+                                    <span class="total-price d-md-none"
+                                        style="font-weight: 300; padding-top: 12px;">Total:</span>
+                                    <span class="total-price d-md-none"
+                                        style="font-weight: 300; padding-top: 12px; font-weight: bold;">{{ number_format($totalproductioncrew) }}</span>
+                                </div> <!-- Show on mobile, hide on desktop -->
+                            </td>
+                            <td class="total-price d-none d-md-table-cell"
+                                style="font-weight: 300; vertical-align: middle;">{{ number_format($totalproductioncrew) }}</td>
+                            <!-- Hide on mobile, show on desktop -->
                         </tr>
+
                         <tr>
-                            <th scope="row ">3</th>
-                            <td style="text-align: start">Production Tools</td>
-                            <td class="text-end" style="font-weight: 300">{{ number_format($totalproductiontool) }}</td>
-                            {{-- <td class="col-2"><input type="text" class="form-control" /></td> --}}
+                            <th scope="row" class="d-none d-md-table-cell">3</th>
+                            <!-- Hide on mobile, show on desktop -->
+                            <td style="text-align: start; display: flex; flex-direction: column; align-items: flex-start;">
+                                Production Tools
+                                <div style="display: flex; width: 100%; justify-content: space-between; ">
+                                    <span class="total-price d-md-none"
+                                        style="font-weight: 300; padding-top: 12px;">Total:</span>
+                                    <span class="total-price d-md-none"
+                                        style="font-weight: 300; padding-top: 12px; font-weight: bold;">{{ number_format($totalproductiontool) }}</span>
+                                </div> <!-- Show on mobile, hide on desktop -->
+                            </td>
+                            <td class="total-price d-none d-md-table-cell"
+                                style="font-weight: 300; vertical-align: middle">{{ number_format($totalproductiontool) }}</td>
+                            <!-- Hide on mobile, show on desktop -->
                         </tr>
+
                         <tr>
-                            <th scope="row ">4</th>
-                            <td style="text-align: start">Operational</td>
-                            <td class="text-end" style="font-weight: 300">{{ number_format($totaloperational) }}</td>
-                            {{-- <td class="col-2"><input type="text" class="form-control" /></td> --}}
+                            <th scope="row" class="d-none d-md-table-cell">4</th>
+                            <!-- Hide on mobile, show on desktop -->
+                            <td style="text-align: start; vertical-align: middle;">
+                                Operational
+                                <div style="display: flex; width: 100%; justify-content: space-between; ">
+                                    <span class="total-price d-md-none"
+                                        style="font-weight: 300; padding-top: 12px;">Total:</span>
+                                    <span class="total-price d-md-none"
+                                        style="font-weight: 300; padding-top: 12px; font-weight: bold;">{{ number_format($totaloperational) }}</span>
+                                </div> <!-- Show on mobile, hide on desktop -->
+                            </td>
+                            <td class="total-price d-none d-md-table-cell"
+                                style="font-weight: 300; vertical-align: middle">{{ number_format($totaloperational) }}</td>
+                            <!-- Hide on mobile, show on desktop -->
                         </tr>
+
                         <tr>
-                            <th scope="row ">5</th>
-                            <td style="text-align: start">Location</td>
-                            <td class="text-end" style="font-weight: 300">{{ number_format($totallocation) }}</td>
-                            {{-- <td class="col-2"><input type="text" class="form-control" /></td> --}}
+                            <th scope="row" class="d-none d-md-table-cell">5</th>
+                            <!-- Hide on mobile, show on desktop -->
+                            <td style="text-align: start; vertical-align: middle;">
+                                Location
+                                <div style="display: flex; width: 100%; justify-content: space-between; ">
+                                    <span class="total-price d-md-none"
+                                        style="font-weight: 300; padding-top: 12px;">Total:</span>
+                                    <span class="total-price d-md-none"
+                                        style="font-weight: 300; padding-top: 12px; font-weight: bold;">{{ number_format($totallocation) }}</span>
+                                </div> <!-- Show on mobile, hide on desktop -->
+                            </td>
+                            <td class="total-price d-none d-md-table-cell"
+                                style="font-weight: 300; vertical-align: middle">{{ number_format($totallocation) }}</td>
+                            <!-- Hide on mobile, show on desktop -->
                         </tr>
+
                         <tr>
-                            <td colspan="2" class="text-right" style="font-weight: 500; background-color: #dbdee8">
-                                Total</td>
-                            <td class="text-end">Rp. {{ number_format($totalAll) }}</td>
-                            {{-- <td class="col-2"></td> --}}
+                            <td colspan="2" class="text-right d-none d-md-table-cell"
+                                style="font-weight: 500; background-color: #dbdee8;">Total</td>
+                            <!-- Hide on mobile, show on desktop -->
+                            <td class="total-price text-center d-none d-md-table-cell" style="vertical-align: middle">Rp. {{ number_format($totalAll) }}
+                            </td> <!-- Hide on mobile, show on desktop -->
+                            <td class="d-md-none"
+                                style="font-weight: 500; text-align: center; padding-left: 15px; background-color: #dbdee8;">
+                                <!-- Show on mobile, hide on desktop -->
+                                Total
+                            </td>
+                            <td class="d-md-none text-center" style="font-weight: 500; text-align: start;">
+                                <!-- Show on mobile, hide on desktop -->
+                                Rp. {{ number_format($totalAll) }}
+                            </td>
                         </tr>
                     </tbody>
 
@@ -437,54 +483,54 @@
                         <div class="step waiting" data-bs-toggle="tooltip" data-bs-placement="top"
                             title="Review Procurement">
                             <div class="circle">2</div>
-                            <div class="label">Review</div>
+                            <div class="label">Studio Production</div>
                         </div>
                     @elseif (($requestBudgets->approval->where('stage', 'reviewer')->first()->status ?? '-') == 'approved')
                         <div class="step approved" data-bs-toggle="tooltip" data-bs-placement="top"
                             title="Review Procurement">
                             <div class="circle">2</div>
-                            <div class="label">Review</div>
+                            <div class="label">Studio Production</div>
                         </div>
                     @else
                         <div class="step rejected" data-bs-toggle="tooltip" data-bs-placement="top"
                             title="Review Procurement">
                             <div class="circle">2</div>
-                            <div class="label">Review</div>
+                            <div class="label">Studio Production</div>
                         </div>
                     @endif
                     @if (($requestBudgets->approval->where('stage', 'hc')->first()->status ?? '-') == 'pending')
                         <div class="step waiting" data-bs-toggle="tooltip" data-bs-placement="top"
                             title="Review Procurement">
                             <div class="circle">2</div>
-                            <div class="label">HC</div>
+                            <div class="label">Human Capital</div>
                         </div>
                     @elseif (($requestBudgets->approval->where('stage', 'hc')->first()->status ?? '-') == 'approved')
                         <div class="step approved" data-bs-toggle="tooltip" data-bs-placement="top"
                             title="Review Procurement">
                             <div class="circle">2</div>
-                            <div class="label">HC</div>
+                            <div class="label">Human Capital</div>
                         </div>
                     @else
                         <div class="step rejected" data-bs-toggle="tooltip" data-bs-placement="top"
                             title="Review Procurement">
                             <div class="circle">2</div>
-                            <div class="label">HC</div>
+                            <div class="label">Human Capital</div>
                         </div>
                     @endif
                     @if (($requestBudgets->approval->where('stage', 'finance 1')->first()->status ?? '-') == 'pending')
                         <div class="step waiting" data-bs-toggle="tooltip" data-bs-placement="top" title="Finance 1">
                             <div class="circle">3</div>
-                            <div class="label">Finance 1</div>
+                            <div class="label">Controller Manager</div>
                         </div>
                     @elseif (($requestBudgets->approval->where('stage', 'finance 1')->first()->status ?? '-') == 'approved')
                         <div class="step approved" data-bs-toggle="tooltip" data-bs-placement="top" title="Finance 1">
                             <div class="circle">3</div>
-                            <div class="label">Finance 1</div>
+                            <div class="label">Controller Manager</div>
                         </div>
                     @else
                         <div class="step rejected" data-bs-toggle="tooltip" data-bs-placement="top" title="Finance 1">
                             <div class="circle">3</div>
-                            <div class="label">Finance 1</div>
+                            <div class="label">Controller Manager</div>
                         </div>
                     @endif
                     @if ($hasApprovalFinance2)
@@ -492,19 +538,19 @@
                             <div class="step waiting" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="Finance 2">
                                 <div class="circle">4</div>
-                                <div class="label">Finance 2</div>
+                                <div class="label">VP Operation</div>
                             </div>
                         @elseif (($requestBudgets->approval->where('stage', 'finance 2')->first()->status ?? '-') == 'approved')
                             <div class="step approved" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="Finance 2">
                                 <div class="circle">4</div>
-                                <div class="label">Finance 2</div>
+                                <div class="label">VP Operation</div>
                             </div>
                         @else
                             <div class="step rejected" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="Finance 2">
                                 <div class="circle">4</div>
-                                <div class="label">Finance 2</div>
+                                <div class="label">VP Operation</div>
                             </div>
                         @endif
                     @else

@@ -14,23 +14,26 @@
         <form action="{{ route('audit_laptop.update', $laptop->audit_laptop_id) }}" method="POST">
             @csrf
             @method('PUT')
+            <div class="mb-3">
+                <label for="employee_id" class="form-label">Employee</label>
+                <select id="employee_option" name="employee_id">
+                    <option disabled selected>Choose One</option>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->employee_id }}"
+                            {{ $user->employee_id == $laptop->employee_id ? 'selected' : '' }}>
+                            {{ $user->full_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
             <div style="display: grid; gap: 24px; grid-template-columns: 1fr 1fr">
                 <div class="mb-3">
-                    <label for="employee_id" class="form-label">Employee</label>
-                    <select id="employee_option" name="employee_id">
-                        <option disabled>Choose One</option>
-                        @foreach ($users as $user)
-                            <option value="{{ $user->employee_id }}"
-                                {{ $user->employee_id == $laptop->employee_id ? 'selected' : '' }}>
-                                {{ $user->full_name }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <label for="laptop_number">Laptop Number</label>
+                    <input type="text" name="laptop_number" id="laptop_number" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="laptop_number">Laptop Number</label>
-                    <input type="text" name="laptop_number" id="laptop_number" class="form-control"
-                        value="{{ $laptop->laptop_number }}" required>
+                    <label for="laptop_type">Laptop Type</label>
+                    <input type="text" name="laptop_type" id="laptop_type" class="form-control" required>
                 </div>
             </div>
 
@@ -119,8 +122,8 @@
             <div style="display: grid; gap: 24px; grid-template-columns: 1fr 1fr">
                 <div class="mb-3">
                     <label for="battery">Battery</label>
-                    <input type="text" name="battery" id="battery" class="form-control" value="{{ $laptop->battery }}"
-                        required>
+                    <input type="text" name="battery" id="battery" class="form-control"
+                        value="{{ $laptop->battery }}" required>
                 </div>
 
                 <div class="mb-3">
@@ -175,6 +178,11 @@
                     <button type="button" id="cameraButton">Take a Photo</button>
                 </div>
             </div>
+            <div class="mb-3">
+                <label for="lainnya"></label>
+                <input type="checkbox" id="status" name="status" value="DONE"> DONE
+            </div>
+
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
         </form>
     </div>

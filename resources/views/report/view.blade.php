@@ -671,8 +671,8 @@
                             <thead style="font-weight: 500; ">
                                 <tr class="dicobain ">
                                     <th scope="col ">Requester</th>
-                                    <th scope="col ">Approval Manager</th>
-                                    <th scope="col ">Studio Production Review</th>
+                                    <th scope="col ">Manager</th>
+                                    <th scope="col ">Studio Production</th>
                                     <th scope="col ">Human Capital</th>
                                     <th scope="col ">Controller Manager</th>
                                     @if ($requestbudget->totalCost->total_cost >= 200000000)

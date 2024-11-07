@@ -25,8 +25,8 @@ class AuditLaptopController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'employee_id' => 'required|integer',
             'laptop_number' => 'required|string',
+            'laptop_type' => 'required|string',
             'serial_number' => 'required|string',
             'no_asset' => 'required|string',
             'processor' => 'nullable|string',
@@ -73,8 +73,8 @@ class AuditLaptopController extends Controller
     {
 
         $request->validate([
-            'employee_id' => 'required|exists:employees,employee_id',
             'laptop_number' => 'required|string|max:255',
+            'laptop_type' => 'required|string|max:255',
             'serial_number' => 'required|string|max:255',
             'no_asset' => 'required|string|max:255',
             'processor' => 'required|string|max:255',
@@ -108,8 +108,10 @@ class AuditLaptopController extends Controller
         // Update fields with provided data
         $laptop->employee_id = $request->employee_id;
         $laptop->laptop_number = $request->laptop_number;
+        $laptop->laptop_type = $request->laptop_type;
         $laptop->serial_number = $request->serial_number;
         $laptop->no_asset = $request->no_asset;
+        $laptop->status = $request->status;
 
         // Check if 'Other' option is used for processor, otherwise use selected option
         $laptop->processor = $request->processor === 'other' ? $request->processor_other : $request->processor;

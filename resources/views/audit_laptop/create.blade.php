@@ -31,21 +31,25 @@
 
         <form action="{{ route('audit_laptop.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <div class="mb-3">
+                <label for="employee_id" class="form-label">Employee</label>
+                <select id="employee_option" name="employee_id">
+                    <option disabled selected>Choose One</option>
+                    @forelse ($users as $user)
+                        <option value="{{ $user->employee_id }}">{{ $user->full_name }}</option>
+                    @empty
+                        <option disabled>Data not found</option>
+                    @endforelse
+                </select>
+            </div>
             <div style="display: grid; gap: 24px; grid-template-columns: 1fr 1fr">
-                <div class="mb-3">
-                    <label for="employee_id" class="form-label">Employee</label>
-                    <select id="employee_option" name="employee_id">
-                        <option disabled selected>Choose One</option>
-                        @forelse ($users as $user)
-                            <option value="{{ $user->employee_id }}">{{ $user->full_name }}</option>
-                        @empty
-                            <option disabled>Data not found</option>
-                        @endforelse
-                    </select>
-                </div>
                 <div class="mb-3">
                     <label for="laptop_number">Laptop Number</label>
                     <input type="text" name="laptop_number" id="laptop_number" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="laptop_type">Laptop Type</label>
+                    <input type="text" name="laptop_type" id="laptop_type" class="form-control" required>
                 </div>
             </div>
 
@@ -170,6 +174,10 @@
                     <button type="button" id="cameraButton">Take Photos</button>
                 </div>
                 <div id="preview"></div>
+            </div>
+            <div class="mb-3">
+                <label for="lainnya"></label>
+                <input type="checkbox" id="status" name="status" value="DONE"> DONE
             </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
         </form>

@@ -234,12 +234,12 @@
                 style="font: 300 16px Narasi Sans, sans-serif;width: 100% ; margin-top: 12px; margin-bottom: 12px; text-align: center; ">
                 <thead style="font-weight: 500; ">
                     <tr class="dicobain ">
-                        <th scope="col ">Approval Manager</th>
-                        <th scope="col ">Review</th>
-                        <th scope="col ">HC</th>
-                        <th scope="col ">Approval 1</th>
+                        <th scope="col ">Manager</th>
+                        <th scope="col ">Studio Production</th>
+                        <th scope="col ">Human Capital</th>
+                        <th scope="col ">Controller Manager</th>
                         @if ($hasApprovalFinance2)
-                            <th scope="col ">Approval 2</th>
+                            <th scope="col ">VP Operation</th>
                         @endif
 
                     </tr>

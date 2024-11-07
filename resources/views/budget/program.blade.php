@@ -140,7 +140,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="quarter_budget" class="form-label">Budget Quarter</label>
+                            <label for="quarter_budget" class="form-label">Amount Quarter</label>
                             <input type="text" class="form-control" name="quarter_budget" id="quarter_budget"
                                 name="budget" required />
                             <!-- Input field for entering the budget value -->

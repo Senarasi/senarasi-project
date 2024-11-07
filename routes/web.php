@@ -39,6 +39,10 @@ Route::middleware(['auth'])->group(function () {
         return view('admin.index');
     })->name('admin');
 
+    Route::get('/setting', function () {
+        return view('setting.index');
+    })->name('setting');
+
     Route::get('/announcement', function () {
         return view('admin.hc.announcement.index');
     })->name('announcement');
