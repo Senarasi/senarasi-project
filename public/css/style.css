@@ -117,11 +117,8 @@ th {
     display: flex;
     width: 100%;
     padding: 48px 32px 48px 32px;
-    /* flex-direction: column; */
-    /* align-items: flex-start; */
     border-bottom: 2px solid var(--Hitam-7, #e0e0ec);
     background-color: white;
-    /* position: fixed; */
 }
 
 .logonavbar {
@@ -130,7 +127,6 @@ th {
     font-size: 42px;
     font-style: normal;
     font-weight: 900;
-    /* line-height: 1; */
 }
 
 .has-search .form-control {
@@ -309,7 +305,8 @@ th {
     align-items: center;
     border: 4px solid transparent;
     border-radius: 8px;
-    background: linear-gradient(to right, white, white), linear-gradient(to right, #4a25aa 0%, #b60f7f 100%, #b60f7f);
+    background: linear-gradient(to right, white, white),
+        linear-gradient(to right, #4a25aa 0%, #b60f7f 100%, #b60f7f);
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
     display: flex;
@@ -356,7 +353,8 @@ th {
     align-self: stretch;
     color: #000;
     margin-top: 4px;
-    font: 300 20px/150% Narasi Sans, -apple-system, Roboto, Helvetica, sans-serif;
+    font: 300 20px/150% Narasi Sans, -apple-system, Roboto, Helvetica,
+        sans-serif;
 }
 
 @media (max-width: 991px) {
@@ -444,7 +442,8 @@ th {
     align-self: stretch;
     color: #000;
     margin-top: 4px;
-    font: 300 20px/150% Narasi Sans, -apple-system, Roboto, Helvetica, sans-serif;
+    font: 300 20px/150% Narasi Sans, -apple-system, Roboto, Helvetica,
+        sans-serif;
 }
 
 @media (max-width: 991px) {
@@ -489,7 +488,10 @@ th {
 }
 
 .modal-content {
-    background: var( --Semantic-Main, linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%));
+    background: var(
+        --Semantic-Main,
+        linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%)
+    );
     margin: 8px;
 }
 
@@ -520,7 +522,10 @@ th {
     gap: 10px;
     border: none;
     border-radius: 8px;
-    background: var( --Semantic-Main, linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%));
+    background: var(
+        --Semantic-Main,
+        linear-gradient(270deg, #4a25aa 0%, #b60f7f 100%, #b60f7f 100%)
+    );
 }
 
 .button-tutup {
@@ -1047,7 +1052,6 @@ label .form-label {
 }
 
 .tablenih {
-    /* border: 2px solid #bcc4e5; */
     border-radius: 12px;
     margin-top: 12px;
     padding: 12px;
@@ -1396,7 +1400,6 @@ td {
     }
 }
 
-
 /*
 .dropdown:hover .dropdown-menu {
     display: block;
@@ -1434,7 +1437,11 @@ td {
     color: #000000;
     background-color: transparent;
     overflow-x: hidden;
-    background-image: linear-gradient( rgba(0, 0, 0, 0.453), rgba(0, 0, 0, 0.394)), url("../asset/image/karyawan.jpg");
+    background-image: linear-gradient(
+            rgba(0, 0, 0, 0.453),
+            rgba(0, 0, 0, 0.394)
+        ),
+        url("../asset/image/karyawan.jpg");
     background-size: cover;
     /* Ensures the background image covers the entire element */
     background-position: center;
@@ -1589,13 +1596,26 @@ a {
     margin-top: 10px;
     margin-right: 32px;
     text-decoration: none;
-    font: 550 16px Narasi Sans, sans-serif;
-    color: rgb(199, 198, 198);
+    font: 200 16px Narasi Sans, sans-serif;
+    color: #333;
     letter-spacing: 0.5px;
+    position: relative;
 }
 
-.maindashboardlink:hover {
-    color: #4a25aa;
+.maindashboardlink::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background-color: #4a25aa;
+    transition: width 0.3s ease;
+}
+
+.maindashboardlink:hover::after,
+.maindashboardlink:active::after {
+    width: 100%;
 }
 
 @media (max-width: 981px) {
@@ -1703,11 +1723,6 @@ a {
     text-transform: uppercase;
 }
 
-
-/* .step-bar .step.waiting + .step::before {
-    background-color: #FFE900 ;
-} */
-
 @media (max-width: 768px) {
     .step-bar {
         flex-direction: column;
@@ -1757,11 +1772,10 @@ a {
     .step-bar .step:last-child::after {
         content: none;
     }
-    .step-bar .step.waiting+.step::after {
+    .step-bar .step.waiting + .step::after {
         background-color: #ffe900;
     }
 }
-
 
 /* Styles for approved and rejected */
 
@@ -1781,7 +1795,6 @@ a {
     background-color: #28a745;
 }
 
-
 /* Tambahkan ini di bawah CSS yang ada */
 
 @media (max-width: 768px) {
@@ -1800,7 +1813,6 @@ a {
     }
 }
 
-
 /* CSS for responsive table */
 
 @media (max-width: 768px) {
@@ -1816,4 +1828,27 @@ a {
 
 .buletan {
     text-align: center;
+}
+
+.button-coy {
+    display: flex;
+    padding: 16px 24px;
+    flex-direction: row;
+    gap: 8px;
+    border-radius: 8px;
+    border: 2px solid #4a25aa;
+    background: none;
+    color: #4a25aa;
+    font: 600 16px Narasi Sans, sans-serif;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.button-coy:hover {
+    background: #34128c;
+    color: #ffe900;
+    fill: white;
+}
+.button-coy:hover svg path {
+    fill: white;
 }

@@ -15,14 +15,25 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        $employees = Employee::with(['department', 'position'])->orderBy('employee_id', 'asc')->get();
-        $managers = Employee::whereIn('employee_status_id', [2, 3, 4])->orderBy('full_name', 'asc')->get();
-        $total_employees = $employees->count();
-        $departments = Department::orderBy('department_name', 'asc')->pluck('department_name', 'department_id');
-        $positions = Position::orderBy('position_name', 'asc')->pluck('position_name', 'position_id');
-        $access = Access::all();
-        $employeeStatus = EmployeeStatus::all();
-        return view('employee.index', compact('employees', 'total_employees', 'departments', 'positions', 'managers', 'access', 'employeeStatus'));
+        if (auth()->user()->hasRole(['admin', 'manager'])) {
+            $employees = Employee::with(['department', 'position'])->orderBy('employee_id', 'asc')->get();
+            $managers = Employee::whereIn('employee_status_id', [2, 3, 4])->orderBy('full_name', 'asc')->get();
+            $total_employees = $employees->count();
+            $departments = Department::orderBy('department_name', 'asc')->pluck('department_name', 'department_id');
+            $positions = Position::orderBy('position_name', 'asc')->pluck('position_name', 'position_id');
+            $access = Access::all();
+            $employeeStatus = EmployeeStatus::all();
+            return view('admin.hc.employee.index', compact('employees', 'total_employees', 'departments', 'positions', 'managers', 'access', 'employeeStatus'));
+        } else {
+            $employees = Employee::with(['department', 'position'])->orderBy('employee_id', 'asc')->get();
+            $managers = Employee::whereIn('employee_status_id', [2, 3, 4])->orderBy('full_name', 'asc')->get();
+            $total_employees = $employees->count();
+            $departments = Department::orderBy('department_name', 'asc')->pluck('department_name', 'department_id');
+            $positions = Position::orderBy('position_name', 'asc')->pluck('position_name', 'position_id');
+            $access = Access::all();
+            $employeeStatus = EmployeeStatus::all();
+            return view('employee.index', compact('employees', 'total_employees', 'departments', 'positions', 'managers', 'access', 'employeeStatus'));
+        }
     }
 
     public function show(Request $request)

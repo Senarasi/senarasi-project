@@ -20,6 +20,7 @@ class AuditLaptop extends Model
     protected $fillable = [
         'employee_id',
         'laptop_number',
+        'laptop_type',
         'serial_number',
         'no_asset',
         'processor',
@@ -34,6 +35,7 @@ class AuditLaptop extends Model
         'kamera',
         'lainnya',
         'picture',
+        'status',
     ];
 
     public function employee()
