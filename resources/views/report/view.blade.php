@@ -145,7 +145,7 @@
                         <div>
                             <div style="margin-top: -12px">
                                 <div class="text-start"
-                                    style="display: inline-block; vertical-align: middle; margin-right: 774px">
+                                    style="display: inline-block; vertical-align: middle; margin-right: 700px">
                                     <p style="margin-bottom: -8px; padding-bottom: -8px">Request Number</p>
                                     <p style="font: 700 24px Narasi Sans, sans-serif; letter-spacing: 0.5px;">
                                         {{ $requestbudget->request_budget_number }}</p>
@@ -212,7 +212,7 @@
                     </div>
 
 
-                    <div style=" margin-bottom: 24px; margin-top: -32px; padding:9px;">
+                    <div style=" margin-bottom: 12px; margin-top: -32px; padding:9px;">
                         <table class="table table-bordered "
                             style="font: 12px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center ">
                             <thead style="font-weight: 500; background-color: rgba(28, 187, 140, 0.25)">
@@ -224,7 +224,7 @@
                                     <th scope="col ">COST</th>
                                     <th scope="col ">TOTAL COST</th>
                                     <th scope="col ">ASSIGN TO</th>
-                                    <th scope="col ">NOTES</th>
+                                    <th scope="col " style="width: 430px">NOTES</th>
                                 </tr>
                             </thead>
 
@@ -612,7 +612,7 @@
                         </table>
 
                         <table class="table table-bordered "
-                            style="font: 12px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center ">
+                            style="font: 12px Narasi Sans, sans-serif; width: 100%; margin-top: 24px; margin-bottom: 12px; text-align: center ">
                             <thead style="font-weight: 500; background-color: rgba(28, 187, 140, 0.25)">
                                 <tr class="dicobain">
                                     <th rowspan="2" scope="col" class="text-center"

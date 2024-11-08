@@ -578,6 +578,36 @@ class ApprovalController extends Controller
             },
         ])->findOrFail($id);
 
+        // Fetch and group performers by sub_description_id
+        $performer = Performer::with(['subDescription', 'employee'])
+            ->where('request_budget_id', $id)
+            ->get()
+            ->groupBy('sub_description_id');
+
+                    // Fetch and group production crews by sub_description_id
+        $productioncrew = ProductionCrew::with(['subDescription', 'employee'])
+        ->where('request_budget_id', $id)
+        ->get()
+        ->groupBy('sub_description_id');
+
+        // Fetch and group production tools by sub_description_id
+        $productiontool = ProductionTool::with(['subDescription', 'employee'])
+            ->where('request_budget_id', $id)
+            ->get()
+            ->groupBy('sub_description_id');
+
+        // Fetch and group operational by sub_description_id
+        $operational = Operational::with(['subDescription', 'employee'])
+            ->where('request_budget_id', $id)
+            ->get()
+            ->groupBy('sub_description_id');
+
+        // Fetch and group location by sub_description_id
+        $location = Location::with(['subDescription', 'employee'])
+            ->where('request_budget_id', $id)
+            ->get()
+            ->groupBy('sub_description_id');
+
         // Check if Finance 2 approval is required based on existing approvals
         $hasApprovalFinance2 = $requestBudgets->approval->where('stage', 'finance 2')->isNotEmpty();
 
@@ -606,6 +636,11 @@ class ApprovalController extends Controller
 
         return view('approval.reject', compact(
             'id',
+            'performer',
+            'productioncrew',
+            'productiontool',
+            'operational',
+            'location',
             'hasApprovalFinance2',
             'managerApproval',
             'reviewerApproval',

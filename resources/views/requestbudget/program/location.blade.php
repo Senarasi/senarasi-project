@@ -245,7 +245,7 @@
             <div class="modal-content">
                 <div class="modal-body bg-white">
                     <form action="{{ route('location.store') }}" method="POST" class="modal-form-check"
-                        style="font: 500 14px Narasi Sans, sans-serif">
+                        style="font: 500 14px Narasi Sans, sans-serif" id="performerForm">
                         @csrf
                         <div class="row">
                             <div class="col">
@@ -289,7 +289,7 @@
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
                                     <div id="name_container">
-                                        <input type="text" class="form-control" id="name" name="name" />
+                                        <input type="text" class="form-control" id="name" name="name" required/>
                                     </div>
                                 </div>
                             </div>
@@ -298,19 +298,19 @@
                             <div class="col">
                                 <div class="mb-3">
                                     <label for="day" class="form-label">Day</label>
-                                    <input type="text" class="form-control" id="day" name="day" />
+                                    <input type="text" class="form-control" id="day" name="day" required/>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="mb-3">
                                     <label for="qty" class="form-label">QTY</label>
-                                    <input type="text" class="form-control" id="qty" name="qty" />
+                                    <input type="text" class="form-control" id="qty" name="qty" required/>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="mb-3">
                                     <label for="cost" class="form-label">Cost</label>
-                                    <input type="text" class="form-control" id="cost" name="cost" />
+                                    <input type="text" class="form-control" id="cost" name="cost" required/>
                                     <input type="hidden" id="raw_budget" name="raw_budget" />
                                     <!-- Hidden input field for storing the raw numeric value -->
                                 </div>
@@ -412,4 +412,24 @@
             return rawValue;
         }
     </script>
+    <script>
+        document.getElementById('performerForm').addEventListener('submit', function(event) {
+            const requiredFields = document.querySelectorAll('#performerForm [required]');
+            let allFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    allFilled = false;
+                    field.classList.add('is-invalid');  // Add Bootstrap error class to highlight the field
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            if (!allFilled) {
+                event.preventDefault();
+                alert('Please fill out all required fields before submitting.');
+            }
+        });
+        </script>
 @endsection

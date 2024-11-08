@@ -9,7 +9,7 @@
             <svg xmlns="http://www.w3.org/2000/svg " width="10 " height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path
                     d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                                                                                                                                                                                                                                                                          7.2501 0 7.6501 0 8.0501Z "
+                                                                                                                                                                                                                                                                                                                                  7.2501 0 7.6501 0 8.0501Z "
                     fill="#4A25AA " />
             </svg>
             Back
@@ -72,7 +72,8 @@
             </div>
         @endif
         <form id="mainForm" action=""></form>
-        <div style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px; border-bottom:none; border-top:none;">
+        <div
+            style="border: 1px solid #c4c4c4; margin: 12px; border-radius: 4px; margin-bottom: 24px; border-bottom:none; border-top:none;">
             <table class="table table-hover align-middle"
                 style="font: 300 16px Narasi Sans, sans-serif; width: 100%; margin-top: 12px; margin-bottom: 12px; text-align: center;">
                 <thead class="table-light" style="border:1px solid #c4c4c4">
@@ -235,6 +236,7 @@
         </div>
     </div>
 @endsection
+{{-- modal asli --}}
 @section('modal')
     <div class="modal justify-content-center fade" id="additem" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -242,7 +244,7 @@
             <div class="modal-content">
                 <div class="modal-body bg-white">
                     <form action="{{ route('performer.store') }}" method="POST" class="modal-form-check"
-                        style="font: 500 14px Narasi Sans, sans-serif">
+                        style="font: 500 14px Narasi Sans, sans-serif" id="performerForm">
                         @csrf
                         <div class="row">
                             <div class="col mb-3">
@@ -305,14 +307,14 @@
                                         @endfor
                                     </select> --}}
                                     <input type="number" class="form-control" id="day" name="day"
-                                        style="padding: 8px" />
+                                        style="padding: 8px" required/>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="mb-3">
                                     <label for="qty" class="form-label">QTY</label>
                                     <input type="number" class="form-control" id="qty" name="qty"
-                                        style="padding: 8px" />
+                                        style="padding: 8px" required/>
                                 </div>
                             </div>
                         </div>
@@ -332,7 +334,7 @@
                                 <div class="mb-3">
                                     <label for="cost" class="form-label">Cost</label>
                                     <input type="text" class="form-control" id="cost" name="cost"
-                                        style="padding: 8px" />
+                                        style="padding: 8px" required/>
                                     <input type="hidden" id="raw_budget" name="raw_budget" />
                                     <!-- Hidden input field for storing the raw numeric value -->
                                 </div>
@@ -620,4 +622,24 @@
             });
         });
     </script>
+    <script>
+        document.getElementById('performerForm').addEventListener('submit', function(event) {
+            const requiredFields = document.querySelectorAll('#performerForm [required]');
+            let allFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    allFilled = false;
+                    field.classList.add('is-invalid');  // Add Bootstrap error class to highlight the field
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            if (!allFilled) {
+                event.preventDefault();
+                alert('Please fill out all required fields before submitting.');
+            }
+        });
+        </script>
 @endsection
