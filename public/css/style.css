@@ -1606,7 +1606,7 @@ a {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -6px;
+    bottom: 0px;
     width: 0;
     height: 2px;
     background-color: #4a25aa;
