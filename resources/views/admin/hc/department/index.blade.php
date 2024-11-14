@@ -1,11 +1,12 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Department - Budgeting System
+    Department - Admin Dashboard
 @endsection
 
 @section('content')
-    <div class="judulhalaman" style="display: flex; align-items: center; ">Narasi Department</div>
+    <!--Badan Isi-->
+    <div class="judulhalaman" style="display: flex; align-items: center; ">Department</div>
 
     <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> Add Department
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -14,67 +15,78 @@
                 fill="white" />
         </svg>
     </button>
-
     <div class="tablenih" style="margin-top: 24px;">
-        <div class="table-responsive p-2">
+        <div class="table-responsive p-3">
             <table id="datatable" class="table table-hover"
-            style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ; ;  color: #4A25AA;">
-                <thead class="table-light">
+                style="font: 300 16px Narasi Sans, sans-serif; margin-top: 12px; display: 100%; width: 100% ; ;  color: #4A25AA;">
+                <thead style="font-weight: 500; text-align: center">
                     <tr class="dicobain">
-                        {{-- <th scope="col">No</th> --}}
+                        <th scope="col">#</th>
                         <th class="blablabla" scope="col" style="text-align:start; width:400px ">Department</th>
                         <th scope="col">Position</th>
-                        <th scope="col" style="width:140px;"></th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        {{-- <th scope="row" style="">1</th> --}}
-                        <td class="blablabla" style="width:400px ">Laptop (Legion 5 Gen 7 (15″ AMD))</td>
-                        <td style="margin-top: 14px;">
-                            <span
-                                style="font: 300 12px Narasi sans, sans-serif; color: black; border: 1px solid #4A25AA; border-radius:4px ;background-color: #eceaef; padding: 4px 8px; display: inline-block; margin: 4px;"><small>20402170001</small>
-                            </span>
-                            <span
-                                style="font: 300 12px Narasi sans, sans-serif; color: black; border: 1px solid #4A25AA; border-radius:4px ;background-color: #eceaef; padding: 4px 8px; display: inline-block; margin: 4px;"><small>20402170001</small>
-                            </span>
-                            <span
-                                style="font: 300 12px Narasi sans, sans-serif; color: black; border: 1px solid #4A25AA; border-radius:4px ;background-color: #eceaef; padding: 4px 8px; display: inline-block; margin: 4px;"><small>20402170001</small>
-                            </span>
-                        </td>
-                        <td>
-                            <span style="display: flex; justify-content: center; gap: 8px;">
-                                <a href="{{ route('departmentedit') }}" class="uwuq" type="button">
-                                    EDIT
-                                </a>
-                                <button type="button " class="btn btn-danger ">DELETE</button>
-                            </span>
-                        </td>
-                    </tr>
+                    @php
+                        $counter = 1;
+                    @endphp
+                    @forelse ($department as $key => $data)
+                        <tr>
+                            <th scope="row" style="text-align: center;">{{ $counter++ }}</th>
+                            <td style="width:200px">{{ $data->department_name }}</td>
+                            <td style="text-align: center; margin-top: 14px;">
+                                @forelse ($data->position->sortBy('position_name') as $position)
+                                    <span
+                                        style="font: 300 12px Narasi sans, sans-serif; color: black; border: 1px solid #4A25AA; border-radius:4px ;background-color: #eceaef; padding: 4px 8px; display: inline-block; margin: 4px;"><small>{{ $position->position_name }}</small></span>
+                                @empty
+                                    <small><i>Position doesn't exist</i></small>
+                                @endforelse
+                            </td>
+                            <td>
+
+                                <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                    action="{{ route('department.destroy', $data->department_id) }}" method="POST">
+                                    <span style="display: flex; justify-content: center; gap: 8px;">
+                                        <a href="{{ route('department.edit', $data->department_id) }}" class="uwuq"
+                                            type="button">
+                                            Edit
+                                        </a>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </span>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <div class="alert alert-danger">
+                            Data Post belum Tersedia.
+                        </div>
+                    @endforelse
                 </tbody>
             </table>
         </div>
-
     </div>
 @endsection
-
 @section('modal')
-    <div class="modal justify-content-center fade" id="staticBackdrop" data-bs-keyboard="false"
+    <div class="modal justify-content-center fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body bg-white">
-                    <form class="modal-form-check" style="font: 500 14px Narasi Sans, sans-serif">
+                    <form action="{{ route('department.store') }}" method="POST" class="modal-form-check"
+                        style="font: 500 14px Narasi Sans, sans-serif">
+                        @csrf
                         <div class="mb-3">
                             <label for="namakaryawan" class="form-label">Department Name</label>
-                            <input type="text" class="form-control" id="namakaryawan" />
+                            <input type="text" class="form-control" name="department_name" placeholder="Department Name">
                         </div>
-
                         <button type="submit" class="button-submit">Submit</button>
                         <button type="button" class="button-tutup" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
-                <img class="img-8" src="{{ asset('asset/image/Narasi_Logo.svg')  }}" alt=" " />
+                <img class="img-8" src="{{ asset('image/Narasi_Logo.svg') }}" alt=" " />
             </div>
         </div>
     </div>

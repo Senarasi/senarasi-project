@@ -25,7 +25,7 @@ class AnnouncementRequest extends FormRequest
             'title' => ['required', 'max:255'],
             'content' => ['required'],
             'announcement_category_id' => ['required'],
-            'attachment' => ['nullable', 'mimes:jpeg,png,jpg,gif,svg,pdf,doc,docx', 'max:2048'],
+            'attachment.*' => ['nullable', 'mimes:jpeg,png,jpg,gif,svg,pdf,doc,docx', 'max:2048'],
 
         ];
 

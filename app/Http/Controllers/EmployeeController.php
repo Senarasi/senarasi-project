@@ -52,7 +52,7 @@ class EmployeeController extends Controller
     {
         $department = Department::orderBy('department_name', 'asc')->pluck('department_name', 'department_id')->prepend('Select Department', '');
         $position = Position::orderBy('position_name', 'asc')->pluck('position_name', 'position_id');
-        return view('employee.create', compact('department', 'position'));
+        return view('admin.hc.employee.create', compact('department', 'position'));
     }
 
     public function store(Request $request)

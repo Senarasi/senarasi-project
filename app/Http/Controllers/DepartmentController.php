@@ -13,7 +13,7 @@ class DepartmentController extends Controller
     {
         $department = Department::orderBy('department_name', 'asc')->with('position')->get();
         $total_department = $department->count();
-        return view('department.index', compact('department', 'total_department'));
+        return view('admin.hc.department.index', compact('department', 'total_department'));
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class DepartmentController extends Controller
     public function edit($department_id)
     {
         $department = Department::findOrFail($department_id);
-        return view('department.edit', compact('department'));
+        return view('admin.hc.department.edit', compact('department'));
     }
 
     public function update(Request $request, $department_id)
