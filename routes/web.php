@@ -43,13 +43,26 @@ Route::middleware(['auth'])->group(function () {
         return view('setting.index');
     })->name('setting');
 
-    Route::get('/announcement', function () {
-        return view('admin.hc.announcement.index');
-    })->name('announcement');
+    // Route::get('/announcement', function () {
+    //     return view('admin.hc.announcement.index');
+    // })->name('announcement');
 
-    Route::get('/announcement-detail', function () {
-        return view('admin.hc.announcement.detail');
-    })->name('announcementdetail');
+    // Route::get('/announcement-detail', function () {
+    //     return view('admin.hc.announcement.detail');
+    // })->name('announcementdetail');
+
+    Route::prefix('hc')->group(function () {
+        Route::prefix('announcement')->controller(App\Http\Controllers\AnnouncementController::class)->name('announcement.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            // Route::get('/create', 'create')->name('create');
+            Route::post('/store', 'store')->name('store');
+            // Route::get('{announcement}/edit', 'edit')->name('edit');
+            Route::patch('/{announcement}/update', 'update')->name('update');
+            Route::get('/{announcement}/detail', 'detail')->name('detail');
+
+            Route::delete('/{announcement}', 'destroy')->name('destroy');
+        });
+    });
 
     Route::get('/admin-department', function () {
         return view('admin.hc.department.index');

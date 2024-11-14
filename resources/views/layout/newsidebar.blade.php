@@ -16,6 +16,7 @@
         width: 80px;
         min-width: 70px;
         z-index: 1000;
+        /*Membuat layer menjadi paling depan*/
         transition: all .25s ease-in-out;
         background-color: #260B6F;
         display: flex;
@@ -33,6 +34,7 @@
         scrollbar-width: none;
     }
 
+    /* Mengatur style ketika sidebar memperluas */
     #sidebar.expand {
         width: 260px;
         min-width: 260px;
@@ -118,12 +120,6 @@
         display: none;
     }
 
-    /* #sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
-display: block;
-width: 100%;
-opacity: 1;
-} */
-
     #sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
         border: solid;
         border-width: 0 .075rem .075rem 0;
@@ -137,6 +133,7 @@ opacity: 1;
         transition: all .2s ease-out;
     }
 
+    /* membuat animasi pada saat toogle di klik untuk melakukan expand */
     #sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
         transform: rotate(45deg);
         transition: all .2s ease-out;
@@ -180,37 +177,15 @@ opacity: 1;
                 <span class="align-middle">Dashboard</span>
             </a>
         </li>
-        {{-- <li class="sidebar-item" style="list-style: none;">
-            <a href="#"
-                class="sidebar-link collapsed has-dropdown {{ Request::is('budgeting-system/budget-*') ? 'active' : '' }} "
-                data-bs-toggle="collapse" data-bs-target="#budget" aria-expanded="false" aria-controls="budget">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 18 18"
-                    fill="none">
-                    <g clip-path="url(#clip0_1168_1371)">
-                        <path
-                            d="M8.39995 5.04004C7.65115 5.26198 7.19995 5.88531 7.19995 6.4731C7.19995 7.06089 7.65115 7.68423 8.39995 7.9053V5.04004ZM9.59995 9.37564V12.24C10.3488 12.019 10.8 11.3956 10.8 10.8078C10.8 10.2201 10.3488 9.59671 9.59995 9.37564Z"
-                            fill="white" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M18 8.64C18 13.4119 13.9707 17.28 9 17.28C4.0293 17.28 0 13.4119 0 8.64C0 3.86813 4.0293 0 9 0C13.9707 0 18 3.86813 18 8.64ZM9 2.808C9.17902 2.808 9.35071 2.87627 9.4773 2.99779C9.60388 3.11932 9.675 3.28414 9.675 3.456V3.72989C11.142 3.98218 12.375 5.04058 12.375 6.48C12.375 6.65186 12.3039 6.81668 12.1773 6.9382C12.0507 7.05973 11.879 7.128 11.7 7.128C11.521 7.128 11.3493 7.05973 11.2227 6.9382C11.0961 6.81668 11.025 6.65186 11.025 6.48C11.025 5.89421 10.5174 5.27299 9.675 5.05181V8.04989C11.142 8.30218 12.375 9.36058 12.375 10.8C12.375 12.2394 11.142 13.2978 9.675 13.5501V13.824C9.675 13.9959 9.60388 14.1607 9.4773 14.2822C9.35071 14.4037 9.17902 14.472 9 14.472C8.82098 14.472 8.64929 14.4037 8.5227 14.2822C8.39612 14.1607 8.325 13.9959 8.325 13.824V13.5501C6.858 13.2978 5.625 12.2394 5.625 10.8C5.625 10.6281 5.69612 10.4633 5.8227 10.3418C5.94929 10.2203 6.12098 10.152 6.3 10.152C6.47902 10.152 6.65071 10.2203 6.7773 10.3418C6.90388 10.4633 6.975 10.6281 6.975 10.8C6.975 11.3858 7.4826 12.007 8.325 12.2273V9.23011C6.858 8.97782 5.625 7.91942 5.625 6.48C5.625 5.04058 6.858 3.98218 8.325 3.72989V3.456C8.325 3.28414 8.39612 3.11932 8.5227 2.99779C8.64929 2.87627 8.82098 2.808 9 2.808Z"
-                            fill="white" />
-                    </g>
-                    <defs>
-                        <clipPath id="clip0_1168_1371">
-                            <rect width="18" height="17.28" fill="white" />
-                        </clipPath>
-                    </defs>
+        <li class="sidebar-item" style="list-style: none;">
+            <a href="" class="sidebar-link {{ request()->routeIs('table-request') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                    <path fill="white"
+                        d="M4 8h16V5H4zm10 11v-9h-4v9zm2 0h4v-9h-4zm-8 0v-9H4v9zM3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1" />
                 </svg>
-                <span class="align-middle">Budget</span>
+                <span class="align-middle">Table Request</span>
             </a>
-            <ul id="budget" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item" style="list-style: none;">
-                    <a href="{{ route('budget.department.index') }}" class="sidebar-link">Budget Department</a>
-                </li>
-                <li class="sidebar-item" style="list-style: none;">
-                    <a href="{{ route('budget.index') }}" class="sidebar-link">Budget Program</a>
-                </li>
-            </ul>
-        </li> --}}
+        </li>
         <li class="sidebar-item" style="list-style: none;">
             <a href="#"
                 class="sidebar-link collapsed has-dropdown {{ Request::is('budgeting-system/request-budget-*') ? 'active' : '' }} "
@@ -257,20 +232,21 @@ opacity: 1;
                         Program
                     </a>
                     <ul id="request-three" class="sidebar-dropdown list-unstyled collapse ">
-                        <li class="sidebar-item">
-                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget Program</a>
+                        <li class="sidebar-item" style="list-style: none;">
+                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget
+                                Advance</a>
                         </li>
                         <li class="sidebar-item" style="list-style: none;">
                             <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget Payment</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget Program</a>
                         </li>
                         <li class="sidebar-item" style="list-style: none;">
                             <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget
                                 Purchase</a>
                         </li>
-                        <li class="sidebar-item" style="list-style: none;">
-                            <a href="{{ route('request-budget.index') }}" class="sidebar-link ps-5">Budget
-                                Advance</a>
-                        </li>
+
                     </ul>
                 </li>
             </ul>
@@ -314,6 +290,9 @@ opacity: 1;
                             Program
                         </a>
                         <ul id="approval-three" class="sidebar-dropdown list-unstyled collapse ">
+                            <li class="sidebar-item" style="list-style: none;">
+                                <a href="/approval-detail" class="sidebar-link ps-5">Advance Approval</a>
+                            </li>
                             <li class="sidebar-item">
                                 <a href="/approval" class="sidebar-link ps-5">Program Approval</a>
                             </li>
@@ -322,9 +301,6 @@ opacity: 1;
                             </li>
                             <li class="sidebar-item" style="list-style: none;">
                                 <a href="/approval-detail" class="sidebar-link ps-5">Purchase Approval</a>
-                            </li>
-                            <li class="sidebar-item" style="list-style: none;">
-                                <a href="/approval-detail" class="sidebar-link ps-5">Advance Approval</a>
                             </li>
                         </ul>
                     </li>

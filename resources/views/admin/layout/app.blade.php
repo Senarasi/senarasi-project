@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,11 +13,15 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('asset/fontawesome/css/all.css') }}" />
+        <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+
 
         <link href="{{ asset('css/selectize.default.min.css') }}" rel="stylesheet">
-        <link rel="stylesheet"  href="{{ asset('asset/datetimepicker/jquery.datetimepicker.css') }}">
+        <link rel="stylesheet" href="{{ asset('asset/datetimepicker/jquery.datetimepicker.css') }}">
         <script src="{{ asset('asset/fullcalendar/dist/index.global.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <link href="{{ asset('asset/summernote/summernote-lite.min.css') }}" rel="stylesheet">
+
         <!-- Data Tables -->
         <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 
@@ -53,14 +58,15 @@
                 margin: 0 auto;
                 text-decoration: none;
             }
+
             #calendar a {
                 text-decoration: none;
                 color: #666;
             }
-
         </style>
 
     </head>
+
     <body class="antialiased">
         <div class="wrapper" style="display: flex">
             @include('layout.newnavbar')
@@ -71,7 +77,8 @@
                     <path d="M10.5383 0.36084C11.4829 1.44994 12.002 2.84375 12 4.28541V6.42827C12 6.66484 12.192 6.85684 12.4286 6.85684H14.5715C16.0131 6.85484 17.4069 7.37396 18.496 8.31855C17.993 6.40633 16.9912 4.66197 15.5931 3.26382C14.1949 1.86567 12.4506 0.863872 10.5383 0.36084Z" fill="#FFE900"/>
                   </svg>Company File Document</a>
             </div> --}}
-            <div class="body" style="min-height: 100vh;
+            <div class="body"
+                style="min-height: 100vh;
     width: 100%;
     overflow: hidden;
     transition: all 0.35s ease-in-out">
@@ -96,9 +103,12 @@
         <script src="{{ asset('js/bootstrap.bundle.min.js') }} "></script>
         <script src="{{ asset('asset/datetimepicker/jquery.js') }}"></script>
         <script src="{{ asset('asset/datetimepicker/build/jquery.datetimepicker.full.min.js') }}"></script>
-        <script src="{{ asset('js/datatables.min.js')}}"></script>
-        <script src="{{ asset('js/datatables.init.js')}}"></script>
-        <script src="{{ asset('js/selectize.min.js')}}"></script>
+        <script src="{{ asset('js/datatables.min.js') }}"></script>
+        <script src="{{ asset('js/datatables.init.js') }}"></script>
+        <script src="{{ asset('js/selectize.min.js') }}"></script>
+        <script src="{{ asset('js/select2.min.js') }}"></script>
+
+        <script src="{{ asset('asset/summernote/summernote-lite.min.js') }}"></script>
         <script>
             // Mendapatkan URL saat ini
             const currentUrl = window.location.pathname;
@@ -115,4 +125,5 @@
         </script>
         @yield('custom-js')
         @yield('alert')
+
 </html>

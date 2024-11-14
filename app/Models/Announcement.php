@@ -9,14 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Announcement extends Model
 {
     use HasFactory;
+
     protected $guarded = ['id'];
-    protected $fillable = [
-        'employee_id',
-        'announcement_category_id',
-        'title',
-        'content',
-        'attachment',
-    ];
 
     public function user()
     {
@@ -28,8 +22,8 @@ class Announcement extends Model
         return $this->belongsTo(AnnouncementCategory::class);
     }
 
-    public function attachment()
+    public function attachments()
     {
-        return Storage::url($this->attachment);
+        return $this->hasMany(AnnouncementAttachment::class);
     }
 }

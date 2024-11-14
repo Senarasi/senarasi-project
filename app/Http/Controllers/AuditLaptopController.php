@@ -26,6 +26,7 @@ class AuditLaptopController extends Controller
     {
         $validated = $request->validate([
             'laptop_number' => 'required|string',
+            'employee_id' => 'nullable|string',
             'laptop_type' => 'required|string',
             'serial_number' => 'required|string',
             'no_asset' => 'required|string',

@@ -208,7 +208,7 @@ opacity: 1;
                     </a>
                     <ul id="people" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#hc">
                         <li class="sidebar-item " style="list-style: none;">
-                            <a href="{{ route('department') }}" class="sidebar-link">
+                            <a href="{{ route('department.index') }}" class="sidebar-link">
                                 <span class="ps-5">Department</span>
                             </a>
                         </li>
@@ -219,7 +219,7 @@ opacity: 1;
                     </ul>
                 </li>
                 <li class="sidebar-item" style="list-style: none;">
-                    <a href="{{ route('announcement') }}"
+                    <a href="{{ route('announcement.index') }}"
                         class="sidebar-link {{ request()->routeIs('admin.hc.index') ? 'active' : '' }}">
 
                         <span class="align-middle ps-4">Announcement</span>
