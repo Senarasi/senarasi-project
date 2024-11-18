@@ -282,39 +282,10 @@
             }
 
 
-            /* Animation */
-            /*
-.parallax > use {
-  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
-}
-.parallax > use:nth-child(1) {
-  animation-delay: -2s;
-  animation-duration: 7s;
-}
-.parallax > use:nth-child(2) {
-  animation-delay: -3s;
-  animation-duration: 10s;
-}
-.parallax > use:nth-child(3) {
-  animation-delay: -4s;
-  animation-duration: 13s;
-}
-.parallax > use:nth-child(4) {
-  animation-delay: -5s;
-  animation-duration: 20s;
-}
-@keyframes move-forever {
-  0% {
-   transform: translate3d(-90px,0,0);
-  }
-  100% {
-    transform: translate3d(85px,0,0);
-  }
-} */
+
             /*Shrinking for mobile*/
             .responsive-container {
                 display: inline-flex;
-                gap: 8px;
                 vertical-align: middle;
             }
 
@@ -337,12 +308,11 @@
                     font-size: 24px;
                 }
 
-                .wkwk {
-                    font-size: 12px;
-                }
+
 
                 .wikwik {
                     font-size: 12px;
+                    text-align: start;
                 }
             }
 
@@ -353,6 +323,20 @@
                 }
 
 
+            }
+
+            .oyoy {
+                width: 112px;
+                height: 112px;
+                margin-right: 32px;
+                z-index: 2;
+            }
+
+            @media (max-width: 576px) {
+                .oyoy {
+                    width: 56px;
+                    height: 56px;
+                }
             }
 
             /* Mobile styles: for screen widths 576px or smaller */
@@ -380,7 +364,7 @@
 
                     <div class="row">
                         <div class="responsive-container">
-                            <div class="wkwk"></div>
+
                             <div class="wikwik"></div>
 
                         </div>
@@ -388,12 +372,12 @@
                             @guest
                                 <h1 id="greeting">Good Morning, Guest !</h1>
                             @else
-                                <h1 id="greeting">Good Morning, {{ Auth::user()->name }}!</h1>
+                                <h1 id="greeting" style="word-wrap: break-word; text-transform:capitalize;">Good Morning,
+                                    {{ Auth::user()->name }}!</h1>
                             @endguest
                         </div>
                     </div>
-                    <img style="width: 112px; height: 112px; margin-right: 32px; z-index: 2;"
-                        src="{{ asset('asset/image/narasi_logomark.png') }}" alt="">
+                    <img class="oyoy" src="{{ asset('asset/image/narasi_logomark.png') }}" alt="">
                 </div>
 
 
@@ -527,17 +511,16 @@
 
                             </div>
                             {{-- <a href="{{ route('announcement.create') }}" type="button" style=" background;" class="buttonannouncemain"> --}}
-                            <button type="button" class="buttonannouncemain" data-bs-toggle="modal"
-                                data-bs-target="#modal-create-announcement">
-                                Add Announcement<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                    viewBox="0 0 18 18" fill="none">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M8.99995 2.7002C9.23865 2.7002 9.46756 2.79502 9.63635 2.9638C9.80513 3.13258 9.89995 3.3615 9.89995 3.6002V8.10019H14.4C14.6386 8.10019 14.8676 8.19502 15.0363 8.3638C15.2051 8.53258 15.3 8.7615 15.3 9.0002C15.3 9.23889 15.2051 9.46781 15.0363 9.63659C14.8676 9.80537 14.6386 9.9002 14.4 9.9002H9.89995V14.4002C9.89995 14.6389 9.80513 14.8678 9.63635 15.0366C9.46756 15.2054 9.23865 15.3002 8.99995 15.3002C8.76126 15.3002 8.53234 15.2054 8.36355 15.0366C8.19477 14.8678 8.09995 14.6389 8.09995 14.4002V9.9002H3.59995C3.36126 9.9002 3.13234 9.80537 2.96356 9.63659C2.79477 9.46781 2.69995 9.23889 2.69995 9.0002C2.69995 8.7615 2.79477 8.53258 2.96356 8.3638C3.13234 8.19502 3.36126 8.10019 3.59995 8.10019H8.09995V3.6002C8.09995 3.3615 8.19477 3.13258 8.36355 2.9638C8.53234 2.79502 8.76126 2.7002 8.99995 2.7002Z"
-                                        fill="white" />
-                                </svg>
-                            </button>
+                            {{-- <button type="button" class="buttonannouncemain" data-bs-toggle="modal" data-bs-target="#modal-create-announcement">
+                        Add Announcement<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
+                            fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M8.99995 2.7002C9.23865 2.7002 9.46756 2.79502 9.63635 2.9638C9.80513 3.13258 9.89995 3.3615 9.89995 3.6002V8.10019H14.4C14.6386 8.10019 14.8676 8.19502 15.0363 8.3638C15.2051 8.53258 15.3 8.7615 15.3 9.0002C15.3 9.23889 15.2051 9.46781 15.0363 9.63659C14.8676 9.80537 14.6386 9.9002 14.4 9.9002H9.89995V14.4002C9.89995 14.6389 9.80513 14.8678 9.63635 15.0366C9.46756 15.2054 9.23865 15.3002 8.99995 15.3002C8.76126 15.3002 8.53234 15.2054 8.36355 15.0366C8.19477 14.8678 8.09995 14.6389 8.09995 14.4002V9.9002H3.59995C3.36126 9.9002 3.13234 9.80537 2.96356 9.63659C2.79477 9.46781 2.69995 9.23889 2.69995 9.0002C2.69995 8.7615 2.79477 8.53258 2.96356 8.3638C3.13234 8.19502 3.36126 8.10019 3.59995 8.10019H8.09995V3.6002C8.09995 3.3615 8.19477 3.13258 8.36355 2.9638C8.53234 2.79502 8.76126 2.7002 8.99995 2.7002Z"
+                                fill="white" />
+                        </svg>
+                    </button> --}}
                             {{-- </a> --}}
-                            @include('dashboard.modal_add_announcement')
+                            {{-- @include('dashboard.modal_add_announcement') --}}
                         </div>
                         <div class="col-lg-9 col-md-12 col-sm-12">
                             @foreach ($announcements as $announcement)
@@ -561,23 +544,18 @@
                                                 <span
                                                     class="badge-unique">{{ $announcement->announcementCategory->category_name }}</span>
                                             </div>
-                                            <div class="col">
-                                                <span style="display: flex; gap: 2px; justify-content:right">
-                                                    <a type="button" class="btn btn-outline-warning btn-sm me-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modal-edit-announcement-{{ $announcement->id }}">
-                                                        Edit
-                                                    </a>
-                                                    <form method="POST"
-                                                        action="{{ route('announcement.destroy', $announcement->id) }}"
-                                                        class="" onsubmit="return confirmDelete()">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit"
-                                                            class="btn btn-outline-danger btn-sm">Delete</button>
-                                                    </form>
-                                                </span>
-                                            </div>
+                                            {{-- <div class="col">
+                                    <span style="display: flex; gap: 2px; justify-content:right">
+                                        <a type="button" class="btn btn-outline-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#modal-edit-announcement-{{ $announcement->id}}" >
+                                            Edit
+                                        </a>
+                                        <form method="POST" action="{{ route('announcement.destroy', $announcement->id )}}" class="" onsubmit="return confirmDelete()">
+                                          @csrf
+                                          @method('delete')
+                                          <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                                      </form>
+                                    </span>
+                                </div> --}}
                                             @include('dashboard.modal_edit_announcement', [
                                                 'data' => $announcement,
                                             ])
@@ -590,38 +568,84 @@
                                             {!! $announcement->content !!}
                                         </p>
                                     </div>
-                                    @php
-                                        // Mengambil ekstensi file dari path attachment
-                                        $attachmentExtension = pathinfo($announcement->attachment, PATHINFO_EXTENSION);
-                                    @endphp
-                                    @if (in_array($attachmentExtension, ['jpg', 'jpeg', 'png', 'gif', 'svg']))
-                                        <div class="image-container text-center">
-                                            <a data-fancybox="gallery" href="{{ $announcement->attachment() }}">
-                                                <img src="{{ $announcement->attachment() }}" class="img-fluid"
-                                                    alt="Gambar" style="cursor:pointer; width:50%;">
-                                            </a>
+                                    <div class="row row-cols-auto">
+                                        @if ($announcement->attachments->isNotEmpty())
+                                            @foreach ($announcement->attachments as $attachment)
+                                                @php
+                                                    // Mengambil ekstensi file dari path attachment
+                                                    $attachmentExtension = pathinfo(
+                                                        $attachment->file_path,
+                                                        PATHINFO_EXTENSION,
+                                                    );
+                                                @endphp
+                                                @if (in_array($attachmentExtension, ['jpg', 'jpeg', 'png', 'gif', 'svg']))
+                                                    <div class="image-container text-center mb-2">
+                                                        <a data-fancybox="gallery"
+                                                            href="{{ $attachment->filePath() }}">
+                                                            <img src="{{ $attachment->filePath() }}"
+                                                                class="img-fluid" alt="Gambar"
+                                                                style="cursor:pointer; width:50%;">
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                                @if (in_array($attachmentExtension, ['pdf', 'doc', 'docx']))
+                                                    <div class="col mb-2">
+                                                        <a href="{{ $attachment->filePath() }}"
+                                                            style="text-decoration: none" download>
+                                                            <div class="file-container">
+                                                                <div class="file-icon">
+                                                                    <i class="far fa-file"></i>
+                                                                </div>
+                                                                <div class="file-info">
+                                                                    <span>{{ basename($attachment->file_path) }}</span>
+                                                                </div>
+                                                                <div class="file-download">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                        width="24" height="24"
+                                                                        viewBox="0 0 24 24">
+                                                                        <path fill="currentColor"
+                                                                            d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z" />
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    {{-- @if ($announcement->attachments->isNotEmpty())
+                            @foreach ($announcement->attachments as $attachment)
+                                @php
+                                // Mengambil ekstensi file dari path attachment
+                                $attachmentExtension = pathinfo($attachment->file_path, PATHINFO_EXTENSION);
+                                @endphp
+                                @if (in_array($attachmentExtension, ['jpg', 'jpeg', 'png', 'gif', 'svg']))
+                                <div class="image-container text-center">
+                                    <a data-fancybox="gallery" href="{{ $attachment->filePath() }}" >
+                                    <img src="{{ $attachment->filePath() }}" class="img-fluid" alt="Gambar" style="cursor:pointer; width:50%;">
+                                    </a>
+                                </div>
+                                @endif
+                                @if (in_array($attachmentExtension, ['pdf', 'doc', 'docx']))
+                                <a href="{{ $attachment->filePath() }}" style="text-decoration: none" download>
+                                    <div class="file-container">
+                                        <div class="file-icon">
+                                            <i class="far fa-file"></i>
                                         </div>
-                                    @endif
-                                    @if (in_array($attachmentExtension, ['pdf', 'doc', 'docx']))
-                                        <a href="{{ $announcement->attachment() }}" style="text-decoration: none"
-                                            download>
-                                            <div class="file-container">
-                                                <div class="file-icon">
-                                                    <i class="far fa-file"></i>
-                                                </div>
-                                                <div class="file-info">
-                                                    <span>{{ basename($announcement->attachment) }}</span>
-                                                </div>
-                                                <div class="file-download">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24">
-                                                        <path fill="currentColor"
-                                                            d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    @endif
+                                        <div class="file-info">
+                                        <span>{{ basename($attachment->file_path) }}</span>
+                                        </div>
+                                        <div class="file-download">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </a>
+                                @endif
+                            @endforeach
+                        @endif --}}
                                     {{-- <div class="attachment-unique">
                             <i class="fas fa-file-pdf"></i>
                             <a href="#">MEMO INTERNAL SPD.pdf</a>
@@ -731,14 +755,14 @@
         </script>
 
         <script>
-            // Mengambil elemen-elemen dengan kelas yang sesuai
-            const wkwkElement = document.querySelector('.wkwk');
+            // Mengambil elemen yang akan menampilkan tanggal dan waktu
+
             const wikwikElement = document.querySelector('.wikwik');
             const greetingElement = document.getElementById('greeting');
 
             // Mendapatkan nama pengguna dari server-side Laravel
             const userName =
-                '@auth, {{ Auth::user()->full_name }}! @else  @endauth';
+                '@auth {{ Auth::user()->full_name }}! @else  @endauth';
 
             // Fungsi untuk mendapatkan tanggal dan jam saat ini
             function updateDateTime() {
@@ -764,20 +788,19 @@
                 // Format jam dalam format 'HH:MM:SS WIB'
                 const time = hour + ':' + minute + ':' + second + ' WIB';
 
-                // Memasukkan tanggal dan jam ke dalam elemen-elemen
-                if (wkwkElement) wkwkElement.textContent = date;
-                if (wikwikElement) wikwikElement.textContent = time;
+                // Memasukkan tanggal dan jam ke dalam elemen yang sama
+                if (wikwikElement) wikwikElement.textContent = date + ' | ' + time;
 
                 // Mengubah ucapan berdasarkan jam
                 let greeting;
                 const currentHour = now.getHours();
 
                 if (currentHour < 12) {
-                    greeting = 'Good Morning' + userName;
+                    greeting = 'Good Morning, ' + userName;
                 } else if (currentHour < 18) {
-                    greeting = 'Good Afternoon' + userName;
+                    greeting = 'Good Afternoon, ' + userName;
                 } else {
-                    greeting = 'Good Evening' + userName;
+                    greeting = 'Good Evening, ' + userName;
                 }
 
                 if (greetingElement) greetingElement.textContent = greeting;

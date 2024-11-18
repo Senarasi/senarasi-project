@@ -65,7 +65,7 @@
         <div class="collapse navbar-collapse" id="navbarnih" style="justify-content: space-between; ">
             <div style="display:flex">
 
-                @if (auth()->user()->hasRole(['admin', 'manager']))
+                @if (auth()->user()->hasRole(['admin', 'manager', 'hc']))
                     <a href="{{ route('admin') }}" class="unique ms-5">Admin</a>
                 @endif
                 @if (auth()->user()->hasRole(['admin']))
