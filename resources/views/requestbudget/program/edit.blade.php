@@ -21,7 +21,7 @@
     <a href="{{ url()->previous() }}" style="text-decoration: none;"> <button class="navback">
             <svg xmlns="http://www.w3.org/2000/svg " width="10 " height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                  7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
+                                                                          7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
             </svg>
             Back
         </button>
@@ -94,6 +94,25 @@
                         </ul>
                     </div>
                 @endif
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="managerform" class="form-label">Date of Production</label>
+                        <input type="date" name="date_start" id="disabledTextInput " class="form-control"
+                            value="{{ $requestBudget->date_start }}" />
+                    </div>
+                    <div class="col mb-3">
+                        <label for="managerform" class="form-label">
+                            Date of Completion of Shooting</label>
+                        <input type="date" name="date_end" id="disabledTextInput " class="form-control"
+                            value="{{ $requestBudget->date_end }}" />
+                    </div>
+                    <div class="col mb-3">
+                        <label for="managerform" class="form-label">Date of Upload</label>
+                        <input type="date" name="date_upload" id="disabledTextInput " class="form-control"
+                            value="{{ $requestBudget->date_upload }}" />
+                    </div>
+
+                </div>
                 <div style="display: grid; gap: 24px; grid-template-columns: 1fr 1fr">
                     <div class="mb-3">
                         <label for="Select " class="form-label">Select Program</label>
@@ -138,7 +157,8 @@
                             <label for="manager_id" class="form-label">Manager Name</label>
                             {{-- <select id="manager_id" name="manager_id" class="form-select"> --}}
                             <input type="text " name="manager_name" id="manager_display" class="form-control"
-                                placeholder="{{ $manager->full_name }}" value="{{ $manager->full_name }}" style="text-transform: uppercase;" readonly />
+                                placeholder="{{ $manager->full_name }}" value="{{ $manager->full_name }}"
+                                style="text-transform: uppercase;" readonly />
                         </fieldset>
                         <!-- Hidden input field to store the manager_id -->
                         <input type="hidden" id="manager_id" name="manager_id" value="{{ $manager->employee_id }}">
@@ -166,12 +186,12 @@
                     <div class="mb-3">
                         <label for="disabledTextInput " class="form-label">Program / Activity Name</label>
                         <input type="text" name="episode" id="disabledTextInput " class="form-control"
-                            placeholder=" " value="{{ $requestBudget->episode }}" style="text-transform: uppercase;"/>
+                            placeholder=" " value="{{ $requestBudget->episode }}" style="text-transform: uppercase;" />
                     </div>
                     <div class="mb-3">
                         <label for="disabledTextInput " class="form-label">Location</label>
                         <input type="text" name="location" id="disabledTextInput " class="form-control"
-                            placeholder="" value="{{ $requestBudget->location }}" style="text-transform: uppercase;"/>
+                            placeholder="" value="{{ $requestBudget->location }}" style="text-transform: uppercase;" />
                     </div>
                 </div>
 
@@ -193,17 +213,21 @@
                         <label for="Select " class="form-label">Production Type</label>
                         <select id="type" name="type" id="type" class="form-select">
                             <option disabled selected>Choose One</option>
-                            <option value="Tapping" {{ $requestBudget->type == 'Tapping' ? 'selected' : '' }}>Tapping
+                            <option value="TAPPING" {{ $requestBudget->type == 'TAPPING' ? 'selected' : '' }}>Tapping
                             </option>
-                            <option value="Live Streaming"
-                                {{ $requestBudget->type == 'Live Streaming' ? 'selected' : '' }}>Live Streaming</option>
+                            <option value="LIVE STREAMING"
+                                {{ $requestBudget->type == 'LIVE STREAMING' ? 'selected' : '' }}>Live Streaming</option>
                             <option value="Event" {{ $requestBudget->type == 'Event' ? 'selected' : '' }}>Event</option>
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="managerform" class="form-label">Date of Upload</label>
-                        <input type="date" name="date_upload" id="disabledTextInput " class="form-control"
-                            value="{{ $requestBudget->date_upload }}" />
+                    <div class="col mb-3">
+                        <label for="Select " class="form-label">Sponsored</label>
+                        <select id="type" name="type" id="type" class="form-select">
+                            <option disabled selected>Choose One</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+
+                        </select>
                     </div>
                 </div>
                 <button type="submit" class="button-departemen"
