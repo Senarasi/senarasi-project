@@ -50,9 +50,10 @@ class EmployeeController extends Controller
 
     public function create()
     {
+        $users = Employee::orderBy('full_name', 'asc')->get();
         $department = Department::orderBy('department_name', 'asc')->pluck('department_name', 'department_id')->prepend('Select Department', '');
         $position = Position::orderBy('position_name', 'asc')->pluck('position_name', 'position_id');
-        return view('admin.hc.employee.create', compact('department', 'position'));
+        return view('admin.hc.employee.create', compact('department', 'position', 'users'));
     }
 
     public function store(Request $request)
@@ -66,6 +67,7 @@ class EmployeeController extends Controller
             'password' => 'required|string|min:5',
             'department_id' => 'required|exists:departments,department_id',
             'position_id' => 'required|exists:positions,position_id',
+            'manager_id' => 'required|exists:employees,manager_id',
             'access' => 'required|array', // Validate roles as an array
             'access.*' => 'exists:access,access_id', // Validate each role exists in the roles table
 
@@ -80,6 +82,7 @@ class EmployeeController extends Controller
         $employee->password = bcrypt($request->password); // Hash the password
         $employee->department_id = $request->department_id;
         $employee->position_id = $request->position_id;
+        $employee->manager_id = $request->manager_id;
         $employee->employee_status_id = $request->role;
 
         // Attempt to save the Employee to the database

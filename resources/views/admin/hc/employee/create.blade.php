@@ -30,13 +30,13 @@
         .form-footer {
             display: flex;
             justify-content: flex-end;
-            margin-top: 20px;
+
         }
 
         .form-footer button {
-            font-size: 14px;
-            letter-spacing: 0.5px;
             color: #ffe900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .modal {
@@ -86,20 +86,31 @@
         .content-section-unique {
             padding: 20px;
         }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(100px, 140px));
+            /* Minimal 100px, maksimal proporsional */
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(3, auto);
+                /* Tiga kolom untuk layar kecil */
+            }
+        }
     </style>
 @endsection
 @section('content')
-    <a href="{{ route('employee') }}" class="text-decoration-none text-end">
+    <a href="{{ route('employee.index') }}" class="text-decoration-none text-end">
         <button class="navback">
             <svg xmlns="http://www.w3.org/2000/svg " width="10" height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                              7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
+                                  7.2501 0 7.6501 0 8.0501Z " fill="#4A25AA " />
             </svg>
             Back
         </button>
     </a>
-
-
 
     <div class="tablenih" style="margin-top: 12px;">
         <div class="content-section-unique">
@@ -171,10 +182,8 @@
                         </select>
                     </div>
                 </div>
-
-
                 <div class="row mb-3">
-                    <div class="col">
+                    <div class="col-8">
                         <label for="date" class="form-label">NIP</label>
                         <input type="nip" class="form-control" id="nip" placeholder="NIP" required>
                     </div>
@@ -182,19 +191,6 @@
                         <label for="role" class="form-label">Role</label>
                         <select id="role" name="access" placeholder="Choose Role" required>
                             <option disabled selected value="">Choose Role</option>
-                            <option value="staff">Staff</option>
-                            <option value="manager">Manager</option>
-                            <option value="vp">VP</option>
-                            <option value="bod">BOD</option>
-
-
-                        </select>
-                    </div>
-                    <div class="col ">
-                        <label for="access" class="form-label">Access</label>
-                        <select id="access" class="form-control" name="access" placeholder="Choose Access"
-                            multiple="multiple" required>
-                            {{-- <option disabled selected value="">Choose Access</option> --}}
                             <option value="staff">Staff</option>
                             <option value="manager">Manager</option>
                             <option value="vp">VP</option>
@@ -228,35 +224,90 @@
                             <option value="widower">Widower</option>
                         </select>
                     </div>
-
                 </div>
 
                 <div class="row mb-3">
                     <div class="col">
                         <label for="department_id" class="form-label">Department</label>
-                        <select name="department_id" id="department_id" placeholder="Choose Department" required>
-                            <option disabled selected>Select Department</option>
-                            <option>IT</option>
-                            <option>Finance</option>
-                            <option>Operation</option>
-                            <option>Editing</option>
+                        <select name="department_id" id="department_option" placeholder="Choose Department" class="form-select" required>
+                            @forelse ($department as $department_id => $department_name)
+                                <option value="{{ $department_id }}">{{ $department_name }}</option>
+                            @empty
+                                <option disabled selected>Data not found</option>
+                            @endforelse
                         </select>
                     </div>
                     <div class="col ">
                         <label for="job_position" class="form-label">Job Position</label>
-                        <select id="job_position" name="job_position" placeholder="Choose Job Position" required>
-                            <option disabled selected value="">Choose Job Postion</option>
-                            <option value="BOD">BOD</option>
+                        <select name="position_id" id="position_option" placeholder="Choose Job Position" class="form-select" required>
+                            <option value="">Select Department First</option>
                         </select>
                     </div>
                     <div class="col">
                         <label for="managername" class="form-label">Manager</label>
-                        <select name="managername" id="managername">
-                            <option disabled selected>Select Department</option>
-                            <option>Khairuldahlan</option>
+                        <select id="managername" name="managername">
+                            <option disabled selected>Choose One</option>
+                            @forelse ($users as $user)
+                                <option value="{{ $user->employee_id }}">{{ $user->full_name }}</option>
+                            @empty
+                                <option disabled>Data not found</option>
+                            @endforelse
                         </select>
                     </div>
+
                 </div>
+                <div class="row mb-3">
+                    <label for="Access" class="form-label">Access for Senarasi</label>
+                    <div class="col">
+                        <div class="grid-container">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <label class="form-label" for="inlineCheckbox1">Admin</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                <label class="form-label" for="inlineCheckbox2">CEO</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                                <label class="form-label" for="inlineCheckbox3">BOD</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                                <label class="form-label" for="inlineCheckbox4">VP</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                                <label class="form-label" for="inlineCheckbox5">Manager</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+                                <label class="form-label" for="inlineCheckbox6">Finance</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+                                <label class="form-label" for="inlineCheckbox7">Procurement</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="option8">
+                                <label class="form-label" for="inlineCheckbox8">Legal</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox9" value="option9">
+                                <label class="form-label" for="inlineCheckbox9">HC</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox10" value="option10">
+                                <label class="form-label" for="inlineCheckbox10">GA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox11" value="option11">
+                                <label class="form-label" for="inlineCheckbox11">Staff</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-footer">
                     <button type="submit" class="uwuq" id="saveButton">Save</button>
                 </div>
@@ -274,6 +325,44 @@
 @endsection
 
 @section('custom-js')
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('#department_option').on('change', function() {
+                $.ajax({
+                    url: "{{ route('ajax.getpositionfromdepartment') }}",
+                    method: 'POST',
+                    data: {
+                        department_id: this.value,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    async: true,
+                    dataType: "json",
+                    success: function(data) {
+                        var $select = $('#position_option');
+                        if (!$.trim(JSON.parse(data.data))) {
+                            $select.html('');
+                            $select.append(
+                                '<option value="">Position doesnt exist/Select Department First</option>'
+                            );
+                        } else {
+                            $select.html('');
+                            $.each(JSON.parse(data.data), function(key, value) {
+                                $select.append('<option value=' + key +
+                                    '>' + value + '</option>');
+                            });
+                        }
+                    }
+                });
+            });
+            $('#check-pw').click(function() {
+                if ('password' == $('#input-pw').attr('type')) {
+                    $('#input-pw').prop('type', 'text');
+                } else {
+                    $('#input-pw').prop('type', 'password');
+                }
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $("#access").select2({
@@ -283,7 +372,7 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#gender, #marital_status, #religion, #job_position, #role, #department_id, #managername').selectize({
+            $('#gender, #marital_status, #religion, #role, #department_id').selectize({
                 create: false,
                 sortField: 'text',
 
@@ -346,5 +435,18 @@
                 hide_eye.style.display = 'none';
             }
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#managername').selectize({
+                placeholder: "Type to search...", // Placeholder text for the dropdown
+                allowClear: true,
+                onDropdownOpen: function() {
+                    // Automatically focus the input when the dropdown opens
+                    this.clear();
+                    this.$control_input.focus();
+                }
+            });
+        });
     </script>
 @endsection
