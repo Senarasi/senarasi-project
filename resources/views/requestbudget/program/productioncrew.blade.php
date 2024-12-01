@@ -3,13 +3,20 @@
 @section('title')
     Create Request Budget - Budgeting System
 @endsection
+@section('costum-css')
+    <style>
+        .select2-container {
+            z-index: 9999 !important;
+        }
+    </style>
+@endsection
 
 @section('content')
     <a href="{{ url()->previous() }}" style="text-decoration: none;"> <button class="navback">
             <svg xmlns="http://www.w3.org/2000/svg " width="10 " height="17 " viewBox="0 0 10 17 " fill="none ">
                 <path
                     d="M0 8.0501C0 8.4501 0.2 8.8501 0.4 9.0501L7 15.6501C7.6 16.2501 8.6 16.2501 9.2 15.6501C9.8 15.0501 9.8 14.0501 9.2 13.4501L3.8 8.0501L9.2 2.6501C9.8 2.0501 9.8 1.0501 9.2 0.450097C8.6 -0.149902 7.6 -0.149902 7 0.450097L0.6 6.8501C0.2
-                                                                                                                                                                                          7.2501 0 7.6501 0 8.0501Z "
+                                                                                                                                                                                                                                      7.2501 0 7.6501 0 8.0501Z "
                     fill="#4A25AA " />
             </svg>
             Back
@@ -206,7 +213,7 @@
                                 <td>Rp. {{ number_format($data->cost) ?? 0 }}</td>
                                 <td>Rp. {{ number_format($data->total_cost) ?? 0 }}</td>
                                 <td>{{ $data->assign ?? '' }}</td>
-                                <td>{{ $data->note ?? '' }}</td>
+                                <td>{!! nl2br(e($data->note ?? '')) !!}</td>
                                 <td>
                                     <span style="display: flex; gap: 8px; justify-content: center">
                                         <a href="javascript:;" class="uwuq editModalBtn" style="font-size: 14px"
@@ -304,9 +311,9 @@
 
                         </div>
                         <div class="col">
-                            <div class="mb-3" id="name_container">
-                                <label for="name" class="form-label">Name</label>
+                            <div class="mb-3">
                                 <div id="name_container">
+                                    {{-- <label for="name" class="form-label">Name</label>
                                     <select name="name" id="name_option" required>
                                         <option disabled selected>Select Name</option>
                                         @forelse ($crew as $data)
@@ -314,7 +321,7 @@
                                         @empty
                                             <option disabled selected>Data not found</option>
                                         @endforelse
-                                    </select>
+                                    </select> --}}
                                 </div>
                             </div>
                         </div>
@@ -324,7 +331,7 @@
                                 <div class="mb-3">
                                     <label for="position" class="form-label">Position</label>
                                     <div id="position_container">
-                                        <select name="position" class="form-select" id="position_option" required>
+                                        <select name="position" id="position_option" required>
                                             <option disabled selected>Select Position</option>
                                             @forelse ($crewposition as $crew_position_id => $crew_position_name)
                                                 <option value="{{ $crew_position_name }}">{{ $crew_position_name }}
@@ -368,9 +375,10 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label for="note" class="form-label">Note</label>
-                                <textarea type="text" class="form-control" id="note" name="note" cols="30" rows="2"></textarea>
+                                <textarea type="text" class="form-control" id="note" name="note" cols="30" rows="4"></textarea>
                             </div>
                         </div>
+
                         <input type="hidden" name="request_budget_id" value="{{ $id }}">
                         <input type="hidden" name="url_back"
                             value="{{ route('request-budget.productioncrew', $requestbudget->request_budget_id) }}">
@@ -470,6 +478,23 @@
         });
     </script>
     <script>
+        $(document).ready(function() {
+            // Initialize selectize for the 'name' dropdown in the modal
+            $('#additem').on('shown.bs.modal', function() {
+                $('#position_option').selectize({
+                    placeholder: "Type to search...", // Placeholder text for the dropdown
+                    allowClear: false,
+                    onDropdownOpen: function() {
+                        // Automatically focus the input when the dropdown opens
+                        this.clear();
+                        this.$control_input.focus();
+                    }
+                });
+            });
+        });
+    </script>
+    {{-- script rep ncs & out J --}}
+    {{-- <script>
         // Function to format numbers as money with "Rp." prefix (e.g., 1250000 -> Rp. 1.250.000)
         function formatMoney(number) {
             return 'Rp. ' + parseInt(number, 10).toLocaleString('id-ID');
@@ -489,8 +514,7 @@
                     // Change name input back to dropdown
                     $('#name_container').html(
                         `<label for="name" class="form-label">Name</label>
-                        <select name="name" id="name_option" required>
-                            <option disabled selected>Select Name</option>
+                        <select class="form-control" id="select2" name="name[]" multiple="multiple" required>
                             @forelse ($crew as $data)
                                 <option value="{{ $data->full_name }}">{{ $data->full_name }}</option>
                             @empty
@@ -537,9 +561,9 @@
                             $('#note').val(response.note); // Set note based on position
                             $('#raw_budget').val(response.price);
                         },
-                        error: function(xhr, status, error) {
-                            alert('Could not fetch position details');
-                        }
+                        // error: function(xhr, status, error) {
+                        //     alert('Could not fetch position details');
+                        // }
                     });
                 } else if (repValue === 'NCS') {
                     // If NCS is selected, the cost remains 0 and note is cleared
@@ -564,7 +588,99 @@
                 }
             });
         });
+    </script> --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const repOption = document.getElementById('rep_option');
+            const nameContainer = document.getElementById('name_container');
+            const modal = $('#additem'); // Replace with the correct modal ID
+
+            // Function to initialize Select2
+            function initializeSelect2() {
+                $('#select2').select2({
+                    placeholder: "Select Name"
+                });
+            }
+
+            // Handle REP option change
+            repOption.addEventListener('change', function() {
+                const repValue = repOption.value;
+
+                if (repValue === 'NCS') {
+                    $('#cost').val('0'); // Set cost to 0
+                    $('#note').val(''); // Clear the note field
+                    $('#raw_budget').val('0'); // Ensure raw budget is also 0
+
+                    // Add the Name input field with Select2
+                    nameContainer.innerHTML = `
+                        <label for="name" class="form-label">Name</label>
+                        <select class="form-control" id="select2" name="name[]" multiple="multiple" required>
+                            @forelse ($crew as $data)
+                                <option value="{{ $data->full_name }}">{{ $data->full_name }}</option>
+                            @empty
+                                <option disabled selected>Data not found</option>
+                            @endforelse
+                        </select>`;
+
+                    // Initialize Select2 after adding it
+                    if (modal.hasClass('show')) {
+                        initializeSelect2();
+                    } else {
+                        modal.on('shown.bs.modal', initializeSelect2);
+                    }
+                } else if (repValue === 'OUT') {
+                    $('#cost').val(''); // Clear cost field
+                    $('#note').val(''); // Clear the note field
+
+                    // Replace Name field with a regular input
+                    nameContainer.innerHTML = `
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="NAMA" name="name[]" required />`;
+                }
+            });
+
+            // Handle Position option change
+            $('#position_option').on('change', function() {
+                const positionName = $(this).val();
+                const repValue = repOption.value;
+
+                if (repValue === 'OUT') {
+                    // Send AJAX request to fetch position details
+                    $.ajax({
+                        url: '/get-position-details/' + positionName,
+                        method: 'GET',
+                        success: function(response) {
+                            // Format the cost and update the cost field
+                            let formattedCost = formatMoney(response.price);
+                            $('#cost').val(formattedCost); // Set formatted cost
+                            $('#note').val(response.note); // Set note
+                            $('#raw_budget').val(response.price); // Raw budget value
+
+                            // Update #name value to match the selected position
+                            $('#NAMA').val(positionName);
+                        },
+                        // error: function(xhr, status, error) {
+                        //     alert('Could not fetch position details');
+                        // }
+                    });
+                } else if (repValue === 'NCS') {
+                    // If NCS is selected, reset cost and note
+                    $('#cost').val('0');
+                    $('#note').val('');
+                    $('#raw_budget').val('0');
+                }
+            });
+        });
+
+        // Utility function to format money (example for Rp. currency)
+        function formatMoney(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            }).format(amount);
+        }
     </script>
+
     <script>
         document.getElementById('performerForm').addEventListener('submit', function(event) {
             const requiredFields = document.querySelectorAll('#performerForm [required]');
