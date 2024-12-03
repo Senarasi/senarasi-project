@@ -33,7 +33,18 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
 
     // Route::resource('', App\Http\Controllers\AuditLaptopController::class);
-    Route::resource('audit_laptop', 'App\Http\Controllers\AuditLaptopController');
+    // Route::resource('audit_laptop', 'App\Http\Controllers\AuditLaptopController');
+    Route::prefix('audit_laptop')->controller(App\Http\Controllers\AuditLaptopController::class)->name('audit_laptop.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::put('/{id}/update', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+        Route::get('/exportexcel', 'exportExcel')->name('exportExcel');
+
+    });
+
 
     Route::get('/admin', function () {
         return view('admin.index');
