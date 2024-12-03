@@ -67,7 +67,7 @@ class EmployeeController extends Controller
             'password' => 'required|string|min:5',
             'department_id' => 'required|exists:departments,department_id',
             'position_id' => 'required|exists:positions,position_id',
-            'manager_id' => 'required|exists:employees,manager_id',
+            'manager_id' => 'required|exists:employees,employee_id',
             'access' => 'required|array', // Validate roles as an array
             'access.*' => 'exists:access,access_id', // Validate each role exists in the roles table
 

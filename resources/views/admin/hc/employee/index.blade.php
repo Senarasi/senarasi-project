@@ -144,7 +144,7 @@
                         <div class="managername mb-3"
                             style="font: 300 12; justify-content: space-between; align-items: center; flex: 1 0 0">
                             <label for="managername" class="form-label">Manager</label>
-                            <select name="managername" class="form-select" id="managername">
+                            <select name="manager_id" class="form-select" id="manager_id">
                                 <option disabled selected>Select Manager</option>
                                 @forelse ($managers as $manager)
                                     <option value="{{ $manager->employee_id }}">{{ $manager->full_name }}</option>
