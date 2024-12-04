@@ -310,7 +310,7 @@
                             onclick="document.getElementById('photoInput').click()">
                             Take a Photo
                         </button> --}}
-                        <input type="file" id="picture" name="picture" accept="image/*" capture="environment" multiple>
+                        <input type="file" id="user_image" name="user_image" accept="image/*" capture="environment" multiple>
                         <!-- Span to display the chosen file name -->
                         <span id="fileName" class="ms-2"></span>
 
