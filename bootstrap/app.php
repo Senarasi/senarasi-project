@@ -15,6 +15,23 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
+$domain = $_SERVER['HTTP_HOST'] ?? '';
+
+if ($domain === 'senarasi.narasi.news') {
+    putenv('APP_ENV=staging');
+    putenv('APP_URL=https://senarasi.narasi.news');
+} elseif($domain === 'se.narasi.tv') {
+    putenv('APP_ENV=production');
+    putenv('APP_URL=https://se.narasi.tv');
+} else {
+    putenv('APP_ENV=local');
+    putenv('APP_URL=http://127.0.0.1:8000');
+}
+
+// Set the environment file based on the domain
+$environmentFile = $domainEnvMap[$domain] ?? '.env';
+$app->loadEnvironmentFrom($environmentFile);
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces

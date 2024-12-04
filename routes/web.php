@@ -30,7 +30,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/test-env', function () {
+    return env('DOMAIN_ENV');
+});
+
 Route::middleware(['auth'])->group(function () {
+
 
     // Route::resource('', App\Http\Controllers\AuditLaptopController::class);
     // Route::resource('audit_laptop', 'App\Http\Controllers\AuditLaptopController');
@@ -42,7 +47,6 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{id}/update', 'update')->name('update');
         Route::delete('/{id}', 'destroy')->name('destroy');
         Route::get('/exportexcel', 'exportExcel')->name('exportExcel');
-
     });
 
 
