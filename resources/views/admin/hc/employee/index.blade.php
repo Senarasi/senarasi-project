@@ -64,6 +64,14 @@
                                     <button type="submit" class="btn btn-danger "
                                         style="width: fit-content; ">Delete</button>
                                 </form>
+                                <form action="{{ route('employees.reset-password', $data->employee_id) }}"
+                                    method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-warning"
+                                        onclick="return confirm('Are you sure you want to send a password reset link to this employee?')">
+                                        Reset Password
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @include('partials.edit_employee_modal', [

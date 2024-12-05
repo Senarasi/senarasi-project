@@ -101,7 +101,8 @@
             Back
         </a>
 
-        <div class="judulhalaman" style="display: flex; align-items: center; text-transform:uppercase">{{ $docCategory->category }}</div>
+        <div class="judulhalaman" style="display: flex; align-items: center; text-transform:uppercase">
+            {{ $docCategory->category }}</div>
 
         <div style="display: inline-flex; gap: 12px; margin-left: 4px;">
             {{-- <button type="button" class="button-departemen" data-bs-toggle="modal" data-bs-target="#modal-upload">Upload
@@ -211,44 +212,47 @@
                                                     fill="white" />
                                             </svg>
                                         </a>
-                                        <a href="{{ route('company-document.edit', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug]) }}"
-                                            class="icon-buttons"
-                                            style="
+                                        @if (auth()->user()->hasRole(['admin', 'legal']))
+                                            <a href="{{ route('company-document.edit', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug]) }}"
+                                                class="icon-buttons"
+                                                style="
                             background: #4a25aa;
                             border-radius: 4px;
                             padding: 8px 12px;"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                viewBox="0 0 16 16" fill="none">
-                                                <path
-                                                    d="M3.5 4.33301H2.66667C2.22464 4.33301 1.80072 4.5086 1.48816 4.82116C1.17559 5.13372 1 5.55765 1 5.99967V13.4997C1 13.9417 1.17559 14.3656 1.48816 14.6782C1.80072 14.9907 2.22464 15.1663 2.66667 15.1663H10.1667C10.6087 15.1663 11.0326 14.9907 11.3452 14.6782C11.6577 14.3656 11.8333 13.9417 11.8333 13.4997V12.6663"
-                                                    stroke="white" stroke-width="1.5" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
-                                                <path
-                                                    d="M11 2.66676L13.5 5.16676M14.6541 3.98759C14.9823 3.65938 15.1667 3.21424 15.1667 2.75009C15.1667 2.28594 14.9823 1.84079 14.6541 1.51259C14.3259 1.18438 13.8808 1 13.4166 1C12.9525 1 12.5073 1.18438 12.1791 1.51259L5.16663 8.50009V11.0001H7.66663L14.6541 3.98759Z"
-                                                    stroke="white" stroke-width="1.5" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
-                                            </svg>
-                                        </a>
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                            action="{{ route('company-document.destroyFile', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="icon-buttons"
-                                                style="background: red;
+                                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 16 16" fill="none">
+                                                    <path
+                                                        d="M3.5 4.33301H2.66667C2.22464 4.33301 1.80072 4.5086 1.48816 4.82116C1.17559 5.13372 1 5.55765 1 5.99967V13.4997C1 13.9417 1.17559 14.3656 1.48816 14.6782C1.80072 14.9907 2.22464 15.1663 2.66667 15.1663H10.1667C10.6087 15.1663 11.0326 14.9907 11.3452 14.6782C11.6577 14.3656 11.8333 13.9417 11.8333 13.4997V12.6663"
+                                                        stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M11 2.66676L13.5 5.16676M14.6541 3.98759C14.9823 3.65938 15.1667 3.21424 15.1667 2.75009C15.1667 2.28594 14.9823 1.84079 14.6541 1.51259C14.3259 1.18438 13.8808 1 13.4166 1C12.9525 1 12.5073 1.18438 12.1791 1.51259L5.16663 8.50009V11.0001H7.66663L14.6541 3.98759Z"
+                                                        stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </a>
+                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                                action="{{ route('company-document.destroyFile', ['docCategory' => $docCategory->slug, 'doc' => $doc->slug]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="icon-buttons"
+                                                    style="background: red;
                             border-radius: 4px;
                             border:none;
                             padding: 10px 12px"
-                                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="15"
-                                                    viewBox="0 0 12 15" fill="none">
-                                                    <path
-                                                        d="M0.787222 12.5956C0.787222 13.4615 1.49572 14.17 2.36167 14.17H8.65944C9.52539 14.17 10.2339 13.4615 10.2339 12.5956V4.72333C10.2339 3.85739 9.52539 3.14889 8.65944 3.14889H2.36167C1.49572 3.14889 0.787222 3.85739 0.787222 4.72333V12.5956ZM10.2339 0.787222H8.26583L7.70691 0.228294C7.56521 0.0865944 7.36053 0 7.15585 0H3.86526C3.66058 0 3.45591 0.0865944 3.31421 0.228294L2.75528 0.787222H0.787222C0.35425 0.787222 0 1.14147 0 1.57444C0 2.00742 0.35425 2.36167 0.787222 2.36167H10.2339C10.6669 2.36167 11.0211 2.00742 11.0211 1.57444C11.0211 1.14147 10.6669 0.787222 10.2339 0.787222Z"
-                                                        fill="white" />
-                                                </svg>
-                                            </button>
-                                        </form>
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-title="Delete">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="15"
+                                                        viewBox="0 0 12 15" fill="none">
+                                                        <path
+                                                            d="M0.787222 12.5956C0.787222 13.4615 1.49572 14.17 2.36167 14.17H8.65944C9.52539 14.17 10.2339 13.4615 10.2339 12.5956V4.72333C10.2339 3.85739 9.52539 3.14889 8.65944 3.14889H2.36167C1.49572 3.14889 0.787222 3.85739 0.787222 4.72333V12.5956ZM10.2339 0.787222H8.26583L7.70691 0.228294C7.56521 0.0865944 7.36053 0 7.15585 0H3.86526C3.66058 0 3.45591 0.0865944 3.31421 0.228294L2.75528 0.787222H0.787222C0.35425 0.787222 0 1.14147 0 1.57444C0 2.00742 0.35425 2.36167 0.787222 2.36167H10.2339C10.6669 2.36167 11.0211 2.00742 11.0211 1.57444C11.0211 1.14147 10.6669 0.787222 10.2339 0.787222Z"
+                                                            fill="white" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </span>
                                 </td>
 
