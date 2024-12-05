@@ -63,14 +63,16 @@
                                                 <a href="{{ route('company-document.detail', $docCategory->slug) }}"
                                                     class="uwuq"
                                                     style="font-size: 14px;letter-spacing: 0.5px; color:#ffe900">DETAIL</a>
-                                                <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                    action="{{ route('company-document.destroy', $docCategory->slug) }}"
-                                                    method="POST" style="display: flex;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="uwuq"
-                                                        style="background-color:#dc3545; font-size: 14px;letter-spacing: 0.5px;">DELETE</button>
-                                                </form>
+                                                @if (auth()->user()->hasRole(['admin', 'legal']))
+                                                    <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                                        action="{{ route('company-document.destroy', $docCategory->slug) }}"
+                                                        method="POST" style="display: flex;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="uwuq"
+                                                            style="background-color:#dc3545; font-size: 14px;letter-spacing: 0.5px;">DELETE</button>
+                                                    </form>
+                                                @endif
                                             </span>
                                         </td>
                                     </tr>

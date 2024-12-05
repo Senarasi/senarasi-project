@@ -315,6 +315,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('employee', 'App\Http\Controllers\EmployeeController');
     Route::post('/employee/store', 'App\Http\Controllers\EmployeeController@store')->name('employee.store');
+    Route::post('/employees/{employee_id}/reset-password', [App\Http\Controllers\EmployeeController::class, 'sendPasswordResetLink'])
+    ->name('employees.reset-password');
     Route::post('/get-current-position', [App\Http\Controllers\AjaxController::class, 'getcurrentposition'])->name('ajax.getcurrentposition');
     Route::post('/get-position-from-department', [App\Http\Controllers\AjaxController::class, 'getpositionfromdepartment'])->name('ajax.getpositionfromdepartment');
     // });
