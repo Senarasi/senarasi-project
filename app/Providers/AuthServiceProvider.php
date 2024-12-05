@@ -8,6 +8,7 @@ use App\Policies\BookingPolicy;
 use App\Models\RequestTransport;
 use App\Policies\RequestTransportPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Password;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->app->bind('password.broker', function ($app) {
+            return Password::broker('employees');
+        });
         $this->registerPolicies();
     }
 }
