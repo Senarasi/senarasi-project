@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'employees', // This must match the provider name
         ],
     ],
 
@@ -60,7 +60,7 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'employees' => [
             'driver' => 'eloquent',
             'model' => App\Models\Employee::class,
             'table' => 'employees',
@@ -101,13 +101,13 @@ return [
     // ],
 
     'passwords' => [
-    'employees' => [
-        'provider' => 'employees',
-        'table' => 'password_reset_tokens',
-        'expire' => 60,
-        'throttle' => 60,
+        'employees' => [
+            'provider' => 'employees', // Matches the provider name defined above
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
-],
 
     /*
     |--------------------------------------------------------------------------

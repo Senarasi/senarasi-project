@@ -50,22 +50,20 @@ class EmployeeController extends Controller
         return view('employee.index', compact('employees', 'total_employees', 'departments', 'positions', 'managers', 'access', 'employeeStatus'));
     }
 
-    public function sendPasswordResetLink($employee_id)
+    public function sendPasswordResetLink(Request $request, $employee_id)
     {
-        // Find the employee
-        $employee = Employee::findOrFail($employee_id);
+        $employee = \App\Models\Employee::findOrFail($employee_id);
 
-        // Send password reset link
-        $status = Password::sendResetLink(
-            ['email' => $employee->email]
-        );
+        // Send the reset link
+        $status = Password::broker('employees')->sendResetLink([
+            'email' => $employee->email,
+        ]);
 
-        // Check the status of the reset link
         if ($status === Password::RESET_LINK_SENT) {
-            return back()->with('status', 'Password reset link sent successfully!');
-        } else {
-            return back()->withErrors(['email' => __($status)]);
+            return back()->with('success', 'Password reset link sent to the employee.');
         }
+
+        return back()->withErrors(['email' => __($status)]);
     }
 
     public function create()
