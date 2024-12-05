@@ -109,6 +109,15 @@ return [
         ],
     ],
 
+    'passwords' => [
+        'employees' => [
+            'provider' => 'employees',
+            'table' => 'password_resets', // You can rename this if needed, but it's the default
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout
