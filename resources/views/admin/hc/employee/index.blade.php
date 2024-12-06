@@ -53,21 +53,21 @@
                             <td style="text-align: left; ">{{ $data->position->position_name }}</td>
                             <td style="text-align: left; ">{{ $data->email }}</td>
                             <td style="text-align: left; ">{{ $data->employeeStatus->status_name ?? 'not assigned' }}</td>
-                            <td style="gap: 8px; display: flex; justify-content: left; ">
+                            <td style="gap: 8px; justify-content: left; ">
                                 <form onsubmit="return confirm('Apakah Anda Yakin ?');"
                                     action="{{ route('employee.destroy', $data->employee_id) }}" style= "display:flex; gap: 8px" method="POST">
                                     <a href="{{ route('employee.edit', $data->employee_id) }}" class="btn btn-primary w-100"
                                         data-bs-toggle="modal" data-bs-target="#editModal-{{ $data->employee_id }}"
-                                        style="width: fit-content; text-transform: capitalize; color: white">Edit</a>
+                                        style="width: fit-content; text-transform: capitalize; color: white; background: #4a25aa; border-color: #4a25aa">Edit</a>
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger "
-                                        style="width: fit-content; w-100">Delete</button>
+                                    <button type="submit" class="btn btn-danger w-100"
+                                        style="width: fit-content;">Delete</button>
                                 </form>
                                 <form action="{{ route('employees.reset-password', $data->employee_id) }}"
                                     method="POST" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-warning"
+                                    <button type="submit" class="btn btn-warning mt-2 w-100"
                                         onclick="return confirm('Are you sure you want to send a password reset link to this employee?')">
                                         Reset Password
                                     </button>
