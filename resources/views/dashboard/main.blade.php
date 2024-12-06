@@ -417,6 +417,7 @@
                                     Quick Links</p>
 
                                 <div class="nih" style="margin-left: 8px;">
+                                    {{-- BACKUP ROUTE --}}
                                     {{-- <a class="apaniha" href="{{ route('dashboard.budget') }}"
                                         style="text-decoration: none; display: flex;">
                                         <svg style="margin-top: 6px; margin-right: 8px"
@@ -472,6 +473,7 @@
                                         </div>
                                     </a>
 
+                                    {{-- BACKUP ROUTE --}}
                                     {{-- <a class="apaniha" href="" style="text-decoration: none; display: flex;">
                                         <svg style="margin-top: 6px; margin-right: 8px"
                                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -510,6 +512,7 @@
                                         </div>
                                     </a>
 
+                                    {{-- BACKUP ROUTE --}}
                                     {{-- <a class="apaniha" href="{{ route('bookingroom.index') }}"
                                         style="text-decoration: none; display: flex;">
                                         <svg style="margin-top: 6px; margin-right: 8px"
@@ -548,6 +551,7 @@
                                         </div>
                                     </a>
 
+                                    {{-- BACKUP ROUTE --}}
                                     {{-- <a class="apaniha" href="" style="text-decoration: none; display: flex;">
                                         <svg style="margin-top: 6px; margin-right: 8px"
                                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -588,7 +592,7 @@
                                             <i class="fas fa-user-circle" style="color: #cfcfcf"></i>
                                             <div class="text-info-unique">
                                                 <strong>{{ $announcement->user->full_name }}</strong><br>
-                                                <span>{{ $announcement->user->role }}</span>
+                                                <span>{{ $announcement->user->position->position_name }}</span>
                                             </div>
                                         </div>
                                         <div class="date-unique">

@@ -25,6 +25,74 @@
         text-decoration: none;
         text-align: center;
     }
+
+    .unique {
+        position: relative;
+        text-decoration: none;
+        color: black;
+        font-family: 'Narasi Sans';
+        font-weight: 200;
+        letter-spacing: 0.5px;
+        display: flex;
+
+    }
+
+    .unique::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 0;
+        height: 2px;
+        background-color: #4a25aa;
+        transition: width 0.3s ease;
+
+    }
+
+    .unique:hover::after,
+    .unique:active::after {
+        width: 100%;
+    }
+
+    .navbar-collapse {
+        display: flex;
+        /* Flex tetap aktif untuk tata letak */
+        justify-content: space-between;
+        /* Elemen horizontal di layar besar */
+        align-items: center;
+        /* Elemen vertikal sejajar */
+    }
+
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            flex-direction: column;
+            /* Atur ulang elemen secara vertikal */
+            align-items: flex-start;
+            /* Pastikan elemen rata kiri */
+        }
+
+        .navbar-collapse .unique,
+        .navbar-collapse .dropdown {
+            width: 100%;
+            /* Atur elemen memenuhi lebar penuh */
+            margin: 5px 0;
+            /* Tambahkan jarak antar elemen */
+        }
+
+        .maindashboardlink {
+            margin-top: 10px;
+            /* Tambahkan jarak tambahan */
+            width: 100%;
+            /* Pastikan elemen Main Dashboard memenuhi lebar penuh */
+        }
+
+        .navbar-collapse .d-flex {
+            flex-direction: column;
+            /* Atur elemen "Admin", "Laptop Checking", dll. menjadi vertikal */
+            align-items: flex-start;
+            /* Rata kiri */
+        }
+    }
 </style>
 <!--Navbar-->
 <nav class="navbar fixed-top navbar-expand-lg p-0">
@@ -44,8 +112,9 @@
         <div class="collapse navbar-collapse" id="navbarnih">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
-            <div class="navbar-nav order-md-last">
-                <a class="maindashboardlink" href="{{ route('dashboard.main') }}">Main Dashboard</a>
+            <div class="navbar-nav order-md-last ms-4"
+                style="display: flex; align-items: center; justify-content: flex-end; ">
+                <a class="unique maindashboardlink" href="{{ route('dashboard.main') }}">Main Dashboard</a>
 
                 @guest
                     <div class="nav-item dropdown">

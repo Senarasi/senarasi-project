@@ -47,22 +47,22 @@
                 <tbody>
                     @forelse ($employees as $key => $data)
                         <tr>
-                            <th scope="row" style="text-align: center; ">{{ $data->employee_id }}</th>
+                            <th scope="row" style="text-align: left; ">{{ $data->employee_id }}</th>
                             <td>{{ $data->full_name }}</td>
-                            <td style="text-align: center; ">{{ $data->department->department_name }}</td>
-                            <td style="text-align: center; ">{{ $data->position->position_name }}</td>
-                            <td style="text-align: center; ">{{ $data->email }}</td>
-                            <td style="text-align: center; ">{{ $data->employeeStatus->status_name ?? 'not assigned' }}</td>
-                            <td style="gap: 8px; display: flex; justify-content: center; ">
+                            <td style="text-align: left; ">{{ $data->department->department_name }}</td>
+                            <td style="text-align: left; ">{{ $data->position->position_name }}</td>
+                            <td style="text-align: left; ">{{ $data->email }}</td>
+                            <td style="text-align: left; ">{{ $data->employeeStatus->status_name ?? 'not assigned' }}</td>
+                            <td style="gap: 8px; display: flex; justify-content: left; ">
                                 <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                    action="{{ route('employee.destroy', $data->employee_id) }}" method="POST">
-                                    <a href="{{ route('employee.edit', $data->employee_id) }}" class="uwuq"
+                                    action="{{ route('employee.destroy', $data->employee_id) }}" style= "display:flex; gap: 8px" method="POST">
+                                    <a href="{{ route('employee.edit', $data->employee_id) }}" class="btn btn-primary w-100"
                                         data-bs-toggle="modal" data-bs-target="#editModal-{{ $data->employee_id }}"
-                                        style="width: fit-content; ">Edit</a>
+                                        style="width: fit-content; text-transform: capitalize; color: white">Edit</a>
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger "
-                                        style="width: fit-content; ">Delete</button>
+                                        style="width: fit-content; w-100">Delete</button>
                                 </form>
                                 <form action="{{ route('employees.reset-password', $data->employee_id) }}"
                                     method="POST" class="d-inline">
