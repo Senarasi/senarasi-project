@@ -41,7 +41,7 @@
                         <th scope="col">Position</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
-                        <th scope="col" style="width: 140px">Action</th>
+                        <th scope="col" style="width: 170px">Action</th>
                     </tr>
                 </thead>
                 <tbody>

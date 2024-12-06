@@ -28,7 +28,7 @@ class EmployeeController extends Controller
             return view('admin.hc.employee.index', compact('employees', 'total_employees', 'departments', 'positions', 'managers', 'access', 'employeeStatus'));
         } else {
             $employees = Employee::with(['department', 'position'])
-                ->whereNotLike('email', '%it.narasi@narasi.tv')
+                ->where('email', 'NOT LIKE', 'it.narasi@narasi.tv')
                 ->orderBy('employee_id', 'asc')
                 ->get();
             $managers = Employee::whereIn('employee_status_id', [2, 3, 4])->orderBy('full_name', 'asc')->get();
