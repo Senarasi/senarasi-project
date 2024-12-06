@@ -32,6 +32,7 @@
         font-family: 'Narasi Sans';
         font-weight: 200;
         letter-spacing: 0.5px;
+        display: flex;
     }
 
     .unique::after {
@@ -50,11 +51,51 @@
     .unique:active::after {
         width: 100%;
     }
+
+    .navbar-collapse {
+        display: flex;
+        /* Flex tetap aktif untuk tata letak */
+        justify-content: space-between;
+        /* Elemen horizontal di layar besar */
+        align-items: center;
+        /* Elemen vertikal sejajar */
+    }
+
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            flex-direction: column;
+            /* Atur ulang elemen secara vertikal */
+            align-items: flex-start;
+            /* Pastikan elemen rata kiri */
+        }
+
+        .navbar-collapse .unique,
+        .navbar-collapse .dropdown {
+            width: 100%;
+            /* Atur elemen memenuhi lebar penuh */
+            margin: 5px 0;
+            /* Tambahkan jarak antar elemen */
+        }
+
+        .maindashboardlink {
+            margin-top: 10px;
+            /* Tambahkan jarak tambahan */
+            width: 100%;
+            /* Pastikan elemen Main Dashboard memenuhi lebar penuh */
+        }
+
+        .navbar-collapse .d-flex {
+            flex-direction: column;
+            /* Atur elemen "Admin", "Laptop Checking", dll. menjadi vertikal */
+            align-items: flex-start;
+            /* Rata kiri */
+        }
+    }
 </style>
 <!--Navbar-->
 <nav class="navbar fixed-top navbar-expand-lg">
     <div class="container-fluid">
-        <a href="{{ route('dashboard.main') }}" class="header ms-3" style="margin: 6px">
+        <a href="{{ route('dashboard.main') }}" class="header ms-3 me-4" style="margin: 6px">
             <img style="width: 208px; height: 38" src="{{ asset('asset/image/senarasi_logo1.png') }}" alt="" />
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarnih"
@@ -63,22 +104,24 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarnih" style="justify-content: space-between; ">
-            <div style="display:flex">
+            <div class="d-flex">
 
                 @if (auth()->user()->hasRole(['admin', 'manager', 'hc']))
-                    <a href="{{ route('admin') }}" class="unique ms-5">Admin</a>
+                    <a href="{{ route('admin') }}" class="unique ms-4">Admin</a>
                 @endif
                 @if (auth()->user()->hasRole(['admin']))
                     <a class="unique ms-4" href="{{ route('audit_laptop.index') }}">Audit</a>
                 @endif
+                {{-- <a href="{{ route('request-laptop-cheking.index') }}" class="unique ms-4">Helpdesk Laptop</a> --}}
+                <a href="" class="unique ms-4">Helpdesk Laptop (Coming Soon)</a>
                 <a class="unique ms-4" href="{{ route('employee.index') }}">Employee</a>
-                <a href="{{ route('vendor.index') }}" class="unique ms-4">Vendor Name</a>
+                {{-- <a href="{{ route('vendor.index') }}" class="unique ms-4">Vendor</a> --}}
             </div>
 
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
-            <div class="navbar-nav order-md-last text-end">
-                <a class="maindashboardlink" href="{{ route('dashboard.main') }}">Main Dashboard</a>
+            <div class="navbar-nav order-md-last text-end  ms-4"
+                style="display: flex; align-items: center; justify-content: flex-end; ">
+                <a href="{{ route('dashboard.main') }}" class="unique maindashboardlink">Main Dashboard</a>
 
                 @guest
                     <div class="nav-item dropdown">
@@ -94,7 +137,7 @@
                         </a>
 
                         <!-- Dropdown menu -->
-                        <div class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <div class="col" style="font:300 14px Narasi Sans, sans-serif">
                                 <div class="mt-1">Nama User</div>
                                 <div class="text-secondary">position</div>
@@ -111,8 +154,6 @@
                             </a>
 
                             <!-- Include modal -->
-
-
                             <a href="{{ route('logout') }}" class="dropdown-item unique-sidebar-link"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
@@ -130,7 +171,7 @@
                     </div>
                 @else
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0 " data-bs-toggle="dropdown"
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                             aria-label="Open user menu">
                             <div class="row me-2">
                                 <div class="col-sm-3">
@@ -171,10 +212,8 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
-
                     </div>
                 @endguest
-
             </div>
         </div>
     </div>

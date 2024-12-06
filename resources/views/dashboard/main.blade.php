@@ -28,8 +28,9 @@
             .headerone {
                 position: relative;
                 text-align: start;
-                background: url('{{ asset('asset/image/bannernarasi.jpeg') }}');
+                background: url('{{ asset('asset/image/banner1.jpeg') }}');
                 background-repeat: no-repeat;
+                background-position: center -470px;
                 background-size: cover;
                 /* Membuat gambar memenuhi seluruh elemen */
                 /* background-position: center -70px; */
@@ -416,7 +417,7 @@
                                     Quick Links</p>
 
                                 <div class="nih" style="margin-left: 8px;">
-                                    <a class="apaniha" href="{{ route('dashboard.budget') }}"
+                                    {{-- <a class="apaniha" href="{{ route('dashboard.budget') }}"
                                         style="text-decoration: none; display: flex;">
                                         <svg style="margin-top: 6px; margin-right: 8px"
                                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -429,6 +430,24 @@
                                         </svg>
                                         <div>
                                             <span style="font-size: 18px; font-weight: 500;">Budgeting System</span>
+                                            <p style="font-style: italic; color:#bababa; margin-top: -4px;">Budget
+                                                Information and Budget Requests</p>
+                                        </div>
+                                    </a> --}}
+
+                                    <a class="apaniha" href=""
+                                        style="text-decoration: none; display: flex;">
+                                        <svg style="margin-top: 6px; margin-right: 8px"
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" style="margin-right: 8px; transform: translateY(2px);">
+                                            <path fill="#a6a6a6"
+                                                d="M14.143 15.962a.5.5 0 0 1-.244.68l-9.402 4.193c-1.495.667-3.047-.814-2.306-2.202l3.152-5.904c.245-.459.245-1 0-1.458L2.191 5.367c-.74-1.388.81-2.87 2.306-2.202l3.525 1.572a2 2 0 0 1 .974.932z" />
+                                            <path fill="#a6a6a6"
+                                                d="M15.533 15.39a.5.5 0 0 0 .651.233l4.823-2.15c1.323-.59 1.323-2.355 0-2.945L12.109 6.56a.5.5 0 0 0-.651.68z"
+                                                opacity="0.5" />
+                                        </svg>
+                                        <div>
+                                            <span style="font-size: 18px; font-weight: 500;">Budgeting System (Coming Soon)</span>
                                             <p style="font-style: italic; color:#bababa; margin-top: -4px;">Budget
                                                 Information and Budget Requests</p>
                                         </div>
@@ -453,7 +472,7 @@
                                         </div>
                                     </a>
 
-                                    <a class="apaniha" href="" style="text-decoration: none; display: flex;">
+                                    {{-- <a class="apaniha" href="" style="text-decoration: none; display: flex;">
                                         <svg style="margin-top: 6px; margin-right: 8px"
                                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 24 24"
@@ -470,9 +489,28 @@
                                             <p style="   font-style: italic; color:#bababa; margin-top:-4px;">Request
                                                 Driver and Transportation</p>
                                         </div>
+                                    </a> --}}
+
+                                    <a class="apaniha" href="" style="text-decoration: none; display: flex;">
+                                        <svg style="margin-top: 6px; margin-right: 8px"
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24"
+                                            style="margin-right: 8px; transform: translateY(2px);">
+                                            <path fill="#a6a6a6"
+                                                d="M14.143 15.962a.5.5 0 0 1-.244.68l-9.402 4.193c-1.495.667-3.047-.814-2.306-2.202l3.152-5.904c.245-.459.245-1 0-1.458L2.191 5.367c-.74-1.388.81-2.87 2.306-2.202l3.525 1.572a2 2 0 0 1 .974.932z" />
+                                            <path fill="#a6a6a6"
+                                                d="M15.533 15.39a.5.5 0 0 0 .651.233l4.823-2.15c1.323-.59 1.323-2.355 0-2.945L12.109 6.56a.5.5 0 0 0-.651.68z"
+                                                opacity="0.5" />
+                                        </svg>
+                                        <div>
+                                            <span style="font-size: 18px; font-weight: 500;">Transportation
+                                                Request (Coming Soon)</span>
+                                            <p style="   font-style: italic; color:#bababa; margin-top:-4px;">Request
+                                                Driver and Transportation</p>
+                                        </div>
                                     </a>
 
-                                    <a class="apaniha" href="{{ route('bookingroom.index') }}"
+                                    {{-- <a class="apaniha" href="{{ route('bookingroom.index') }}"
                                         style="text-decoration: none; display: flex;">
                                         <svg style="margin-top: 6px; margin-right: 8px"
                                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -489,8 +527,28 @@
                                             <p style="   font-style: italic; color:#bababa; margin-top:-4px;">Book Room
                                                 Meeting</p>
                                         </div>
+                                    </a> --}}
+
+                                    <a class="apaniha" href=""
+                                        style="text-decoration: none; display: flex;">
+                                        <svg style="margin-top: 6px; margin-right: 8px"
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24"
+                                            style="margin-right: 8px; transform: translateY(2px);">
+                                            <path fill="#a6a6a6"
+                                                d="M14.143 15.962a.5.5 0 0 1-.244.68l-9.402 4.193c-1.495.667-3.047-.814-2.306-2.202l3.152-5.904c.245-.459.245-1 0-1.458L2.191 5.367c-.74-1.388.81-2.87 2.306-2.202l3.525 1.572a2 2 0 0 1 .974.932z" />
+                                            <path fill="#a6a6a6"
+                                                d="M15.533 15.39a.5.5 0 0 0 .651.233l4.823-2.15c1.323-.59 1.323-2.355 0-2.945L12.109 6.56a.5.5 0 0 0-.651.68z"
+                                                opacity="0.5" />
+                                        </svg>
+                                        <div>
+                                            <span style="font-size: 18px; font-weight: 500;">Booking Room (Coming Soon)</span>
+                                            <p style="   font-style: italic; color:#bababa; margin-top:-4px;">Book Room
+                                                Meeting</p>
+                                        </div>
                                     </a>
-                                    <a class="apaniha" href="" style="text-decoration: none; display: flex;">
+
+                                    {{-- <a class="apaniha" href="" style="text-decoration: none; display: flex;">
                                         <svg style="margin-top: 6px; margin-right: 8px"
                                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 24 24"
@@ -506,7 +564,7 @@
                                             <p style="   font-style: italic; color:#bababa; margin-top:-4px;">Anything
                                                 you want to do</p>
                                         </div>
-                                    </a>
+                                    </a> --}}
                                 </div>
 
                             </div>
